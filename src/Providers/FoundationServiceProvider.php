@@ -215,7 +215,7 @@ class FoundationServiceProvider extends ServiceProvider
     /**
      * Load the module routes.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param \Illuminate\Routing\Router $router
      *
      * @return void
      */
@@ -229,8 +229,8 @@ class FoundationServiceProvider extends ServiceProvider
         } else {
             // Load the application routes
             $router->group([
-                'prefix' => $this->app['config']['rinvex.cortex.route.locale_prefix'] ? '{locale}' : '',
-                'namespace' => 'Cortex\Foundation\Http\Controllers',
+                'prefix'     => $this->app['config']['rinvex.cortex.route.locale_prefix'] ? '{locale}' : '',
+                'namespace'  => 'Cortex\Foundation\Http\Controllers',
                 'middleware' => 'web',
             ], function ($router) {
                 require __DIR__.'/../../routes/web.php';
