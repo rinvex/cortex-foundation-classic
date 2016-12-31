@@ -7,8 +7,8 @@ The core foundation of **Rinvex Cortex** modular application architecture.
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/cortex/foundation.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/cortex/foundation/)
 [![Code Climate](https://img.shields.io/codeclimate/github/cortex/foundation.svg?label=CodeClimate&style=flat-square)](https://codeclimate.com/github/cortex/foundation)
 [![Travis](https://img.shields.io/travis/cortex/foundation.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/cortex/foundation)
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/42d49018-acc4-4b2d-854b-00b0b7f81e3c.svg?label=SensioLabs&style=flat-square)](https://insight.sensiolabs.com/projects/42d49018-acc4-4b2d-854b-00b0b7f81e3c)
-[![StyleCI](https://styleci.io/repos/77742523/shield)](https://styleci.io/repos/77742523)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/a2cccb54-31b7-49a3-9df2-176a23400fde.svg?label=SensioLabs&style=flat-square)](https://insight.sensiolabs.com/projects/a2cccb54-31b7-49a3-9df2-176a23400fde)
+[![StyleCI](https://styleci.io/repos/77746390/shield)](https://styleci.io/repos/77746390)
 [![License](https://img.shields.io/packagist/l/cortex/foundation.svg?label=License&style=flat-square)](https://github.com/cortex/foundation/blob/develop/LICENSE)
 
 
