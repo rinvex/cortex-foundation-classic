@@ -215,7 +215,7 @@ class FoundationServiceProvider extends ServiceProvider
     /**
      * Load the module routes.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param \Illuminate\Routing\Router $router
      *
      * @return void
      */
