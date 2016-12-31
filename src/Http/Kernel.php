@@ -65,13 +65,13 @@ class Kernel extends HttpKernel
      * {@inheritdoc}
      */
     protected $routeMiddleware = [
-        'auth' => \Rinvex\Fort\Http\Middleware\Authenticate::class,
+        'auth'       => \Rinvex\Fort\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'abilities' => \Rinvex\Fort\Http\Middleware\Abilities::class,
+        'bindings'   => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'can'        => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest'      => \Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'abilities'  => \Rinvex\Fort\Http\Middleware\Abilities::class,
     ];
 
     /**
