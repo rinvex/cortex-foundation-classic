@@ -1,0 +1,81 @@
+{
+    "name": "cortex/foundation",
+    "type": "cortex-module",
+    "description": "The core foundation of Rinvex Cortex modular application architecture.",
+    "keywords": [
+        "rinvex",
+        "cortex",
+        "module",
+        "laravel",
+        "foundation",
+        "architecture",
+        "modular",
+        "kernel",
+        "heart",
+        "core"
+    ],
+    "license": "MIT",
+    "homepage": "https://rinvex.com",
+    "support": {
+        "email": "help@rinvex.com",
+        "issues": "https://github.com/rinvex/cortex-foundation/issues",
+        "source": "https://github.com/rinvex/cortex-foundation",
+        "docs": "https://github.com/rinvex/cortex-foundation/README.md"
+    },
+    "authors": [
+        {
+            "name": "Rinvex LLC",
+            "homepage": "https://rinvex.com",
+            "email": "help@rinvex.com"
+        },
+        {
+            "name": "Abdelrahman Omran",
+            "homepage": "https://omranic.com",
+            "email": "me@omranic.com",
+            "role": "Project Lead"
+        },
+        {
+            "name": "The Generous Laravel Community",
+            "homepage": "https://github.com/rinvex/cortex-foundation/contributors"
+        }
+    ],
+    "require": {
+        "php": "^7.0.0",
+        "laravel/framework": "^5.3.0",
+        "mcamara/laravel-localization": "^1.1.0",
+        "spatie/laravel-translatable": "1.1.*",
+        "laravelcollective/html": "^5.3.0",
+        "rinvex/composer": "dev-develop",
+        "rinvex/module": "dev-develop",
+        "rinvex/fort": "dev-develop"
+    },
+    "autoload": {
+        "files": [
+            "src/Support/helpers.php"
+        ],
+        "psr-4": {
+            "Cortex\\Foundation\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "cortex-module": {
+            "autoinstall": false,
+            "icon": {
+                "color": "#2196f3",
+                "name": "heartbeat",
+                "background-size": "cover",
+                "background-color": "#e3f2fd",
+                "background-position": "center",
+                "background-repeat": "no-repeat"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
