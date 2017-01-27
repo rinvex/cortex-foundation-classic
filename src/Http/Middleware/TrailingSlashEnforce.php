@@ -30,8 +30,8 @@ class TrailingSlashEnforce
     public function handle($request, Closure $next)
     {
         if (! $request->ajax()) {
-            $requestUri    = $request->getRequestUri();
-            $queryString   = $request->getQueryString();
+            $requestUri = $request->getRequestUri();
+            $queryString = $request->getQueryString();
             $untrimmedPath = trim($request->getPathInfo(), '/').'/';
 
             if ($request->method() == 'GET' && strrchr($requestUri, '.') === false && $this->checkQueryString($requestUri, $queryString)) {
