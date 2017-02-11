@@ -22,7 +22,6 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Rinvex\Repository\Exceptions\EntityNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -71,14 +70,6 @@ class Handler extends ExceptionHandler
                 'route'      => 'rinvex.fort.frontend.auth.login',
                 'withErrors' => ['rinvex.fort.session.expired' => trans('rinvex/fort::frontend/messages.auth.session.expired')],
             ], 401);
-        } elseif ($exception instanceof EntityNotFoundException) {
-            $single = strtolower(trim(strrchr($exception->getModel(), '\\'), '\\'));
-            $plural = str_plural($single);
-
-            return intend([
-                'route'      => 'rinvex.fort.backend.'.$plural.'.index',
-                'withErrors' => ['rinvex.fort.'.$single.'.not_found' => trans('rinvex/fort::backend/messages.'.$single.'.not_found', [$single.'Id' => $exception->getId()])],
-            ]);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
                 'url'        => '/',
