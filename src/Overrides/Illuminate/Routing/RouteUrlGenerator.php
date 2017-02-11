@@ -15,7 +15,6 @@
 
 namespace Cortex\Foundation\Overrides\Illuminate\Routing;
 
-
 use Illuminate\Routing\RouteUrlGenerator as BaseRouteUrlGenerator;
 
 class RouteUrlGenerator extends BaseRouteUrlGenerator
@@ -23,8 +22,9 @@ class RouteUrlGenerator extends BaseRouteUrlGenerator
     /**
      * Add a query string to the URI.
      *
-     * @param  string  $uri
-     * @param  array  $parameters
+     * @param string $uri
+     * @param array  $parameters
+     *
      * @return mixed|string
      */
     protected function addQueryString($uri, array $parameters)
