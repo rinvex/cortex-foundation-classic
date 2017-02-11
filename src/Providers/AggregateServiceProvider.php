@@ -16,7 +16,6 @@
 namespace Cortex\Foundation\Providers;
 
 use Rinvex\Module\ModuleServiceProvider;
-use Illuminate\Foundation\Providers\ConsoleSupportServiceProvider;
 use Illuminate\Support\AggregateServiceProvider as BaseAggregateServiceProvider;
 
 class AggregateServiceProvider extends BaseAggregateServiceProvider
