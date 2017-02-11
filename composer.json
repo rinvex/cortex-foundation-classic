@@ -48,6 +48,7 @@
         "watson/validating": "^3.0.1",
         "rinvex/module": "dev-develop",
         "rinvex/sparse": "dev-develop",
+        "rinvex/composer": "dev-develop",
         "rinvex/category": "dev-develop",
         "spatie/laravel-fractal": "^3.2",
         "rinvex/cacheable": "dev-develop",
