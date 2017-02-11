@@ -22,7 +22,7 @@ use Illuminate\Foundation\Application;
 class Clockwork
 {
     /**
-     * The Laravel Application
+     * The Laravel Application.
      *
      * @var Application
      */
@@ -31,7 +31,7 @@ class Clockwork
     /**
      * Create a new middleware instance.
      *
-     * @param  Application $app
+     * @param Application $app
      *
      * @return void
      */
@@ -43,8 +43,8 @@ class Clockwork
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
      *
      * @return mixed
      */
