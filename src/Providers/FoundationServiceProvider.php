@@ -115,7 +115,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerGeneric()
     {
-        if (! $this->app->environment('production')) {
+        if ($this->app->environment() !== 'production') {
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
@@ -128,7 +128,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function overrideRedirector()
     {
-        $this->app['redirect'] = $this->app->share(function ($app) {
+        $this->app->singleton('redirect', function ($app) {
             $redirector = new Redirector($app['url']);
 
             // If the session is set on the application instance, we'll inject it into
@@ -149,7 +149,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function overrideUrlGenerator()
     {
-        $this->app['url'] = $this->app->share(function ($app) {
+        $this->app->singleton('url', function ($app) {
             $routes = $app['router']->getRoutes();
 
             // The URL generator needs the route collection that exists on the router.
@@ -197,7 +197,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function overrideLaravelLocalization()
     {
-        $this->app['laravellocalization'] = $this->app->share(function () {
+        $this->app->singleton('laravellocalization', function () {
             return new LaravelLocalization();
         });
     }
