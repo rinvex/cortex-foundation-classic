@@ -18,7 +18,9 @@ namespace Cortex\Foundation\Providers;
 use Illuminate\Routing\Router;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Http\Middleware\TrailingSlashEnforce;
+use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
 use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
@@ -47,6 +49,13 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Register a translation file namespace
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
+
+        // Publish config
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                realpath(__DIR__.'/../../config/config.php') => config_path('cortex.foundation.php'),
+            ], 'config');
+        }
     }
 
     /**
@@ -60,14 +69,57 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Merge config
+        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'cortex.foundation');
+
+        $this->overrideNotificationMiddleware();
+        $this->registerDevelopmentProviders();
         $this->overrideLaravelLocalization();
+        $this->registerPackageProviders();
         $this->overrideUrlGenerator();
         $this->overrideRedirector();
-        $this->registerGeneric();
+        $this->bindBladeCompiler();
         $this->setBackendUri();
 
         // Add required middleware to the stack
         $this->prependMiddleware();
+    }
+
+    /**
+     * Override notification middleware.
+     *
+     * @return void
+     */
+    protected function overrideNotificationMiddleware()
+    {
+        $this->app->singleton('Cortex\Foundation\Http\Middleware\NotificationMiddleware', function ($app) {
+            return new NotificationMiddleware(
+                $app['session.store'],
+                $app['notification'],
+                $app['config']->get('notification.session_key')
+            );
+        });
+    }
+
+    /**
+     * Bind blade compiler.
+     *
+     * @return void
+     */
+    protected function bindBladeCompiler()
+    {
+        $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
+
+            // @alerts('container')
+            $bladeCompiler->directive('alerts', function ($container = null) {
+                if (strcasecmp('()', $container) === 0) {
+                    $container = null;
+                }
+
+                return "<?php echo app('notification')->container({$container})->show(); ?>";
+            });
+
+        });
     }
 
     /**
@@ -113,10 +165,11 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerGeneric()
+    protected function registerDevelopmentProviders()
     {
         if ($this->app->environment() !== 'production') {
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+            $this->app->register(\Clockwork\Support\Laravel\ClockworkServiceProvider::class);
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
     }
@@ -200,6 +253,30 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->singleton('laravellocalization', function () {
             return new LaravelLocalization();
         });
+    }
+
+    /**
+     * Register package providers.
+     *
+     * @return void
+     */
+    protected function registerPackageProviders()
+    {
+        foreach ($this->app['config']->get('cortex.foundation.providers') as $provider) {
+            $this->app->register($provider);
+        }
+    }
+
+    /**
+     * Bind service aliases.
+     *
+     * @return void
+     */
+    protected function bindServiceAliases()
+    {
+        foreach ($this->app['config']->get('cortex.foundation.aliases') as $key => $alias) {
+            $this->app->alias($key, $alias);
+        }
     }
 
     /**

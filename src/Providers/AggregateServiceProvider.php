@@ -29,6 +29,5 @@ class AggregateServiceProvider extends BaseAggregateServiceProvider
         ModuleServiceProvider::class,
         FoundationServiceProvider::class,
         ConsoleSupportServiceProvider::class,
-        FortServiceProvider::class,
     ];
 }
