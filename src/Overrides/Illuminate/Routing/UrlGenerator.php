@@ -16,7 +16,6 @@
 namespace Cortex\Foundation\Overrides\Illuminate\Routing;
 
 use Illuminate\Routing\UrlGenerator as BaseUrlGenerator;
-use Illuminate\Routing\Exceptions\UrlGenerationException;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class UrlGenerator extends BaseUrlGenerator
@@ -65,25 +64,21 @@ class UrlGenerator extends BaseUrlGenerator
      */
     public function to($path, $extra = [], $secure = null)
     {
-        return config('rinvex.cortex.route.locale_prefix') ? LaravelLocalization::localizeURL(parent::to($path, $extra, $secure)) : parent::to($path, $extra, $secure);
+        return config('rinvex.cortex.route.locale_prefix')
+            ? LaravelLocalization::localizeURL(parent::to($path, $extra, $secure))
+            : parent::to($path, $extra, $secure);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function addQueryString($uri, array $parameters)
+    protected function routeUrl()
     {
-        // If the URI has a fragment, we will move it to the end of the URI since it will
-        // need to come after any query string that may be added to the URL else it is
-        // not going to be available. We will remove it then append it back on here.
-        if (! is_null($fragment = parse_url($uri, PHP_URL_FRAGMENT))) {
-            $uri = preg_replace('/#.*/', '', $uri);
+        if (! $this->routeGenerator) {
+            $this->routeGenerator = new RouteUrlGenerator($this, $this->request);
         }
 
-        // Add trailing slash to URL before the query string
-        $uri .= '/'.$this->getRouteQueryString($parameters);
-
-        return is_null($fragment) ? $uri : $uri."#{$fragment}";
+        return $this->routeGenerator;
     }
 
     /**
@@ -99,26 +94,13 @@ class UrlGenerator extends BaseUrlGenerator
      */
     protected function toRoute($route, $parameters, $absolute)
     {
-        $parameters = $this->formatParameters($parameters);
-
         // Bind {locale} route parameter
         if (config('rinvex.cortex.route.locale_prefix') && ! isset($parameters['locale'])) {
             $parameters['locale'] = LaravelLocalization::getCurrentLocale();
         }
 
-        $domain = $this->getRouteDomain($route, $parameters);
-
-        $uri = $this->addQueryString($this->trimUrl(
-            $root = $this->replaceRoot($route, $domain, $parameters),
-            $this->replaceRouteParameters($route->uri(), $parameters)
-        ), $parameters);
-
-        if (preg_match('/\{.*?\}/', $uri)) {
-            throw UrlGenerationException::forMissingParameters($route);
-        }
-
-        $uri = strtr(rawurlencode($uri), $this->dontEncode);
-
-        return $absolute ? $uri : '/'.ltrim(str_replace($root, '', $uri), '/');
+        return $this->routeUrl()->to(
+            $route, $this->formatParameters($parameters), $absolute
+        );
     }
 }

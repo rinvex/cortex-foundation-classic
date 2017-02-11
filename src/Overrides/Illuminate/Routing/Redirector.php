@@ -24,7 +24,8 @@ class Redirector extends BaseRedirector
      */
     public function route($route, $parameters = [], $status = 302, $headers = [])
     {
-        return ($previousUrl = $this->generator->getRequest()->get('previous_url')) ? $this->to($previousUrl) : parent::route($route, $parameters, $status, $headers);
+        return ($previousUrl = $this->generator->getRequest()->get('previous_url'))
+            ? $this->to($previousUrl) : parent::route($route, $parameters, $status, $headers);
     }
 
     /**
