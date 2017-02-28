@@ -49,13 +49,6 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Register a translation file namespace
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
-
-        // Publish config
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                realpath(__DIR__.'/../../config/config.php') => config_path('cortex.foundation.php'),
-            ], 'config');
-        }
     }
 
     /**
@@ -69,13 +62,9 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Merge config
-        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'cortex.foundation');
-
         $this->overrideNotificationMiddleware();
         $this->registerDevelopmentProviders();
         $this->overrideLaravelLocalization();
-        $this->registerPackageProviders();
         $this->overrideUrlGenerator();
         $this->overrideRedirector();
         $this->bindBladeCompiler();
@@ -252,30 +241,6 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->singleton('laravellocalization', function () {
             return new LaravelLocalization();
         });
-    }
-
-    /**
-     * Register package providers.
-     *
-     * @return void
-     */
-    protected function registerPackageProviders()
-    {
-        foreach ($this->app['config']->get('cortex.foundation.providers') as $provider) {
-            $this->app->register($provider);
-        }
-    }
-
-    /**
-     * Bind service aliases.
-     *
-     * @return void
-     */
-    protected function bindServiceAliases()
-    {
-        foreach ($this->app['config']->get('cortex.foundation.aliases') as $key => $alias) {
-            $this->app->alias($key, $alias);
-        }
     }
 
     /**
