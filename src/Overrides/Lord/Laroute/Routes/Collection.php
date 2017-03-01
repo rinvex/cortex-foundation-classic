@@ -50,5 +50,4 @@ class Collection extends BaseCollection
 
         return compact('uri', 'name');
     }
-
 }
