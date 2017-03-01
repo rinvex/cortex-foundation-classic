@@ -42,6 +42,7 @@
     "require": {
         "php": "^7.0.0",
         "lord/laroute": "^2.3",
+        "fideloper/proxy": "^3.2",
         "rinvex/tag": "dev-develop",
         "rinvex/fort": "dev-develop",
         "laravel/framework": "~5.4.0",
