@@ -40,12 +40,6 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Require Support Files
         $this->requireSupportFiles();
-
-        // Register a view file namespace
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
-
-        // Register a translation file namespace
-        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
     }
 
     /**
