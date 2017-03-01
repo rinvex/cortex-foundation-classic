@@ -38,9 +38,6 @@ class FoundationServiceProvider extends ServiceProvider
         // Early set application locale globaly
         $this->app['laravellocalization']->setLocale();
 
-        // Load routes
-        $this->loadRoutes($router);
-
         // Require Support Files
         $this->requireSupportFiles();
 
@@ -251,32 +248,5 @@ class FoundationServiceProvider extends ServiceProvider
     protected function setBackendUri()
     {
         $this->app['url']->setBackendUri(backend_uri());
-    }
-
-    /**
-     * Load the module routes.
-     *
-     * @param \Illuminate\Routing\Router $router
-     *
-     * @return void
-     */
-    public function loadRoutes(Router $router)
-    {
-        // Load routes
-        if ($this->app->routesAreCached()) {
-            $this->app->booted(function () {
-                require $this->app->getCachedRoutesPath();
-            });
-        } else {
-            // Load the application routes
-            $router->namespace('Cortex\Foundation\Http\Controllers')
-                   ->prefix($this->app['config']['rinvex.cortex.route.locale_prefix'] ? '{locale}' : '')
-                   ->middleware('web')
-                   ->group(__DIR__.'/../../routes/web.php');
-
-            $this->app->booted(function () use ($router) {
-                $router->getRoutes()->refreshNameLookups();
-            });
-        }
     }
 }
