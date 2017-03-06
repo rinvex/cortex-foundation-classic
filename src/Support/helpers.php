@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 if (! function_exists('backend_uri')) {
     /**
      * Return the backend uri.
