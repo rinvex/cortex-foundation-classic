@@ -36,7 +36,7 @@ class TrailingSlashEnforce
             $queryString = $request->getQueryString();
             $untrimmedPath = trim($request->getPathInfo(), '/').'/';
 
-            if ($request->method() == 'GET' && strrchr($requestUri, '.') === false && $this->checkQueryString($requestUri, $queryString)) {
+            if ($request->method() === 'GET' && mb_strrchr($requestUri, '.') === false && $this->checkQueryString($requestUri, $queryString)) {
                 return redirect()->to($untrimmedPath.(! empty($queryString) ? '?'.$queryString : ''), 301);
             }
         }
@@ -52,6 +52,6 @@ class TrailingSlashEnforce
      */
     protected function checkQueryString($requestUri, $queryString)
     {
-        return (! $queryString && ! ends_with($requestUri, '/')) || ($queryString && ! ends_with(strstr($requestUri, '?', true), '/'));
+        return (! $queryString && ! ends_with($requestUri, '/')) || ($queryString && ! ends_with(mb_strstr($requestUri, '?', true), '/'));
     }
 }

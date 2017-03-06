@@ -40,12 +40,12 @@ class Collection extends BaseCollection
         switch ($filter) {
             case 'all':
                 if ($laroute === false) {
-                    return null;
+                    return;
                 }
                 break;
             case 'only':
                 if ($laroute !== true) {
-                    return null;
+                    return;
                 }
                 break;
         }
