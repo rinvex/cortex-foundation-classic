@@ -17,8 +17,8 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
-use Illuminate\Console\Scheduling\ScheduleFinishCommand;
 use Illuminate\Console\Scheduling\ScheduleRunCommand;
+use Illuminate\Console\Scheduling\ScheduleFinishCommand;
 use Illuminate\Foundation\Providers\ArtisanServiceProvider as BaseArtisanServiceProvider;
 
 class ArtisanServiceProvider extends BaseArtisanServiceProvider
