@@ -79,7 +79,6 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'abilities' => \Rinvex\Fort\Http\Middleware\Abilities::class,
         'nohttpcache' => \Rinvex\Fort\Http\Middleware\NoHttpCache::class,
     ];
 
