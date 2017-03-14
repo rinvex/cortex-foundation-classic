@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Cortex\Foundation\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -23,9 +25,8 @@ class Kernel extends HttpKernel
      * {@inheritdoc}
      */
     protected $bootstrappers = [
-        \Illuminate\Foundation\Bootstrap\DetectEnvironment::class,
+        \Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables::class,
         \Illuminate\Foundation\Bootstrap\LoadConfiguration::class,
-        \Illuminate\Foundation\Bootstrap\ConfigureLogging::class,
         \Illuminate\Foundation\Bootstrap\HandleExceptions::class,
         \Illuminate\Foundation\Bootstrap\RegisterFacades::class,
         \Illuminate\Foundation\Bootstrap\RegisterProviders::class,
@@ -38,6 +39,10 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        \Cortex\Foundation\Http\Middleware\TrimStrings::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Fideloper\Proxy\TrustProxies::class,
     ];
 
     /**
@@ -49,9 +54,12 @@ class Kernel extends HttpKernel
             \Cortex\Foundation\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
+            // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Cortex\Foundation\Http\Middleware\NotificationMiddleware::class,
+            \Cortex\Foundation\Http\Middleware\Clockwork::class,
             \Rinvex\Fort\Http\Middleware\Abilities::class,
         ],
 
@@ -71,7 +79,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'abilities' => \Rinvex\Fort\Http\Middleware\Abilities::class,
+        'nohttpcache' => \Rinvex\Fort\Http\Middleware\NoHttpCache::class,
     ];
 
     /**

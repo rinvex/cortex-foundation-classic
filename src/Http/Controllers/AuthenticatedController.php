@@ -13,19 +13,17 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Cortex\Foundation\Http\Controllers;
 
-use Rinvex\Fort\Http\Controllers\AbstractController;
-
-class HomeController extends AbstractController
+class AuthenticatedController extends AbstractController
 {
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * Create a new manage persistence controller instance.
      */
-    public function index()
+    public function __construct()
     {
-        return view('cortex/foundation::home');
+        $this->middleware($this->getAuthMiddleware(), ['except' => $this->middlewareWhitelist]);
     }
 }

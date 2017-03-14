@@ -41,13 +41,25 @@
     ],
     "require": {
         "php": "^7.0.0",
-        "laravel/framework": "^5.3.0",
-        "mcamara/laravel-localization": "^1.1.0",
-        "spatie/laravel-translatable": "1.1.*",
-        "laravelcollective/html": "^5.3.0",
-        "rinvex/composer": "dev-develop",
+        "lord/laroute": "^2.3",
+        "fideloper/proxy": "^3.2",
+        "rinvex/tag": "dev-develop",
+        "rinvex/fort": "dev-develop",
+        "laravel/framework": "~5.4.0",
+        "watson/validating": "^3.0.1",
         "rinvex/module": "dev-develop",
-        "rinvex/fort": "dev-develop"
+        "rinvex/sparse": "dev-develop",
+        "rinvex/composer": "dev-develop",
+        "spatie/laravel-fractal": "^3.2",
+        "rinvex/cacheable": "dev-develop",
+        "laravelcollective/html": "~5.4.0",
+        "barryvdh/laravel-snappy": "^0.3.1",
+        "edvinaskrucas/notification": "^5.1",
+        "spatie/laravel-activitylog": "^1.10",
+        "spatie/laravel-translatable": "^1.2.0",
+        "mcamara/laravel-localization": "^1.2.0",
+        "yajra/laravel-datatables-oracle": "^7.0.0",
+        "yajra/laravel-datatables-buttons": "^1.0.0"
     },
     "autoload": {
         "files": [

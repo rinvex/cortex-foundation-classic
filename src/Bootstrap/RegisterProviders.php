@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Cortex\Foundation\Bootstrap;
 
 use Illuminate\Contracts\Foundation\Application;
@@ -23,7 +25,7 @@ class RegisterProviders
     /**
      * Bootstrap the given application.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
      *
      * @return void
      */

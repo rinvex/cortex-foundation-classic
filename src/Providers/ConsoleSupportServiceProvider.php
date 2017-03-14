@@ -13,11 +13,10 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Cortex\Foundation\Providers;
 
-use Illuminate\Database\SeedServiceProvider;
-use Illuminate\Queue\ConsoleServiceProvider;
-use Illuminate\Console\ScheduleServiceProvider;
 use Illuminate\Database\MigrationServiceProvider;
 use Illuminate\Foundation\Providers\ComposerServiceProvider;
 use Illuminate\Support\AggregateServiceProvider as BaseAggregateServiceProvider;
@@ -38,10 +37,7 @@ class ConsoleSupportServiceProvider extends BaseAggregateServiceProvider
      */
     protected $providers = [
         ArtisanServiceProvider::class,
-        ScheduleServiceProvider::class,
         MigrationServiceProvider::class,
-        SeedServiceProvider::class,
         ComposerServiceProvider::class,
-        ConsoleServiceProvider::class,
     ];
 }

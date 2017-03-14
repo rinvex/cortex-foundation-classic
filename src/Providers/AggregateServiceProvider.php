@@ -13,10 +13,11 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Cortex\Foundation\Providers;
 
 use Rinvex\Module\ModuleServiceProvider;
-use Rinvex\Repository\Providers\RepositoryServiceProvider;
 use Illuminate\Support\AggregateServiceProvider as BaseAggregateServiceProvider;
 
 class AggregateServiceProvider extends BaseAggregateServiceProvider
@@ -30,7 +31,5 @@ class AggregateServiceProvider extends BaseAggregateServiceProvider
         ModuleServiceProvider::class,
         FoundationServiceProvider::class,
         ConsoleSupportServiceProvider::class,
-        RepositoryServiceProvider::class,
-        FortServiceProvider::class,
     ];
 }

@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Cortex\Foundation\Overrides\Mcamara\LaravelLocalization;
 
 use Mcamara\LaravelLocalization\LaravelLocalization as BaseLaravelLocalization;

@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Cortex\Foundation\Exceptions;
 
 use Exception;
@@ -22,7 +24,6 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Rinvex\Repository\Exceptions\EntityNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -47,13 +48,15 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param \Exception $exception
+     *
      * @return void
      */
     public function report(Exception $exception)
     {
         parent::report($exception);
     }
+
     /**
      * Render an exception into an HTTP response.
      *
@@ -66,20 +69,12 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof InvalidPersistenceException) {
             return intend([
-                'route'      => 'rinvex.fort.frontend.auth.login',
+                'route' => 'rinvex.fort.frontend.auth.login',
                 'withErrors' => ['rinvex.fort.session.expired' => trans('rinvex/fort::frontend/messages.auth.session.expired')],
             ], 401);
-        } elseif ($exception instanceof EntityNotFoundException) {
-            $single = strtolower(trim(strrchr($exception->getModel(), '\\'), '\\'));
-            $plural = str_plural($single);
-
-            return intend([
-                'route'      => 'rinvex.fort.backend.'.$plural.'.index',
-                'withErrors' => ['rinvex.fort.'.$single.'.not_found' => trans('rinvex/fort::backend/messages.'.$single.'.not_found', [$single.'Id' => $exception->getId()])],
-            ]);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
-                'url'        => '/',
+                'url' => '/',
                 'withErrors' => ['rinvex.fort.unauthorized' => $exception->getMessage()],
             ], 403);
         }
@@ -98,7 +93,7 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return intend([
-            'route'      => 'rinvex.fort.frontend.auth.login',
+            'route' => 'rinvex.fort.frontend.auth.login',
             'withErrors' => ['rinvex.fort.session.required' => trans('rinvex/fort::frontend/messages.auth.session.required')],
         ], 401);
     }
