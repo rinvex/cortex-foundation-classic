@@ -42,6 +42,14 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Require Support Files
         $this->requireSupportFiles();
+
+        if ($this->app->runningInConsole()) {
+            // Load migrations
+            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+
+            // Publish Resources
+            $this->publishResources();
+        }
     }
 
     /**
@@ -244,5 +252,18 @@ class FoundationServiceProvider extends ServiceProvider
     protected function setBackendUri()
     {
         $this->app['url']->setBackendUri(backend_uri());
+    }
+
+    /**
+     * Publish resources.
+     *
+     * @return void
+     */
+    protected function publishResources()
+    {
+        // Publish migrations
+        $this->publishes([
+            realpath(__DIR__.'/../../database/migrations') => database_path('migrations'),
+        ], 'migrations');
     }
 }

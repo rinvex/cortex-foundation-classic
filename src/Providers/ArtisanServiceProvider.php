@@ -79,7 +79,6 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'NotificationTable' => 'command.notification.table',
         'QueueFailedTable' => 'command.queue.failed-table',
         'QueueTable' => 'command.queue.table',
-        'SessionTable' => 'command.session.table',
         'Serve' => 'command.serve',
         'VendorPublish' => 'command.vendor.publish',
     ];

@@ -62,6 +62,9 @@
         "yajra/laravel-datatables-buttons": "^1.0.0"
     },
     "autoload": {
+        "classmap": [
+            "database"
+        ],
         "files": [
             "src/Support/helpers.php"
         ],
