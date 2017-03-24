@@ -115,7 +115,7 @@ class Kernel extends HttpKernel
      */
     public function enableMiddleware()
     {
-        $this->middleware = $this->disableMiddleware;
+        $this->middleware = $this->disabledMiddleware;
 
         $this->disabledMiddleware = [];
     }
@@ -139,7 +139,7 @@ class Kernel extends HttpKernel
      */
     public function enableRouteMiddleware()
     {
-        $this->routeMiddleware = $this->disableRouteMiddleware;
+        $this->routeMiddleware = $this->disabledRouteMiddleware;
 
         $this->disabledRouteMiddleware = [];
     }
