@@ -69,8 +69,8 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof InvalidPersistenceException) {
             return intend([
-                'route' => 'rinvex.fort.frontend.auth.login',
-                'withErrors' => ['rinvex.fort.session.expired' => trans('rinvex/fort::frontend/messages.auth.session.expired')],
+                'route' => 'frontend.auth.login',
+                'withErrors' => ['rinvex.fort.session.expired' => trans('auth.session.expired')],
             ], 401);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
@@ -93,8 +93,8 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return intend([
-            'route' => 'rinvex.fort.frontend.auth.login',
-            'withErrors' => ['rinvex.fort.session.required' => trans('rinvex/fort::frontend/messages.auth.session.required')],
+            'route' => 'frontend.auth.login',
+            'withErrors' => ['rinvex.fort.session.required' => trans('auth.session.required')],
         ], 401);
     }
 }
