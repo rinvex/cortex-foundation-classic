@@ -40,9 +40,6 @@ class FoundationServiceProvider extends ServiceProvider
         // Early set application locale globaly
         $this->app['laravellocalization']->setLocale();
 
-        // Require Support Files
-        $this->requireSupportFiles();
-
         if ($this->app->runningInConsole()) {
             // Load migrations
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
@@ -69,7 +66,6 @@ class FoundationServiceProvider extends ServiceProvider
         $this->overrideUrlGenerator();
         $this->overrideRedirector();
         $this->bindBladeCompiler();
-        $this->setBackendUri();
 
         // Add required middleware to the stack
         $this->prependMiddleware();
@@ -124,28 +120,6 @@ class FoundationServiceProvider extends ServiceProvider
 
         if ($this->app['config']->get('rinvex.cortex.route.trailing_slash')) {
             $this->app[Kernel::class]->prependMiddleware(TrailingSlashEnforce::class);
-        }
-    }
-
-    /**
-     * Require support files.
-     *
-     * @return void
-     */
-    protected function requireSupportFiles()
-    {
-        // Load the functions
-        $helpers = $this->app->path().'/Support/helpers.php';
-
-        if ($this->app['files']->exists($helpers)) {
-            require $helpers;
-        }
-
-        // Load the form macros
-        $macros = $this->app->path().'/Support/macros.php';
-
-        if ($this->app['files']->exists($macros)) {
-            require $macros;
         }
     }
 
@@ -242,16 +216,6 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->singleton('laravellocalization', function () {
             return new LaravelLocalization();
         });
-    }
-
-    /**
-     * Set the backend uri on the url generator.
-     *
-     * @return void
-     */
-    protected function setBackendUri()
-    {
-        $this->app['url']->setBackendUri(backend_uri());
     }
 
     /**

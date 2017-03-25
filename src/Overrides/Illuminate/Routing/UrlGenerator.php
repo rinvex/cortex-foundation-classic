@@ -23,39 +23,6 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 class UrlGenerator extends BaseUrlGenerator
 {
     /**
-     * The backend URI.
-     *
-     * @var string
-     */
-    protected $backendUri = 'backend';
-
-    /**
-     * Set the backend URI.
-     *
-     * @param string $backendUri
-     *
-     * @return void
-     */
-    public function setBackendUri($backendUri)
-    {
-        $this->backendUri = $backendUri;
-    }
-
-    /**
-     * Generate an absolute URL to the given admin path.
-     *
-     * @param string $path
-     * @param array  $parameters
-     * @param bool   $secure
-     *
-     * @return string
-     */
-    public function toBackend($path, array $parameters = [], $secure = null)
-    {
-        return $this->to("{$this->backendUri}/{$path}", $parameters, $secure);
-    }
-
-    /**
      * Generate a absolute URL to the given path.
      *
      * @param string    $path
