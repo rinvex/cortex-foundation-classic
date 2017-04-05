@@ -60,6 +60,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Cortex\Foundation\Http\Middleware\NotificationMiddleware::class,
             \Cortex\Foundation\Http\Middleware\Clockwork::class,
+            \Rinvex\Fort\Http\Middleware\ResetTimezone::class,
             \Rinvex\Fort\Http\Middleware\Abilities::class,
         ],
 
