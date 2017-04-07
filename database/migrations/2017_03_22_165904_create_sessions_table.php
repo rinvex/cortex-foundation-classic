@@ -26,14 +26,8 @@ class CreateSessionsTable extends Migration
             $table->integer('last_activity');
 
             // Indexes
-            $table->foreign('user_id')
-                  ->references('id')
-                  ->on(config('rinvex.fort.tables.users'))
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-
-            // Engine
-            $table->engine = 'InnoDB';
+            $table->foreign('user_id')->references('id')->on(config('rinvex.fort.tables.users'))
+                  ->onDelete('cascade')->onUpdate('cascade');
         });
 
         Schema::enableForeignKeyConstraints();
