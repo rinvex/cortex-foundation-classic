@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
-use Rinvex\Module\ModuleServiceProvider;
+use Rinvex\Modulable\ModulableServiceProvider;
 use Illuminate\Support\AggregateServiceProvider as BaseAggregateServiceProvider;
 
 class AggregateServiceProvider extends BaseAggregateServiceProvider
@@ -28,7 +28,7 @@ class AggregateServiceProvider extends BaseAggregateServiceProvider
      * @var array
      */
     protected $providers = [
-        ModuleServiceProvider::class,
+        ModulableServiceProvider::class,
         FoundationServiceProvider::class,
         ConsoleSupportServiceProvider::class,
     ];
