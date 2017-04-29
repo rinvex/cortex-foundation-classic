@@ -62,9 +62,6 @@
         "yajra/laravel-datatables-buttons": "^1.0.0"
     },
     "autoload": {
-        "classmap": [
-            "database"
-        ],
         "psr-4": {
             "Cortex\\Foundation\\": "src/"
         }
