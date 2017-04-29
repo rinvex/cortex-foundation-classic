@@ -27,12 +27,18 @@ class FoundationServiceProvider extends ServiceProvider
         // Early set application locale globaly
         $this->app['laravellocalization']->setLocale();
 
-        if ($this->app->runningInConsole()) {
-            // Load migrations
-            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        // Load views
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
 
+        // Load language phrases
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
+
+        if ($this->app->runningInConsole()) {
             // Publish Resources
             $this->publishResources();
+
+            // Load migrations
+            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         }
     }
 
@@ -53,6 +59,16 @@ class FoundationServiceProvider extends ServiceProvider
         $this->overrideUrlGenerator();
         $this->overrideRedirector();
         $this->bindBladeCompiler();
+
+        // Register sidebar menus
+        $this->app->singleton('menus.sidebar', function ($app) {
+            return collect();
+        });
+
+        // Register topbar menus
+        $this->app->singleton('menus.topbar', function ($app) {
+            return collect();
+        });
 
         // Add required middleware to the stack
         $this->prependMiddleware();
