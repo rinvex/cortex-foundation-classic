@@ -54,7 +54,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof InvalidPersistenceException) {
+        if ($exception instanceof TokenMismatchException) {
+            return intend([
+                'back' => true,
+                'with' => ['warning' => trans('cortex/foundation::messages.token_mismatch')],
+            ], 400);
+        } elseif ($exception instanceof InvalidPersistenceException) {
             return intend([
                 'url' => route('frontend.auth.login'),
                 'with' => ['warning' => trans('auth.session.expired')],
