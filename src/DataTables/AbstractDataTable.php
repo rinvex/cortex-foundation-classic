@@ -50,7 +50,7 @@ abstract class AbstractDataTable extends DataTable
     {
         return $this->datatables
             ->eloquent($this->query())
-            ->setTransformer(new $this->transformer)
+            ->setTransformer(new $this->transformer())
             ->make(true);
     }
 
@@ -90,6 +90,6 @@ abstract class AbstractDataTable extends DataTable
      */
     protected function filename()
     {
-        return str_slug(str_replace('datatable', '', strtolower(__CLASS__)).'-export-'.time());
+        return str_slug(str_replace('datatable', '', mb_strtolower(__CLASS__)).'-export-'.time());
     }
 }

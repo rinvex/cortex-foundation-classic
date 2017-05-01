@@ -65,13 +65,13 @@ class Handler extends ExceptionHandler
                 'with' => ['warning' => $exception->getMessage()],
             ], 403);
         } elseif ($exception instanceof ModelNotFoundException) {
-            $isBackend = strpos($request->route()->getName(), 'backend') !== false;
-            $single = strtolower(substr($exception->getModel(), strrpos($exception->getModel(), '\\') + 1));
+            $isBackend = mb_strpos($request->route()->getName(), 'backend') !== false;
+            $single = mb_strtolower(mb_substr($exception->getModel(), mb_strrpos($exception->getModel(), '\\') + 1));
             $plural = str_plural($single);
 
             return intend([
                 'url' => $isBackend ? route("backend.{$plural}.index") : route('frontend.home'),
-                'with' => ['warning' => trans("cortex/foundation::messages.resource_not_found", ['resource' => $single, 'id' => $request->route()->parameter($single)])],
+                'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'id' => $request->route()->parameter($single)])],
             ], 404);
         }
 
