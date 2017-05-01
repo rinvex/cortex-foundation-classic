@@ -3,7 +3,7 @@
         @if($model->created_at)
             <small>
                 <strong>{{ trans('cortex/foundation::common.created_at') }}:</strong>
-                <time datetime="{{ $model->created_at }}">{{ $model->created_at->format('M jS, Y') }}</time>
+                <time datetime="{{ $model->created_at }}">{{ $model->created_at->format(config('app.date_format')) }}</time>
             </small>
         @endif
 
@@ -12,7 +12,7 @@
         @if($model->updated_at)
             <small>
                 <strong>{{ trans('cortex/foundation::common.updated_at') }}:</strong>
-                <time datetime="{{ $model->updated_at }}">{{ $model->updated_at->format('M jS, Y') }}</time>
+                <time datetime="{{ $model->updated_at }}">{{ $model->updated_at->format(config('app.date_format')) }}</time>
             </small>
         @endif
     @endif

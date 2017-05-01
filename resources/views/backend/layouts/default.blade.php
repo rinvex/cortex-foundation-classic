@@ -5,7 +5,7 @@
     <title>@yield('title', config('app.name'))</title>
 
     <!-- Meta Data -->
-    @include('cortex/foundation::partials.meta')
+    @include('cortex/foundation::backend.partials.meta')
 
     <!-- Styles -->
     <link href="{{ mix('css/vendor.css') }}" rel="stylesheet">
@@ -20,12 +20,12 @@
 <body class="hold-transition skin-blue fixed sidebar-mini">
     <!-- Main Content -->
     <div class="wrapper">
-        @include('cortex/foundation::partials.header')
-        @include('cortex/foundation::partials.sidebar')
+        @include('cortex/foundation::backend.partials.header')
+        @include('cortex/foundation::backend.partials.sidebar')
 
         @yield('content')
 
-        @include('cortex/foundation::partials.footer')
+        @include('cortex/foundation::backend.partials.footer')
     </div>
 
     <!-- JavaScripts -->
