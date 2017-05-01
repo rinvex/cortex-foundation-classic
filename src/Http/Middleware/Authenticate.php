@@ -23,7 +23,7 @@ class Authenticate
         if (Auth::guard($guard)->guest()) {
             return intend([
                 'url' => route('frontend.auth.login'),
-                'warning' => ['session.expired' => trans('auth.session.required')],
+                'with' => ['warning' => trans('auth.session.required')],
             ], 401);
         }
 

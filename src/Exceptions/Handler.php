@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\Access\AuthorizationException;
+use Rinvex\Fort\Exceptions\AuthorizationException;
 use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -57,12 +57,12 @@ class Handler extends ExceptionHandler
         if ($exception instanceof InvalidPersistenceException) {
             return intend([
                 'url' => route('frontend.auth.login'),
-                'warning' => ['session.expired' => trans('auth.session.expired')],
+                'with' => ['warning' => trans('auth.session.expired')],
             ], 401);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
                 'url' => '/',
-                'warning' => ['session.unauthorized' => $exception->getMessage()],
+                'with' => ['warning' => $exception->getMessage()],
             ], 403);
         } elseif ($exception instanceof ModelNotFoundException) {
             $isBackend = strpos($request->route()->getName(), 'backend') !== false;
@@ -90,7 +90,7 @@ class Handler extends ExceptionHandler
     {
         return intend([
             'url' => route('frontend.auth.login'),
-            'warning' => ['session.required' => trans('auth.session.required')],
+            'with' => ['warning' => trans('auth.session.required')],
         ], 401);
     }
 }
