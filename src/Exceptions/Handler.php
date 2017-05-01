@@ -62,7 +62,7 @@ class Handler extends ExceptionHandler
         } elseif ($exception instanceof InvalidPersistenceException) {
             return intend([
                 'url' => route('frontend.auth.login'),
-                'with' => ['warning' => trans('auth.session.expired')],
+                'with' => ['warning' => trans('cortex/foundation::messages.session_expired')],
             ], 401);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
@@ -95,7 +95,7 @@ class Handler extends ExceptionHandler
     {
         return intend([
             'url' => route('frontend.auth.login'),
-            'with' => ['warning' => trans('auth.session.required')],
+            'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
         ], 401);
     }
 }

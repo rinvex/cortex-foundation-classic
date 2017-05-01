@@ -23,7 +23,7 @@ class Authenticate
         if (Auth::guard($guard)->guest()) {
             return intend([
                 'url' => route('frontend.auth.login'),
-                'with' => ['warning' => trans('auth.session.required')],
+                'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
             ], 401);
         }
 
