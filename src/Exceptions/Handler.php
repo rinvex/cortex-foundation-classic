@@ -57,12 +57,12 @@ class Handler extends ExceptionHandler
         if ($exception instanceof InvalidPersistenceException) {
             return intend([
                 'url' => route('frontend.auth.login'),
-                'withErrors' => ['rinvex.fort.session.expired' => trans('auth.session.expired')],
+                'warning' => ['session.expired' => trans('auth.session.expired')],
             ], 401);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
                 'url' => '/',
-                'withErrors' => ['rinvex.fort.unauthorized' => $exception->getMessage()],
+                'warning' => ['session.unauthorized' => $exception->getMessage()],
             ], 403);
         } elseif ($exception instanceof ModelNotFoundException) {
             $isBackend = strpos($request->route()->getName(), 'backend') !== false;
@@ -90,7 +90,7 @@ class Handler extends ExceptionHandler
     {
         return intend([
             'url' => route('frontend.auth.login'),
-            'withErrors' => ['rinvex.fort.session.required' => trans('auth.session.required')],
+            'warning' => ['session.required' => trans('auth.session.required')],
         ], 401);
     }
 }

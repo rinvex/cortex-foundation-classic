@@ -23,7 +23,7 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check()) {
             return intend([
                 'url' => '/',
-                'with' => ['success' => trans('cortex/fort::messages.auth.already')],
+                'with' => ['success' => trans('cortex/foundation::messages.already_authenticated')],
             ]);
         }
 
