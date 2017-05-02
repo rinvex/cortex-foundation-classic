@@ -34,9 +34,6 @@ class FoundationServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
 
         if ($this->app->runningInConsole()) {
-            // Publish Resources
-            $this->publishResources();
-
             // Load migrations
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         }
@@ -219,18 +216,5 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->singleton('laravellocalization', function () {
             return new LaravelLocalization();
         });
-    }
-
-    /**
-     * Publish resources.
-     *
-     * @return void
-     */
-    protected function publishResources()
-    {
-        // Publish migrations
-        $this->publishes([
-            realpath(__DIR__.'/../../database/migrations') => database_path('migrations'),
-        ], 'migrations');
     }
 }
