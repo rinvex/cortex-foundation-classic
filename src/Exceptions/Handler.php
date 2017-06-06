@@ -13,6 +13,7 @@ use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Watson\Validating\ValidationException as WatsonValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -58,6 +59,11 @@ class Handler extends ExceptionHandler
             return intend([
                 'back' => true,
                 'with' => ['warning' => trans('cortex/foundation::messages.token_mismatch')],
+            ], 400);
+        } elseif ($exception instanceof WatsonValidationException) {
+            return intend([
+                'back' => true,
+                'with' => ['warning' => $exception->getMessage()],
             ], 400);
         } elseif ($exception instanceof InvalidPersistenceException) {
             return intend([
