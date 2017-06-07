@@ -63,7 +63,8 @@ class Handler extends ExceptionHandler
         } elseif ($exception instanceof WatsonValidationException) {
             return intend([
                 'back' => true,
-                'with' => ['warning' => $exception->getMessage()],
+                'withInput' => $request->all(),
+                'withErrors' => $exception->errors(),
             ], 400);
         } elseif ($exception instanceof InvalidPersistenceException) {
             return intend([
