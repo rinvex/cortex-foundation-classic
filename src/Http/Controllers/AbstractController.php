@@ -40,7 +40,7 @@ abstract class AbstractController extends Controller
      */
     public function __construct()
     {
-        $this->brwosingArea = strchr(request()->route()->getName(), '.', true);
+        $this->brwosingArea = strstr(request()->route()->getName(), '.', true);
     }
 
     /**
