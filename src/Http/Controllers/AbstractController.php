@@ -18,7 +18,7 @@ abstract class AbstractController extends Controller
      *
      * @var string
      */
-    protected $brwosingArea;
+    protected $browsingArea;
 
     /**
      * Whitelisted methods.
@@ -40,7 +40,7 @@ abstract class AbstractController extends Controller
      */
     public function __construct()
     {
-        $this->brwosingArea = strchr(request()->route()->getName(), '.', true);
+        $this->browsingArea = request()->route() ? strchr(request()->route()->getName(), '.', true) : 'frontend';
     }
 
     /**
