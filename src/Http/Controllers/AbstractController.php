@@ -14,6 +14,13 @@ abstract class AbstractController extends Controller
     use DispatchesJobs;
 
     /**
+     * The browsing area.
+     *
+     * @var string
+     */
+    protected $brwosingArea;
+
+    /**
      * Whitelisted methods.
      * Array of whitelisted methods which do not need to go through middleware.
      *
@@ -27,6 +34,14 @@ abstract class AbstractController extends Controller
      * @var string
      */
     protected $broker;
+
+    /**
+     * Create a new abstract controller instance.
+     */
+    public function __construct()
+    {
+        $this->brwosingArea = strchr(request()->route()->getName(), '.', true);
+    }
 
     /**
      * Get the broker to be used.
