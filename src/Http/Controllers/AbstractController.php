@@ -40,7 +40,7 @@ abstract class AbstractController extends Controller
      */
     public function __construct()
     {
-        $this->browsingArea = request()->route() ? strchr(request()->route()->getName(), '.', true) : 'frontend';
+        $this->browsingArea = request()->route() ? strstr(request()->route()->getName(), '.', true) : 'frontend';
     }
 
     /**
