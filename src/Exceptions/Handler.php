@@ -66,6 +66,11 @@ class Handler extends ExceptionHandler
                 'withInput' => $request->all(),
                 'withErrors' => $exception->errors(),
             ], 400);
+        } elseif ($exception instanceof GenericException) {
+            return intend([
+                'url' => route('frontend.home'),
+                'with' => ['warning' => $exception->getMessage()],
+            ], 422);
         } elseif ($exception instanceof InvalidPersistenceException) {
             return intend([
                 'url' => route('frontend.auth.login'),
