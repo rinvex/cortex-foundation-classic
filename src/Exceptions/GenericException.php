@@ -37,5 +37,4 @@ class GenericException extends Exception
     {
         return $this->redirection;
     }
-
 }
