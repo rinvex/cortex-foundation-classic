@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Http\Middleware;
 
-use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncrypter;
+use Illuminate\Cookie\Middleware\EncryptCookies as Middleware;
 
-class EncryptCookies extends BaseEncrypter
+class EncryptCookies extends Middleware
 {
     /**
      * The names of the cookies that should not be encrypted.

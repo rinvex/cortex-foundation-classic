@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Http\Middleware;
 
 use Closure;
-use Krucas\Notification\Middleware\NotificationMiddleware as BaseNotificationMiddleware;
+use Krucas\Notification\Middleware\NotificationMiddleware as Middleware;
 
-class NotificationMiddleware extends BaseNotificationMiddleware
+class NotificationMiddleware extends Middleware
 {
     /**
      * Handle an incoming request.

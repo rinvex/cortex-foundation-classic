@@ -29,7 +29,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Cortex\Foundation\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \Fideloper\Proxy\TrustProxies::class,
+        \Cortex\Foundation\Http\Middleware\TrustProxies::class,
     ];
 
     /**

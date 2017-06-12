@@ -7,11 +7,9 @@ namespace Cortex\Foundation\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Session\TokenMismatchException;
-use Illuminate\Validation\ValidationException;
 use Rinvex\Fort\Exceptions\AuthorizationException;
 use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Watson\Validating\ValidationException as WatsonValidationException;
 
@@ -22,14 +20,7 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
-    protected $dontReport = [
-        AuthenticationException::class,
-        AuthorizationException::class,
-        HttpException::class,
-        ModelNotFoundException::class,
-        TokenMismatchException::class,
-        ValidationException::class,
-    ];
+    protected $dontReport = [];
 
     /**
      * Report or log an exception.
