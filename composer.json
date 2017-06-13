@@ -48,7 +48,6 @@
         "watson/validating": "^3.0.1",
         "rinvex/taggable": "dev-develop",
         "spatie/laravel-fractal": "^3.2",
-        "rinvex/modulable": "dev-develop",
         "rinvex/cacheable": "dev-develop",
         "rinvex/composable": "dev-develop",
         "laravelcollective/html": "~5.5.0",
