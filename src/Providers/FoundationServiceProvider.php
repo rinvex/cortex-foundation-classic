@@ -130,10 +130,10 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerDevelopmentProviders()
     {
-        if ($this->app->environment() !== 'production') {
+        if ($this->app->isLocal()) {
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
             $this->app->register(\Clockwork\Support\Laravel\ClockworkServiceProvider::class);
-            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+            //$this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
     }
 

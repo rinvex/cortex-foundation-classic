@@ -26,18 +26,22 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'CacheClear' => 'command.cache.clear',
         'CacheForget' => 'command.cache.forget',
         'ClearCompiled' => 'command.clear-compiled',
+        //'ClearResets' => 'command.auth.resets.clear',
         'ConfigCache' => 'command.config.cache',
         'ConfigClear' => 'command.config.clear',
         'Down' => 'command.down',
         'Environment' => 'command.environment',
         'KeyGenerate' => 'command.key.generate',
         'Migrate' => 'command.migrate',
+        //'MigrateFresh' => 'command.migrate.fresh',
         'MigrateInstall' => 'command.migrate.install',
         'MigrateRefresh' => 'command.migrate.refresh',
         'MigrateReset' => 'command.migrate.reset',
         'MigrateRollback' => 'command.migrate.rollback',
         'MigrateStatus' => 'command.migrate.status',
         'Optimize' => 'command.optimize',
+        'PackageDiscover' => 'command.package.discover',
+        'Preset' => 'command.preset',
         'QueueFailed' => 'command.queue.failed',
         'QueueFlush' => 'command.queue.flush',
         'QueueForget' => 'command.queue.forget',
@@ -62,11 +66,31 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      * @var array
      */
     protected $devCommands = [
+        //'AppName' => 'command.app.name',
+        //'AuthMake' => 'command.auth.make',
         'CacheTable' => 'command.cache.table',
+        //'ConsoleMake' => 'command.console.make',
+        //'ControllerMake' => 'command.controller.make',
+        //'EventGenerate' => 'command.event.generate',
+        //'EventMake' => 'command.event.make',
+        //'FactoryMake' => 'command.factory.make',
+        //'JobMake' => 'command.job.make',
+        //'ListenerMake' => 'command.listener.make',
+        //'MailMake' => 'command.mail.make',
+        //'MiddlewareMake' => 'command.middleware.make',
+        //'MigrateMake' => 'command.migrate.make',
+        //'ModelMake' => 'command.model.make',
+        //'NotificationMake' => 'command.notification.make',
         'NotificationTable' => 'command.notification.table',
+        //'PolicyMake' => 'command.policy.make',
+        //'ProviderMake' => 'command.provider.make',
         'QueueFailedTable' => 'command.queue.failed-table',
         'QueueTable' => 'command.queue.table',
+        //'RequestMake' => 'command.request.make',
+        //'SeederMake' => 'command.seeder.make',
+        //'SessionTable' => 'command.session.table',
         'Serve' => 'command.serve',
+        //'TestMake' => 'command.test.make',
         'VendorPublish' => 'command.vendor.publish',
     ];
 
@@ -79,7 +103,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->registerCommands($this->commands);
 
-        if ($this->app->environment() !== 'production') {
+        if (! $this->app->isLocal()) {
             $this->registerCommands($this->devCommands);
         }
     }
