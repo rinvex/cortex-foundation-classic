@@ -50,7 +50,7 @@
         "spatie/laravel-fractal": "^3.2",
         "rinvex/cacheable": "dev-develop",
         "rinvex/composable": "dev-develop",
-        "laravelcollective/html": "~5.5.0",
+        "laravelcollective/html": "~5.4.0|~5.5.0",
         "barryvdh/laravel-snappy": "^0.3.1",
         "rinvex/attributable": "dev-develop",
         "edvinaskrucas/notification": "^5.1",
