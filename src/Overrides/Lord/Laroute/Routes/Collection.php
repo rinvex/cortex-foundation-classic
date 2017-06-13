@@ -21,6 +21,7 @@ class Collection extends BaseCollection
     protected function getRouteInformation(Route $route, $filter, $namespace)
     {
         $uri = $route->uri();
+        $host = $route->domain();
         $name = $route->getName();
         $laroute = array_get($route->getAction(), 'laroute', null);
 
@@ -37,6 +38,6 @@ class Collection extends BaseCollection
                 break;
         }
 
-        return compact('uri', 'name');
+        return compact('host', 'uri', 'name');
     }
 }
