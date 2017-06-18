@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Cortex\Foundation\Overrides\Illuminate\Foundation;
 
 use Illuminate\Filesystem\Filesystem;
@@ -18,7 +20,7 @@ class Application extends BaseApplication
     {
         $providers = $this->make(PackageManifest::class)->providers();
 
-        (new ProviderRepository($this, new Filesystem, $this->getCachedServicesPath()))
+        (new ProviderRepository($this, new Filesystem(), $this->getCachedServicesPath()))
                     ->load(array_merge($this->config['app.providers'], $providers));
     }
 }
