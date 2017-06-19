@@ -8,7 +8,6 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Session\TokenMismatchException;
 use Rinvex\Fort\Exceptions\AuthorizationException;
-use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Watson\Validating\ValidationException as WatsonValidationException;
@@ -50,7 +49,7 @@ class Handler extends ExceptionHandler
             return intend([
                 'back' => true,
                 'with' => ['warning' => trans('cortex/foundation::messages.token_mismatch')],
-            ], 400);
+            ], 419);
         } elseif ($exception instanceof WatsonValidationException) {
             return intend([
                 'back' => true,
@@ -62,11 +61,6 @@ class Handler extends ExceptionHandler
                 'url' => $exception->getRedirection() ?? route('frontend.home'),
                 'with' => ['warning' => $exception->getMessage()],
             ], 422);
-        } elseif ($exception instanceof InvalidPersistenceException) {
-            return intend([
-                'url' => route('frontend.auth.login'),
-                'with' => ['warning' => trans('cortex/foundation::messages.session_expired')],
-            ], 401);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
                 'url' => '/',
