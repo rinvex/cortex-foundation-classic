@@ -9,7 +9,6 @@ return [
     'delete_confirmation' => 'Delete Confirmation',
     'delete_confirmation_body' => 'Are you sure you want to delete <strong class="item-name"></strong> :type?',
     'session_required' => 'You must login first!',
-    'session_expired' => 'Session expired, please login again!',
-    'token_mismatch' => 'Token mismatch! Reload previous page, then try again.',
+    'token_mismatch' => 'The page has expired due to inactivity. Please refresh and try again.',
 
 ];
