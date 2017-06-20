@@ -9,6 +9,13 @@ use Exception;
 class GenericException extends Exception
 {
     /**
+     * The exception inputs.
+     *
+     * @var array
+     */
+    protected $inputs;
+
+    /**
      * The exception redirection.
      *
      * @var string
@@ -21,10 +28,11 @@ class GenericException extends Exception
      * @param string $message
      * @param array  $redirection
      */
-    public function __construct($message = 'This action is unauthorized.', $redirection = null)
+    public function __construct($message = 'This action is unauthorized.', $redirection = null, array $inputs = null)
     {
         parent::__construct($message);
 
+        $this->inputs = $inputs;
         $this->redirection = $redirection;
     }
 
@@ -36,5 +44,15 @@ class GenericException extends Exception
     final public function getRedirection()
     {
         return $this->redirection;
+    }
+
+    /**
+     * Gets the Exception inputs.
+     *
+     * @return array
+     */
+    final public function getInputs()
+    {
+        return $this->inputs;
     }
 }

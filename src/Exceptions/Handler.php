@@ -59,6 +59,7 @@ class Handler extends ExceptionHandler
         } elseif ($exception instanceof GenericException) {
             return intend([
                 'url' => $exception->getRedirection() ?? route('frontend.home'),
+                'withInput' => $exception->getInputs() ?? $request->all(),
                 'with' => ['warning' => $exception->getMessage()],
             ], 422);
         } elseif ($exception instanceof AuthorizationException) {
