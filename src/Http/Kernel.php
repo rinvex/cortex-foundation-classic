@@ -33,6 +33,7 @@ class Kernel extends HttpKernel
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Cortex\Foundation\Http\Middleware\NotificationMiddleware::class,
+            \Rinvex\Fort\Http\Middleware\UpdateLastActivity::class,
             \Cortex\Foundation\Http\Middleware\Clockwork::class,
             \Rinvex\Fort\Http\Middleware\Abilities::class,
         ],
