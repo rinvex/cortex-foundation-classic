@@ -87,7 +87,8 @@ abstract class AbstractDataTable extends DataTable
             'keys' => true,
             'autoWidth' => false,
             'dom' => "<'row'<'col-sm-6'B><'col-sm-6'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>",
-            'buttons' => ['create', 'print', 'reset', 'reload', 'export',
+            'buttons' => [
+                ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.new')], 'print', 'reset', 'reload', 'export',
                 ['extend' => 'colvis', 'text' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.columns').' <span class="caret"/>'],
             ],
         ];
