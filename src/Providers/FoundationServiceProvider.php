@@ -10,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Http\Middleware\TrailingSlashEnforce;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
+use Cortex\Foundation\Overrides\Yajra\Datatables\Html\Builder;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
 use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
@@ -56,6 +57,11 @@ class FoundationServiceProvider extends ServiceProvider
         $this->overrideUrlGenerator();
         $this->overrideRedirector();
         $this->bindBladeCompiler();
+
+        // Register custom datatables html builder
+        $this->app->singleton('cortex.foundation.datatables.html', function () {
+            return $this->app->make(Builder::class);
+        });
 
         // Register sidebar menus
         $this->app->singleton('menus.sidebar', function ($app) {

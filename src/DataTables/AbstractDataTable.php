@@ -55,6 +55,16 @@ abstract class AbstractDataTable extends DataTable
     }
 
     /**
+     * Get Datatables Html Builder instance.
+     *
+     * @return \Yajra\Datatables\Html\Builder
+     */
+    public function builder()
+    {
+        return $this->htmlBuilder ?: $this->htmlBuilder = app('cortex.foundation.datatables.html');
+    }
+
+    /**
      * Optional method if you want to use html builder.
      *
      * @return \Yajra\Datatables\Html\Builder
