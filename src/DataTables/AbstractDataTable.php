@@ -101,7 +101,7 @@ abstract class AbstractDataTable extends DataTable
      */
     protected function filename()
     {
-        $resource = str_plural(strtolower(array_last(explode('\\', $this->model))));
+        $resource = str_plural(mb_strtolower(array_last(explode('\\', $this->model))));
 
         return $resource.'-export_'.date('Y-m-d').'_'.time();
     }
