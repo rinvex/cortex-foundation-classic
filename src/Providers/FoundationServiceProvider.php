@@ -239,5 +239,11 @@ class FoundationServiceProvider extends ServiceProvider
     {
         // Publish config
         $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('cortex.foundation.php')], 'config');
+
+        // Publish language phrases
+        $this->publishes([realpath(__DIR__.'/../../resources/lang') => resource_path('lang/vendor/cortex/foundation')], 'lang');
+
+        // Publish views
+        $this->publishes([realpath(__DIR__.'/../../resources/views') => resource_path('views/vendor/cortex/foundation')], 'views');
     }
 }
