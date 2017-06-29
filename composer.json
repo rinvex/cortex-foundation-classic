@@ -64,6 +64,9 @@
         "yajra/laravel-datatables-oracle": "^7.8.0"
     },
     "autoload": {
+        "classmap": [
+            "database"
+        ],
         "psr-4": {
             "Cortex\\Foundation\\": "src/"
         }

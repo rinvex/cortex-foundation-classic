@@ -35,6 +35,9 @@ class FoundationServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
 
         if ($this->app->runningInConsole()) {
+            // Publish Resources
+            $this->publishResources();
+
             // Load migrations
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         }
@@ -57,6 +60,9 @@ class FoundationServiceProvider extends ServiceProvider
         $this->overrideUrlGenerator();
         $this->overrideRedirector();
         $this->bindBladeCompiler();
+
+        // Merge config
+        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'cortex.foundation');
 
         // Register custom datatables html builder
         $this->app->singleton('cortex.foundation.datatables.html', function () {
@@ -222,5 +228,16 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->singleton('laravellocalization', function () {
             return new LaravelLocalization();
         });
+    }
+
+    /**
+     * Publish resources.
+     *
+     * @return void
+     */
+    protected function publishResources()
+    {
+        // Publish config
+        $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('cortex.foundation.php')], 'config');
     }
 }
