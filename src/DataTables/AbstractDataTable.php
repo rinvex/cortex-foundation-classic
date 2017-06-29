@@ -72,6 +72,7 @@ abstract class AbstractDataTable extends DataTable
     public function html()
     {
         return $this->builder()
+                    ->minifiedAjax()
                     ->columns($this->getColumns())
                     ->parameters($this->getParameters());
     }
