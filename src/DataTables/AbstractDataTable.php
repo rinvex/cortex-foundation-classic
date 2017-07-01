@@ -81,8 +81,8 @@ abstract class AbstractDataTable extends DataTable
      * Process dataTables needed render output.
      *
      * @param string $view
-     * @param array $data
-     * @param array $mergeData
+     * @param array  $data
+     * @param array  $mergeData
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
@@ -92,8 +92,8 @@ abstract class AbstractDataTable extends DataTable
             return $this->ajax();
         }
 
-        if ($action = $this->request()->get('action') AND in_array($action, $this->actions)) {
-            if ($action == 'print') {
+        if ($action = $this->request()->get('action') and in_array($action, $this->actions)) {
+            if ($action === 'print') {
                 return $this->printPreview();
             }
 
