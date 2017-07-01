@@ -92,7 +92,7 @@ abstract class AbstractDataTable extends DataTable
             return $this->ajax();
         }
 
-        if ($action = $this->request()->get('action') and in_array($action, $this->actions)) {
+        if (($action = $this->request()->get('action')) && in_array($action, $this->actions)) {
             if ($action === 'print') {
                 return $this->printPreview();
             }
