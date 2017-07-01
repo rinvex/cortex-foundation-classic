@@ -78,6 +78,32 @@ abstract class AbstractDataTable extends DataTable
     }
 
     /**
+     * Process dataTables needed render output.
+     *
+     * @param string $view
+     * @param array $data
+     * @param array $mergeData
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
+    public function render($view, $data = [], $mergeData = [])
+    {
+        if ($this->request()->ajax() && $this->request()->wantsJson()) {
+            return $this->ajax();
+        }
+
+        if ($action = $this->request()->get('action') AND in_array($action, $this->actions)) {
+            if ($action == 'print') {
+                return $this->printPreview();
+            }
+
+            return call_user_func_array([$this, $action], []);
+        }
+
+        return $this->viewFactory->make($view, array_merge($this->attributes, $data), $mergeData)->with('dataTable', $this->getHtmlBuilder());
+    }
+
+    /**
      * Get parameters.
      *
      * @return array

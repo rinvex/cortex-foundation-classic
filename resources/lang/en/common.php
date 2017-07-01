@@ -13,4 +13,14 @@ return [
     'updated_at' => 'Updated At',
     'toggle_navigation' => 'Toggle navigation',
 
+    'logs' => 'Logs',
+    'subject' => 'Subject',
+    'log_name' => 'Log Name',
+    'activities' => 'Activities',
+    'description' => 'Description',
+    'properties' => 'Properties',
+    'details' => 'Details',
+    'causer' => 'Causer',
+    'date' => 'Date',
+
 ];
