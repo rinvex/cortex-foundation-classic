@@ -66,7 +66,6 @@ class Log extends Activity
             'subject_type' => 'nullable|string|max:150',
             'causer_id' => 'nullable|integer',
             'causer_type' => 'nullable|string|max:150',
-            'properties' => 'nullable|string',
         ]);
     }
 }
