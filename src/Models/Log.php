@@ -61,7 +61,7 @@ class Log extends Activity
         $this->setTable(config('cortex.foundation.tables.activity_log'));
         $this->setRules([
             'log_name' => 'required|string|max:150',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:10000',
             'subject_id' => 'nullable|integer',
             'subject_type' => 'nullable|string|max:150',
             'causer_id' => 'nullable|integer',
