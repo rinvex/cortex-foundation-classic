@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Exceptions;
 
 use Exception;
-use Rinvex\Fort\Exceptions\GenericException;
 use Illuminate\Auth\AuthenticationException;
+use Rinvex\Fort\Exceptions\GenericException;
 use Illuminate\Session\TokenMismatchException;
 use Rinvex\Fort\Exceptions\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
