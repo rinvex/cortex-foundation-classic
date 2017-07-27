@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
-use Illuminate\Routing\Router;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -23,7 +22,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Router $router)
+    public function boot()
     {
         // Early set application locale globaly
         $this->app['laravellocalization']->setLocale();
