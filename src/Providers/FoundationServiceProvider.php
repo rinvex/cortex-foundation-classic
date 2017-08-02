@@ -27,19 +27,13 @@ class FoundationServiceProvider extends ServiceProvider
         // Early set application locale globaly
         $this->app['laravellocalization']->setLocale();
 
-        // Load views
+        // Load resources
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
-
-        // Load language phrases
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
+        ! $this->app->runningInConsole() || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
-        if ($this->app->runningInConsole()) {
-            // Publish Resources
-            $this->publishResources();
-
-            // Load migrations
-            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
-        }
+        // Publish Resources
+        ! $this->app->runningInConsole() || $this->publishResources();
     }
 
     /**
@@ -236,13 +230,8 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function publishResources()
     {
-        // Publish config
         $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('cortex.foundation.php')], 'config');
-
-        // Publish language phrases
         $this->publishes([realpath(__DIR__.'/../../resources/lang') => resource_path('lang/vendor/cortex/foundation')], 'lang');
-
-        // Publish views
         $this->publishes([realpath(__DIR__.'/../../resources/views') => resource_path('views/vendor/cortex/foundation')], 'views');
     }
 }
