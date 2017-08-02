@@ -34,6 +34,15 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Publish Resources
         ! $this->app->runningInConsole() || $this->publishResources();
+
+        $this->app->booted(function () {
+            if ($this->app->routesAreCached()) {
+                require $this->app->getCachedRoutesPath();
+            } else {
+                $this->app['router']->getRoutes()->refreshNameLookups();
+                $this->app['router']->getRoutes()->refreshActionLookups();
+            }
+        });
     }
 
     /**
