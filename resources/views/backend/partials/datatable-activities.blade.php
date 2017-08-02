@@ -10,14 +10,10 @@
 @section('content')
 
     <div class="content-wrapper">
-        <!-- Breadcrumbs -->
         <section class="content-header">
             <h1>{{ $resource->slug ?? $resource->username }}</h1>
-            <ol class="breadcrumb">
-                <li><a href="{{ route('backend.home') }}"><i class="fa fa-dashboard"></i> {{ trans('cortex/foundation::common.backend') }}</a></li>
-                <li><a href="{{ route("backend.{$type}.index") }}">{{ $phrase }}</a></li>
-                <li class="active">{{ $resource->slug ?? $resource->username }}</li>
-            </ol>
+            <!-- Breadcrumbs -->
+            {{ Breadcrumbs::render() }}
         </section>
 
         <!-- Main content -->
