@@ -104,7 +104,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->registerCommands($this->commands);
 
-        if ($this->app->isLocal()) {
+        if ($this->app->environment('local')) {
             $this->registerCommands($this->devCommands);
         }
     }

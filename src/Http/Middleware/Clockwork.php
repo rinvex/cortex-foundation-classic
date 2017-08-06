@@ -39,7 +39,7 @@ class Clockwork
      */
     public function handle($request, Closure $next)
     {
-        if (app()->isLocal()) {
+        if (app()->environment('local')) {
             $this->app['config']->set('clockwork::config.middleware', true);
 
             try {
