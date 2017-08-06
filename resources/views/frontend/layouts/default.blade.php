@@ -9,6 +9,7 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/vendor.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/theme.css') }}" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @stack('styles')
 
