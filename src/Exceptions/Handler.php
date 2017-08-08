@@ -10,6 +10,7 @@ use Rinvex\Fort\Exceptions\GenericException;
 use Illuminate\Session\TokenMismatchException;
 use Rinvex\Fort\Exceptions\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Watson\Validating\ValidationException as WatsonValidationException;
 
@@ -80,6 +81,24 @@ class Handler extends ExceptionHandler
         }
 
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Render the given HttpException.
+     *
+     * @param  \Symfony\Component\HttpKernel\Exception\HttpException $e
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderHttpException(HttpException $e)
+    {
+        $status = $e->getStatusCode();
+
+        if (view()->exists("cortex/foundation::common.errors.{$status}")) {
+            return response()->view("cortex/foundation::common.errors.{$status}", ['exception' => $e], $status, $e->getHeaders());
+        } else {
+            return parent::renderHttpException($e);
+        }
     }
 
     /**
