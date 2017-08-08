@@ -12,9 +12,7 @@ class Kernel extends ConsoleKernel
     /**
      * {@inheritdoc}
      */
-    protected $commands = [
-        // Commands\Inspire::class,
-    ];
+    protected $commands = [];
 
     /**
      * Define the application's command schedule.
