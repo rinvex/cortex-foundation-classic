@@ -86,7 +86,7 @@ class Handler extends ExceptionHandler
     /**
      * Render the given HttpException.
      *
-     * @param  \Symfony\Component\HttpKernel\Exception\HttpException $e
+     * @param \Symfony\Component\HttpKernel\Exception\HttpException $e
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

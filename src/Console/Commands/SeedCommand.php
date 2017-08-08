@@ -32,7 +32,7 @@ class SeedCommand extends Command
     public function handle()
     {
         collect(Artisan::all())->filter(function ($command) {
-            return strpos($command->getName(), 'cortex:seed:') !== false;
+            return mb_strpos($command->getName(), 'cortex:seed:') !== false;
         })->each->run(new ArrayInput([]), $this->output);
     }
 }
