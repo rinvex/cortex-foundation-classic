@@ -59,7 +59,7 @@ class Kernel extends ConsoleKernel
         foreach ((new Finder())->in($paths)->files() as $command) {
             $command = str_replace(' ', '\\', ucwords(str_replace(['.php', 'src/', '/'], ['', '', ' '], Str::after($command->getPathname(), app_path().'/'))));
 
-            if (is_subclass_of($command, Command::class) && method_exists($command, 'handle')) {
+            if (is_subclass_of($command, Command::class) && ! property_exists($command, 'webConsole')) {
                 Artisan::starting(function (Artisan $artisan) use ($command) {
                     $artisan->resolve($command);
                 });
