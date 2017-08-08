@@ -56,7 +56,7 @@ class Kernel extends ConsoleKernel
             return;
         }
 
-        foreach ((new Finder)->in($paths)->files() as $command) {
+        foreach ((new Finder())->in($paths)->files() as $command) {
             $command = str_replace(' ', '\\', ucwords(str_replace(['.php', 'src/', '/'], ['', '', ' '], Str::after($command->getPathname(), app_path().'/'))));
 
             if (is_subclass_of($command, Command::class) && method_exists($command, 'handle')) {
