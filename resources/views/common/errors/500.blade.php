@@ -1,4 +1,4 @@
-@extends('errors::layout')
+@extends('cortex/foundation::common.errors.layout')
 
 @section('title', 'Error')
 
