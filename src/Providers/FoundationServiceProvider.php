@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Cortex\Foundation\Models\Menu;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -43,6 +44,8 @@ class FoundationServiceProvider extends ServiceProvider
                 $this->app['router']->getRoutes()->refreshActionLookups();
             }
         });
+
+        $this->bootMenus();
     }
 
     /**
@@ -71,18 +74,8 @@ class FoundationServiceProvider extends ServiceProvider
             return $this->app->make(Builder::class);
         });
 
-        // Register sidebar menus
-        $this->app->singleton('menus.sidebar', function ($app) {
-            return collect();
-        });
-
-        // Register topbar menus
-        $this->app->singleton('menus.topbar', function ($app) {
-            return collect();
-        });
-
-        // Add required middleware to the stack
         $this->prependMiddleware();
+        $this->registerMenus();
     }
 
     /**
@@ -242,5 +235,102 @@ class FoundationServiceProvider extends ServiceProvider
         $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('cortex.foundation.php')], 'config');
         $this->publishes([realpath(__DIR__.'/../../resources/lang') => resource_path('lang/vendor/cortex/foundation')], 'lang');
         $this->publishes([realpath(__DIR__.'/../../resources/views') => resource_path('views/vendor/cortex/foundation')], 'views');
+    }
+
+    /**
+     * Register menus.
+     *
+     * @return void
+     */
+    protected function registerMenus()
+    {
+        $this->app->singleton(Menu::class, function () {
+            return Menu::new();
+        });
+
+        $this->app->alias(Menu::class, 'menu');
+
+        $this->registerBackendMenus();
+        $this->registerUserareaMenus();
+        $this->registerFrontendMenus();
+    }
+
+    /**
+     * Register backend menus.
+     *
+     * @return void
+     */
+    protected function registerBackendMenus()
+    {
+        $app = $this->app;
+
+        Menu::macro('backendSidebar', function ($section = null) use ($app) {
+            $app->bound('menu.backend.sidebar') || $app->singleton('menu.backend.sidebar', function () {
+                return Menu::new();
+            });
+
+            return $app['menu.backend.sidebar']->setSection($section);
+        });
+
+        Menu::macro('backendTopbar', function ($section = null) use ($app) {
+            $app->bound('menu.backend.topbar') || $app->singleton('menu.backend.topbar', function () {
+                return Menu::new();
+            });
+
+            return $app['menu.backend.topbar']->setSection($section);
+        });
+    }
+
+    /**
+     * Register userarea menus.
+     *
+     * @return void
+     */
+    protected function registerUserareaMenus()
+    {
+        $app = $this->app;
+
+        Menu::macro('userareaTopbar', function ($section = null) use ($app) {
+            $app->bound('menu.userarea.topbar') || $app->singleton('menu.userarea.topbar', function () {
+                return Menu::new();
+            });
+
+            return $app['menu.userarea.topbar']->setSection($section);
+        });
+    }
+
+    /**
+     * Register frontend menus.
+     *
+     * @return void
+     */
+    protected function registerFrontendMenus()
+    {
+        $app = $this->app;
+
+        Menu::macro('frontendTopbar', function ($section = null) use ($app) {
+            $app->bound('menu.frontend.topbar') || $app->singleton('menu.frontend.topbar', function () {
+                return Menu::new();
+            });
+
+            return $app['menu.frontend.topbar']->setSection($section);
+        });
+    }
+
+    /**
+     * Boot menus.
+     *
+     * @return void
+     */
+    protected function bootMenus()
+    {
+        // Maybe this is NOT the best location to callback menus `afterResolving`,
+        // but we need to asure that session has been resolved, user object
+        // has been populated, and gate abilities are loaded and ready.
+        $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
+            foreach (glob(app_path('*/*/routes/menus.php')) as $path) {
+                require $path;
+            }
+        });
     }
 }

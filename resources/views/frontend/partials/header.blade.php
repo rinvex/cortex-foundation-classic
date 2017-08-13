@@ -10,9 +10,7 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    {!! app('menus.topbar')->implode('') !!}
-                </ul>
+                {!! Menu::frontendTopbar()->addClass('nav navbar-nav navbar-right')->setActiveFromRequest() !!}
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>

@@ -17,9 +17,7 @@
         </a>
 
         <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
-                {!! app('menus.topbar')->implode('') !!}
-            </ul>
+            {!! Menu::backendTopbar()->addClass('nav navbar-nav')->setActiveFromRequest() !!}
         </div>
     </nav>
 </header>
