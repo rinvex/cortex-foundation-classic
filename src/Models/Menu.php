@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Models;
 
-use Illuminate\Support\Arr;
 use Spatie\Menu\Item;
 use Spatie\Menu\Html\Tag;
+use Illuminate\Support\Arr;
 use Spatie\Menu\Laravel\Html;
 use Spatie\Menu\Laravel\Link;
 use Spatie\Menu\Laravel\View;
@@ -454,10 +454,10 @@ class Menu extends BaseMenu
         $tag = new Tag('ul', $this->htmlAttributes);
 
         $contents = array_map([$this, 'renderItem'], $items);
-//dd($this->count());
-//        if ($this->count() > 0 && $this->count() < 8) {
-//            dd($this->items);
-//        }
+        //dd($this->count());
+        //        if ($this->count() > 0 && $this->count() < 8) {
+        //            dd($this->items);
+        //        }
         $menu = $this->prepend.$tag->withContents($contents).$this->append;
 
         if (! empty($this->wrap)) {
@@ -477,12 +477,16 @@ class Menu extends BaseMenu
         return count(array_collapse($this->items));
     }
 
-    protected function ksortRecursive(&$array, $sort_flags = SORT_REGULAR) {
-        if (!is_array($array)) return false;
+    protected function ksortRecursive(&$array, $sort_flags = SORT_REGULAR)
+    {
+        if (! is_array($array)) {
+            return false;
+        }
         ksort($array, $sort_flags);
         foreach ($array as &$arr) {
             $this->ksortRecursive($arr, $sort_flags);
         }
+
         return true;
     }
 }
