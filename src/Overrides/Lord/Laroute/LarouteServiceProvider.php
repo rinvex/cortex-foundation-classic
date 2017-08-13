@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Lord\Laroute;
 
-use Lord\Laroute\Console\Commands\LarouteGeneratorCommand;
+use Cortex\Foundation\Console\LarouteGeneratorCommand;
 use Cortex\Foundation\Overrides\Lord\Laroute\Routes\Collection;
 use Lord\Laroute\LarouteServiceProvider as BaseLarouteServiceProvider;
 
