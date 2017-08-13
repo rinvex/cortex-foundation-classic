@@ -8,7 +8,7 @@ Route::group(['domain' => domain()], function () {
          ->middleware(['web', 'nohttpcache', 'can:access-dashboard'])
          ->prefix(config('rinvex.cortex.route.locale_prefix') ? '{locale}/backend' : 'backend')->group(function () {
 
-         // Dashboard route
+            // Dashboard route
              Route::get('/')->name('home')->uses('HomeController@home');
          });
 });
