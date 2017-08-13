@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Input\ArrayInput;
 
-class SeedCommand extends Command
+class CoreSeedCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -22,7 +22,7 @@ class SeedCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Seed default Cortex data.';
+    protected $description = 'Seed Default Cortex data.';
 
     /**
      * Execute the console command.
