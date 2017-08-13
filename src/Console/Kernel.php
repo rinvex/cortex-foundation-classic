@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(glob(app_path('*/*/src/Console/Commands')));
+        $this->load(glob(app_path('*/*/src/Console/Commands'), GLOB_ONLYDIR));
     }
 
     /**
