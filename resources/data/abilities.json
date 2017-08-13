@@ -1,0 +1,8 @@
+[
+    {
+        "action": "access",
+        "resource": "dashboard",
+        "policy": "Cortex\\Foundation\\Policies\\DashboardPolicy@access",
+        "name": "Access Dashboard"
+    }
+]
