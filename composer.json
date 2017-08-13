@@ -41,6 +41,7 @@
     ],
     "require": {
         "php": "^7.0.0",
+        "cortex/fort": "dev-develop",
         "rinvex/fort": "dev-develop",
         "laravel/framework": "~5.5.0",
         "watson/validating": "^3.0.1",
