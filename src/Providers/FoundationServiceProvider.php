@@ -8,6 +8,11 @@ use Cortex\Foundation\Models\Menu;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
+use Cortex\Foundation\Console\MigrateMakeCommand;
+use Cortex\Foundation\Console\Commands\SeedCommand;
+use Cortex\Foundation\Console\Commands\MigrateCommand;
+use Cortex\Foundation\Console\Commands\CoreSeedCommand;
+use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
 use Cortex\Foundation\Http\Middleware\TrailingSlashEnforce;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
@@ -33,6 +38,13 @@ class FoundationServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
         ! $this->app->runningInConsole() || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        $this->commands([
+            SeedCommand::class,
+            MigrateCommand::class,
+            CoreSeedCommand::class,
+            CoreMigrateCommand::class,
+            MigrateMakeCommand::class,
+        ]);
 
         // Publish Resources
         ! $this->app->runningInConsole() || $this->publishResources();
