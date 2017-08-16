@@ -45,8 +45,6 @@ class FoundationServiceProvider extends ServiceProvider
                 $this->app['router']->getRoutes()->refreshActionLookups();
             }
         });
-
-        $this->bootMenus();
     }
 
     /**
@@ -315,23 +313,6 @@ class FoundationServiceProvider extends ServiceProvider
             });
 
             return $app['menu.frontend.topbar']->setSection($section);
-        });
-    }
-
-    /**
-     * Boot menus.
-     *
-     * @return void
-     */
-    protected function bootMenus()
-    {
-        // Maybe this is NOT the best location to callback menus `afterResolving`,
-        // but we need to asure that session has been resolved, user object
-        // has been populated, and gate abilities are loaded and ready.
-        $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
-            foreach (glob(app_path('*/*/routes/menus.php')) as $path) {
-                require $path;
-            }
         });
     }
 }
