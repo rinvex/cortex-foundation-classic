@@ -42,7 +42,6 @@
     "require": {
         "php": "^7.0.0",
         "barryvdh/laravel-snappy": "^0.3.0",
-        "cortex/fort": "dev-develop",
         "davejamesmiller/laravel-breadcrumbs": "4.x-dev",
         "edvinaskrucas/notification": "^5.2.0",
         "fideloper/proxy": "^3.3.0",
