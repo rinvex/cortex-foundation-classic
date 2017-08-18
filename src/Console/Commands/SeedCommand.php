@@ -34,6 +34,8 @@ class SeedCommand extends Command
      */
     public function handle()
     {
+        $this->warn('Seed cortex/foundation:');
+
         if ($this->ensureExistingFortTables()) {
             $this->seedAbilities(realpath(__DIR__.'/../../../resources/data/abilities.json'));
         }
