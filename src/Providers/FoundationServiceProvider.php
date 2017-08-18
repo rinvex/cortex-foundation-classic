@@ -8,7 +8,6 @@ use Cortex\Foundation\Models\Menu;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Cortex\Foundation\Console\MigrateMakeCommand;
 use Cortex\Foundation\Console\Commands\SeedCommand;
 use Cortex\Foundation\Console\Commands\MigrateCommand;
 use Cortex\Foundation\Console\Commands\CoreSeedCommand;
@@ -24,40 +23,16 @@ use Cortex\Foundation\Overrides\Mcamara\LaravelLocalization\LaravelLocalization;
 class FoundationServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
+     * The commands to be registered.
      *
-     * @return void
+     * @var array
      */
-    public function boot()
-    {
-        // Early set application locale globaly
-        $this->app['laravellocalization']->setLocale();
-
-        // Load resources
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
-        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
-        ! $this->app->runningInConsole() || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
-        $this->commands([
-            SeedCommand::class,
-            MigrateCommand::class,
-            CoreSeedCommand::class,
-            CoreMigrateCommand::class,
-            MigrateMakeCommand::class,
-        ]);
-
-        // Publish Resources
-        ! $this->app->runningInConsole() || $this->publishResources();
-
-        $this->app->booted(function () {
-            if ($this->app->routesAreCached()) {
-                require $this->app->getCachedRoutesPath();
-            } else {
-                $this->app['router']->getRoutes()->refreshNameLookups();
-                $this->app['router']->getRoutes()->refreshActionLookups();
-            }
-        });
-    }
+    protected $commands = [
+        CoreMigrateCommand::class => 'command.cortex.foundation.coremigrate',
+        CoreSeedCommand::class => 'command.cortex.foundation.coreseed',
+        MigrateCommand::class => 'command.cortex.foundation.migrate',
+        SeedCommand::class => 'command.cortex.foundation.seed',
+    ];
 
     /**
      * Register any application services.
@@ -85,8 +60,46 @@ class FoundationServiceProvider extends ServiceProvider
             return $this->app->make(Builder::class);
         });
 
+        // Register artisan commands
+        foreach ($this->commands as $key => $value) {
+            $this->app->singleton($value, function ($app) use ($key) {
+                return new $key();
+            });
+        }
+
+        $this->commands(array_values($this->commands));
+
         $this->prependMiddleware();
         $this->registerMenus();
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // Early set application locale globaly
+        $this->app['laravellocalization']->setLocale();
+
+        // Load resources
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
+        ! $this->app->runningInConsole() || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+
+        // Publish Resources
+        ! $this->app->runningInConsole() || $this->publishResources();
+
+        $this->app->booted(function () {
+            if ($this->app->routesAreCached()) {
+                require $this->app->getCachedRoutesPath();
+            } else {
+                $this->app['router']->getRoutes()->refreshNameLookups();
+                $this->app['router']->getRoutes()->refreshActionLookups();
+            }
+        });
     }
 
     /**
