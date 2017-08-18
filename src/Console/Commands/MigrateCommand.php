@@ -30,6 +30,6 @@ class MigrateCommand extends Command
     public function handle()
     {
         $this->warn('Migrate cortex/foundation:');
-        $this->call('migrate', ['--step' => true, '--path' => 'app/cortex/foundation/database']);
+        $this->call('migrate', ['--step' => true, '--path' => 'app/cortex/foundation/database/migrations']);
     }
 }
