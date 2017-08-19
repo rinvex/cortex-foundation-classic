@@ -43,9 +43,9 @@ class LaravelLocalization extends BaseLaravelLocalization
         $url .= $user.(($user || $pass) ? "$pass@" : '');
 
         if (! empty($url)) {
-            $url .= isset($parsed_url['path']) ? '/'.ltrim($parsed_url['path'], '/').(config('rinvex.cortex.route.trailing_slash') ? '/' : '') : '';
+            $url .= isset($parsed_url['path']) ? '/'.ltrim($parsed_url['path'], '/').(config('cortex.foundation.route.trailing_slash') ? '/' : '') : '';
         } else {
-            $url .= isset($parsed_url['path']) ? $parsed_url['path'].(config('rinvex.cortex.route.trailing_slash') ? '/' : '') : '';
+            $url .= isset($parsed_url['path']) ? $parsed_url['path'].(config('cortex.foundation.route.trailing_slash') ? '/' : '') : '';
         }
 
         $url .= isset($parsed_url['query']) ? '?'.$parsed_url['query'] : '';

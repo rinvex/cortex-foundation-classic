@@ -20,7 +20,7 @@ class UrlGenerator extends BaseUrlGenerator
      */
     public function to($path, $extra = [], $secure = null)
     {
-        return config('rinvex.cortex.route.locale_prefix')
+        return config('cortex.foundation.route.locale_prefix')
             ? LaravelLocalization::localizeURL(parent::to($path, $extra, $secure))
             : parent::to($path, $extra, $secure);
     }
@@ -51,7 +51,7 @@ class UrlGenerator extends BaseUrlGenerator
     protected function toRoute($route, $parameters, $absolute)
     {
         // Bind {locale} route parameter
-        if (config('rinvex.cortex.route.locale_prefix') && ! isset($parameters['locale'])) {
+        if (config('cortex.foundation.route.locale_prefix') && ! isset($parameters['locale'])) {
             $parameters['locale'] = LaravelLocalization::getCurrentLocale();
         }
 

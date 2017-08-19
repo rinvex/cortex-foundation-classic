@@ -145,11 +145,11 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function prependMiddleware()
     {
-        if ($this->app['config']->get('rinvex.cortex.route.locale_prefix') && $this->app['config']->get('rinvex.cortex.route.locale_redirect')) {
+        if ($this->app['config']->get('cortex.foundation.route.locale_prefix') && $this->app['config']->get('cortex.foundation.route.locale_redirect')) {
             $this->app[Kernel::class]->prependMiddleware(LaravelLocalizationRedirectFilter::class);
         }
 
-        if ($this->app['config']->get('rinvex.cortex.route.trailing_slash')) {
+        if ($this->app['config']->get('cortex.foundation.route.trailing_slash')) {
             $this->app[Kernel::class]->prependMiddleware(TrailingSlashEnforce::class);
         }
     }
