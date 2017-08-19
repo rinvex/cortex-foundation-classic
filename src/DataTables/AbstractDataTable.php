@@ -36,7 +36,7 @@ abstract class AbstractDataTable extends DataTable
      */
     public function query()
     {
-        $query = ($this->model)::query();
+        $query = class_exists($this->model) ? ($this->model)::query() : app($this->model)->query();
 
         return $this->applyScopes($query);
     }
@@ -128,7 +128,7 @@ abstract class AbstractDataTable extends DataTable
      */
     protected function filename()
     {
-        $resource = str_plural(mb_strtolower(array_last(explode('\\', $this->model))));
+        $resource = str_plural(mb_strtolower(array_last(explode(class_exists($this->model) ? '\\' : '.', $this->model))));
 
         return $resource.'_export_'.date('Y-m-d').'_'.time();
     }
