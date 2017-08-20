@@ -471,7 +471,7 @@ class Menu extends BaseMenu
      */
     public function count(): int
     {
-        return count(array_collapse($this->items));
+        return count(Arr::isAssoc($this->items) ? array_collapse($this->items) : $this->items);
     }
 
     /**
