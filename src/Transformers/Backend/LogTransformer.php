@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Transformers\Backend;
 
 use Cortex\Foundation\Models\Log;
+use Illuminate\Support\Facades\Route;
 use League\Fractal\TransformerAbstract;
 
 class LogTransformer extends TransformerAbstract
@@ -14,17 +15,14 @@ class LogTransformer extends TransformerAbstract
      */
     public function transform(Log $log)
     {
-        $route = '';
+        $causer_route = '';
 
         if ($log->causer) {
             $class = explode('\\', get_class($log->causer));
-
-            switch ($causer = end($class)) {
-                case 'User':
-                    $route = route('backend.users.edit', ['user' => $log->causer]);
-            }
-
-            $causer = $causer.': '.$log->causer->username ?? $log->causer->name;
+            $singleResource = lower_case(end($class));
+            $pluralResource = str_plural(lower_case(end($class)));
+            $causer = ucfirst($singleResource).': '.($log->causer->username ?? $log->causer->name ?? $log->causer->title ?? $log->causer->slug);
+            $causer_route = Route::has("backend.{$pluralResource}.edit") ? route("backend.{$pluralResource}.edit", [$singleResource => $log->causer]) : null;
         } else {
             $causer = 'System';
         }
@@ -33,7 +31,7 @@ class LogTransformer extends TransformerAbstract
             'id' => (int) $log->id,
             'description' => (string) $log->description,
             'causer' => $causer,
-            'causer_route' => $route,
+            'causer_route' => $causer_route,
             'properties' => (object) $log->properties,
             'created_at' => (string) $log->created_at,
         ];
