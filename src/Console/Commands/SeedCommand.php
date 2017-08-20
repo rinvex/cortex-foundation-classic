@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Console\Command;
-use Rinvex\Fort\Traits\AbilitySeeder;
-use Rinvex\Fort\Traits\ArtisanHelper;
+use Rinvex\Support\Traits\SeederHelper;
 
 class SeedCommand extends Command
 {
-    use AbilitySeeder;
-    use ArtisanHelper;
+    use SeederHelper;
 
     /**
      * The name and signature of the console command.
@@ -36,8 +34,8 @@ class SeedCommand extends Command
     {
         $this->warn('Seed cortex/foundation:');
 
-        if ($this->ensureExistingFortTables()) {
-            $this->seedAbilities(realpath(__DIR__.'/../../../resources/data/abilities.json'));
+        if ($this->ensureExistingDatabaseTables('rinvex/fort')) {
+            $this->seedResources(app('rinvex.fort.ability'), realpath(__DIR__.'/../../../resources/data/abilities.json'), ['name', 'description']);
         }
     }
 }
