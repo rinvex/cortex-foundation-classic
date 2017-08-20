@@ -33,6 +33,8 @@ class CoreSeedCommand extends Command
     {
         collect(Artisan::all())->filter(function ($command) {
             return mb_strpos($command->getName(), 'cortex:seed:') !== false;
-        })->each->run(new ArrayInput([]), $this->output);
+        })->partition(function ($command) {
+            return in_array($command->getName(), ['cortex:seed:foundation', 'cortex:seed:fort']);
+        })->flatten()->each->run(new ArrayInput([]), $this->output);
     }
 }
