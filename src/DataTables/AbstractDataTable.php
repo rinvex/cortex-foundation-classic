@@ -36,7 +36,7 @@ abstract class AbstractDataTable extends DataTable
      */
     public function query()
     {
-        $query = class_exists($this->model) ? ($this->model)::query() : app($this->model)->query();
+        $query = app($this->model)->query();
 
         return $this->applyScopes($query);
     }
@@ -48,9 +48,11 @@ abstract class AbstractDataTable extends DataTable
      */
     public function ajax()
     {
+        $transformer = app($this->transformer);
+
         return $this->datatables
             ->eloquent($this->query())
-            ->setTransformer(new $this->transformer())
+            ->setTransformer($transformer)
             ->make(true);
     }
 
