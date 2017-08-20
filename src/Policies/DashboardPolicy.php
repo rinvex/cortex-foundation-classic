@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Policies;
+namespace Cortex\Foundation\Policies;
 
 use Rinvex\Fort\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
