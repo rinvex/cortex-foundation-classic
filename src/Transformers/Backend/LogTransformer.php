@@ -15,17 +15,24 @@ class LogTransformer extends TransformerAbstract
     public function transform(Log $log)
     {
         $route = '';
-        $class = explode('\\', get_class($log->causer));
 
-        switch ($causer = end($class)) {
-            case 'User':
-                $route = route('backend.users.edit', ['user' => $log->causer]);
+        if ($log->causer) {
+            $class = explode('\\', get_class($log->causer));
+
+            switch ($causer = end($class)) {
+                case 'User':
+                    $route = route('backend.users.edit', ['user' => $log->causer]);
+            }
+
+            $causer = $causer.': '.$log->causer->username ?? $log->causer->name;
+        } else {
+            $causer = 'System';
         }
 
         return [
             'id' => (int) $log->id,
             'description' => (string) $log->description,
-            'causer' => $causer.': '.$log->causer->username ?? $log->causer->name,
+            'causer' => $causer,
             'causer_route' => $route,
             'properties' => (object) $log->properties,
             'created_at' => (string) $log->created_at,
