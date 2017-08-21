@@ -5,7 +5,7 @@
     <title>@yield('title', config('app.name'))</title>
 
     <!-- Meta Data -->
-    @include('cortex/foundation::backend.partials.meta')
+    @include('cortex/foundation::common.partials.meta')
 
     <!-- Styles -->
     <link href="{{ mix('css/vendor.css') }}" rel="stylesheet">
