@@ -16,14 +16,14 @@ class HomeController extends AuthorizedController
     /**
      * {@inheritdoc}
      */
-    protected $resourceAbilityMap = ['home' => 'access'];
+    protected $resourceAbilityMap = ['index' => 'access'];
 
     /**
      * Show the dashboard home.
      *
      * @return \Illuminate\Http\Response
      */
-    public function home()
+    public function index()
     {
         return view('cortex/foundation::backend.pages.home');
     }

@@ -9,6 +9,15 @@ Route::group(['domain' => domain()], function () {
          ->prefix(config('cortex.foundation.route.locale_prefix') ? '{locale}/backend' : 'backend')->group(function () {
 
             // Dashboard route
-             Route::get('/')->name('home')->uses('HomeController@home');
+             Route::get('/')->name('home')->uses('HomeController@index');
          });
+
+    Route::name('userarea.')
+         ->middleware(['web', 'nohttpcache'])
+         ->namespace('Cortex\Foundation\Http\Controllers\Userarea')
+         ->prefix(config('cortex.foundation.route.locale_prefix') ? '{locale}/userarea' : 'userarea')->group(function () {
+
+            // Homepage Routes
+            Route::get('/')->name('home')->uses('HomeController@index');
+        });
 });
