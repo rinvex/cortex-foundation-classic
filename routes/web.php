@@ -18,6 +18,6 @@ Route::group(['domain' => domain()], function () {
          ->prefix(config('cortex.foundation.route.locale_prefix') ? '{locale}/userarea' : 'userarea')->group(function () {
 
             // Homepage Routes
-            Route::get('/')->name('home')->uses('HomeController@index');
-        });
+             Route::get('/')->name('home')->uses('HomeController@index');
+         });
 });
