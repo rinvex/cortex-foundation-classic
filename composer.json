@@ -42,7 +42,7 @@
     "require": {
         "php": "^7.0.0",
         "barryvdh/laravel-snappy": "^0.3.0",
-        "davejamesmiller/laravel-breadcrumbs": "4.x-dev",
+        "davejamesmiller/laravel-breadcrumbs": "^4.0.0",
         "edvinaskrucas/notification": "^5.2.0",
         "fideloper/proxy": "^3.3.0",
         "laravel/framework": "~5.5.0",
