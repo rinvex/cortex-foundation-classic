@@ -9,6 +9,7 @@ return [
     'cancel' => 'Cancel',
     'delete' => 'Delete',
     'backend' => 'Backend',
+    'userarea' => 'Userarea',
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',
     'toggle_navigation' => 'Toggle navigation',
