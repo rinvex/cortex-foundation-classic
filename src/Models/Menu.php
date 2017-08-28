@@ -28,7 +28,7 @@ class Menu extends BaseMenu
      *
      * @param string $section
      *
-     * @return $this
+     * @return static
      */
     public function setSection($section)
     {
@@ -48,7 +48,7 @@ class Menu extends BaseMenu
      *
      * @param \Spatie\Menu\Item $item
      *
-     * @return $this
+     * @return static
      */
     public function add(Item $item)
     {
@@ -79,7 +79,7 @@ class Menu extends BaseMenu
      * @param bool              $condition
      * @param \Spatie\Menu\Item $item
      *
-     * @return $this
+     * @return static
      */
     public function addIf($condition, Item $item)
     {
@@ -96,7 +96,7 @@ class Menu extends BaseMenu
      * @param string $url
      * @param string $text
      *
-     * @return $this
+     * @return static
      */
     public function link(string $url, string $text)
     {
@@ -110,7 +110,7 @@ class Menu extends BaseMenu
      * @param string $url
      * @param string $text
      *
-     * @return $this
+     * @return static
      */
     public function linkIf($condition, string $url, string $text)
     {
@@ -127,7 +127,7 @@ class Menu extends BaseMenu
      * @param string $html
      * @param array  $parentAttributes
      *
-     * @return $this
+     * @return static
      */
     public function html(string $html, array $parentAttributes = [])
     {
@@ -141,7 +141,7 @@ class Menu extends BaseMenu
      * @param string $html
      * @param array  $parentAttributes
      *
-     * @return $this
+     * @return static
      */
     public function htmlIf($condition, string $html, array $parentAttributes = [])
     {
@@ -156,7 +156,7 @@ class Menu extends BaseMenu
      * @param callable|\Spatie\Menu\Menu|\Spatie\Menu\Item $header
      * @param callable|\Spatie\Menu\Menu|null              $menu
      *
-     * @return $this
+     * @return static
      */
     public function submenu($header, $menu = null)
     {
@@ -173,7 +173,7 @@ class Menu extends BaseMenu
      * @param callable|\Spatie\Menu\Menu|\Spatie\Menu\Item $header
      * @param callable|\Spatie\Menu\Menu|null              $menu
      *
-     * @return $this
+     * @return static
      */
     public function submenuIf($condition, $header, $menu = null)
     {
@@ -190,7 +190,7 @@ class Menu extends BaseMenu
      * @param mixed     $parameters
      * @param bool|null $secure
      *
-     * @return $this
+     * @return static
      */
     public function url(string $path, string $text, $parameters = [], $secure = null)
     {
@@ -203,7 +203,7 @@ class Menu extends BaseMenu
      * @param mixed  $parameters
      * @param bool   $absolute
      *
-     * @return $this
+     * @return static
      */
     public function action(string $action, string $text, $parameters = [], bool $absolute = true)
     {
@@ -216,7 +216,7 @@ class Menu extends BaseMenu
      * @param mixed  $parameters
      * @param bool   $absolute
      *
-     * @return $this
+     * @return static
      */
     public function route(string $name, string $text, $parameters = [], bool $absolute = true)
     {
@@ -227,7 +227,7 @@ class Menu extends BaseMenu
      * @param string $name
      * @param array  $data
      *
-     * @return $this
+     * @return static
      */
     public function view(string $name, array $data = [])
     {
@@ -241,7 +241,7 @@ class Menu extends BaseMenu
      * @param array     $parameters
      * @param bool|null $secure
      *
-     * @return $this
+     * @return static
      */
     public function urlIf($condition, string $path, string $text, array $parameters = [], $secure = null)
     {
@@ -255,7 +255,7 @@ class Menu extends BaseMenu
      * @param array  $parameters
      * @param bool   $absolute
      *
-     * @return $this
+     * @return static
      */
     public function actionIf($condition, string $action, string $text, array $parameters = [], bool $absolute = true)
     {
@@ -270,7 +270,7 @@ class Menu extends BaseMenu
      * @param bool                           $absolute
      * @param \Illuminate\Routing\Route|null $route
      *
-     * @return $this
+     * @return static
      */
     public function routeIf($condition, string $name, string $text, array $parameters = [], bool $absolute = true, $route = null)
     {
@@ -282,7 +282,7 @@ class Menu extends BaseMenu
      * @param string $name
      * @param array  $data
      *
-     * @return $this
+     * @return static
      */
     public function viewIf($condition, string $name, array $data = null)
     {
@@ -293,7 +293,7 @@ class Menu extends BaseMenu
      * @param string|array      $authorization
      * @param \Spatie\Menu\Item $item
      *
-     * @return $this
+     * @return static
      */
     public function addIfCan($authorization, Item $item)
     {
@@ -308,7 +308,7 @@ class Menu extends BaseMenu
      * @param string       $url
      * @param string       $text
      *
-     * @return $this
+     * @return static
      */
     public function linkIfCan($authorization, string $url, string $text)
     {
@@ -331,7 +331,7 @@ class Menu extends BaseMenu
      * @param callable|\Spatie\Menu\Menu|\Spatie\Menu\Item $header
      * @param callable|\Spatie\Menu\Menu|null              $menu
      *
-     * @return $this
+     * @return static
      */
     public function submenuIfCan($authorization, $header, $menu = null)
     {
@@ -350,7 +350,7 @@ class Menu extends BaseMenu
      * @param array        $parameters
      * @param bool|null    $secure
      *
-     * @return $this
+     * @return static
      */
     public function urlIfCan($authorization, string $path, string $text, array $parameters = [], $secure = null)
     {
@@ -364,7 +364,7 @@ class Menu extends BaseMenu
      * @param array        $parameters
      * @param bool         $absolute
      *
-     * @return $this
+     * @return static
      */
     public function actionIfCan($authorization, string $action, string $text, array $parameters = [], bool $absolute = true)
     {
@@ -379,7 +379,7 @@ class Menu extends BaseMenu
      * @param bool                           $absolute
      * @param \Illuminate\Routing\Route|null $route
      *
-     * @return $this
+     * @return static
      */
     public function routeIfCan($authorization, string $name, string $text, array $parameters = [], bool $absolute = true, $route = null)
     {
@@ -393,7 +393,7 @@ class Menu extends BaseMenu
      *
      * @param callable $callable
      *
-     * @return $this
+     * @return static
      */
     public function each(callable $callable)
     {
@@ -434,7 +434,7 @@ class Menu extends BaseMenu
      * @param string $name
      * @param array  $data
      *
-     * @return $this
+     * @return static
      */
     public function viewIfCan($authorization, string $name, array $data = null)
     {
