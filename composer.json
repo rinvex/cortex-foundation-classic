@@ -91,7 +91,7 @@
                 "Cortex\\Foundation\\Overrides\\Lord\\Laroute\\LarouteServiceProvider"
             ],
             "aliases": {
-                "Menu": "Spatie\\Menu\\Laravel\\MenuFacade"
+                "Menu": "Spatie\\Menu\\Laravel\\Facades\\Menu"
             }
         },
         "cortex-module": {
