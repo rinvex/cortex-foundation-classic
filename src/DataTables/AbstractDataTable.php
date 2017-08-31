@@ -50,10 +50,9 @@ abstract class AbstractDataTable extends DataTable
     {
         $transformer = app($this->transformer);
 
-        return $this->datatables
-            ->eloquent($this->query())
-            ->setTransformer($transformer)
-            ->make(true);
+        return datatables()->eloquent($this->query())
+                           ->setTransformer($transformer)
+                           ->make(true);
     }
 
     /**
@@ -80,7 +79,7 @@ abstract class AbstractDataTable extends DataTable
     }
 
     /**
-     * Process dataTables needed render output.
+     * Process DataTables needed render output.
      *
      * @param string $view
      * @param array  $data
@@ -91,18 +90,18 @@ abstract class AbstractDataTable extends DataTable
     public function render($view, $data = [], $mergeData = [])
     {
         if ($this->request()->ajax() && $this->request()->wantsJson()) {
-            return $this->ajax();
+            return app()->call([$this, 'ajax']);
         }
 
-        if (($action = $this->request()->get('action')) && in_array($action, $this->actions)) {
-            if ($action === 'print') {
-                return $this->printPreview();
+        if ($action = $this->request()->get('action') AND in_array($action, $this->actions)) {
+            if ($action == 'print') {
+                return app()->call([$this, 'printPreview']);
             }
 
-            return call_user_func_array([$this, $action], []);
+            return app()->call([$this, $action]);
         }
 
-        return $this->viewFactory->make($view, array_merge($this->attributes, $data), $mergeData)->with('dataTable', $this->getHtmlBuilder());
+        return view($view, array_merge($this->attributes, $data), $mergeData)->with($this->dataTableVariable, $this->getHtmlBuilder());
     }
 
     /**

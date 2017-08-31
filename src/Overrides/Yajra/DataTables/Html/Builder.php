@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Yajra\DataTables\Html;
 
+use Illuminate\Support\HtmlString;
 use Yajra\DataTables\Html\Builder as BaseBuilder;
 
 class Builder extends BaseBuilder
@@ -13,15 +14,15 @@ class Builder extends BaseBuilder
      *
      * @param array $attributes
      * @param bool  $drawFooter
-     *
-     * @return string
+     * @param bool  $drawSearch
+     * @return \Illuminate\Support\HtmlString
      */
-    public function table(array $attributes = [], $drawFooter = false)
+    public function table(array $attributes = [], $drawFooter = false, $drawSearch = false)
     {
-        $this->tableAttributes = array_merge($this->tableAttributes, $attributes);
+        $this->tableAttributes = array_merge($this->getTableAttributes(), $attributes);
         $htmlAttr = $this->html->attributes($this->tableAttributes);
         $tableHtml = '<table '.$htmlAttr.'></table>';
 
-        return $tableHtml;
+        return new HtmlString($tableHtml);
     }
 }
