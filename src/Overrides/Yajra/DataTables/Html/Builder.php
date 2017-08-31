@@ -15,6 +15,7 @@ class Builder extends BaseBuilder
      * @param array $attributes
      * @param bool  $drawFooter
      * @param bool  $drawSearch
+     *
      * @return \Illuminate\Support\HtmlString
      */
     public function table(array $attributes = [], $drawFooter = false, $drawSearch = false)
