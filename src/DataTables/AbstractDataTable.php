@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\DataTables;
 
-use Yajra\Datatables\Services\DataTable;
+use Yajra\DataTables\Services\DataTable;
 
 abstract class AbstractDataTable extends DataTable
 {
@@ -59,7 +59,7 @@ abstract class AbstractDataTable extends DataTable
     /**
      * Get Datatables Html Builder instance.
      *
-     * @return \Yajra\Datatables\Html\Builder
+     * @return \Yajra\DataTables\Html\Builder
      */
     public function builder()
     {
@@ -69,7 +69,7 @@ abstract class AbstractDataTable extends DataTable
     /**
      * Optional method if you want to use html builder.
      *
-     * @return \Yajra\Datatables\Html\Builder
+     * @return \Yajra\DataTables\Html\Builder
      */
     public function html()
     {

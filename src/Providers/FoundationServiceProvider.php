@@ -19,7 +19,7 @@ use Cortex\Foundation\Console\Commands\CorePublishCommand;
 use Cortex\Foundation\Http\Middleware\TrailingSlashEnforce;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
-use Cortex\Foundation\Overrides\Yajra\Datatables\Html\Builder;
+use Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
 use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
 use Cortex\Foundation\Overrides\Mcamara\LaravelLocalization\LaravelLocalization;

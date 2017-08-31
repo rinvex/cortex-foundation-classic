@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cortex\Foundation\Overrides\Yajra\Datatables\Html;
+namespace Cortex\Foundation\Overrides\Yajra\DataTables\Html;
 
-use Yajra\Datatables\Html\Builder as BaseBuilder;
+use Yajra\DataTables\Html\Builder as BaseBuilder;
 
 class Builder extends BaseBuilder
 {
