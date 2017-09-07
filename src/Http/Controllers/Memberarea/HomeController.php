@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cortex\Foundation\Http\Controllers\Userarea;
+namespace Cortex\Foundation\Http\Controllers\Memberarea;
 
 use Cortex\Foundation\Http\Controllers\AbstractController;
 
@@ -15,6 +15,6 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        return view('cortex/foundation::userarea.pages.home');
+        return view('cortex/foundation::memberarea.pages.home');
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cortex\Foundation\Http\Controllers\Backend;
+namespace Cortex\Foundation\Http\Controllers\Adminarea;
 
 use Cortex\Foundation\Http\Controllers\AuthorizedController;
 
@@ -25,6 +25,6 @@ class HomeController extends AuthorizedController
      */
     public function index()
     {
-        return view('cortex/foundation::backend.pages.home');
+        return view('cortex/foundation::adminarea.pages.home');
     }
 }

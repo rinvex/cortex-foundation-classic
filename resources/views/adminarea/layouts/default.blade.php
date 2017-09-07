@@ -21,12 +21,12 @@
 <body class="hold-transition skin-blue fixed sidebar-mini">
     <!-- Main Content -->
     <div class="wrapper">
-        @include('cortex/foundation::backend.partials.header')
-        @include('cortex/foundation::backend.partials.sidebar')
+        @include('cortex/foundation::adminarea.partials.header')
+        @include('cortex/foundation::adminarea.partials.sidebar')
 
         @yield('content')
 
-        @include('cortex/foundation::backend.partials.footer')
+        @include('cortex/foundation::adminarea.partials.footer')
     </div>
 
     <!-- JavaScripts -->

@@ -40,6 +40,6 @@ class CrawlingRobots
      */
     protected function shouldIndex(Request $request)
     {
-        return app()->environment('production') && ! in_array($request->segment(1), ['backend']);
+        return app()->environment('production') && ! in_array($request->segment(1), ['adminarea']);
     }
 }

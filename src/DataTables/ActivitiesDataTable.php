@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\DataTables;
 
-use Cortex\Foundation\Transformers\Backend\ActivityTransformer;
+use Cortex\Foundation\Transformers\Adminarea\ActivityTransformer;
 
 class ActivitiesDataTable extends LogsDataTable
 {

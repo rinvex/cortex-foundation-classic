@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="{{ route('backend.home') }}" class="logo">
+    <a href="{{ route('adminarea.home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><i class="fa fa-home"></i></span>
         <!-- logo for regular state and mobile devices -->
@@ -17,7 +17,7 @@
         </a>
 
         <div class="navbar-custom-menu">
-            {!! Menu::backendTopbar()->addClass('nav navbar-nav')->setActiveFromRequest() !!}
+            {!! Menu::adminareaTopbar()->addClass('nav navbar-nav')->setActiveFromRequest() !!}
         </div>
     </nav>
 </header>

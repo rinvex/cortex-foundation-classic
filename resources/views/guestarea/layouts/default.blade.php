@@ -21,9 +21,9 @@
 <body class="skin-blue-light layout-top-nav">
     <!-- Main Content -->
     <div class="wrapper">
-        @include('cortex/foundation::frontend.partials.header')
+        @include('cortex/foundation::guestarea.partials.header')
         @yield('content')
-        @include('cortex/foundation::frontend.partials.footer')
+        @include('cortex/foundation::guestarea.partials.footer')
     </div>
 
     <!-- JavaScripts -->

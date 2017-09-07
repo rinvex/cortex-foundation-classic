@@ -60,7 +60,7 @@ class Handler extends ExceptionHandler
             ], 400);
         } elseif ($exception instanceof GenericException) {
             return intend([
-                'url' => $exception->getRedirection() ?? route('frontend.home'),
+                'url' => $exception->getRedirection() ?? route('guestarea.home'),
                 'withInput' => $exception->getInputs() ?? $request->all(),
                 'with' => ['warning' => $exception->getMessage()],
             ], 422);
@@ -71,12 +71,12 @@ class Handler extends ExceptionHandler
             ], 403);
         } elseif ($exception instanceof ModelNotFoundException) {
             $model = str_replace('Contract', '', $exception->getModel());
-            $isBackend = mb_strpos($request->route()->getName(), 'backend') !== false;
+            $isAdminarea = mb_strpos($request->route()->getName(), 'adminarea') !== false;
             $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
             $plural = str_plural($single);
 
             return intend([
-                'url' => $isBackend ? route("backend.{$plural}.index") : route('frontend.home'),
+                'url' => $isAdminarea ? route("adminarea.{$plural}.index") : route('guestarea.home'),
                 'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'id' => $request->route()->parameter($single)])],
             ], 404);
         }
@@ -113,7 +113,7 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return intend([
-            'url' => route('frontend.auth.login'),
+            'url' => route('guestarea.auth.login'),
             'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
         ], 401);
     }

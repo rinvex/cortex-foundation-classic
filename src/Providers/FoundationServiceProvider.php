@@ -276,39 +276,39 @@ class FoundationServiceProvider extends ServiceProvider
 
         $this->app->alias(Menu::class, 'menu');
 
-        $this->registerBackendMenus();
+        $this->registerAdminareaMenus();
         $this->registerUserareaMenus();
         $this->registerFrontendMenus();
     }
 
     /**
-     * Register backend menus.
+     * Register adminarea menus.
      *
      * @return void
      */
-    protected function registerBackendMenus()
+    protected function registerAdminareaMenus()
     {
         $app = $this->app;
 
-        Menu::macro('backendSidebar', function ($section = null) use ($app) {
-            $app->bound('menu.backend.sidebar') || $app->singleton('menu.backend.sidebar', function () {
+        Menu::macro('adminareaSidebar', function ($section = null) use ($app) {
+            $app->bound('menu.adminarea.sidebar') || $app->singleton('menu.adminarea.sidebar', function () {
                 return Menu::new();
             });
 
-            return $app['menu.backend.sidebar']->setSection($section);
+            return $app['menu.adminarea.sidebar']->setSection($section);
         });
 
-        Menu::macro('backendTopbar', function ($section = null) use ($app) {
-            $app->bound('menu.backend.topbar') || $app->singleton('menu.backend.topbar', function () {
+        Menu::macro('adminareaTopbar', function ($section = null) use ($app) {
+            $app->bound('menu.adminarea.topbar') || $app->singleton('menu.adminarea.topbar', function () {
                 return Menu::new();
             });
 
-            return $app['menu.backend.topbar']->setSection($section);
+            return $app['menu.adminarea.topbar']->setSection($section);
         });
     }
 
     /**
-     * Register userarea menus.
+     * Register memberarea menus.
      *
      * @return void
      */
@@ -317,16 +317,16 @@ class FoundationServiceProvider extends ServiceProvider
         $app = $this->app;
 
         Menu::macro('userareaTopbar', function ($section = null) use ($app) {
-            $app->bound('menu.userarea.topbar') || $app->singleton('menu.userarea.topbar', function () {
+            $app->bound('menu.memberarea.topbar') || $app->singleton('menu.memberarea.topbar', function () {
                 return Menu::new();
             });
 
-            return $app['menu.userarea.topbar']->setSection($section);
+            return $app['menu.memberarea.topbar']->setSection($section);
         });
     }
 
     /**
-     * Register frontend menus.
+     * Register guestarea menus.
      *
      * @return void
      */
@@ -335,11 +335,11 @@ class FoundationServiceProvider extends ServiceProvider
         $app = $this->app;
 
         Menu::macro('frontendTopbar', function ($section = null) use ($app) {
-            $app->bound('menu.frontend.topbar') || $app->singleton('menu.frontend.topbar', function () {
+            $app->bound('menu.guestarea.topbar') || $app->singleton('menu.guestarea.topbar', function () {
                 return Menu::new();
             });
 
-            return $app['menu.frontend.topbar']->setSection($section);
+            return $app['menu.guestarea.topbar']->setSection($section);
         });
     }
 

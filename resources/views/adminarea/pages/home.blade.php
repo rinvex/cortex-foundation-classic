@@ -1,9 +1,9 @@
 {{-- Master Layout --}}
-@extends('cortex/foundation::backend.layouts.default')
+@extends('cortex/foundation::adminarea.layouts.default')
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('cortex/foundation::common.backend') }}
+    {{ config('app.name') }} » {{ trans('cortex/foundation::common.adminarea') }}
 @stop
 
 {{-- Main Content --}}
