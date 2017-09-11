@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
-use Cortex\Foundation\Console\MigrateMakeCommand;
 use Illuminate\Console\Scheduling\ScheduleRunCommand;
 use Illuminate\Console\Scheduling\ScheduleFinishCommand;
+use Cortex\Foundation\Console\Commands\MigrateMakeCommand;
 use Illuminate\Foundation\Providers\ArtisanServiceProvider as BaseArtisanServiceProvider;
 
 class ArtisanServiceProvider extends BaseArtisanServiceProvider
