@@ -13,6 +13,7 @@ use Cortex\Foundation\Console\Commands\ModelMakeCommand;
 use Cortex\Foundation\Console\Commands\EventMakeCommand;
 use Cortex\Foundation\Console\Commands\PolicyMakeCommand;
 use Cortex\Foundation\Console\Commands\ConfigMakeCommand;
+use Cortex\Foundation\Console\Commands\ModuleMakeCommand;
 use Cortex\Foundation\Console\Commands\SeederMakeCommand;
 use Cortex\Foundation\Console\Commands\ConsoleMakeCommand;
 use Cortex\Foundation\Console\Commands\FactoryMakeCommand;
@@ -102,6 +103,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'MiddlewareMake' => 'command.middleware.make',
         'MigrateMake' => 'command.migrate.make',
         'ModelMake' => 'command.model.make',
+        'ModuleMake' => 'command.module.make',
         'NotificationMake' => 'command.notification.make',
         'NotificationTable' => 'command.notification.table',
         'PolicyMake' => 'command.policy.make',
@@ -281,6 +283,18 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->app->singleton('command.model.make', function ($app) {
             return new ModelMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerModuleMakeCommand()
+    {
+        $this->app->singleton('command.module.make', function ($app) {
+            return new ModuleMakeCommand($app['files']);
         });
     }
 
