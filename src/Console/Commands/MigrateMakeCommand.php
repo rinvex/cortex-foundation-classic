@@ -20,6 +20,36 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
         {--path= : The location where the migration file should be created.}';
 
     /**
+     * Write the migration file to disk.
+     *
+     * @param  string  $name
+     * @param  string  $table
+     * @param  bool    $create
+     * @return string
+     */
+    protected function writeMigration($name, $table, $create)
+    {
+        $this->makeDirectory($this->getMigrationPath());
+
+        parent::writeMigration($name, $table, $create);
+    }
+
+    /**
+     * Build the directory for the class if necessary.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    protected function makeDirectory($path)
+    {
+        if (! $this->laravel['files']->isDirectory($path)) {
+            $this->laravel['files']->makeDirectory($path, 0777, true, true);
+        }
+
+        return $path;
+    }
+
+    /**
      * Get migration path (either specified by '--path' or '--module' options).
      *
      * @return string
