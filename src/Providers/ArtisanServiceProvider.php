@@ -12,6 +12,7 @@ use Illuminate\Console\Scheduling\ScheduleFinishCommand;
 use Cortex\Foundation\Console\Commands\ModelMakeCommand;
 use Cortex\Foundation\Console\Commands\EventMakeCommand;
 use Cortex\Foundation\Console\Commands\PolicyMakeCommand;
+use Cortex\Foundation\Console\Commands\ConfigMakeCommand;
 use Cortex\Foundation\Console\Commands\SeederMakeCommand;
 use Cortex\Foundation\Console\Commands\ConsoleMakeCommand;
 use Cortex\Foundation\Console\Commands\FactoryMakeCommand;
@@ -88,6 +89,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         //'AppName' => 'command.app.name',
         //'AuthMake' => 'command.auth.make',
         'CacheTable' => 'command.cache.table',
+        'ConfigMake' => 'command.config.make',
         'ConsoleMake' => 'command.console.make',
         'ControllerMake' => 'command.controller.make',
         'DatatableMake' => 'command.datatable.make',
@@ -351,6 +353,18 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->app->singleton('command.controller.make', function ($app) {
             return new ControllerMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerConfigMakeCommand()
+    {
+        $this->app->singleton('command.config.make', function ($app) {
+            return new ConfigMakeCommand($app['files']);
         });
     }
 
