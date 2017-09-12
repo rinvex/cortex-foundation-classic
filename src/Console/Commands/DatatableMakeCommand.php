@@ -52,7 +52,8 @@ class DatatableMakeCommand extends GeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function buildClass($name)
@@ -69,9 +70,9 @@ class DatatableMakeCommand extends GeneratorCommand
     /**
      * Replace the model and transformer for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $model
-     * @param  string  $transformer
+     * @param string $stub
+     * @param string $model
+     * @param string $transformer
      *
      * @return string
      */
@@ -94,7 +95,7 @@ class DatatableMakeCommand extends GeneratorCommand
 
             $transformer = class_basename(trim($transformer, '\\'));
 
-            $stub = str_replace('DummyTransformer', $transformer, $stub);;
+            $stub = str_replace('DummyTransformer', $transformer, $stub);
 
             $stub = str_replace('dummyTransformer', Str::camel($transformer), $stub);
         }
@@ -133,7 +134,8 @@ class DatatableMakeCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
+     *
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)

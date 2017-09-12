@@ -14,7 +14,7 @@ class SeederMakeCommand extends BaseSeederMakeCommand
     /**
      * Get the destination class path.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @throws \Exception
      *
