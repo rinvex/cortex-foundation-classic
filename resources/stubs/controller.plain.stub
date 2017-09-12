@@ -1,0 +1,11 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Http\Request;
+use Cortex\Foundation\Http\Controllers\AuthorizedController;
+
+class DummyClass extends AuthorizedController
+{
+    //
+}
