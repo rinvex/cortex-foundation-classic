@@ -75,7 +75,9 @@ class TransformerMakeCommand extends GeneratorCommand
 
         $model = class_basename(trim($model, '\\'));
 
-        return str_replace('DummyModel', $model, $stub);
+        $stub = str_replace('DummyModel', $model, $stub);
+
+        return str_replace('dummyModel', Str::camel($model), $stub);
     }
 
     /**
