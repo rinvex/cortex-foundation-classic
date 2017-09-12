@@ -20,7 +20,7 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
         {--path= : The location where the migration file should be created.}';
 
     /**
-     * Get migration path (either specified by '--path' option or module location).
+     * Get migration path (either specified by '--path' or '--module' options).
      *
      * @return string
      */
