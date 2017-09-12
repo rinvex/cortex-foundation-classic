@@ -104,28 +104,22 @@ class ModuleMakeCommand extends Command
      */
     protected function generateSamples()
     {
+        $module = str_after($this->getNameInput(), '/');
+
         $this->call('make:config', ['name' => 'config', '--module' => $this->getNameInput()]);
-        $this->call('make:model', ['name' => 'Test', '--module' => $this->getNameInput()]);
-        $this->call('make:policy', ['name' => 'TestPolicy', '--module' => $this->getNameInput()]);
-        $this->call('make:provider', ['name' => ucfirst(str_after($this->getNameInput(), '/')).'ServiceProvider', '--module' => $this->getNameInput()]);
-        $this->call('make:command', ['name' => 'TestCommand', '--module' => $this->getNameInput()]);
-        $this->call('make:controller', ['name' => 'TestController', '--module' => $this->getNameInput()]);
-        $this->call('make:request', ['name' => 'TestRequest', '--module' => $this->getNameInput()]);
-        $this->call('make:middleware', ['name' => 'TestMiddleware', '--module' => $this->getNameInput()]);
-        $this->call('make:transformer', ['name' => 'TestTransformer', '--model' => 'Test', '--module' => $this->getNameInput()]);
-        $this->call('make:datatable', ['name' => 'TestDatatable', '--model' => 'Test', '--transformer' => 'TestTransformer', '--module' => $this->getNameInput()]);
-        //$this->call('make:config', ['name' => 'config', '--module' => $this->getNameInput()]);
-        //$this->call('make:config', ['name' => 'config', '--module' => $this->getNameInput()]);
-        //$this->call('make:config', ['name' => 'config', '--module' => $this->getNameInput()]);
-        //$this->call('make:config', ['--module' => $this->getNameInput()]);
-        //$this->call('make:config', ['--module' => $this->getNameInput()]);
-        //$this->call('make:config', ['--module' => $this->getNameInput()]);
-        //$this->call('make:config', ['--module' => $this->getNameInput()]);
-        //$this->call('make:config', ['--module' => $this->getNameInput()]);
-        //$this->call('make:config', ['--module' => $this->getNameInput()]);
-        //$this->call('make:config', ['--module' => $this->getNameInput()]);
-        //$this->call('make:config', ['--module' => $this->getNameInput()]);
-        //$this->call('make:config', ['--module' => $this->getNameInput()]);
+        $this->call('make:model', ['name' => 'Example', '--module' => $this->getNameInput()]);
+        $this->call('make:policy', ['name' => 'ExamplePolicy', '--module' => $this->getNameInput()]);
+        $this->call('make:provider', ['name' => ucfirst($module).'ServiceProvider', '--module' => $this->getNameInput()]);
+        $this->call('make:command', ['name' => 'ExampleCommand', '--module' => $this->getNameInput()]);
+        $this->call('make:controller', ['name' => 'ExampleController', '--module' => $this->getNameInput()]);
+        $this->call('make:request', ['name' => 'ExampleRequest', '--module' => $this->getNameInput()]);
+        $this->call('make:middleware', ['name' => 'ExampleMiddleware', '--module' => $this->getNameInput()]);
+        $this->call('make:transformer', ['name' => 'ExampleTransformer', '--model' => 'Example', '--module' => $this->getNameInput()]);
+        $this->call('make:datatable', ['name' => 'ExampleDatatable', '--model' => 'Example', '--transformer' => 'ExampleTransformer', '--module' => $this->getNameInput()]);
+
+        $this->warn('Optionally create migrations and seeds (it may take some time):');
+        $this->warn("artisan make:migration create_{$module}_example_table --module {$this->getNameInput()}");
+        $this->warn("artisan make:seeder ExampleSeeder --module {$this->getNameInput()}");
     }
 
     /**
