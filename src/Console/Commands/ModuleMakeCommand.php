@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 
 class ModuleMakeCommand extends Command
 {
@@ -41,7 +40,7 @@ class ModuleMakeCommand extends Command
     /**
      * Create a new controller creator command instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
+     * @param \Illuminate\Filesystem\Filesystem $files
      *
      * @return void
      */
@@ -85,7 +84,8 @@ class ModuleMakeCommand extends Command
     /**
      * Build the directory for the class if necessary.
      *
-     * @param  string  $path
+     * @param string $path
+     *
      * @return string
      */
     protected function makeDirectory($path)
@@ -131,8 +131,8 @@ class ModuleMakeCommand extends Command
     /**
      * Process stubs placeholders.
      *
-     * @param  string  $stubs
-     * @param  string  $path
+     * @param string $stubs
+     * @param string $path
      *
      * @return void
      */
@@ -177,7 +177,7 @@ class ModuleMakeCommand extends Command
     {
         $name = trim($this->argument('name'));
 
-        if (strpos($name, '/') === false) {
+        if (mb_strpos($name, '/') === false) {
             throw new \Exception('Module name must consist of two segments: vendor/module');
         }
 

@@ -14,7 +14,8 @@ class PolicyMakeCommand extends BasePolicyMakeCommand
     /**
      * Replace the User model namespace.
      *
-     * @param  string  $stub
+     * @param string $stub
+     *
      * @return string
      */
     protected function replaceUserNamespace($stub)
