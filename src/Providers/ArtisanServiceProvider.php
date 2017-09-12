@@ -20,8 +20,10 @@ use Cortex\Foundation\Console\Commands\MigrateMakeCommand;
 use Cortex\Foundation\Console\Commands\ResourceMakeCommand;
 use Cortex\Foundation\Console\Commands\ProviderMakeCommand;
 use Cortex\Foundation\Console\Commands\ListenerMakeCommand;
+use Cortex\Foundation\Console\Commands\DataTableMakeCommand;
 use Cortex\Foundation\Console\Commands\ControllerMakeCommand;
 use Cortex\Foundation\Console\Commands\MiddlewareMakeCommand;
+use Cortex\Foundation\Console\Commands\TransformerMakeCommand;
 use Cortex\Foundation\Console\Commands\NotificationMakeCommand;
 use Illuminate\Foundation\Providers\ArtisanServiceProvider as BaseArtisanServiceProvider;
 
@@ -88,6 +90,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'CacheTable' => 'command.cache.table',
         'ConsoleMake' => 'command.console.make',
         'ControllerMake' => 'command.controller.make',
+        'DatatableMake' => 'command.datatable.make',
         //'EventGenerate' => 'command.event.generate',
         'EventMake' => 'command.event.make',
         'FactoryMake' => 'command.factory.make',
@@ -110,6 +113,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         //'SessionTable' => 'command.session.table',
         'Serve' => 'command.serve',
         //'TestMake' => 'command.test.make',
+        'TransformerMake' => 'command.transformer.make',
         'VendorPublish' => 'command.vendor.publish',
     ];
 
@@ -311,6 +315,30 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->app->singleton('command.seeder.make', function ($app) {
             return new SeederMakeCommand($app['files'], $app['composer']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerTransformerMakeCommand()
+    {
+        $this->app->singleton('command.transformer.make', function ($app) {
+            return new TransformerMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerDatatableMakeCommand()
+    {
+        $this->app->singleton('command.datatable.make', function ($app) {
+            return new DataTableMakeCommand($app['files']);
         });
     }
 

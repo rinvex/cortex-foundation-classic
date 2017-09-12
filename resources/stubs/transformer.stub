@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DummyNamespace;
+
+use NamespacedDummyModel;
+use League\Fractal\TransformerAbstract;
+
+class DummyClass extends TransformerAbstract
+{
+    /**
+     * Transform the given model.
+     *
+     * @param \NamespacedDummyModel $dummyModel
+     *
+     * @return array
+     */
+    public function transform(DummyModel $dummyModel)
+    {
+        return [
+            //
+        ];
+    }
+}

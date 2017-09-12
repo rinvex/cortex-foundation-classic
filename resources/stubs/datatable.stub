@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DummyNamespace;
+
+use NamespacedDummyModel;
+use NamespacedDummyTransformer;
+use Cortex\Foundation\DataTables\AbstractDataTable;
+
+class DummyClass extends AbstractDataTable
+{
+    /**
+     * {@inheritdoc}
+     */
+    protected $dummyModel = DummyModel::class;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $dummyTransformer = DummyTransformer::class;
+
+    /**
+     * Get columns.
+     *
+     * @return array
+     */
+    protected function getColumns()
+    {
+        return [
+            //
+        ];
+    }
+}
