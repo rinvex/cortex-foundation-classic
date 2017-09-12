@@ -22,9 +22,10 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
     /**
      * Write the migration file to disk.
      *
-     * @param  string  $name
-     * @param  string  $table
-     * @param  bool    $create
+     * @param string $name
+     * @param string $table
+     * @param bool   $create
+     *
      * @return string
      */
     protected function writeMigration($name, $table, $create)
@@ -37,7 +38,8 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
     /**
      * Build the directory for the class if necessary.
      *
-     * @param  string  $path
+     * @param string $path
+     *
      * @return string
      */
     protected function makeDirectory($path)
