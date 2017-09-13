@@ -30,6 +30,10 @@ class UrlGenerator extends BaseUrlGenerator
      */
     protected function routeUrl()
     {
+        if (! config('cortex.foundation.route.trailing_slash')) {
+            return parent::routeUrl();
+        }
+
         if (! $this->routeGenerator) {
             $this->routeGenerator = new RouteUrlGenerator($this, $this->request);
         }
