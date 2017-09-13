@@ -16,7 +16,6 @@ use Cortex\Foundation\Console\Commands\CoreSeedCommand;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
 use Cortex\Foundation\Console\Commands\CorePublishCommand;
-use Cortex\Foundation\Http\Middleware\TrailingSlashEnforce;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder;
@@ -150,10 +149,6 @@ class FoundationServiceProvider extends ServiceProvider
         if ($this->app['config']->get('cortex.foundation.route.locale_prefix') && $this->app['config']->get('cortex.foundation.route.locale_redirect')) {
             $this->app[Kernel::class]->prependMiddleware(LaravelLocalizationRedirectFilter::class);
         }
-
-        if ($this->app['config']->get('cortex.foundation.route.trailing_slash')) {
-            $this->app[Kernel::class]->prependMiddleware(TrailingSlashEnforce::class);
-        }
     }
 
     /**
@@ -166,7 +161,7 @@ class FoundationServiceProvider extends ServiceProvider
         if ($this->app->environment('local')) {
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
             $this->app->register(\Clockwork\Support\Laravel\ClockworkServiceProvider::class);
-            //$this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
     }
 

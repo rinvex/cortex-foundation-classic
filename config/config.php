@@ -15,9 +15,6 @@ return [
         // 'route.locale_prefix' must be true for this option to work
         'locale_redirect' => false,
 
-        // Automatically add a trailing slash to the end of all routes
-        'trailing_slash' => false,
-
     ],
 
     // Adminarea Configuration
