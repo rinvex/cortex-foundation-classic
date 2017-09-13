@@ -13,7 +13,7 @@ class PublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:publish:foundation';
+    protected $signature = 'cortex:publish:foundation {--force : Overwrite any existing files.}';
 
     /**
      * The console command description.
@@ -30,8 +30,8 @@ class PublishCommand extends Command
     public function handle()
     {
         $this->warn('Publish cortex/foundation:');
-        $this->call('vendor:publish', ['--tag' => 'cortex-foundation-config']);
-        $this->call('vendor:publish', ['--tag' => 'cortex-foundation-views']);
-        $this->call('vendor:publish', ['--tag' => 'cortex-foundation-lang']);
+        $this->call('vendor:publish', ['--tag' => 'cortex-foundation-config', '--force' => $this->option('force')]);
+        $this->call('vendor:publish', ['--tag' => 'cortex-foundation-views', '--force' => $this->option('force')]);
+        $this->call('vendor:publish', ['--tag' => 'cortex-foundation-lang', '--force' => $this->option('force')]);
     }
 }
