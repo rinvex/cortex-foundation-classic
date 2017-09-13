@@ -10,7 +10,7 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-collapse">
-                {!! Menu::frontendTopbar()->addClass('nav navbar-nav navbar-right')->setActiveFromRequest() !!}
+                {!! Menu::guestareaTopbar()->addClass('nav navbar-nav navbar-right')->setActiveFromRequest() !!}
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
