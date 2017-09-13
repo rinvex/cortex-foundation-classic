@@ -53,7 +53,6 @@ class FoundationServiceProvider extends ServiceProvider
     public function register()
     {
         $this->overrideNotificationMiddleware();
-        $this->registerDevelopmentProviders();
         $this->overrideLaravelLocalization();
         $this->overrideUrlGenerator();
         $this->overrideRedirector();
@@ -148,20 +147,6 @@ class FoundationServiceProvider extends ServiceProvider
     {
         if ($this->app['config']->get('cortex.foundation.route.locale_prefix') && $this->app['config']->get('cortex.foundation.route.locale_redirect')) {
             $this->app[Kernel::class]->prependMiddleware(LaravelLocalizationRedirectFilter::class);
-        }
-    }
-
-    /**
-     * Registers the Generic bindings.
-     *
-     * @return void
-     */
-    protected function registerDevelopmentProviders()
-    {
-        if ($this->app->environment('local')) {
-            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
-            $this->app->register(\Clockwork\Support\Laravel\ClockworkServiceProvider::class);
-            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
     }
 
