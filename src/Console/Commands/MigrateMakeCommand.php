@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 use Illuminate\Database\Console\Migrations\MigrateMakeCommand as BaseMigrateMakeCommand;
 
 class MigrateMakeCommand extends BaseMigrateMakeCommand
 {
+    use ConsoleMakeModuleCommand;
+
     /**
      * The console command signature.
      *
@@ -16,8 +19,7 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
     protected $signature = 'make:migration {name : The name of the migration.}
         {--module= : The name of the module.}
         {--create= : The table to be created.}
-        {--table= : The table to migrate.}
-        {--path= : The location where the migration file should be created.}';
+        {--table= : The table to migrate.}';
 
     /**
      * Write the migration file to disk.
@@ -54,18 +56,16 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
     /**
      * Get migration path (either specified by '--path' or '--module' options).
      *
+     * @throws \Exception
+     *
      * @return string
      */
     protected function getMigrationPath()
     {
-        if (! is_null($targetPath = $this->input->getOption('path'))) {
-            return $this->laravel->basePath().'/'.$targetPath;
+        if (! $this->laravel->files->exists($path = $this->laravel['path'].DIRECTORY_SEPARATOR.$this->moduleName())) {
+            throw new \Exception("Invalid path: {$path}");
         }
 
-        if (! is_null($module = $this->input->getOption('module')) && $this->laravel->files->exists($modulePath = $this->laravel->path().DIRECTORY_SEPARATOR.$module)) {
-            return $modulePath.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations';
-        }
-
-        return $this->laravel->databasePath().DIRECTORY_SEPARATOR.'migrations';
+        return $path.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations';
     }
 }
