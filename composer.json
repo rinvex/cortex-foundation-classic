@@ -49,7 +49,7 @@
         "laravelcollective/html": "~5.5.0",
         "league/fractal": "^0.16.0",
         "lord/laroute": "^2.4.0",
-        "mcamara/laravel-localization": "^1.2.0",
+        "mcamara/laravel-localization": "^1.3.0",
         "proengsoft/laravel-jsvalidation": "^2.1.0",
         "rinvex/cacheable": "dev-develop",
         "rinvex/composer": "dev-develop",
