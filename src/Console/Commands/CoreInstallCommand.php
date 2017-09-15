@@ -20,7 +20,7 @@ class CoreInstallCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Install Cortex Foundation Module.';
+    protected $description = 'Install Cortex Project.';
 
     /**
      * Execute the console command.
