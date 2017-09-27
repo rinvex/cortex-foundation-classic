@@ -115,6 +115,6 @@ class Handler extends ExceptionHandler
         return intend([
             'url' => route('guestarea.auth.login'),
             'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
-        ], 401);
+        ]);
     }
 }
