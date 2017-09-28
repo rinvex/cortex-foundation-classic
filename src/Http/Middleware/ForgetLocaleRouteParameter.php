@@ -18,8 +18,8 @@ class ForgetLocaleRouteParameter
      */
     public function handle($request, Closure $next)
     {
-        // Bind {locale} route parameter
-        $request->route()->forgetParameter('locale');
+        // unBind {locale} route parameter
+        ! config('cortex.foundation.route.locale_prefix') || $request->route()->forgetParameter('locale');
 
         return $next($request);
     }
