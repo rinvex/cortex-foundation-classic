@@ -22,6 +22,7 @@ return [
         // Changing this option require re-caching routes if already cached
         'prefix' => [
             'memberarea' => 'memberarea',
+            'tenantarea' => 'tenantarea',
             'adminarea' => 'adminarea',
         ],
 
