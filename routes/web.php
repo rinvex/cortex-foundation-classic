@@ -12,6 +12,15 @@ Route::group(['domain' => domain()], function () {
              Route::get('/')->name('home')->uses('HomeController@index');
          });
 
+    Route::name('tenantarea.')
+         ->namespace('Cortex\Foundation\Http\Controllers\Tenantarea')
+         ->middleware(['web', 'nohttpcache', 'can:access-tenantarea'])
+         ->prefix(config('cortex.foundation.route.locale_prefix') ? '{locale}/'.config('cortex.foundation.route.prefix.tenantarea') : config('cortex.foundation.route.prefix.tenantarea'))->group(function () {
+
+            // Tenantarea Home route
+             Route::get('/')->name('home')->uses('HomeController@index');
+         });
+
     Route::name('memberarea.')
          ->middleware(['web', 'nohttpcache'])
          ->namespace('Cortex\Foundation\Http\Controllers\Memberarea')

@@ -247,6 +247,7 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->alias(Menu::class, 'menu');
 
         $this->registerAdminareaMenus();
+        $this->registerTenantareaMenus();
         $this->registerUserareaMenus();
         $this->registerGuestareaMenus();
     }
@@ -274,6 +275,32 @@ class FoundationServiceProvider extends ServiceProvider
             });
 
             return $app['menu.adminarea.topbar']->setSection($section);
+        });
+    }
+
+    /**
+     * Register tenantarea menus.
+     *
+     * @return void
+     */
+    protected function registerTenantareaMenus()
+    {
+        $app = $this->app;
+
+        Menu::macro('tenantareaSidebar', function ($section = null) use ($app) {
+            $app->bound('menu.tenantarea.sidebar') || $app->singleton('menu.tenantarea.sidebar', function () {
+                return Menu::new();
+            });
+
+            return $app['menu.tenantarea.sidebar']->setSection($section);
+        });
+
+        Menu::macro('tenantareaTopbar', function ($section = null) use ($app) {
+            $app->bound('menu.tenantarea.topbar') || $app->singleton('menu.tenantarea.topbar', function () {
+                return Menu::new();
+            });
+
+            return $app['menu.tenantarea.topbar']->setSection($section);
         });
     }
 
