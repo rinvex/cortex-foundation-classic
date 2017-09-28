@@ -11,6 +11,7 @@ use Illuminate\Session\TokenMismatchException;
 use Rinvex\Fort\Exceptions\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Watson\Validating\ValidationException as WatsonValidationException;
 
@@ -69,6 +70,24 @@ class Handler extends ExceptionHandler
                 'url' => '/',
                 'with' => ['warning' => $exception->getMessage()],
             ], 403);
+        } elseif ($exception instanceof NotFoundHttpException) {
+            // Catch localized routes with missing {locale}
+            // and redirect them to the correct localized version
+            if (config('cortex.foundation.route.locale_redirect')) {
+                $originalUrl = $request->url();
+                $localizedUrl = app('laravellocalization')->getLocalizedURL(null, $originalUrl);
+
+                try {
+                    $route = app('router')->getRoutes()->match(request()->create($localizedUrl))->getName();
+
+                    return intend([
+                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route('guestarea.home'),
+                        'with' => ['warning' => $exception->getMessage()],
+                    ]);
+                } catch (Exception $e) {}
+            }
+
+            return $this->prepareResponse($request, $e);
         } elseif ($exception instanceof ModelNotFoundException) {
             $model = str_replace('Contract', '', $exception->getModel());
             $isAdminarea = mb_strpos($request->route()->getName(), 'adminarea') !== false;
