@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Illuminate\Routing\Router;
 use Cortex\Foundation\Models\Menu;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
@@ -69,7 +70,6 @@ class FoundationServiceProvider extends ServiceProvider
         // Register console commands
         ! $this->app->runningInConsole() || $this->registerCommands();
 
-        $this->prependMiddleware();
         $this->registerMenus();
     }
 
@@ -78,7 +78,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Router $router)
     {
         // Early set application locale globaly
         $router->pattern('locale', '[a-z]{2}');
@@ -137,18 +137,6 @@ class FoundationServiceProvider extends ServiceProvider
                 return "<?php echo app('notification')->container({$container})->show(); ?>";
             });
         });
-    }
-
-    /**
-     * Prepends the bootstrap middleware.
-     *
-     * @return void
-     */
-    protected function prependMiddleware()
-    {
-        if ($this->app['config']->get('cortex.foundation.route.trailing_slash')) {
-            $this->app[Kernel::class]->prependMiddleware(TrailingSlashEnforce::class);
-        }
     }
 
     /**

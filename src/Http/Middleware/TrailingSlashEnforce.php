@@ -18,7 +18,7 @@ class TrailingSlashEnforce
      */
     public function handle($request, Closure $next)
     {
-        if (! $request->ajax()) {
+        if (! $request->ajax() && config('cortex.foundation.route.trailing_slash')) {
             $requestUri = $request->getRequestUri();
             $queryString = $request->getQueryString();
             $untrimmedPath = trim($request->getPathInfo(), '/').'/';
