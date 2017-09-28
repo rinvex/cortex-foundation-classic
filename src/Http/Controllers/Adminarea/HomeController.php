@@ -11,7 +11,7 @@ class HomeController extends AuthorizedController
     /**
      * {@inheritdoc}
      */
-    protected $resource = 'dashboard';
+    protected $resource = 'adminarea';
 
     /**
      * {@inheritdoc}
@@ -19,7 +19,7 @@ class HomeController extends AuthorizedController
     protected $resourceAbilityMap = ['index' => 'access'];
 
     /**
-     * Show the dashboard home.
+     * Show the adminarea home.
      *
      * @return \Illuminate\Http\Response
      */

@@ -23,7 +23,7 @@ return [
     'details' => 'Details',
     'causer' => 'Causer',
     'date' => 'Date',
-    'welcome' => 'Welcome to your Dashboard',
+    'welcome' => 'Welcome to adminarea',
     'welcome_body' => 'This is your dashboard, a place with your taste to get a glimpse about system vitals, and data metrics in nice widgets.',
 
 ];
