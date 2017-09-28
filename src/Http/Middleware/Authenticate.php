@@ -23,7 +23,7 @@ class Authenticate
             return intend([
                 'url' => route('guestarea.auth.login'),
                 'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
-            ], 401);
+            ]);
         }
 
         return $next($request);
