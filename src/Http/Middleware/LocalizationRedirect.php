@@ -9,7 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationMiddlewareBase;
 
 /**
- * Class LocaleSessionRedirect
+ * Class LocaleSessionRedirect.
  *
  * This middleware is accessed ONLY if there's a match of existing routes,
  * whether localized or not but has already existing definition in route map.
@@ -17,8 +17,6 @@ use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationMiddlewareBase;
  *
  * Localized routes with missing {locale} are handled through the exception handler:
  * \Cortex\Foundation\Exceptions\Handler::render => instanceof NotFoundHttpException
- *
- * @package Mcamara\LaravelLocalization\Middleware
  */
 class LocalizationRedirect extends LaravelLocalizationMiddlewareBase
 {
