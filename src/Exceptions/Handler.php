@@ -11,8 +11,8 @@ use Illuminate\Session\TokenMismatchException;
 use Rinvex\Fort\Exceptions\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Watson\Validating\ValidationException as WatsonValidationException;
 
 class Handler extends ExceptionHandler
@@ -84,7 +84,8 @@ class Handler extends ExceptionHandler
                         'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route('guestarea.home'),
                         'with' => ['warning' => $exception->getMessage()],
                     ]);
-                } catch (Exception $e) {}
+                } catch (Exception $e) {
+                }
             }
 
             return $this->prepareResponse($request, $e);

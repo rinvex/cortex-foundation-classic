@@ -12,9 +12,10 @@ class UrlGenerator extends BaseUrlGenerator
     /**
      * Generate an absolute URL to the given path.
      *
-     * @param  string  $path
-     * @param  mixed  $extra
-     * @param  bool|null  $secure
+     * @param string    $path
+     * @param mixed     $extra
+     * @param bool|null $secure
+     *
      * @return string
      */
     public function to($path, $extra = [], $secure = null)
