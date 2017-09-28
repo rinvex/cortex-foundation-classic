@@ -15,6 +15,6 @@ class Request extends BaseRequest
      */
     public function url()
     {
-        return rtrim(preg_replace('/\?.*/', '', $this->getUri()), '/').'/';
+        return parent::url().(config('cortex.foundation.route.trailing_slash') ? '/' : '');
     }
 }
