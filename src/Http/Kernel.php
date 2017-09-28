@@ -25,11 +25,11 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \Cortex\Foundation\Http\Middleware\ForgetLocaleRouteParameter::class,
             \Cortex\Foundation\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
+            \Cortex\Foundation\Http\Middleware\ForgetLocaleRouteParameter::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
