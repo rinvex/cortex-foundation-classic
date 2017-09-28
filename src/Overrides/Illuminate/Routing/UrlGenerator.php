@@ -56,7 +56,11 @@ class UrlGenerator extends BaseUrlGenerator
     {
         // Bind {locale} route parameter
         if (config('cortex.foundation.route.locale_prefix') && ! isset($parameters['locale'])) {
-            $parameters['locale'] = LaravelLocalization::getCurrentLocale();
+            $urlLocale = $this->request->segment(1);
+            $sessionLocale = session('locale', $defaultLocale = app('laravellocalization')->getCurrentLocale());
+
+            $parameters['locale'] = app('laravellocalization')->checkLocaleInSupportedLocales($urlLocale) ? $urlLocale
+                : (app('laravellocalization')->checkLocaleInSupportedLocales($sessionLocale) ? $sessionLocale : $defaultLocale);
         }
 
         return $this->routeUrl()->to(

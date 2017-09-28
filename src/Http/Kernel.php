@@ -29,6 +29,7 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
+            \Cortex\Foundation\Http\Middleware\LocalizationRedirect::class,
             \Cortex\Foundation\Http\Middleware\ForgetLocaleRouteParameter::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,

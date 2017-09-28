@@ -21,7 +21,6 @@ use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
-use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
 use Cortex\Foundation\Overrides\Mcamara\LaravelLocalization\LaravelLocalization;
 
 class FoundationServiceProvider extends ServiceProvider
@@ -82,6 +81,7 @@ class FoundationServiceProvider extends ServiceProvider
     public function boot()
     {
         // Early set application locale globaly
+        $router->pattern('locale', '[a-z]{2}');
         $this->app['laravellocalization']->setLocale();
 
         // Load resources
@@ -146,10 +146,6 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function prependMiddleware()
     {
-        if ($this->app['config']->get('cortex.foundation.route.locale_prefix') && $this->app['config']->get('cortex.foundation.route.locale_redirect')) {
-            $this->app[Kernel::class]->prependMiddleware(LaravelLocalizationRedirectFilter::class);
-        }
-
         if ($this->app['config']->get('cortex.foundation.route.trailing_slash')) {
             $this->app[Kernel::class]->prependMiddleware(TrailingSlashEnforce::class);
         }
