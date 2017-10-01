@@ -84,11 +84,11 @@ class Handler extends ExceptionHandler
                         'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route('guestarea.home'),
                         'with' => ['warning' => $exception->getMessage()],
                     ]);
-                } catch (Exception $e) {
+                } catch (Exception $exception) {
                 }
             }
 
-            return $this->prepareResponse($request, $e);
+            return $this->prepareResponse($request, $exception);
         } elseif ($exception instanceof ModelNotFoundException) {
             $model = str_replace('Contract', '', $exception->getModel());
             $isAdminarea = mb_strpos($request->route()->getName(), 'adminarea') !== false;
@@ -107,18 +107,18 @@ class Handler extends ExceptionHandler
     /**
      * Render the given HttpException.
      *
-     * @param \Symfony\Component\HttpKernel\Exception\HttpException $e
+     * @param \Symfony\Component\HttpKernel\Exception\HttpException $exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderHttpException(HttpException $e)
+    protected function renderHttpException(HttpException $exception)
     {
-        $status = $e->getStatusCode();
+        $status = $exception->getStatusCode();
 
         if (view()->exists("cortex/foundation::common.errors.{$status}")) {
-            return response()->view("cortex/foundation::common.errors.{$status}", ['exception' => $e], $status, $e->getHeaders());
+            return response()->view("cortex/foundation::common.errors.{$status}", ['exception' => $exception], $status, $exception->getHeaders());
         } else {
-            return parent::renderHttpException($e);
+            return parent::renderHttpException($exception);
         }
     }
 
