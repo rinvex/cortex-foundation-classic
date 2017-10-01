@@ -78,7 +78,8 @@ class Handler extends ExceptionHandler
                 $localizedUrl = app('laravellocalization')->getLocalizedURL(null, $originalUrl);
 
                 try {
-                    $route = app('router')->getRoutes()->match(request()->create($localizedUrl))->getName();
+                    // Will return `NotFoundHttpException` exception if no match found!
+                    app('router')->getRoutes()->match(request()->create($localizedUrl));
 
                     return intend([
                         'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route('guestarea.home'),
