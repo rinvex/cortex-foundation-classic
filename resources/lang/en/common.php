@@ -30,5 +30,9 @@ return [
     'tenantarea_welcome_body' => 'This is your dashboard, a place with your taste to get a glimpse about your account, and feature highlights.',
     'memberarea_welcome' => 'Welcome to memberarea',
     'memberarea_welcome_body' => 'This is your dashboard, a place with your taste to get a glimpse about your account, and feature highlights.',
+    'guestarea_welcome' => 'Welcome to guestarea',
+    'guestarea_welcome_body' => 'This is your dashboard, a place with your taste to get a glimpse about your account, and feature highlights.',
+    'guestarea_about' => 'About Page',
+    'guestarea_about_body' => 'This is a sample about page.',
 
 ];
