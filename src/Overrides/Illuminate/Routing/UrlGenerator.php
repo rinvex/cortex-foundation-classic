@@ -80,6 +80,11 @@ class UrlGenerator extends BaseUrlGenerator
                 : (app('laravellocalization')->checkLocaleInSupportedLocales($sessionLocale) ? $sessionLocale : $defaultLocale);
         }
 
+        // Bind {subdomain} route parameter
+        if (in_array('subdomain', $route->parameterNames()) && ! isset($parameters['subdomain'])) {
+            $parameters['subdomain'] = $route->parameter('subdomain');
+        }
+
         return $this->routeUrl()->to(
             $route, $this->formatParameters($parameters), $absolute
         );
