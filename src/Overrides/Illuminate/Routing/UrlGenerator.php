@@ -56,7 +56,7 @@ class UrlGenerator extends BaseUrlGenerator
             $this->routeGenerator = new RouteUrlGenerator($this, $this->request);
         }
 
-        return $this->routeGenerator;
+        return parent::routeUrl();
     }
 
     /**
