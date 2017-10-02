@@ -82,7 +82,7 @@ class UrlGenerator extends BaseUrlGenerator
 
         // Bind {subdomain} route parameter
         if (in_array('subdomain', $route->parameterNames()) && ! isset($parameters['subdomain'])) {
-            $parameters['subdomain'] = $route->parameter('subdomain');
+            $parameters['subdomain'] = $route->hasParameter('subdomain') ? $route->parameter('subdomain') : explode('.', $this->request->getHost())[0];
         }
 
         return $this->routeUrl()->to(
