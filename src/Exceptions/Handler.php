@@ -52,19 +52,19 @@ class Handler extends ExceptionHandler
             return intend([
                 'back' => true,
                 'with' => ['warning' => trans('cortex/foundation::messages.token_mismatch')],
-            ], 419);
+            ]);
         } elseif ($exception instanceof WatsonValidationException) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
                 'withErrors' => $exception->errors(),
-            ], 400);
+            ]);
         } elseif ($exception instanceof GenericException) {
             return intend([
                 'url' => $exception->getRedirection() ?? route('guestarea.home'),
                 'withInput' => $exception->getInputs() ?? $request->all(),
                 'with' => ['warning' => $exception->getMessage()],
-            ], 422);
+            ]);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
                 'url' => '/',
@@ -99,7 +99,7 @@ class Handler extends ExceptionHandler
             return intend([
                 'url' => $isAdminarea ? route("adminarea.{$plural}.index") : route('guestarea.home'),
                 'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'id' => $request->route()->parameter($single)])],
-            ], 404);
+            ]);
         }
 
         return parent::render($request, $exception);
