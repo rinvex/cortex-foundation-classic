@@ -69,7 +69,7 @@ class Handler extends ExceptionHandler
             return intend([
                 'url' => '/',
                 'with' => ['warning' => $exception->getMessage()],
-            ], 403);
+            ]);
         } elseif ($exception instanceof NotFoundHttpException) {
             // Catch localized routes with missing {locale}
             // and redirect them to the correct localized version
