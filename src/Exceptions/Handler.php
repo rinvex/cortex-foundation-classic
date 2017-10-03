@@ -91,13 +91,15 @@ class Handler extends ExceptionHandler
 
             return $this->prepareResponse($request, $exception);
         } elseif ($exception instanceof ModelNotFoundException) {
+            $segment = config('cortex.foundation.route.locale_prefix') ? $request->segment(2) : $request->segment(1);
+            $area = config("cortex.foundation.route.prefix.{$segment}");
+
             $model = str_replace('Contract', '', $exception->getModel());
-            $isAdminarea = mb_strpos($request->route()->getName(), 'adminarea') !== false;
             $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
             $plural = str_plural($single);
 
             return intend([
-                'url' => $isAdminarea ? route("adminarea.{$plural}.index") : route('guestarea.home'),
+                'url' => $area ? route("{$area}.{$plural}.index") : route('guestarea.home'),
                 'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'id' => $request->route()->parameter($single)])],
             ]);
         }
