@@ -91,9 +91,7 @@ class Handler extends ExceptionHandler
 
             return $this->prepareResponse($request, $exception);
         } elseif ($exception instanceof ModelNotFoundException) {
-            $segment = config('cortex.foundation.route.locale_prefix') ? $request->segment(2) : $request->segment(1);
-            $area = config("cortex.foundation.route.prefix.{$segment}");
-
+            $area = $request->get('accessarea');
             $model = str_replace('Contract', '', $exception->getModel());
             $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
             $plural = str_plural($single);

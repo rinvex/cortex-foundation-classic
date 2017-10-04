@@ -19,6 +19,7 @@ class Kernel extends HttpKernel
         \Cortex\Foundation\Http\Middleware\TrailingSlashEnforce::class,
         \Cortex\Foundation\Http\Middleware\CrawlingRobots::class,
         \Cortex\Foundation\Http\Middleware\TrustProxies::class,
+        \Cortex\Foundation\Http\Middleware\DetectAccessArea::class,
     ];
 
     /**
