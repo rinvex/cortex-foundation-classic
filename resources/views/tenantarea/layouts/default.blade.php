@@ -18,7 +18,7 @@
         window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token()]); ?>
     </script>
 </head>
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="hold-transition skin-green fixed sidebar-mini">
     <!-- Main Content -->
     <div class="wrapper">
         @include('cortex/foundation::tenantarea.partials.header')
