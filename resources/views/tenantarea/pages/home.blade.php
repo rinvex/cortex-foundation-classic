@@ -1,9 +1,9 @@
 {{-- Master Layout --}}
-@extends('cortex/foundation::adminarea.layouts.default')
+@extends('cortex/foundation::tenantarea.layouts.default')
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('cortex/foundation::common.adminarea') }}
+    {{ config('app.name') }} » {{ trans('cortex/foundation::common.tenantarea') }}
 @stop
 
 {{-- Main Content --}}
@@ -16,8 +16,8 @@
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-md-12">
-                    <h1><i class="fa fa-dashboard"></i> {{ trans('cortex/foundation::common.adminarea_welcome') }}</h1>
-                    <h4>{{ trans('cortex/foundation::common.adminarea_welcome_body') }}</h4>
+                    <h1><i class="fa fa-dashboard"></i> {{ trans('cortex/foundation::common.tenantarea_welcome') }}</h1>
+                    <h4>{{ trans('cortex/foundation::common.tenantarea_welcome_body') }}</h4>
                 </div>
 
             </div>

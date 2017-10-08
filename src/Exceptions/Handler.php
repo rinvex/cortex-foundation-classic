@@ -52,24 +52,24 @@ class Handler extends ExceptionHandler
             return intend([
                 'back' => true,
                 'with' => ['warning' => trans('cortex/foundation::messages.token_mismatch')],
-            ], 419);
+            ]);
         } elseif ($exception instanceof WatsonValidationException) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
                 'withErrors' => $exception->errors(),
-            ], 400);
+            ]);
         } elseif ($exception instanceof GenericException) {
             return intend([
                 'url' => $exception->getRedirection() ?? route('guestarea.home'),
                 'withInput' => $exception->getInputs() ?? $request->all(),
                 'with' => ['warning' => $exception->getMessage()],
-            ], 422);
+            ]);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
                 'url' => '/',
                 'with' => ['warning' => $exception->getMessage()],
-            ], 403);
+            ]);
         } elseif ($exception instanceof NotFoundHttpException) {
             // Catch localized routes with missing {locale}
             // and redirect them to the correct localized version
@@ -78,27 +78,28 @@ class Handler extends ExceptionHandler
                 $localizedUrl = app('laravellocalization')->getLocalizedURL(null, $originalUrl);
 
                 try {
-                    $route = app('router')->getRoutes()->match(request()->create($localizedUrl))->getName();
+                    // Will return `NotFoundHttpException` exception if no match found!
+                    app('router')->getRoutes()->match(request()->create($localizedUrl));
 
                     return intend([
                         'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route('guestarea.home'),
                         'with' => ['warning' => $exception->getMessage()],
                     ]);
-                } catch (Exception $e) {
+                } catch (Exception $exception) {
                 }
             }
 
-            return $this->prepareResponse($request, $e);
+            return $this->prepareResponse($request, $exception);
         } elseif ($exception instanceof ModelNotFoundException) {
+            $area = $request->get('accessarea');
             $model = str_replace('Contract', '', $exception->getModel());
-            $isAdminarea = mb_strpos($request->route()->getName(), 'adminarea') !== false;
             $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
             $plural = str_plural($single);
 
             return intend([
-                'url' => $isAdminarea ? route("adminarea.{$plural}.index") : route('guestarea.home'),
+                'url' => $area ? route("{$area}.{$plural}.index") : route('guestarea.home'),
                 'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'id' => $request->route()->parameter($single)])],
-            ], 404);
+            ]);
         }
 
         return parent::render($request, $exception);
@@ -107,18 +108,18 @@ class Handler extends ExceptionHandler
     /**
      * Render the given HttpException.
      *
-     * @param \Symfony\Component\HttpKernel\Exception\HttpException $e
+     * @param \Symfony\Component\HttpKernel\Exception\HttpException $exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderHttpException(HttpException $e)
+    protected function renderHttpException(HttpException $exception)
     {
-        $status = $e->getStatusCode();
+        $status = $exception->getStatusCode();
 
         if (view()->exists("cortex/foundation::common.errors.{$status}")) {
-            return response()->view("cortex/foundation::common.errors.{$status}", ['exception' => $e], $status, $e->getHeaders());
+            return response()->view("cortex/foundation::common.errors.{$status}", ['exception' => $exception], $status, $exception->getHeaders());
         } else {
-            return parent::renderHttpException($e);
+            return parent::renderHttpException($exception);
         }
     }
 

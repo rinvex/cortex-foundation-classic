@@ -6,7 +6,7 @@ namespace Cortex\Foundation\Http\Middleware;
 
 use Closure;
 
-class ForgetLocaleRouteParameter
+class DetectAccessArea
 {
     /**
      * Handle an incoming request.
@@ -18,8 +18,10 @@ class ForgetLocaleRouteParameter
      */
     public function handle($request, Closure $next)
     {
-        // unBind {locale} route parameter
-        ! $request->route('locale') || $request->route()->forgetParameter('locale');
+        $segment = config('cortex.foundation.route.locale_prefix') ? $request->segment(2) : $request->segment(1);
+        $area = config("cortex.foundation.route.prefix.{$segment}");
+
+        ! $area || $request->request->add(['accessarea' => $area]);
 
         return $next($request);
     }

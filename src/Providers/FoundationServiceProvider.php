@@ -247,7 +247,8 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->alias(Menu::class, 'menu');
 
         $this->registerAdminareaMenus();
-        $this->registerUserareaMenus();
+        $this->registerTenantareaMenus();
+        $this->registerMemberareaMenus();
         $this->registerGuestareaMenus();
     }
 
@@ -278,13 +279,47 @@ class FoundationServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register tenantarea menus.
+     *
+     * @return void
+     */
+    protected function registerTenantareaMenus()
+    {
+        $app = $this->app;
+
+        Menu::macro('tenantareaSidebar', function ($section = null) use ($app) {
+            $app->bound('menu.tenantarea.sidebar') || $app->singleton('menu.tenantarea.sidebar', function () {
+                return Menu::new();
+            });
+
+            return $app['menu.tenantarea.sidebar']->setSection($section);
+        });
+
+        Menu::macro('tenantareaTopbar', function ($section = null) use ($app) {
+            $app->bound('menu.tenantarea.topbar') || $app->singleton('menu.tenantarea.topbar', function () {
+                return Menu::new();
+            });
+
+            return $app['menu.tenantarea.topbar']->setSection($section);
+        });
+    }
+
+    /**
      * Register memberarea menus.
      *
      * @return void
      */
-    protected function registerUserareaMenus()
+    protected function registerMemberareaMenus()
     {
         $app = $this->app;
+
+        Menu::macro('memberareaSidebar', function ($section = null) use ($app) {
+            $app->bound('menu.memberarea.sidebar') || $app->singleton('menu.memberarea.sidebar', function () {
+                return Menu::new();
+            });
+
+            return $app['menu.memberarea.sidebar']->setSection($section);
+        });
 
         Menu::macro('memberareaTopbar', function ($section = null) use ($app) {
             $app->bound('menu.memberarea.topbar') || $app->singleton('menu.memberarea.topbar', function () {

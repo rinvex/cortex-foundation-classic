@@ -1,8 +1,8 @@
 [
     {
         "action": "access",
-        "resource": "dashboard",
-        "policy": "Cortex\\Foundation\\Policies\\DashboardPolicy@access",
-        "name": "Access Dashboard"
+        "resource": "tenantarea",
+        "policy": "Cortex\\Foundation\\Policies\\TenantareaPolicy@access",
+        "name": "Access Tenantarea"
     }
 ]

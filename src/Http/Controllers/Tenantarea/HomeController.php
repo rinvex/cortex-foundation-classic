@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cortex\Foundation\Http\Controllers\Adminarea;
+namespace Cortex\Foundation\Http\Controllers\Tenantarea;
 
 use Cortex\Foundation\Http\Controllers\AuthorizedController;
 
@@ -11,7 +11,7 @@ class HomeController extends AuthorizedController
     /**
      * {@inheritdoc}
      */
-    protected $resource = 'adminarea';
+    protected $resource = 'tenantarea';
 
     /**
      * {@inheritdoc}
@@ -19,12 +19,12 @@ class HomeController extends AuthorizedController
     protected $resourceAbilityMap = ['index' => 'access'];
 
     /**
-     * Show the adminarea home.
+     * Show the tenantarea home.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('cortex/foundation::adminarea.pages.home');
+        return view('cortex/foundation::tenantarea.pages.home');
     }
 }

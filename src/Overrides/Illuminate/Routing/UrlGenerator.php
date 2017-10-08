@@ -56,7 +56,7 @@ class UrlGenerator extends BaseUrlGenerator
             $this->routeGenerator = new RouteUrlGenerator($this, $this->request);
         }
 
-        return $this->routeGenerator;
+        return parent::routeUrl();
     }
 
     /**
@@ -73,12 +73,16 @@ class UrlGenerator extends BaseUrlGenerator
     protected function toRoute($route, $parameters, $absolute)
     {
         // Bind {locale} route parameter
-        if (config('cortex.foundation.route.locale_prefix') && ! isset($parameters['locale'])) {
+        if (config('cortex.foundation.route.locale_prefix') && in_array('locale', $route->parameterNames()) && ! isset($parameters['locale'])) {
             $urlLocale = $this->request->segment(1);
             $sessionLocale = session('locale', $defaultLocale = app('laravellocalization')->getCurrentLocale());
-
             $parameters['locale'] = app('laravellocalization')->checkLocaleInSupportedLocales($urlLocale) ? $urlLocale
                 : (app('laravellocalization')->checkLocaleInSupportedLocales($sessionLocale) ? $sessionLocale : $defaultLocale);
+        }
+
+        // Bind {subdomain} route parameter
+        if (in_array('subdomain', $route->parameterNames()) && ! isset($parameters['subdomain'])) {
+            $parameters['subdomain'] = $route->hasParameter('subdomain') ? $route->parameter('subdomain') : explode('.', $this->request->getHost())[0];
         }
 
         return $this->routeUrl()->to(

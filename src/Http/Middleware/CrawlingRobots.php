@@ -40,6 +40,6 @@ class CrawlingRobots
      */
     protected function shouldIndex(Request $request)
     {
-        return app()->environment('production') && ! in_array($request->segment(1), ['adminarea']);
+        return app()->environment('production') && ! in_array($request->get('accessarea'), array_keys(config('cortex.foundation.route.prefix')));
     }
 }
