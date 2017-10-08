@@ -248,7 +248,7 @@ class FoundationServiceProvider extends ServiceProvider
 
         $this->registerAdminareaMenus();
         $this->registerTenantareaMenus();
-        $this->registerUserareaMenus();
+        $this->registerMemberareaMenus();
         $this->registerGuestareaMenus();
     }
 
@@ -309,9 +309,17 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerUserareaMenus()
+    protected function registerMemberareaMenus()
     {
         $app = $this->app;
+
+        Menu::macro('memberareaSidebar', function ($section = null) use ($app) {
+            $app->bound('menu.memberarea.sidebar') || $app->singleton('menu.memberarea.sidebar', function () {
+                return Menu::new();
+            });
+
+            return $app['menu.memberarea.sidebar']->setSection($section);
+        });
 
         Menu::macro('memberareaTopbar', function ($section = null) use ($app) {
             $app->bound('menu.memberarea.topbar') || $app->singleton('menu.memberarea.topbar', function () {
