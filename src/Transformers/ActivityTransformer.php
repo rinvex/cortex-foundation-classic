@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cortex\Foundation\Transformers\Adminarea;
+namespace Cortex\Foundation\Transformers;
 
 use Cortex\Foundation\Models\Log;
 use Illuminate\Support\Facades\Route;

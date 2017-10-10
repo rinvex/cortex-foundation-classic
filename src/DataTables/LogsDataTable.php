@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\DataTables;
 
 use Cortex\Foundation\Models\Log;
-use Cortex\Foundation\Transformers\Adminarea\LogTransformer;
+use Cortex\Foundation\Transformers\LogTransformer;
 
 class LogsDataTable extends AbstractDataTable
 {
