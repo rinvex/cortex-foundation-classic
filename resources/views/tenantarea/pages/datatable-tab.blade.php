@@ -1,9 +1,9 @@
 {{-- Master Layout --}}
-@extends('cortex/foundation::adminarea.layouts.default')
+@extends('cortex/foundation::tenantarea.layouts.default')
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('cortex/foundation::common.adminarea') }} » {{ $phrase }} » {{ $resource->username ?? $resource->name ?? $resource->slug ?? '' }}
+    {{ config('app.name') }} » {{ trans('cortex/foundation::common.tenantarea') }} » {{ $phrase }} » {{ $resource->username ?? $resource->name ?? $resource->slug ?? '' }}
 @stop
 
 {{-- Main Content --}}
@@ -22,9 +22,8 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     @section('tabs')
-                        <li><a href="{{ route("adminarea.{$type}.edit", [str_singular($type) => $resource]) }}">{{ trans('cortex/foundation::common.details') }}</a></li>
+                        <li><a href="{{ route("tenantarea.{$type}.edit", [str_singular($type) => $resource]) }}">{{ trans('cortex/foundation::common.details') }}</a></li>
                         <li class="active"><a href="#{{ $tab }}-tab" data-toggle="tab">{{ trans('cortex/foundation::common.'.$tab) }}</a></li>
-                        @if(method_exists($resource, 'causedActivity')) <li><a href="{{ route("adminarea.{$type}.activities", [str_singular($type) => $resource]) }}">{{ trans('cortex/foundation::common.activities') }}</a></li> @endif
                         <li style="float: right; padding: 5px"><select class="form-control dataTableBuilderLengthChanger" aria-controls="{{ $id }}-table"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></li>
                     @show
                 </ul>
@@ -50,3 +49,4 @@
 @push('scripts')
     {!! $dataTable->scripts() !!}
 @endpush
+
