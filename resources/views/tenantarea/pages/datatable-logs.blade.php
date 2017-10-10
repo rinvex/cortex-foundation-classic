@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('cortex/foundation::common.tenantarea') }} » {{ $phrase }} » {{ $resource->slug ?? $resource->username }}
+    {{ config('app.name') }} » {{ trans('cortex/foundation::common.tenantarea') }} » {{ $phrase }} » {{ $resource->username ?? $resource->name ?? $resource->slug ?? '' }}
 @stop
 
 {{-- Main Content --}}
@@ -11,7 +11,7 @@
 
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>{{ $resource->slug ?? $resource->username }}</h1>
+            <h1>@yield('name', $resource->username ?? $resource->name ?? $resource->slug ?? '')</h1>
             <!-- Breadcrumbs -->
             {{ Breadcrumbs::render() }}
         </section>
@@ -21,15 +21,17 @@
 
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li><a href="{{ route("tenantarea.{$type}.edit", [str_singular($type) => $resource]) }}">{{ trans('cortex/foundation::common.details') }}</a></li>
-                    <li class="active"><a href="" href="#logs-tab" data-toggle="tab">{{ trans('cortex/foundation::common.logs') }}</a></li>
-                    @if(method_exists($resource, 'causedActivity')) <li><a href="{{ route("tenantarea.{$type}.activities", [str_singular($type) => $resource]) }}">{{ trans('cortex/foundation::common.activities') }}</a></li> @endif
-                    <li style="float: right; padding: 5px"><select class="form-control dataTableBuilderLengthChanger" aria-controls="{{ $id }}-table"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></li>
+                    @section('tabs')
+                        <li><a href="{{ route("tenantarea.{$type}.edit", [str_singular($type) => $resource]) }}">{{ trans('cortex/foundation::common.details') }}</a></li>
+                        <li class="active"><a href="#{{ $tab ?? 'logs' }}-tab" data-toggle="tab">{{ trans('cortex/foundation::common.logs') }}</a></li>
+                        @if(method_exists($resource, 'causedActivity')) <li><a href="{{ route("tenantarea.{$type}.activities", [str_singular($type) => $resource]) }}">{{ trans('cortex/foundation::common.activities') }}</a></li> @endif
+                        <li style="float: right; padding: 5px"><select class="form-control dataTableBuilderLengthChanger" aria-controls="{{ $id }}-table"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></li>
+                    @show
                 </ul>
 
                 <div class="tab-content">
 
-                    <div class="tab-pane active" id="logs-tab">
+                    <div class="tab-pane active" id="{{ $tab ?? 'logs' }}-tab">
 
                         {!! $dataTable->table(['class' => 'table table-striped responsive dataTableBuilder', 'id' => "{$id}"]) !!}
 
