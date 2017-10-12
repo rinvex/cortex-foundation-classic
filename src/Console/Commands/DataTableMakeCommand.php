@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 
-class DatatableMakeCommand extends GeneratorCommand
+class DataTableMakeCommand extends GeneratorCommand
 {
     use ConsoleMakeModuleCommand;
 
