@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 return [
 
+    'id' => 'ID',
     'new' => 'New',
     'columns' => 'Columns',
     'cancel' => 'Cancel',
