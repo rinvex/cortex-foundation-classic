@@ -148,7 +148,7 @@ class ModuleMakeCommand extends Command
 
         foreach ($files as $key => &$file) {
             $file = str_replace('DummyModuleName', $name, $file);
-            $file = str_replace('Dummy\\Module', $jsonNamespace, $file);
+            $file = str_replace('Dummy\\\\Module', $jsonNamespace, $file);
             $file = str_replace('DummyModuleServiceProvider', $jsonNamespace."\\\\Providers\\\\{$module}ServiceProvider", $file);
 
             $file = str_replace('dummy/module', $this->getNameInput(), $file);
