@@ -29,7 +29,7 @@ class PublishCommand extends Command
      */
     public function handle()
     {
-        $this->warn('Publish cortex/foundation:');
+        $this->warn($this->description);
         $this->call('vendor:publish', ['--tag' => 'cortex-foundation-config', '--force' => $this->option('force')]);
         $this->call('vendor:publish', ['--tag' => 'cortex-foundation-views', '--force' => $this->option('force')]);
         $this->call('vendor:publish', ['--tag' => 'cortex-foundation-lang', '--force' => $this->option('force')]);
