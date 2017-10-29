@@ -3,7 +3,6 @@
 The core foundation of **Rinvex Cortex** modular application architecture.
 
 [![Packagist](https://img.shields.io/packagist/v/cortex/foundation.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/cortex/foundation)
-[![VersionEye Dependencies](https://img.shields.io/versioneye/d/php/cortex:foundation.svg?label=Dependencies&style=flat-square)](https://www.versioneye.com/php/cortex:foundation/)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/cortex/foundation.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/cortex/foundation/)
 [![Code Climate](https://img.shields.io/codeclimate/github/cortex/foundation.svg?label=CodeClimate&style=flat-square)](https://codeclimate.com/github/cortex/foundation)
 [![Travis](https://img.shields.io/travis/cortex/foundation.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/cortex/foundation)
