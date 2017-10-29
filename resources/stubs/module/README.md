@@ -3,7 +3,6 @@
 **DummyModuleName** is a new module for rinvex/cortex applications.
 
 [![Packagist](https://img.shields.io/packagist/v/dummy/module.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/dummy/module)
-[![VersionEye Dependencies](https://img.shields.io/versioneye/d/php/dummy:module.svg?label=Dependencies&style=flat-square)](https://www.versioneye.com/php/dummy:module/)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/dummy/module.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/dummy/module/)
 [![Code Climate](https://img.shields.io/codeclimate/github/dummy/module.svg?label=CodeClimate&style=flat-square)](https://codeclimate.com/github/dummy/module)
 [![Travis](https://img.shields.io/travis/dummy/module.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/dummy/module)
