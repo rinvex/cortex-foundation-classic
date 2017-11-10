@@ -248,8 +248,7 @@ class FoundationServiceProvider extends ServiceProvider
 
         $this->registerAdminareaMenus();
         $this->registerTenantareaMenus();
-        $this->registerMemberareaMenus();
-        $this->registerGuestareaMenus();
+        $this->registerFrontareaMenus();
     }
 
     /**
@@ -305,46 +304,28 @@ class FoundationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register memberarea menus.
+     * Register frontarea menus.
      *
      * @return void
      */
-    protected function registerMemberareaMenus()
+    protected function registerFrontareaMenus()
     {
         $app = $this->app;
 
-        Menu::macro('memberareaSidebar', function ($section = null) use ($app) {
-            $app->bound('menu.memberarea.sidebar') || $app->singleton('menu.memberarea.sidebar', function () {
+        Menu::macro('frontareaSidebar', function ($section = null) use ($app) {
+            $app->bound('menu.frontarea.sidebar') || $app->singleton('menu.frontarea.sidebar', function () {
                 return Menu::new();
             });
 
-            return $app['menu.memberarea.sidebar']->setSection($section);
+            return $app['menu.frontarea.sidebar']->setSection($section);
         });
 
-        Menu::macro('memberareaTopbar', function ($section = null) use ($app) {
-            $app->bound('menu.memberarea.topbar') || $app->singleton('menu.memberarea.topbar', function () {
+        Menu::macro('frontareaTopbar', function ($section = null) use ($app) {
+            $app->bound('menu.frontarea.topbar') || $app->singleton('menu.frontarea.topbar', function () {
                 return Menu::new();
             });
 
-            return $app['menu.memberarea.topbar']->setSection($section);
-        });
-    }
-
-    /**
-     * Register guestarea menus.
-     *
-     * @return void
-     */
-    protected function registerGuestareaMenus()
-    {
-        $app = $this->app;
-
-        Menu::macro('guestareaTopbar', function ($section = null) use ($app) {
-            $app->bound('menu.guestarea.topbar') || $app->singleton('menu.guestarea.topbar', function () {
-                return Menu::new();
-            });
-
-            return $app['menu.guestarea.topbar']->setSection($section);
+            return $app['menu.frontarea.topbar']->setSection($section);
         });
     }
 

@@ -12,10 +12,10 @@ Route::domain(domain())->group(function () {
              Route::get('/')->name('home')->uses('HomeController@index');
          });
 
-    Route::name('memberarea.')
+    Route::name('frontarea.')
          ->middleware(['web', 'nohttpcache'])
-         ->namespace('Cortex\Foundation\Http\Controllers\Memberarea')
-         ->prefix(config('cortex.foundation.route.locale_prefix') ? '{locale}/'.config('cortex.foundation.route.prefix.memberarea') : config('cortex.foundation.route.prefix.memberarea'))->group(function () {
+         ->namespace('Cortex\Foundation\Http\Controllers\Frontarea')
+         ->prefix(config('cortex.foundation.route.locale_prefix') ? '{locale}/'.config('cortex.foundation.route.prefix.frontarea') : config('cortex.foundation.route.prefix.frontarea'))->group(function () {
 
             // Homepage Routes
              Route::get('/')->name('home')->uses('HomeController@index');

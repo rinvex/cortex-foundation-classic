@@ -21,7 +21,7 @@ class Authenticate
     {
         if (auth()->guard($guard)->guest()) {
             return intend([
-                'url' => route('guestarea.auth.login'),
+                'url' => route('frontarea.auth.login'),
                 'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
             ]);
         }

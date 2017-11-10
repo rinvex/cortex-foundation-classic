@@ -61,7 +61,7 @@ class Handler extends ExceptionHandler
             ]);
         } elseif ($exception instanceof GenericException) {
             return intend([
-                'url' => $exception->getRedirection() ?? route('guestarea.home'),
+                'url' => $exception->getRedirection() ?? route('frontarea.home'),
                 'withInput' => $exception->getInputs() ?? $request->all(),
                 'with' => ['warning' => $exception->getMessage()],
             ]);
@@ -82,7 +82,7 @@ class Handler extends ExceptionHandler
                     app('router')->getRoutes()->match(request()->create($localizedUrl));
 
                     return intend([
-                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route('guestarea.home'),
+                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route('frontarea.home'),
                         'with' => ['warning' => $exception->getMessage()],
                     ]);
                 } catch (Exception $exception) {
@@ -97,7 +97,7 @@ class Handler extends ExceptionHandler
             $plural = str_plural($single);
 
             return intend([
-                'url' => $area ? route("{$area}.{$plural}.index") : route('guestarea.home'),
+                'url' => $area ? route("{$area}.{$plural}.index") : route('frontarea.home'),
                 'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'id' => $request->route()->parameter($single)])],
             ]);
         }
@@ -134,7 +134,7 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return intend([
-            'url' => route('guestarea.auth.login'),
+            'url' => route('frontarea.auth.login'),
             'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
         ]);
     }

@@ -11,7 +11,7 @@ return [
     'delete' => 'Delete',
     'adminarea' => 'Adminarea',
     'tenantarea' => 'Tenantarea',
-    'memberarea' => 'Memberarea',
+    'frontarea' => 'Frontarea',
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',
     'toggle_navigation' => 'Toggle navigation',
@@ -29,11 +29,5 @@ return [
     'adminarea_welcome_body' => 'This is your dashboard, a place with your taste to get a glimpse about system vitals, and data metrics in nice widgets.',
     'tenantarea_welcome' => 'Welcome to tenantarea',
     'tenantarea_welcome_body' => 'This is your dashboard, a place with your taste to get a glimpse about your account, and feature highlights.',
-    'memberarea_welcome' => 'Welcome to memberarea',
-    'memberarea_welcome_body' => 'This is your dashboard, a place with your taste to get a glimpse about your account, and feature highlights.',
-    'guestarea_welcome' => 'Welcome to guestarea',
-    'guestarea_welcome_body' => 'This is your dashboard, a place with your taste to get a glimpse about your account, and feature highlights.',
-    'guestarea_about' => 'About Page',
-    'guestarea_about_body' => 'This is a sample about page.',
 
 ];
