@@ -46,6 +46,14 @@
 
 @endsection
 
+@push('styles')
+    <link href="{{ mix('css/datatables.css') }}" rel="stylesheet">
+@endpush
+
+@push('scripts-vendor')
+    <script src="{{ mix('js/datatables.js') }}" type="text/javascript"></script>
+@endpush
+
 @push('scripts')
     {!! $dataTable->scripts() !!}
 @endpush
