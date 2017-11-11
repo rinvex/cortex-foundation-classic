@@ -1,6 +1,5 @@
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <strong>{{ config('app.copyright') }}</strong>
+<div id="copyright">
+    <div class="container">
+        <p>{{ config('app.copyright') }}</p>
     </div>
-    &nbsp;
-</footer>
+</div>

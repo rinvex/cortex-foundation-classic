@@ -1,17 +1,22 @@
-<header class="main-header">
-    <nav class="navbar navbar-static-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="{{ route('frontarea.home') }}" class="navbar-brand">{{ config('app.name') }}</a>
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-                    <i class="fa fa-bars"></i>
-                </button>
-            </div>
+<!-- Fixed navbar -->
+<div id="navigation" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ route('frontarea.home') }}"><b>{{ config('app.name') }}</b></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#home" class="smothscroll">Home</a></li>
+                <li><a href="#desc" class="smothscroll">Description</a></li>
+                <li><a href="#contact" class="smothScroll">Contact</a></li>
+            </ul>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar-collapse">
-                {!! Menu::frontareaTopbar()->addClass('nav navbar-nav navbar-right')->setActiveFromRequest() !!}
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-</header>
+            {!! Menu::frontareaTopbar()->addClass('nav navbar-nav navbar-right')->setActiveFromRequest() !!}
+        </div><!--/.nav-collapse -->
+    </div>
+</div>

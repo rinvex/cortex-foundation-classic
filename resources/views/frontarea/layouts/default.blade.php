@@ -7,9 +7,14 @@
     <!-- Meta Data -->
     @include('cortex/foundation::common.partials.meta')
 
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+
     <!-- Styles -->
     <link href="{{ mix('css/vendor.css') }}" rel="stylesheet">
-    <link href="{{ mix('css/theme.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/theme-adminlte.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/theme-pratt.css') }}" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @stack('styles')
 
@@ -18,13 +23,12 @@
         window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token()]); ?>
     </script>
 </head>
-<body class="skin-blue-light layout-top-nav">
-    <!-- Main Content -->
-    <div class="wrapper">
-        @include('cortex/foundation::frontarea.partials.header')
-        @yield('content')
-        @include('cortex/foundation::frontarea.partials.footer')
-    </div>
+<body @yield('body-attributes')>
+    @include('cortex/foundation::frontarea.partials.header')
+
+    @yield('content')
+
+    @include('cortex/foundation::frontarea.partials.footer')
 
     <!-- JavaScripts -->
     <script src="{{ mix('js/manifest.js') }}" type="text/javascript"></script>
