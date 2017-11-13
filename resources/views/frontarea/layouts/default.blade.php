@@ -12,10 +12,10 @@
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
-    <link href="{{ mix('css/vendor.css') }}" rel="stylesheet">
-    <link href="{{ mix('css/theme-adminlte.css') }}" rel="stylesheet">
-    <link href="{{ mix('css/theme-pratt.css') }}" rel="stylesheet">
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/vendor.css', 'assets') }}" rel="stylesheet">
+    <link href="{{ mix('css/theme-adminlte.css', 'assets') }}" rel="stylesheet">
+    <link href="{{ mix('css/theme-pratt.css', 'assets') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css', 'assets') }}" rel="stylesheet">
     @stack('styles')
 
     <!-- Scripts -->
@@ -31,10 +31,10 @@
     @include('cortex/foundation::frontarea.partials.footer')
 
     <!-- JavaScripts -->
-    <script src="{{ mix('js/manifest.js') }}" type="text/javascript"></script>
-    <script src="{{ mix('js/vendor.js') }}" type="text/javascript"></script>
+    <script src="{{ mix('js/manifest.js', 'assets') }}" type="text/javascript"></script>
+    <script src="{{ mix('js/vendor.js', 'assets') }}" type="text/javascript"></script>
     @stack('scripts-vendor')
-    <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
+    <script src="{{ mix('js/app.js', 'assets') }}" type="text/javascript"></script>
     @stack('scripts')
 
     <!-- Alerts -->

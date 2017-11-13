@@ -8,9 +8,9 @@
     @include('cortex/foundation::common.partials.meta')
 
     <!-- Styles -->
-    <link href="{{ mix('css/vendor.css') }}" rel="stylesheet">
-    <link href="{{ mix('css/theme.css') }}" rel="stylesheet">
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/vendor.css', 'assets') }}" rel="stylesheet">
+    <link href="{{ mix('css/theme.css', 'assets') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css', 'assets') }}" rel="stylesheet">
     @stack('styles')
 
     <!-- Scripts -->
@@ -30,10 +30,10 @@
     </div>
 
     <!-- JavaScripts -->
-    <script src="{{ mix('js/manifest.js') }}" type="text/javascript"></script>
-    <script src="{{ mix('js/vendor.js') }}" type="text/javascript"></script>
+    <script src="{{ mix('js/manifest.js', 'assets') }}" type="text/javascript"></script>
+    <script src="{{ mix('js/vendor.js', 'assets') }}" type="text/javascript"></script>
     @stack('scripts-vendor')
-    <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
+        <script src="{{ mix('js/app.js', 'assets') }}" type="text/javascript"></script>
     @stack('scripts')
 
     <!-- Alerts -->
