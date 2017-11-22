@@ -7,6 +7,7 @@ return [
     'id' => 'ID',
     'new' => 'New',
     'columns' => 'Columns',
+    'limit' => 'Limit',
     'cancel' => 'Cancel',
     'delete' => 'Delete',
     'adminarea' => 'Adminarea',
