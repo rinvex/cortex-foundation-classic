@@ -5,6 +5,8 @@
 [![Packagist](https://img.shields.io/packagist/v/dummy/module.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/dummy/module)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/dummy/module.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/dummy/module/)
 [![Code Climate](https://img.shields.io/codeclimate/github/dummy/module.svg?label=CodeClimate&style=flat-square)](https://codeclimate.com/github/dummy/module)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/746e5965-90c3-5caa-aa57-c340f79bc78f.svg?label=SensioLabs&style=flat-square)](https://insight.sensiolabs.com/projects/746e5965-90c3-5caa-aa57-c340f79bc78f)
+[![StyleCI](https://styleci.io/repos/123123123/shield)](https://styleci.io/repos/123123123)
 [![Travis](https://img.shields.io/travis/dummy/module.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/dummy/module)
 [![License](https://img.shields.io/packagist/l/dummy/module.svg?label=License&style=flat-square)](https://github.com/dummy/module/blob/develop/LICENSE)
 
