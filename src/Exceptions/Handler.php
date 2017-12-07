@@ -134,7 +134,7 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return intend([
-            'url' => route('frontarea.auth.login'),
+            'url' => route('frontarea.login'),
             'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
         ]);
     }
