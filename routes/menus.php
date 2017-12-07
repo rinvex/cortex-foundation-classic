@@ -16,6 +16,5 @@ if (config('cortex.foundation.route.locale_prefix')) {
     };
 
     Menu::adminareaTopbar()->submenu($langSwitcherHeader, $langSwitcherBody);
-    Menu::tenantareaTopbar()->submenu($langSwitcherHeader, $langSwitcherBody);
     Menu::frontareaTopbar()->submenu($langSwitcherHeader, $langSwitcherBody);
 }

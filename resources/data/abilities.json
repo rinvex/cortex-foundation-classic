@@ -1,8 +1,0 @@
-[
-    {
-        "action": "access",
-        "resource": "tenantarea",
-        "policy": "Cortex\\Foundation\\Policies\\TenantareaPolicy@access",
-        "name": "Access Tenantarea"
-    }
-]
