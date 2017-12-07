@@ -20,7 +20,8 @@
 
     <!-- Scripts -->
     <script>
-        window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token()]); ?>
+        window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token()]); ?>;
+        window.Accessarea = "<?php echo request('accessarea'); ?>";
     </script>
 </head>
 <body @yield('body-attributes')>
