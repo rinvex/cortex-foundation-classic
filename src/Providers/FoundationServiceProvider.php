@@ -12,10 +12,12 @@ use Cortex\Foundation\Console\Commands\SeedCommand;
 use Cortex\Foundation\Console\Commands\InstallCommand;
 use Cortex\Foundation\Console\Commands\MigrateCommand;
 use Cortex\Foundation\Console\Commands\PublishCommand;
+use Cortex\Foundation\Console\Commands\RollbackCommand;
 use Cortex\Foundation\Console\Commands\CoreSeedCommand;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
 use Cortex\Foundation\Console\Commands\CorePublishCommand;
+use Cortex\Foundation\Console\Commands\CoreRollbackCommand;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder;
@@ -30,14 +32,16 @@ class FoundationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        CoreMigrateCommand::class => 'command.cortex.foundation.coremigrate',
-        CoreInstallCommand::class => 'command.cortex.foundation.coreinstall',
-        CorePublishCommand::class => 'command.cortex.foundation.corempublish',
-        CoreSeedCommand::class => 'command.cortex.foundation.coreseed',
+        SeedCommand::class => 'command.cortex.foundation.seed',
+        InstallCommand::class => 'command.cortex.foundation.install',
         MigrateCommand::class => 'command.cortex.foundation.migrate',
         PublishCommand::class => 'command.cortex.foundation.publish',
-        InstallCommand::class => 'command.cortex.foundation.install',
-        SeedCommand::class => 'command.cortex.foundation.seed',
+        RollbackCommand::class => 'command.cortex.foundation.rollback',
+        CoreSeedCommand::class => 'command.cortex.foundation.coreseed',
+        CoreInstallCommand::class => 'command.cortex.foundation.coreinstall',
+        CoreMigrateCommand::class => 'command.cortex.foundation.coremigrate',
+        CorePublishCommand::class => 'command.cortex.foundation.corempublish',
+        CoreRollbackCommand::class => 'command.cortex.foundation.corerollback',
     ];
 
     /**
