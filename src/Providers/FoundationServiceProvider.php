@@ -64,7 +64,7 @@ class FoundationServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'cortex.foundation');
 
         // Override datatables html builder
-        $this->app->singleton(\Yajra\DataTables\Html\Builder::class, \Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder::class);
+        $this->app->bind(\Yajra\DataTables\Html\Builder::class, \Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder::class);
 
         // Register console commands
         ! $this->app->runningInConsole() || $this->registerCommands();
