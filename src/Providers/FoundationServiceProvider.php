@@ -20,7 +20,6 @@ use Cortex\Foundation\Console\Commands\CorePublishCommand;
 use Cortex\Foundation\Console\Commands\CoreRollbackCommand;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
-use Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
 use Cortex\Foundation\Overrides\Mcamara\LaravelLocalization\LaravelLocalization;
 
@@ -64,10 +63,8 @@ class FoundationServiceProvider extends ServiceProvider
         // Merge config
         $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'cortex.foundation');
 
-        // Register custom datatables html builder
-        $this->app->singleton('cortex.foundation.datatables.html', function () {
-            return $this->app->make(Builder::class);
-        });
+        // Override datatables html builder
+        $this->app->singleton(\Yajra\DataTables\Html\Builder::class, \Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder::class);
 
         // Register console commands
         ! $this->app->runningInConsole() || $this->registerCommands();
