@@ -26,6 +26,7 @@ return [
     'causer' => 'Causer',
     'date' => 'Date',
     'or' => 'or',
+    'home' => 'Home',
     'adminarea_welcome' => 'Welcome to adminarea',
     'adminarea_welcome_body' => 'This is your dashboard, a place with your taste to get a glimpse about system vitals, and data metrics in nice widgets.',
 
