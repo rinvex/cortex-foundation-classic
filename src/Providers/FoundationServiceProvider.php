@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Providers;
 
 use Illuminate\Routing\Router;
-use Cortex\Foundation\Models\Menu;
+use Rinvex\Menus\Facades\Menu;
+use Rinvex\Menus\Factories\MenuFactory;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Console\Commands\SeedCommand;
@@ -68,8 +69,6 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Register console commands
         ! $this->app->runningInConsole() || $this->registerCommands();
-
-        $this->registerMenus();
     }
 
     /**
@@ -103,6 +102,9 @@ class FoundationServiceProvider extends ServiceProvider
                 $this->app['router']->getRoutes()->refreshActionLookups();
             }
         });
+
+        // Register menus
+        $this->registerMenus();
     }
 
     /**
@@ -241,66 +243,9 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerMenus()
     {
-        $this->app->singleton(Menu::class, function () {
-            return Menu::new();
-        });
-
-        $this->app->alias(Menu::class, 'menu');
-
-        $this->registerAdminareaMenus();
-        $this->registerFrontareaMenus();
-    }
-
-    /**
-     * Register adminarea menus.
-     *
-     * @return void
-     */
-    protected function registerAdminareaMenus()
-    {
-        $app = $this->app;
-
-        Menu::macro('adminareaSidebar', function ($section = null) use ($app) {
-            $app->bound('menu.adminarea.sidebar') || $app->singleton('menu.adminarea.sidebar', function () {
-                return Menu::new();
-            });
-
-            return $app['menu.adminarea.sidebar']->setSection($section);
-        });
-
-        Menu::macro('adminareaTopbar', function ($section = null) use ($app) {
-            $app->bound('menu.adminarea.topbar') || $app->singleton('menu.adminarea.topbar', function () {
-                return Menu::new();
-            });
-
-            return $app['menu.adminarea.topbar']->setSection($section);
-        });
-    }
-
-    /**
-     * Register frontarea menus.
-     *
-     * @return void
-     */
-    protected function registerFrontareaMenus()
-    {
-        $app = $this->app;
-
-        Menu::macro('frontareaSidebar', function ($section = null) use ($app) {
-            $app->bound('menu.frontarea.sidebar') || $app->singleton('menu.frontarea.sidebar', function () {
-                return Menu::new();
-            });
-
-            return $app['menu.frontarea.sidebar']->setSection($section);
-        });
-
-        Menu::macro('frontareaTopbar', function ($section = null) use ($app) {
-            $app->bound('menu.frontarea.topbar') || $app->singleton('menu.frontarea.topbar', function () {
-                return Menu::new();
-            });
-
-            return $app['menu.frontarea.topbar']->setSection($section);
-        });
+        Menu::make('frontarea.topbar', function(MenuFactory $menu) {});
+        Menu::make('adminarea.topbar', function(MenuFactory $menu) {});
+        Menu::make('adminarea.sidebar', function(MenuFactory $menu) {});
     }
 
     /**

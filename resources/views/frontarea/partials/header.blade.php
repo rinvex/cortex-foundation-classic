@@ -16,7 +16,9 @@
                 <li><a href="#contact" class="smothScroll">Contact</a></li>
             </ul>
 
-            {!! Menu::frontareaTopbar()->addClass('nav navbar-nav navbar-right')->setActiveFromRequest() !!}
+            <div class="navbar-right">
+                {!! Menu::render('frontarea.topbar') !!}
+            </div>
         </div><!--/.nav-collapse -->
     </div>
 </div>

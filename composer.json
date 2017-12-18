@@ -58,8 +58,7 @@
         "rinvex/pages": "dev-develop",
         "rinvex/support": "dev-develop",
         "spatie/laravel-activitylog": "^2.0.0",
-        "spatie/laravel-menu": "^3.0.0",
-        "spatie/menu": "^2.2.0",
+        "rinvex/menus": "dev-develop",
         "symfony/console": "^3.0.0",
         "symfony/finder": "^3.0.0",
         "symfony/http-kernel": "^3.0.0",
@@ -91,10 +90,7 @@
                 "Cortex\\Foundation\\Providers\\FoundationServiceProvider",
                 "Cortex\\Foundation\\Providers\\ConsoleSupportServiceProvider",
                 "Cortex\\Foundation\\Overrides\\Lord\\Laroute\\LarouteServiceProvider"
-            ],
-            "aliases": {
-                "Menu": "Spatie\\Menu\\Laravel\\Facades\\Menu"
-            }
+            ]
         },
         "cortex-module": {
             "autoinstall": false,
