@@ -6,8 +6,8 @@ namespace Cortex\Foundation\Providers;
 
 use Illuminate\Routing\Router;
 use Rinvex\Menus\Facades\Menu;
-use Rinvex\Menus\Factories\MenuFactory;
 use Illuminate\Support\ServiceProvider;
+use Rinvex\Menus\Factories\MenuFactory;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Console\Commands\SeedCommand;
 use Cortex\Foundation\Console\Commands\InstallCommand;
@@ -243,9 +243,12 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerMenus()
     {
-        Menu::make('frontarea.header', function(MenuFactory $menu) {});
-        Menu::make('adminarea.header', function(MenuFactory $menu) {});
-        Menu::make('adminarea.sidebar', function(MenuFactory $menu) {});
+        Menu::make('frontarea.header', function (MenuFactory $menu) {
+        });
+        Menu::make('adminarea.header', function (MenuFactory $menu) {
+        });
+        Menu::make('adminarea.sidebar', function (MenuFactory $menu) {
+        });
     }
 
     /**
