@@ -17,7 +17,7 @@
             </ul>
 
             <div class="navbar-right">
-                {!! Menu::render('frontarea.topbar') !!}
+                {!! Menu::render('frontarea.header') !!}
             </div>
         </div><!--/.nav-collapse -->
     </div>

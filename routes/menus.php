@@ -58,6 +58,6 @@ if (config('cortex.foundation.route.locale_prefix')) {
         }, app('laravellocalization')->getCurrentLocaleNative(), 10, 'fa fa-globe');
     };
 
-    Menu::modify('frontarea.topbar', $languageMenu);
-    Menu::modify('adminarea.topbar', $languageMenu);
+    Menu::modify('frontarea.header', $languageMenu);
+    Menu::modify('adminarea.header', $languageMenu);
 }
