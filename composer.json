@@ -94,7 +94,10 @@
                 "Cortex\\Foundation\\Providers\\FoundationServiceProvider",
                 "Cortex\\Foundation\\Providers\\ConsoleSupportServiceProvider",
                 "Cortex\\Foundation\\Overrides\\Lord\\Laroute\\LarouteServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Tab": "Cortex\\Foundation\\Facades\\Tab"
+            }
         },
         "cortex-module": {
             "autoinstall": false,
