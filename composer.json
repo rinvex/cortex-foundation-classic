@@ -58,6 +58,7 @@
         "rinvex/pages": "dev-develop",
         "rinvex/support": "dev-develop",
         "spatie/laravel-activitylog": "^2.0.0",
+        "spatie/laravel-medialibrary": "^6.0.0",
         "rinvex/menus": "dev-develop",
         "symfony/console": "^3.0.0",
         "symfony/finder": "^3.0.0",
