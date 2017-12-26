@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Facades;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Database\Eloquent\Model;
 
 class Tab extends Facade
 {
