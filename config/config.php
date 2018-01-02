@@ -44,7 +44,9 @@ return [
     ],
 
     'tables' => [
+        'media' => 'media',
         'activity_log' => 'activity_log',
+        'temporary_uploads' => 'temporary_uploads',
     ],
 
 ];

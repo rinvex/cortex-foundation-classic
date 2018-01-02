@@ -6,6 +6,7 @@ namespace Cortex\Foundation\Providers;
 
 use Illuminate\Routing\Router;
 use Rinvex\Menus\Facades\Menu;
+use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Menus\Factories\MenuFactory;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -81,6 +82,8 @@ class FoundationServiceProvider extends ServiceProvider
         // Early set application locale globaly
         $router->pattern('locale', '[a-z]{2}');
         $this->app['laravellocalization']->setLocale();
+
+        $router->model('media', Media::class);
 
         // Load resources
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');

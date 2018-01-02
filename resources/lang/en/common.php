@@ -36,4 +36,10 @@ return [
     'cms' => 'Content Management',
     'maintenance' => 'Maintenance',
     'crm' => 'Customer Relationship',
+
+    'name' => 'Name',
+    'file_name' => 'File Name',
+    'mime_type' => 'Mime Type',
+    'size' => 'Size',
+
 ];
