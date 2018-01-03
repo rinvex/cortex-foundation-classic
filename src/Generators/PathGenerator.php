@@ -11,6 +11,6 @@ class PathGenerator extends BasePathGenerator
 {
     protected function getBasePath(Media $media): string
     {
-        return str_plural(str_slug($media->model->getMorphClass())).'/'.str_plural($media->getTypeAttribute()).'/'.$media->getKey();
+        return str_plural(str_slug($media->model->getMorphClass())).'/'.$media->collection_name.'/'.$media->getKey();
     }
 }
