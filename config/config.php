@@ -46,6 +46,7 @@ return [
     'tables' => [
         'media' => 'media',
         'activity_log' => 'activity_log',
+        'notifications' => 'notifications',
         'temporary_uploads' => 'temporary_uploads',
     ],
 
