@@ -67,7 +67,7 @@ class MediaDataTable extends AbstractDataTable
             'size' => ['title' => trans('cortex/foundation::common.size')],
             'created_at' => ['title' => trans('cortex/foundation::common.created_at'), 'render' => "moment(data).format('MMM Do, YYYY')"],
             'updated_at' => ['title' => trans('cortex/foundation::common.updated_at'), 'render' => "moment(data).format('MMM Do, YYYY')"],
-            'delete' => ['title' => trans('cortex/foundation::common.delete'), 'searchable' => false, 'render' => '"<a href=\""+data+"\" data-method=\"delete\" data-token=\"'.csrf_token().'\" class=\"close\"><span class=\"text-danger fa fa-times\"></span></a>"'],
+            'delete' => ['title' => trans('cortex/foundation::common.delete'), 'searchable' => false, 'render' => '"<a href=\""+data+"\" data-method=\"delete\" data-token=\"'.csrf_token().'\" class=\"close\"><span class=\"text-danger fa fa-close\"></span></a>"'],
         ];
     }
 }
