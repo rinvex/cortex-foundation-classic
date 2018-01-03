@@ -30,6 +30,7 @@ class CoreInstallCommand extends Command
     public function handle()
     {
         $this->warn($this->description);
+
         $this->call('cortex:migrate');
         $this->call('cortex:seed');
         $this->call('cortex:publish');

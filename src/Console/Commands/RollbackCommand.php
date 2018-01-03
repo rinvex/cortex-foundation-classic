@@ -30,6 +30,7 @@ class RollbackCommand extends Command
     public function handle()
     {
         $this->warn($this->description);
+
         $this->call('migrate:reset', ['--path' => 'app/cortex/foundation/database/migrations']);
     }
 }
