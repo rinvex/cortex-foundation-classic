@@ -65,7 +65,7 @@ abstract class AbstractDataTable extends DataTable
         return $this->builder()
                     ->minifiedAjax()
                     ->columns($this->getColumns())
-                    ->parameters($this->getParameters());
+                    ->parameters($this->getBuilderParameters());
     }
 
     /**
@@ -95,11 +95,11 @@ abstract class AbstractDataTable extends DataTable
     }
 
     /**
-     * Get parameters.
+     * Get default builder parameters.
      *
      * @return array
      */
-    protected function getParameters()
+    protected function getBuilderParameters()
     {
         return [
             'keys' => true,
