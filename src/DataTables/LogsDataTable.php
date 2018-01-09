@@ -41,7 +41,7 @@ class LogsDataTable extends AbstractDataTable
         return [
             'keys' => true,
             'autoWidth' => false,
-            'order' => [[0 => 'asc']],
+            'order' => [[0, 'asc']],
             'dom' => "<'row'<'col-sm-6'B><'col-sm-6'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>",
             'drawCallback' => "function (settings) {
                 var api = this.api();
