@@ -26,7 +26,7 @@ class ActivityTransformer extends TransformerAbstract
         }
 
         return [
-            'id' => (int) $log->id,
+            'id' => (int) $log->getKey(),
             'description' => (string) $log->description,
             'subject' => $subjectName,
             'subject_route' => $route,

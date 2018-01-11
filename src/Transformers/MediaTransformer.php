@@ -15,7 +15,7 @@ class MediaTransformer extends TransformerAbstract
     public function transform(Media $media)
     {
         return [
-            'id' => (int) $media->id,
+            'id' => (int) $media->getKey(),
             'name' => (string) $media->name,
             'file_name' => (string) $media->file_name,
             'mime_type' => (string) $media->mime_type,

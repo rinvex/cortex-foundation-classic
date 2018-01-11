@@ -1,7 +1,7 @@
 <div style="padding-top: 5px;">
     @if($model->exists)
         <small>
-            <strong>{{ trans('cortex/foundation::common.id') }}:</strong> {{ $model->id }}
+            <strong>{{ trans('cortex/foundation::common.id') }}:</strong> {{ $model->getKey() }}
         </small>
 
         @if($model->created_at || $model->updated_at) | @endif

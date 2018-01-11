@@ -28,7 +28,7 @@ class LogTransformer extends TransformerAbstract
         }
 
         return [
-            'id' => (int) $log->id,
+            'id' => (int) $log->getKey(),
             'description' => (string) $log->description,
             'causer' => $causer,
             'causer_route' => $causer_route,
