@@ -103,6 +103,7 @@ abstract class AbstractDataTable extends DataTable
     {
         return [
             'keys' => true,
+            'retrieve' => true,
             'autoWidth' => false,
             'dom' => "<'row'<'col-sm-6'B><'col-sm-6'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>",
             'buttons' => [
