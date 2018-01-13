@@ -36,6 +36,7 @@
 
     @include('cortex/foundation::frontarea.partials.footer')
 
+    <!-- Scripts -->
     @stack('inline-scripts')
 
     <!-- Alerts -->

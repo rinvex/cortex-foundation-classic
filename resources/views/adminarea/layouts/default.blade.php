@@ -35,6 +35,7 @@
         @include('cortex/foundation::adminarea.partials.footer')
     </div>
 
+    <!-- Scripts -->
     @stack('inline-scripts')
 
     <!-- Alerts -->
