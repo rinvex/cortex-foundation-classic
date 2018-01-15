@@ -9,6 +9,7 @@ return [
     'columns' => 'Columns',
     'limit' => 'Limit',
     'cancel' => 'Cancel',
+    'close' => 'Close',
     'delete' => 'Delete',
     'adminarea' => 'Adminarea',
     'frontarea' => 'Frontarea',
