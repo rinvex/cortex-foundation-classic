@@ -10,11 +10,13 @@ use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Menus\Factories\MenuFactory;
 use Illuminate\View\Compilers\BladeCompiler;
+use Cortex\Foundation\Generators\LangJsGenerator;
 use Cortex\Foundation\Console\Commands\InstallCommand;
 use Cortex\Foundation\Console\Commands\MigrateCommand;
 use Cortex\Foundation\Console\Commands\PublishCommand;
 use Cortex\Foundation\Console\Commands\CoreSeedCommand;
 use Cortex\Foundation\Console\Commands\RollbackCommand;
+use Mariuzzo\LaravelJsLocalization\Commands\LangJsCommand;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
 use Cortex\Foundation\Console\Commands\CorePublishCommand;
@@ -59,6 +61,7 @@ class FoundationServiceProvider extends ServiceProvider
         $this->overrideUrlGenerator();
         $this->overrideRedirector();
         $this->bindBladeCompiler();
+        $this->overrideLangJS();
 
         // Merge config
         $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'cortex.foundation');
@@ -268,5 +271,34 @@ class FoundationServiceProvider extends ServiceProvider
         }
 
         $this->commands(array_values($this->commands));
+    }
+
+    /**
+     * Register console commands.
+     *
+     * @return void
+     */
+    protected function overrideLangJS()
+    {
+        // Bind the Laravel JS Localization command into the app IOC.
+        $this->app->singleton('localization.js', function ($app) {
+            $app = $this->app;
+            $laravelMajorVersion = (int) $app::VERSION;
+
+            $files = $app['files'];
+
+            if ($laravelMajorVersion === 4) {
+                $langs = $app['path.base'].'/app/lang';
+            } elseif ($laravelMajorVersion === 5) {
+                $langs = $app['path.base'].'/resources/lang';
+            }
+            $messages = $app['config']->get('localization-js.messages');
+            $generator = new LangJsGenerator($files, $langs, $messages);
+
+            return new LangJsCommand($generator);
+        });
+
+        // Bind the Laravel JS Localization command into Laravel Artisan.
+        $this->commands('localization.js');
     }
 }
