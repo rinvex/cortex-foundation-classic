@@ -41,7 +41,6 @@
     ],
     "require": {
         "php": "^7.1.0",
-        "barryvdh/laravel-snappy": "^0.4.0",
         "davejamesmiller/laravel-breadcrumbs": "^4.0.0",
         "edvinaskrucas/notification": "^5.2.0",
         "fideloper/proxy": "^3.3.0",
