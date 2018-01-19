@@ -27,7 +27,7 @@ class CoreInstallCommand extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->warn($this->description);
 

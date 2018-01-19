@@ -58,7 +58,7 @@ class AuthorizedController extends AuthenticatedController
      *
      * @return void
      */
-    public function authorizeResource($resource, $parameter = null, array $options = [], $request = null)
+    public function authorizeResource($resource, $parameter = null, array $options = [], $request = null): void
     {
         $middleware = [];
         $parameter = $parameter ?: $resource;

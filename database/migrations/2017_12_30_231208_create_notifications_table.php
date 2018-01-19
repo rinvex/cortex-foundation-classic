@@ -13,7 +13,7 @@ class CreateNotificationsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create(config('cortex.foundation.tables.notifications'), function (Blueprint $table) {
             $table->uuid('id')->primary();
@@ -30,7 +30,7 @@ class CreateNotificationsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists(config('cortex.foundation.tables.notifications'));
     }

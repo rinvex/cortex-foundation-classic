@@ -13,7 +13,7 @@ class CreateTemporaryUploadsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create(config('cortex.foundation.tables.temporary_uploads'), function (Blueprint $table) {
             $table->string('id');
@@ -25,7 +25,7 @@ class CreateTemporaryUploadsTable extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists(config('cortex.foundation.tables.temporary_uploads'));
     }

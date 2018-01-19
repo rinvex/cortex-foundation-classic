@@ -29,7 +29,7 @@ class CoreSeedCommand extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         collect(Artisan::all())->filter(function ($command) {
             return mb_strpos($command->getName(), 'cortex:seed:') !== false;

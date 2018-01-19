@@ -13,7 +13,7 @@ class CreateCacheTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create(config('cache.stores.database.table'), function (Blueprint $table) {
             $table->string('key')->unique();
@@ -27,7 +27,7 @@ class CreateCacheTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists(config('cache.stores.database.table'));
     }

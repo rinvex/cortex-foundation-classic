@@ -79,7 +79,7 @@ class Kernel extends HttpKernel
      *
      * @return void
      */
-    public function disableMiddleware()
+    public function disableMiddleware(): void
     {
         $this->disabledMiddleware = $this->middleware;
 
@@ -91,7 +91,7 @@ class Kernel extends HttpKernel
      *
      * @return void
      */
-    public function enableMiddleware()
+    public function enableMiddleware(): void
     {
         $this->middleware = $this->disabledMiddleware;
 
@@ -103,7 +103,7 @@ class Kernel extends HttpKernel
      *
      * @return void
      */
-    public function disableRouteMiddleware()
+    public function disableRouteMiddleware(): void
     {
         $this->disabledRouteMiddleware = $this->routeMiddleware;
 
@@ -115,7 +115,7 @@ class Kernel extends HttpKernel
      *
      * @return void
      */
-    public function enableRouteMiddleware()
+    public function enableRouteMiddleware(): void
     {
         $this->routeMiddleware = $this->disabledRouteMiddleware;
 

@@ -54,7 +54,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->overrideNotificationMiddleware();
         $this->overrideLaravelLocalization();
@@ -78,7 +78,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Router $router)
+    public function boot(Router $router): void
     {
         // Early set application locale globaly
         $router->pattern('locale', '[a-z]{2}');
@@ -116,7 +116,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function overrideNotificationMiddleware()
+    protected function overrideNotificationMiddleware(): void
     {
         $this->app->singleton('Cortex\Foundation\Http\Middleware\NotificationMiddleware', function ($app) {
             return new NotificationMiddleware(
@@ -132,7 +132,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function bindBladeCompiler()
+    protected function bindBladeCompiler(): void
     {
         $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
 
@@ -152,7 +152,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function overrideRedirector()
+    protected function overrideRedirector(): void
     {
         $this->app->singleton('redirect', function ($app) {
             $redirector = new Redirector($app['url']);
@@ -173,7 +173,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function overrideUrlGenerator()
+    protected function overrideUrlGenerator(): void
     {
         $this->app->singleton('url', function ($app) {
             $routes = $app['router']->getRoutes();
@@ -221,7 +221,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function overrideLaravelLocalization()
+    protected function overrideLaravelLocalization(): void
     {
         $this->app->singleton('laravellocalization', function () {
             return new LaravelLocalization();
@@ -233,7 +233,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function publishResources()
+    protected function publishResources(): void
     {
         $this->publishes([realpath(__DIR__.'/../../database/migrations') => database_path('migrations')], 'cortex-foundation-migrations');
         $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('cortex.foundation.php')], 'cortex-foundation-config');
@@ -246,7 +246,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerMenus()
+    protected function registerMenus(): void
     {
         Menu::make('frontarea.header', function (MenuFactory $menu) {
         });
@@ -261,7 +261,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerCommands()
+    protected function registerCommands(): void
     {
         // Register artisan commands
         foreach ($this->commands as $key => $value) {
@@ -278,7 +278,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function overrideLangJS()
+    protected function overrideLangJS(): void
     {
         // Bind the Laravel JS Localization command into the app IOC.
         $this->app->singleton('localization.js', function ($app) {

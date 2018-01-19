@@ -102,7 +102,7 @@ class ModuleMakeCommand extends Command
      *
      * @return void
      */
-    protected function generateSamples()
+    protected function generateSamples(): void
     {
         $module = str_after($this->getNameInput(), '/');
 
@@ -130,7 +130,7 @@ class ModuleMakeCommand extends Command
      *
      * @return void
      */
-    protected function processStubs($stubs, $path)
+    protected function processStubs($stubs, $path): void
     {
         $this->makeDirectory($path);
         $this->files->copyDirectory($stubs, $path);

@@ -13,7 +13,7 @@ class CreateFailedJobsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create(config('queue.failed.table'), function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -30,7 +30,7 @@ class CreateFailedJobsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists(config('queue.failed.table'));
     }

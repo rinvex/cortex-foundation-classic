@@ -15,7 +15,7 @@ class LarouteServiceProvider extends BaseLarouteServiceProvider
      *
      * @return void
      */
-    protected function registerCommand()
+    protected function registerCommand(): void
     {
         $this->app->singleton(
             'command.laroute.generate',

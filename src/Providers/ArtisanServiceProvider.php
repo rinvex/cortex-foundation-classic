@@ -126,7 +126,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->registerCommands($this->commands);
 
@@ -140,7 +140,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerConfigMakeCommand()
+    protected function registerConfigMakeCommand(): void
     {
         $this->app->singleton('command.config.make', function ($app) {
             return new ConfigMakeCommand($app['files']);
@@ -152,7 +152,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerConsoleMakeCommand()
+    protected function registerConsoleMakeCommand(): void
     {
         $this->app->singleton('command.console.make', function ($app) {
             return new ConsoleMakeCommand($app['files']);
@@ -164,7 +164,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerControllerMakeCommand()
+    protected function registerControllerMakeCommand(): void
     {
         $this->app->singleton('command.controller.make', function ($app) {
             return new ControllerMakeCommand($app['files']);
@@ -176,7 +176,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerDatatableMakeCommand()
+    protected function registerDatatableMakeCommand(): void
     {
         $this->app->singleton('command.datatable.make', function ($app) {
             return new DataTableMakeCommand($app['files']);
@@ -188,7 +188,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerEventMakeCommand()
+    protected function registerEventMakeCommand(): void
     {
         $this->app->singleton('command.event.make', function ($app) {
             return new EventMakeCommand($app['files']);
@@ -200,7 +200,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerFactoryMakeCommand()
+    protected function registerFactoryMakeCommand(): void
     {
         $this->app->singleton('command.factory.make', function ($app) {
             return new FactoryMakeCommand($app['files']);
@@ -212,7 +212,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerJobMakeCommand()
+    protected function registerJobMakeCommand(): void
     {
         $this->app->singleton('command.job.make', function ($app) {
             return new JobMakeCommand($app['files']);
@@ -224,7 +224,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerListenerMakeCommand()
+    protected function registerListenerMakeCommand(): void
     {
         $this->app->singleton('command.listener.make', function ($app) {
             return new ListenerMakeCommand($app['files']);
@@ -236,7 +236,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerMailMakeCommand()
+    protected function registerMailMakeCommand(): void
     {
         $this->app->singleton('command.mail.make', function ($app) {
             return new MailMakeCommand($app['files']);
@@ -248,7 +248,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerMiddlewareMakeCommand()
+    protected function registerMiddlewareMakeCommand(): void
     {
         $this->app->singleton('command.middleware.make', function ($app) {
             return new MiddlewareMakeCommand($app['files']);
@@ -260,7 +260,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerMigrateMakeCommand()
+    protected function registerMigrateMakeCommand(): void
     {
         $this->app->singleton('command.migrate.make', function ($app) {
             // Once we have the migration creator registered, we will create the command
@@ -279,7 +279,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerModelMakeCommand()
+    protected function registerModelMakeCommand(): void
     {
         $this->app->singleton('command.model.make', function ($app) {
             return new ModelMakeCommand($app['files']);
@@ -291,7 +291,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerModuleMakeCommand()
+    protected function registerModuleMakeCommand(): void
     {
         $this->app->singleton('command.module.make', function ($app) {
             return new ModuleMakeCommand($app['files']);
@@ -303,7 +303,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerNotificationMakeCommand()
+    protected function registerNotificationMakeCommand(): void
     {
         $this->app->singleton('command.notification.make', function ($app) {
             return new NotificationMakeCommand($app['files']);
@@ -315,7 +315,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerPolicyMakeCommand()
+    protected function registerPolicyMakeCommand(): void
     {
         $this->app->singleton('command.policy.make', function ($app) {
             return new PolicyMakeCommand($app['files']);
@@ -327,7 +327,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerProviderMakeCommand()
+    protected function registerProviderMakeCommand(): void
     {
         $this->app->singleton('command.provider.make', function ($app) {
             return new ProviderMakeCommand($app['files']);
@@ -339,7 +339,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerRequestMakeCommand()
+    protected function registerRequestMakeCommand(): void
     {
         $this->app->singleton('command.request.make', function ($app) {
             return new RequestMakeCommand($app['files']);
@@ -351,7 +351,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerResourceMakeCommand()
+    protected function registerResourceMakeCommand(): void
     {
         $this->app->singleton('command.resource.make', function ($app) {
             return new ResourceMakeCommand($app['files']);
@@ -363,7 +363,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerRuleMakeCommand()
+    protected function registerRuleMakeCommand(): void
     {
         $this->app->singleton('command.rule.make', function ($app) {
             return new RuleMakeCommand($app['files']);
@@ -375,7 +375,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerSeederMakeCommand()
+    protected function registerSeederMakeCommand(): void
     {
         $this->app->singleton('command.seeder.make', function ($app) {
             return new SeederMakeCommand($app['files'], $app['composer']);
@@ -387,7 +387,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
-    protected function registerTransformerMakeCommand()
+    protected function registerTransformerMakeCommand(): void
     {
         $this->app->singleton('command.transformer.make', function ($app) {
             return new TransformerMakeCommand($app['files']);
