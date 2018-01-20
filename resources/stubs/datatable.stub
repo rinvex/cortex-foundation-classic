@@ -25,7 +25,7 @@ class DummyClass extends AbstractDataTable
      *
      * @return array
      */
-    protected function getColumns()
+    protected function getColumns(): array
     {
         return [
             //

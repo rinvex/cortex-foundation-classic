@@ -31,7 +31,7 @@ trait ConsoleMakeModuleCommand
      *
      * @return string
      */
-    protected function getPath($name)
+    protected function getPath($name): string
     {
         $name = str_replace_first($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'src', $name);
 
@@ -47,7 +47,7 @@ trait ConsoleMakeModuleCommand
      *
      * @return string
      */
-    protected function rootNamespace()
+    protected function rootNamespace(): string
     {
         return $this->rootNamespace ?? $this->rootNamespace = implode('\\', array_map('ucfirst', explode('/', trim($this->moduleName()))));
     }
@@ -57,7 +57,7 @@ trait ConsoleMakeModuleCommand
      *
      * @return string
      */
-    protected function moduleName()
+    protected function moduleName(): string
     {
         return $this->moduleName ?? $this->input->getOption('module') ?? $this->moduleName = $this->ask('What is your module?');
     }
@@ -67,7 +67,7 @@ trait ConsoleMakeModuleCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return array_merge(parent::getOptions(), [
             ['module', 'd', InputOption::VALUE_REQUIRED, 'The module name to generate the file within.'],

@@ -20,7 +20,7 @@ class FactoryMakeCommand extends BaseFactoryMakeCommand
      *
      * @return string
      */
-    protected function getPath($name)
+    protected function getPath($name): string
     {
         $name = str_replace_first($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'factories', $name);
 

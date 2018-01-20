@@ -36,7 +36,7 @@ class MediaDataTable extends AbstractDataTable
      *
      * @return array
      */
-    protected function getBuilderParameters()
+    protected function getBuilderParameters(): array
     {
         return [
             'keys' => true,
@@ -59,7 +59,7 @@ class MediaDataTable extends AbstractDataTable
      *
      * @return array
      */
-    protected function getColumns()
+    protected function getColumns(): array
     {
         return [
             'name' => ['title' => trans('cortex/foundation::common.name'), 'responsivePriority' => 0],

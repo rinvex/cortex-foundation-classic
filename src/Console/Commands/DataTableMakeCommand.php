@@ -56,7 +56,7 @@ class DataTableMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function buildClass($name)
+    protected function buildClass($name): string
     {
         $stub = parent::buildClass($name);
 
@@ -76,7 +76,7 @@ class DataTableMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function replaceClasses($stub, $model, $transformer = null)
+    protected function replaceClasses($stub, $model, $transformer = null): string
     {
         if ($transformer) {
             $transformer = str_replace('/', '\\', $transformer);
@@ -126,7 +126,7 @@ class DataTableMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__.'/../../../resources/stubs/datatable.stub';
     }
@@ -138,7 +138,7 @@ class DataTableMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\Datatables';
     }
@@ -148,7 +148,7 @@ class DataTableMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getArguments()
+    protected function getArguments(): array
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the datatable.'],
@@ -160,7 +160,7 @@ class DataTableMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['model', 'm', InputOption::VALUE_REQUIRED, 'The model that the datatable applies to.'],

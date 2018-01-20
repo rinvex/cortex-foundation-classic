@@ -99,7 +99,7 @@ abstract class AbstractDataTable extends DataTable
      *
      * @return array
      */
-    protected function getBuilderParameters()
+    protected function getBuilderParameters(): array
     {
         return [
             'keys' => true,
@@ -119,7 +119,7 @@ abstract class AbstractDataTable extends DataTable
      *
      * @return string
      */
-    protected function filename()
+    protected function filename(): string
     {
         $resource = str_plural(mb_strtolower(array_last(str_replace('Contract', '', explode(class_exists($this->model) ? '\\' : '.', $this->model)))));
 

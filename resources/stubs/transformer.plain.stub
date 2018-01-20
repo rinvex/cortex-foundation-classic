@@ -15,7 +15,7 @@ class DummyClass extends TransformerAbstract
      *
      * @return array
      */
-    public function transform($dummyModel)
+    public function transform($dummyModel): array
     {
         return [
             //

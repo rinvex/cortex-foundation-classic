@@ -13,7 +13,7 @@ class ImageFormRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -23,7 +23,7 @@ class ImageFormRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return ['file' => 'mimetypes:image/jpeg,image/gif,image/png'];
     }

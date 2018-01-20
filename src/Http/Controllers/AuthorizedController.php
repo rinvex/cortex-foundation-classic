@@ -79,7 +79,7 @@ class AuthorizedController extends AuthenticatedController
      *
      * @return array
      */
-    protected function mapResourceAbilities()
+    protected function mapResourceAbilities(): array
     {
         // Reflect calling controller
         $controller = new ReflectionClass(static::class);
@@ -107,7 +107,7 @@ class AuthorizedController extends AuthenticatedController
      *
      * @return array
      */
-    protected function resourceAbilityMap()
+    protected function resourceAbilityMap(): array
     {
         return $this->resourceAbilityMap + [
                 'index' => 'list',

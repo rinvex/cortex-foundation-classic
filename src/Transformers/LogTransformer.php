@@ -13,7 +13,7 @@ class LogTransformer extends TransformerAbstract
     /**
      * @return array
      */
-    public function transform(Log $log)
+    public function transform(Log $log): array
     {
         $causer_route = '';
 

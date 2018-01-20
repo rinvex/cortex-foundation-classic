@@ -20,7 +20,7 @@ class LangJsGenerator extends BaseLangJsGenerator
      *
      * @return array
      */
-    protected function getMessages()
+    protected function getMessages(): array
     {
         $messages = [];
 

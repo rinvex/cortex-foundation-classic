@@ -36,7 +36,7 @@ class LogsDataTable extends AbstractDataTable
      *
      * @return array
      */
-    protected function getBuilderParameters()
+    protected function getBuilderParameters(): array
     {
         return [
             'keys' => true,
@@ -73,7 +73,7 @@ class LogsDataTable extends AbstractDataTable
      *
      * @return array
      */
-    protected function getColumns()
+    protected function getColumns(): array
     {
         return [
             'details' => ['title' => '', 'data' => null, 'defaultContent' => '', 'class' => 'dt-details-control', 'searchable' => false, 'orderable' => false],

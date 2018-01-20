@@ -42,7 +42,7 @@ class TransformerMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function buildClass($name)
+    protected function buildClass($name): string
     {
         $stub = parent::buildClass($name);
 
@@ -59,7 +59,7 @@ class TransformerMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function replaceModel($stub, $model)
+    protected function replaceModel($stub, $model): string
     {
         $model = str_replace('/', '\\', $model);
 
@@ -87,7 +87,7 @@ class TransformerMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return $this->option('model')
             ? __DIR__.'/../../../resources/stubs/transformer.stub'
@@ -101,7 +101,7 @@ class TransformerMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\Transformers';
     }
@@ -111,7 +111,7 @@ class TransformerMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getArguments()
+    protected function getArguments(): array
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the transformer.'],
@@ -123,7 +123,7 @@ class TransformerMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'The model that the transformer applies to.'],

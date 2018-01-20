@@ -13,7 +13,7 @@ class LaravelLocalization extends BaseLaravelLocalization
      *
      * @return array
      */
-    public function getAppLocales()
+    public function getAppLocales(): array
     {
         return array_unique([
             $this->configRepository->get('app.locale'),

@@ -18,7 +18,7 @@ class UrlGenerator extends BaseUrlGenerator
      *
      * @return string
      */
-    public function to($path, $extra = [], $secure = null)
+    public function to($path, $extra = [], $secure = null): string
     {
         if (! config('cortex.foundation.route.trailing_slash')) {
             return parent::to($path, $extra, $secure);

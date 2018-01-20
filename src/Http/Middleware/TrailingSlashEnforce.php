@@ -37,7 +37,7 @@ class TrailingSlashEnforce
      *
      * @return bool
      */
-    protected function checkQueryString($requestUri, $queryString)
+    protected function checkQueryString($requestUri, $queryString): bool
     {
         return (! $queryString && ! ends_with($requestUri, '/')) || ($queryString && ! ends_with(mb_strstr($requestUri, '?', true), '/'));
     }

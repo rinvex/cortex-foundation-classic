@@ -30,7 +30,7 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
      *
      * @return string
      */
-    protected function writeMigration($name, $table, $create)
+    protected function writeMigration($name, $table, $create): string
     {
         $this->makeDirectory($this->getMigrationPath());
 
@@ -44,7 +44,7 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
      *
      * @return string
      */
-    protected function makeDirectory($path)
+    protected function makeDirectory($path): string
     {
         if (! $this->laravel['files']->isDirectory($path)) {
             $this->laravel['files']->makeDirectory($path, 0777, true, true);
@@ -60,7 +60,7 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
      *
      * @return string
      */
-    protected function getMigrationPath()
+    protected function getMigrationPath(): string
     {
         if (! $this->laravel->files->exists($path = $this->laravel['path'].DIRECTORY_SEPARATOR.$this->moduleName())) {
             throw new \Exception("Invalid path: {$path}");

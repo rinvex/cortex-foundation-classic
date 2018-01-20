@@ -12,7 +12,7 @@ class MediaTransformer extends TransformerAbstract
     /**
      * @return array
      */
-    public function transform(Media $media)
+    public function transform(Media $media): array
     {
         return [
             'id' => (int) $media->getKey(),

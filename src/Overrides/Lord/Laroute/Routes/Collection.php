@@ -16,9 +16,9 @@ class Collection extends BaseCollection
      * @param $filter    string
      * @param $namespace string
      *
-     * @return array
+     * @return array|null
      */
-    protected function getRouteInformation(Route $route, $filter, $namespace)
+    protected function getRouteInformation(Route $route, $filter, $namespace): ?array
     {
         $uri = $route->uri();
         $host = $route->domain();
@@ -28,12 +28,12 @@ class Collection extends BaseCollection
         switch ($filter) {
             case 'all':
                 if ($laroute === false) {
-                    return;
+                    return null;
                 }
                 break;
             case 'only':
                 if ($laroute !== true) {
-                    return;
+                    return null;
                 }
                 break;
         }

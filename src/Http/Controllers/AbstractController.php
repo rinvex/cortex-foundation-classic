@@ -48,7 +48,7 @@ abstract class AbstractController extends Controller
      *
      * @return string
      */
-    protected function getBroker()
+    protected function getBroker(): string
     {
         return $this->broker;
     }

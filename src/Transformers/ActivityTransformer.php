@@ -13,7 +13,7 @@ class ActivityTransformer extends TransformerAbstract
     /**
      * @return array
      */
-    public function transform(Log $log)
+    public function transform(Log $log): array
     {
         $subject = $log->subject_type;
         $subjects = str_plural($subject);

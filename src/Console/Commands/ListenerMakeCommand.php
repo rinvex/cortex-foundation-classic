@@ -19,7 +19,7 @@ class ListenerMakeCommand extends BaseListenerMakeCommand
      *
      * @return string
      */
-    protected function buildClass($name)
+    protected function buildClass($name): string
     {
         $event = $this->option('event');
 
@@ -47,7 +47,7 @@ class ListenerMakeCommand extends BaseListenerMakeCommand
      *
      * @return string
      */
-    protected function defaultBuildClass($name)
+    protected function defaultBuildClass($name): string
     {
         $stub = $this->files->get($this->getStub());
 

@@ -54,9 +54,9 @@ class ModuleMakeCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return bool|null
+     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $name = $this->getNameInput();
 
@@ -68,7 +68,7 @@ class ModuleMakeCommand extends Command
         if ($this->files->exists($path)) {
             $this->error($this->type.' already exists!');
 
-            return false;
+            return;
         }
 
         // Next, we will generate the path to the location where this class' file should get
@@ -88,7 +88,7 @@ class ModuleMakeCommand extends Command
      *
      * @return string
      */
-    protected function makeDirectory($path)
+    protected function makeDirectory($path): string
     {
         if (! $this->files->isDirectory($path)) {
             $this->files->makeDirectory($path, 0777, true, true);
@@ -167,7 +167,7 @@ class ModuleMakeCommand extends Command
      *
      * @return string
      */
-    protected function getNameInput()
+    protected function getNameInput(): string
     {
         $name = trim($this->argument('name'));
 

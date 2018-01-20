@@ -13,7 +13,7 @@ class Request extends BaseRequest
      *
      * @return string
      */
-    public function url()
+    public function url(): string
     {
         return parent::url().(config('cortex.foundation.route.trailing_slash') ? '/' : '');
     }

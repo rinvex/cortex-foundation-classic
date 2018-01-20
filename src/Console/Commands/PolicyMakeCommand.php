@@ -18,7 +18,7 @@ class PolicyMakeCommand extends BasePolicyMakeCommand
      *
      * @return string
      */
-    protected function replaceUserNamespace($stub)
+    protected function replaceUserNamespace($stub): string
     {
         if (! $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model')) {
             return $stub;

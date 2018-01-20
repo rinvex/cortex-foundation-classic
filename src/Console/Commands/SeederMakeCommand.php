@@ -20,7 +20,7 @@ class SeederMakeCommand extends BaseSeederMakeCommand
      *
      * @return string
      */
-    protected function getPath($name)
+    protected function getPath($name): string
     {
         $name = $this->moduleName().DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'seeds'.DIRECTORY_SEPARATOR.$name;
 

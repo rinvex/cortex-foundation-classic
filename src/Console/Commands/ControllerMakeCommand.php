@@ -16,7 +16,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         if ($this->option('parent')) {
             return __DIR__.'/../../../resources/stubs/controller.nested.stub';

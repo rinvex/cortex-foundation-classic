@@ -37,7 +37,7 @@ class ConfigMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__.'/../../../resources/stubs/config.stub';
     }
@@ -51,7 +51,7 @@ class ConfigMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getPath($name)
+    protected function getPath($name): string
     {
         $name = str_replace_first($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'config', $name);
 
