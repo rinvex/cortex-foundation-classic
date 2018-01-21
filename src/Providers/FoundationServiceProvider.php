@@ -6,7 +6,6 @@ namespace Cortex\Foundation\Providers;
 
 use Illuminate\Routing\Router;
 use Rinvex\Menus\Facades\Menu;
-use Rinvex\Menus\Models\MenuItem;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Menus\Factories\MenuFactory;
