@@ -61,6 +61,19 @@ class Log extends Activity
     /**
      * {@inheritdoc}
      */
+    protected $casts = [
+        'properties' => 'collection',
+        'log_name' => 'string',
+        'description' => 'string',
+        'subject_id' => 'integer',
+        'subject_type' => 'string',
+        'causer_id' => 'integer',
+        'causer_type' => 'string',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
     protected $observables = [
         'validating',
         'validated',
