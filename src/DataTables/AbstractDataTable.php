@@ -50,9 +50,9 @@ abstract class AbstractDataTable extends DataTable
     {
         $transformer = app($this->transformer);
 
-        return datatables()->eloquent($this->query())
-                           ->setTransformer($transformer)
-                           ->make(true);
+        return datatables($this->query())
+            ->setTransformer($transformer)
+            ->make(true);
     }
 
     /**
