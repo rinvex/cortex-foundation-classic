@@ -7,6 +7,7 @@ namespace Cortex\Foundation\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Rinvex\Fort\Exceptions\GenericException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Session\TokenMismatchException;
 use Rinvex\Fort\Exceptions\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -54,6 +55,12 @@ class Handler extends ExceptionHandler
                 'with' => ['warning' => trans('cortex/foundation::messages.token_mismatch')],
             ]);
         } elseif ($exception instanceof WatsonValidationException) {
+            return intend([
+                'back' => true,
+                'withInput' => $request->all(),
+                'withErrors' => $exception->errors(),
+            ]);
+        } elseif ($exception instanceof ValidationException) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
