@@ -14,6 +14,7 @@ class EloquentDataTable extends BaseEloquentDataTable
      *
      * @param mixed $results
      * @param bool  $object
+     *
      * @return array
      */
     protected function processResults($results, $object = false)
