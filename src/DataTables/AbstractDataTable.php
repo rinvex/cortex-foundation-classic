@@ -16,13 +16,6 @@ abstract class AbstractDataTable extends DataTable
     protected $model;
 
     /**
-     * The transformer class.
-     *
-     * @var string
-     */
-    protected $transformer;
-
-    /**
      * Get columns.
      *
      * @return array
@@ -48,10 +41,7 @@ abstract class AbstractDataTable extends DataTable
      */
     public function ajax()
     {
-        $transformer = app($this->transformer);
-
         return datatables($this->query())
-            ->setTransformer($transformer)
             ->make(true);
     }
 
