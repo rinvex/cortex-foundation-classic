@@ -12,6 +12,7 @@ class DataProcessor extends BaseDataProcessor
      * Escape all values of row.
      *
      * @param array $row
+     *
      * @return array
      */
     protected function escapeRow(array $row)
