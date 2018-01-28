@@ -32,7 +32,7 @@ abstract class AbstractDataTable extends DataTable
     /**
      * The datatable create parameter.
      *
-     * @var boolean
+     * @var bool
      */
     protected $createButton = true;
 
