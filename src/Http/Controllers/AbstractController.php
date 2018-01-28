@@ -6,17 +6,29 @@ namespace Cortex\Foundation\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Route;
-use Rinvex\Fort\Traits\GetsMiddleware;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 abstract class AbstractController extends Controller
 {
-    use GetsMiddleware;
     use DispatchesJobs;
     use ValidatesRequests;
     use AuthorizesRequests;
+
+    /**
+     * The authentication guard.
+     *
+     * @var string
+     */
+    protected $guard;
+
+    /**
+     * The broker name.
+     *
+     * @var string
+     */
+    protected $broker;
 
     /**
      * Whitelisted methods.
@@ -25,13 +37,6 @@ abstract class AbstractController extends Controller
      * @var array
      */
     protected $middlewareWhitelist = [];
-
-    /**
-     * The broker name.
-     *
-     * @var string
-     */
-    protected $broker;
 
     /**
      * Create a new authenticated controller instance.
@@ -51,5 +56,32 @@ abstract class AbstractController extends Controller
     protected function getBroker(): string
     {
         return $this->broker;
+    }
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return string|null
+     */
+    protected function getGuard(): ?string
+    {
+        return $this->guard;
+    }
+
+    /**
+     * Get the guest middleware for the application.
+     */
+    protected function getGuestMiddleware()
+    {
+        return ($guard = $this->getGuard()) ? 'guest:'.$guard : 'guest';
+    }
+
+    /**
+     * Get the auth middleware for the application.
+     *
+     * @return string
+     */
+    protected function getAuthMiddleware(): string
+    {
+        return ($guard = $this->getGuard()) ? 'auth:'.$guard : 'auth';
     }
 }
