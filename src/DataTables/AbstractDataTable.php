@@ -16,6 +16,34 @@ abstract class AbstractDataTable extends DataTable
     protected $model;
 
     /**
+     * The datatable order parameter.
+     *
+     * @var array
+     */
+    protected $order = [[0, 'asc']];
+
+    /**
+     * The datatable dom parameter.
+     *
+     * @var string
+     */
+    protected $dom = "<'row'<'col-sm-6'B><'col-sm-6'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>";
+
+    /**
+     * The datatable create parameter.
+     *
+     * @var boolean
+     */
+    protected $createButton = true;
+
+    /**
+     * The datatable builder parameters.
+     *
+     * @var array
+     */
+    protected $builderParameters = [];
+
+    /**
      * Get columns.
      *
      * @return array
@@ -91,17 +119,18 @@ abstract class AbstractDataTable extends DataTable
      */
     protected function getBuilderParameters(): array
     {
-        return [
+        return array_merge([
             'keys' => true,
             'retrieve' => true,
             'autoWidth' => false,
-            'dom' => "<'row'<'col-sm-6'B><'col-sm-6'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>",
-            'buttons' => [
-                ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.new')], 'print', 'reset', 'reload', 'export',
+            'order' => $this->order,
+            'dom' => $this->dom,
+            'buttons' => array_merge($this->createButton ? [['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.new')]] : [], [
+                'print', 'reset', 'reload', 'export',
                 ['extend' => 'colvis', 'text' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.columns').' <span class="caret"/>'],
                 ['extend' => 'pageLength', 'text' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.limit').' <span class="caret"/>'],
-            ],
-        ];
+            ]),
+        ], $this->builderParameters);
     }
 
     /**
