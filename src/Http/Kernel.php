@@ -36,9 +36,7 @@ class Kernel extends HttpKernel
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Cortex\Foundation\Http\Middleware\NotificationMiddleware::class,
-            \Rinvex\Fort\Http\Middleware\UpdateLastActivity::class,
             \Cortex\Foundation\Http\Middleware\Clockwork::class,
-            \Rinvex\Fort\Http\Middleware\Abilities::class,
         ],
 
         'api' => [
@@ -51,13 +49,10 @@ class Kernel extends HttpKernel
      * {@inheritdoc}
      */
     protected $routeMiddleware = [
-        'auth' => \Cortex\Foundation\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \Cortex\Foundation\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'nohttpcache' => \Rinvex\Fort\Http\Middleware\NoHttpCache::class,
+        'can' => \Illuminate\Auth\Middleware\Authorize::class,
     ];
 
     /**
