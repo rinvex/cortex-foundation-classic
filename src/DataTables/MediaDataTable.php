@@ -46,6 +46,18 @@ class MediaDataTable extends AbstractDataTable
     }
 
     /**
+     * Display ajax response.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ajax()
+    {
+        return datatables($this->query())
+            ->setTransformer($this->transformer)
+            ->make(true);
+    }
+
+    /**
      * Get columns.
      *
      * @return array
