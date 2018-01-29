@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Providers;
 
 use Illuminate\Routing\Router;
-use Rinvex\Menus\Facades\Menu;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\ServiceProvider;
-use Rinvex\Menus\Factories\MenuFactory;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
 use Cortex\Foundation\Console\Commands\InstallCommand;
@@ -106,9 +104,6 @@ class FoundationServiceProvider extends ServiceProvider
                 $this->app['router']->getRoutes()->refreshActionLookups();
             }
         });
-
-        // Register menus
-        $this->registerMenus();
     }
 
     /**
@@ -239,18 +234,6 @@ class FoundationServiceProvider extends ServiceProvider
         $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('cortex.foundation.php')], 'cortex-foundation-config');
         $this->publishes([realpath(__DIR__.'/../../resources/lang') => resource_path('lang/vendor/cortex/foundation')], 'cortex-foundation-lang');
         $this->publishes([realpath(__DIR__.'/../../resources/views') => resource_path('views/vendor/cortex/foundation')], 'cortex-foundation-views');
-    }
-
-    /**
-     * Register menus.
-     *
-     * @return void
-     */
-    protected function registerMenus(): void
-    {
-        Menu::make('frontarea.header');
-        Menu::make('adminarea.header');
-        Menu::make('adminarea.sidebar');
     }
 
     /**
