@@ -248,12 +248,9 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerMenus(): void
     {
-        Menu::make('frontarea.header', function (MenuFactory $menu) {
-        });
-        Menu::make('adminarea.header', function (MenuFactory $menu) {
-        });
-        Menu::make('adminarea.sidebar', function (MenuFactory $menu) {
-        });
+        Menu::make('frontarea.header');
+        Menu::make('adminarea.header');
+        Menu::make('adminarea.sidebar');
     }
 
     /**
