@@ -129,10 +129,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     public function register(): void
     {
         $this->registerCommands($this->commands);
-
-        if ($this->app->environment('local')) {
-            $this->registerCommands($this->devCommands);
-        }
+        $this->registerCommands($this->devCommands);
     }
 
     /**
