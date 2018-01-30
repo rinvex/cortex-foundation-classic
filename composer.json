@@ -94,10 +94,7 @@
                 "Cortex\\Foundation\\Providers\\FoundationServiceProvider",
                 "Cortex\\Foundation\\Providers\\ConsoleSupportServiceProvider",
                 "Cortex\\Foundation\\Overrides\\Lord\\Laroute\\LarouteServiceProvider"
-            ],
-            "aliases": {
-                "Tab": "Cortex\\Foundation\\Facades\\Tab"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",

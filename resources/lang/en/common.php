@@ -18,6 +18,7 @@ return [
     'toggle_navigation' => 'Toggle navigation',
 
     'logs' => 'Logs',
+    'media' => 'Media',
     'subject' => 'Subject',
     'log_name' => 'Log Name',
     'activities' => 'Activities',
