@@ -4,17 +4,17 @@
     <meta charset="utf-8" />
     <title>@yield('title', config('app.name'))</title>
 
-    <!-- Meta Data -->
+    {{-- Meta Data --}}
     @include('cortex/foundation::common.partials.meta')
     @stack('head-elements')
 
-    <!-- Styles -->
+    {{-- Styles --}}
     <link href="{{ mix('css/vendor.css', 'assets') }}" rel="stylesheet">
     <link href="{{ mix('css/theme-adminarea.css', 'assets') }}" rel="stylesheet">
     <link href="{{ mix('css/app.css', 'assets') }}" rel="stylesheet">
     @stack('styles')
 
-    <!-- Scripts -->
+    {{-- Scripts --}}
     <script>
         window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token()]); ?>;
         window.Accessarea = "<?php echo request('accessarea'); ?>";
@@ -25,7 +25,7 @@
     <script src="{{ mix('js/app.js', 'assets') }}" defer></script>
 </head>
 <body class="hold-transition skin-blue fixed sidebar-mini">
-    <!-- Main Content -->
+    {{-- Main content --}}
     <div class="wrapper">
         @include('cortex/foundation::adminarea.partials.header')
         @include('cortex/foundation::adminarea.partials.sidebar')
@@ -35,10 +35,10 @@
         @include('cortex/foundation::adminarea.partials.footer')
     </div>
 
-    <!-- Scripts -->
+    {{-- Scripts --}}
     @stack('inline-scripts')
 
-    <!-- Alerts -->
+    {{-- Alerts --}}
     @alerts('default')
 </body>
 </html>

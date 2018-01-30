@@ -11,9 +11,9 @@
 
     <div class="content-wrapper">
 
-        <!-- Main content -->
+        {{-- Main content --}}
         <section class="content">
-            <!-- Small boxes (Stat box) -->
+
             <div class="row">
                 <div class="col-md-12">
                     <h1><i class="fa fa-dashboard"></i> {{ trans('cortex/foundation::common.adminarea_welcome') }}</h1>
@@ -21,10 +21,8 @@
                 </div>
 
             </div>
-            <!-- /.row -->
 
         </section>
-        <!-- /.content -->
     </div>
 
 @endsection

@@ -1,7 +1,7 @@
-<!-- CSRF Token -->
+{{-- CSRF Token --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<!-- Basic Meta -->
+{{-- Basic Meta --}}
 <meta name="title" content="Rinvex - Enterprise Solutions for SMEs" />
 <meta name="headline" content="Rinvex - Enterprise Solutions for SMEs" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,13 +27,13 @@
 <link rel="canonical" href="https://rinvex.com" />
 
 
-<!-- Vendor Meta -->
+{{-- Vendor Meta --}}
 <meta name="googlebot" content="index, follow" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-<!-- Favicon -->
+{{-- Favicon --}}
 <link rel="shortcut icon" href="{{ asset('favicon/favicon.ico') }}" />
 <link rel="icon" type="image/x-icon" href="{{ asset('favicon/favicon.ico') }}" />
 <link rel="fluid-icon" title="Rinvex" href="{{ asset('favicon/favicon-512x512.png') }}" />
@@ -57,7 +57,7 @@
 <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}" />
 <meta name="theme-color" content="#ffffff" />
 
-<!-- Open Graph -->
+{{-- Open Graph --}}
 <meta property="og:locale" content="en_US" />
 <meta property="og:url" content="https://rinvex.com" />
 <meta property="og:type" content="website" />
@@ -79,7 +79,7 @@
 <meta name="og:postal-code" content="21532" />
 <meta name="og:country-name" content="Egypt" />
 
-<!-- Twitter Card -->
+{{-- Twitter Card --}}
 <meta property="twitter:site" content="@rinvex" />
 <meta property="twitter:site:id" content="1711790082" />
 <meta property="twitter:creator" content="@omranic" />
