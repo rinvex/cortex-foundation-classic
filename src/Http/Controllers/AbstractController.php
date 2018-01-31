@@ -57,6 +57,7 @@ abstract class AbstractController extends Controller
     {
         return $this->broker;
     }
+
     /**
      * Get the guard to be used during authentication.
      *

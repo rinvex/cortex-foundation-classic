@@ -12,7 +12,7 @@ trait Auditable
     /**
      * Register a creating model event with the dispatcher.
      *
-     * @param  \Closure|string $callback
+     * @param \Closure|string $callback
      *
      * @return void
      */
@@ -21,7 +21,7 @@ trait Auditable
     /**
      * Register an updating model event with the dispatcher.
      *
-     * @param  \Closure|string $callback
+     * @param \Closure|string $callback
      *
      * @return void
      */
@@ -30,10 +30,10 @@ trait Auditable
     /**
      * Define an inverse one-to-one or many relationship.
      *
-     * @param  string $related
-     * @param  string $foreignKey
-     * @param  string $ownerKey
-     * @param  string $relation
+     * @param string $related
+     * @param string $foreignKey
+     * @param string $ownerKey
+     * @param string $relation
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

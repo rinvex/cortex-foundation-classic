@@ -292,7 +292,7 @@ class FoundationServiceProvider extends ServiceProvider
         // Get users model
         $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
 
-        Blueprint::macro('auditable', function() use ($userModel) {
+        Blueprint::macro('auditable', function () use ($userModel) {
             // Columns
             $this->unsignedInteger('created_by')->after('created_at')->nullable();
             $this->unsignedInteger('updated_by')->after('updated_at')->nullable();
@@ -304,7 +304,7 @@ class FoundationServiceProvider extends ServiceProvider
                  ->onDelete('cascade')->onUpdate('cascade');
         });
 
-        Blueprint::macro('dropAuditable', function() {
+        Blueprint::macro('dropAuditable', function () {
             $this->dropForeign($this->createIndexName('foreign', ['created_by']));
             $this->dropForeign($this->createIndexName('foreign', ['updated_by']));
             $this->dropColumn(['created_by', 'updated_by']);
