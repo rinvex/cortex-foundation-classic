@@ -7,6 +7,7 @@ namespace Cortex\Foundation\Providers;
 use Illuminate\Routing\Router;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
 use Cortex\Foundation\Console\Commands\InstallCommand;
@@ -57,6 +58,7 @@ class FoundationServiceProvider extends ServiceProvider
         $this->overrideNotificationMiddleware();
         $this->overrideLaravelLocalization();
         $this->overrideUrlGenerator();
+        $this->bindBlueprintMacro();
         $this->overrideRedirector();
         $this->bindBladeCompiler();
         $this->overrideLangJS();
@@ -278,5 +280,34 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Bind the Laravel JS Localization command into Laravel Artisan.
         $this->commands('localization.js');
+    }
+
+    /**
+     * Bind blueprint macro.
+     *
+     * @return void
+     */
+    protected function bindBlueprintMacro(): void
+    {
+        // Get users model
+        $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
+
+        Blueprint::macro('auditable', function() use ($userModel) {
+            // Columns
+            $this->unsignedInteger('created_by')->after('created_at')->nullable();
+            $this->unsignedInteger('updated_by')->after('updated_at')->nullable();
+
+            // Indexes
+            $this->foreign('created_by')->references('id')->on((new $userModel())->getTable())
+                 ->onDelete('cascade')->onUpdate('cascade');
+            $this->foreign('updated_by')->references('id')->on((new $userModel())->getTable())
+                 ->onDelete('cascade')->onUpdate('cascade');
+        });
+
+        Blueprint::macro('dropAuditable', function() {
+            $this->dropForeign($this->createIndexName('foreign', ['created_by']));
+            $this->dropForeign($this->createIndexName('foreign', ['updated_by']));
+            $this->dropColumn(['created_by', 'updated_by']);
+        });
     }
 }
