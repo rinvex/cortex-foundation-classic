@@ -28,9 +28,9 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
      * @param string $table
      * @param bool   $create
      *
-     * @return string
+     * @return void
      */
-    protected function writeMigration($name, $table, $create): string
+    protected function writeMigration($name, $table, $create): void
     {
         $this->makeDirectory($this->getMigrationPath());
 
