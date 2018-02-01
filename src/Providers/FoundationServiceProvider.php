@@ -292,10 +292,10 @@ class FoundationServiceProvider extends ServiceProvider
         // Get users model
         $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
 
-        Blueprint::macro('auditable', function () use ($userModel) {
+        Blueprint::macro('auditable', function ($alter = false) use ($userModel) {
             // Columns
-            $this->unsignedInteger('created_by')->after('created_at')->nullable();
-            $this->unsignedInteger('updated_by')->after('updated_at')->nullable();
+            $alter ? $this->unsignedInteger('created_by')->after('created_at')->nullable() : $this->unsignedInteger('created_by')->nullable();
+            $alter ? $this->unsignedInteger('updated_by')->after('updated_at')->nullable() : $this->unsignedInteger('updated_by')->nullable();
 
             // Indexes
             $this->foreign('created_by')->references('id')->on((new $userModel())->getTable())
