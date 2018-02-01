@@ -401,7 +401,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     protected function registerServeCommand()
     {
         $this->app->singleton('command.serve', function () {
-            return new ServeCommand;
+            return new ServeCommand();
         });
     }
 
