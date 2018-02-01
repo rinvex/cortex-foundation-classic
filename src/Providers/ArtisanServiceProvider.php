@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Cortex\Foundation\Console\Commands\ServeCommand;
 use Illuminate\Console\Scheduling\ScheduleRunCommand;
 use Cortex\Foundation\Console\Commands\JobMakeCommand;
 use Cortex\Foundation\Console\Commands\MailMakeCommand;
@@ -23,6 +24,7 @@ use Cortex\Foundation\Console\Commands\ListenerMakeCommand;
 use Cortex\Foundation\Console\Commands\ProviderMakeCommand;
 use Cortex\Foundation\Console\Commands\ResourceMakeCommand;
 use Cortex\Foundation\Console\Commands\DataTableMakeCommand;
+use Cortex\Foundation\Console\Commands\VendorPublishCommand;
 use Cortex\Foundation\Console\Commands\ControllerMakeCommand;
 use Cortex\Foundation\Console\Commands\MiddlewareMakeCommand;
 use Cortex\Foundation\Console\Commands\TransformerMakeCommand;
@@ -388,6 +390,30 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->app->singleton('command.transformer.make', function ($app) {
             return new TransformerMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerServeCommand()
+    {
+        $this->app->singleton('command.serve', function () {
+            return new ServeCommand;
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerVendorPublishCommand()
+    {
+        $this->app->singleton('command.vendor.publish', function ($app) {
+            return new VendorPublishCommand($app['files']);
         });
     }
 }
