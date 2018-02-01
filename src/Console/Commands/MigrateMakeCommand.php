@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Illuminate\Console\ConfirmableTrait;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 use Illuminate\Database\Console\Migrations\MigrateMakeCommand as BaseMigrateMakeCommand;
 
 class MigrateMakeCommand extends BaseMigrateMakeCommand
 {
+    use ConfirmableTrait;
     use ConsoleMakeModuleCommand;
 
     /**

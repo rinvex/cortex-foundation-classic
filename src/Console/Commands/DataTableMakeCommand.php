@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Support\Str;
+use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,6 +13,7 @@ use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 
 class DataTableMakeCommand extends GeneratorCommand
 {
+    use ConfirmableTrait;
     use ConsoleMakeModuleCommand;
 
     /**

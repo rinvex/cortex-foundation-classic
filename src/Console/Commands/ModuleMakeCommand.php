@@ -6,9 +6,12 @@ namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Console\ConfirmableTrait;
 
 class ModuleMakeCommand extends Command
 {
+    use ConfirmableTrait;
+
     /**
      * The filesystem instance.
      *
