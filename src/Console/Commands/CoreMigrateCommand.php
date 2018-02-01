@@ -15,7 +15,7 @@ class CoreMigrateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:migrate';
+    protected $signature = 'cortex:migrate {--force : Force the operation to run when in production.}';
 
     /**
      * The console command description.
@@ -35,6 +35,6 @@ class CoreMigrateCommand extends Command
             return mb_strpos($command->getName(), 'cortex:migrate:') !== false;
         })->partition(function ($command) {
             return in_array($command->getName(), ['cortex:migrate:foundation', 'cortex:migrate:fort']);
-        })->flatten()->each->run(new ArrayInput([]), $this->output);
+        })->flatten()->each->run(new ArrayInput(['--force' => $this->option('force')]), $this->output);
     }
 }

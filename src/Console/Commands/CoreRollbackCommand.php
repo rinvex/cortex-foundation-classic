@@ -15,7 +15,7 @@ class CoreRollbackCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:rollback';
+    protected $signature = 'cortex:rollback {--force : Force the operation to run when in production.}';
 
     /**
      * The console command description.
@@ -35,6 +35,6 @@ class CoreRollbackCommand extends Command
             return mb_strpos($command->getName(), 'cortex:rollback:') !== false;
         })->partition(function ($command) {
             return in_array($command->getName(), ['cortex:rollback:foundation', 'cortex:rollback:fort']);
-        })->flatten()->each->run(new ArrayInput([]), $this->output);
+        })->flatten()->each->run(new ArrayInput(['--force' => $this->option('force')]), $this->output);
     }
 }
