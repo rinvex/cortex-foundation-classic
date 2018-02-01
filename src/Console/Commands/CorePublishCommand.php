@@ -15,7 +15,7 @@ class CorePublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:publish';
+    protected $signature = 'cortex:publish {--force : Overwrite any existing files.}';
 
     /**
      * The console command description.
@@ -35,6 +35,6 @@ class CorePublishCommand extends Command
             return mb_strpos($command->getName(), 'cortex:publish:') !== false;
         })->partition(function ($command) {
             return in_array($command->getName(), ['cortex:publish:foundation', 'cortex:publish:fort']);
-        })->flatten()->each->run(new ArrayInput([]), $this->output);
+        })->flatten()->each->run(new ArrayInput(['--force' => $this->option('force')]), $this->output);
     }
 }
