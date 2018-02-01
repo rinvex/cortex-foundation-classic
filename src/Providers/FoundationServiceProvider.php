@@ -289,18 +289,15 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function bindBlueprintMacro(): void
     {
-        // Get users model
-        $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
-
-        Blueprint::macro('auditable', function ($alter = false) use ($userModel) {
+        Blueprint::macro('auditable', function ($alter = false) {
             // Columns
             $alter ? $this->unsignedInteger('created_by')->after('created_at')->nullable() : $this->unsignedInteger('created_by')->nullable();
             $alter ? $this->unsignedInteger('updated_by')->after('updated_at')->nullable() : $this->unsignedInteger('updated_by')->nullable();
 
             // Indexes
-            $this->foreign('created_by')->references('id')->on((new $userModel())->getTable())
+            $this->foreign('created_by')->references('id')->on(config('rinvex.fort.tables.users'))
                  ->onDelete('cascade')->onUpdate('cascade');
-            $this->foreign('updated_by')->references('id')->on((new $userModel())->getTable())
+            $this->foreign('updated_by')->references('id')->on(config('rinvex.fort.tables.users'))
                  ->onDelete('cascade')->onUpdate('cascade');
         });
 
