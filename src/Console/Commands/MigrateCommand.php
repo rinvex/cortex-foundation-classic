@@ -13,7 +13,7 @@ class MigrateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:migrate:foundation';
+    protected $signature = 'cortex:migrate:foundation {--force : Force the operation to run when in production.}';
 
     /**
      * The console command description.
@@ -31,6 +31,6 @@ class MigrateCommand extends Command
     {
         $this->warn($this->description);
 
-        $this->call('migrate', ['--step' => true, '--path' => 'app/cortex/foundation/database/migrations']);
+        $this->call('migrate', ['--step' => true, '--path' => 'app/cortex/foundation/database/migrations', '--force' => $this->option('force')]);
     }
 }
