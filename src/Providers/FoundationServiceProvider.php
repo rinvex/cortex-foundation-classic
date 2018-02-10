@@ -10,6 +10,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
 use Cortex\Foundation\Console\Commands\SeedCommand;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Cortex\Foundation\Console\Commands\InstallCommand;
 use Cortex\Foundation\Console\Commands\MigrateCommand;
 use Cortex\Foundation\Console\Commands\PublishCommand;
@@ -86,6 +87,11 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app['laravellocalization']->setLocale();
 
         $router->model('media', config('medialibrary.media_model'));
+
+        // Map relations
+        Relation::morphMap([
+            'media' => config('medialibrary.media_model'),
+        ]);
 
         // Load resources
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
