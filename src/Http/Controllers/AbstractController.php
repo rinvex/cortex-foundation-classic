@@ -39,7 +39,7 @@ abstract class AbstractController extends Controller
     protected $middlewareWhitelist = [];
 
     /**
-     * Create a new authenticated controller instance.
+     * Create a new abstract controller instance.
      */
     public function __construct()
     {

@@ -102,7 +102,7 @@ class Log extends Activity
     protected $throwValidationExceptions = true;
 
     /**
-     * Create a new Eloquent model instance.
+     * Create a new Log model instance.
      *
      * @param array $attributes
      */

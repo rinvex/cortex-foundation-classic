@@ -18,7 +18,7 @@ class Clockwork
     protected $app;
 
     /**
-     * Create a new middleware instance.
+     * Create a new Clockwork middleware instance.
      *
      * @param Application $app
      *

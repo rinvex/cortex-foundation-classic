@@ -11,7 +11,7 @@ use Cortex\Foundation\Http\Controllers\AuthorizedController;
 class DummyClass extends AuthorizedController
 {
     /**
-     * Display a listing of the resource.
+     * List all records.
      *
      * @return \Illuminate\Http\Response
      */
@@ -31,9 +31,10 @@ class DummyClass extends AuthorizedController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store new record.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -53,7 +54,7 @@ class DummyClass extends AuthorizedController
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Edit given record.
      *
      * @param  \DummyFullModelClass  $DummyModelVariable
      * @return \Illuminate\Http\Response
@@ -64,10 +65,11 @@ class DummyClass extends AuthorizedController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update given record.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \DummyFullModelClass  $DummyModelVariable
+     * @param  \Illuminate\Http\Request $request
+     * @param  \DummyFullModelClass                    $DummyModelVariable
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, DummyModelClass $DummyModelVariable)
@@ -76,9 +78,10 @@ class DummyClass extends AuthorizedController
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Destroy given record.
      *
-     * @param  \DummyFullModelClass  $DummyModelVariable
+     * @param \DummyFullModelClass $DummyModelVariable
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(DummyModelClass $DummyModelVariable)
