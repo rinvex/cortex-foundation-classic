@@ -15,6 +15,6 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        return view('cortex/foundation::frontarea.pages.home');
+        return view('cortex/foundation::frontarea.pages.index');
     }
 }
