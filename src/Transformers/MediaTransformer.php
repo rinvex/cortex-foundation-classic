@@ -22,7 +22,7 @@ class MediaTransformer extends TransformerAbstract
             'size' => (string) $media->getHumanReadableSizeAttribute(),
             'created_at' => (string) $media->created_at,
             'updated_at' => (string) $media->updated_at,
-            'delete' => (string) route('adminarea.rooms.media.delete', ['room' => $media->model, 'media' => $media]),
+            'delete' => (string) route('adminarea.rooms.media.destroy', ['room' => $media->model, 'media' => $media]),
         ];
     }
 }
