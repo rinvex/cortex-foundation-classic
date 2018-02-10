@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Providers;
 
 use Illuminate\Routing\Router;
-use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -86,7 +85,7 @@ class FoundationServiceProvider extends ServiceProvider
         $router->pattern('locale', '[a-z]{2}');
         $this->app['laravellocalization']->setLocale();
 
-        $router->model('media', Media::class);
+        $router->model('media', config('medialibrary.media_model'));
 
         // Load resources
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
