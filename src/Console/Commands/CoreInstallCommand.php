@@ -32,7 +32,7 @@ class CoreInstallCommand extends Command
         $this->warn($this->description);
 
         $this->call('cortex:migrate', ['--force' => $this->option('force')]);
-        $this->call('cortex:seed');
         $this->call('cortex:publish', ['--force' => $this->option('force')]);
+        $this->call('cortex:seed');
     }
 }
