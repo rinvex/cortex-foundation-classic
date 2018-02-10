@@ -6,6 +6,7 @@ namespace Cortex\Foundation\Http\Controllers;
 
 use ReflectionClass;
 use ReflectionMethod;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class AuthorizedController extends AuthenticatedController
@@ -13,12 +14,22 @@ class AuthorizedController extends AuthenticatedController
     use AuthorizesRequests;
 
     /**
-     * Resource Ability Map.
-     * Array of resource ability map.
+     * The resource Ability Map.
      *
      * @var array
      */
-    protected $resourceAbilityMap = [];
+    protected $resourceAbilityMap = [
+        'activities' => 'audit',
+        'index' => 'list',
+        'logs' => 'audit',
+    ];
+
+    /**
+     * The resource methods without models.
+     *
+     * @var array
+     */
+    protected $resourceMethodsWithoutModels = [];
 
     /**
      * Resource action whitelist.
@@ -49,26 +60,19 @@ class AuthorizedController extends AuthenticatedController
     }
 
     /**
-     * Authorize a resource action based on the incoming request.
-     *
-     * @param string                        $resource
-     * @param string|null                   $parameter
-     * @param array                         $options
-     * @param \Illuminate\Http\Request|null $request
-     *
-     * @return void
+     * {@inheritdoc}
      */
-    public function authorizeResource($resource, $parameter = null, array $options = [], $request = null): void
+    public function authorizeResource($model, $parameter = null, array $options = [], $request = null): void
     {
         $middleware = [];
-        $parameter = $parameter ?: $resource;
+        $parameter = $parameter ?: Str::snake(class_basename($model));
 
-        // Prepare middleware
         foreach ($this->mapResourceAbilities() as $method => $ability) {
-            $middleware["can:{$ability}-{$resource},{$parameter}"][] = $method;
+            $modelName = in_array($method, $this->resourceMethodsWithoutModels()) ? $model : $parameter;
+
+            $middleware["can:{$ability},{$modelName}"][] = $method;
         }
 
-        // Attach middleware
         foreach ($middleware as $middlewareName => $methods) {
             $this->middleware($middlewareName, $options)->only($methods);
         }
@@ -103,16 +107,18 @@ class AuthorizedController extends AuthenticatedController
     }
 
     /**
-     * Get the map of resource methods to ability names.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     protected function resourceAbilityMap(): array
     {
-        return $this->resourceAbilityMap + [
-                'index' => 'list',
-                'store' => 'create',
-                'edit' => 'update',
-            ];
+        return array_merge(parent::resourceAbilityMap(), $this->resourceAbilityMap);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function resourceMethodsWithoutModels()
+    {
+        return array_merge(parent::resourceMethodsWithoutModels(), $this->resourceMethodsWithoutModels);
     }
 }

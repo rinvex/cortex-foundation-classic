@@ -10,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
+use Cortex\Foundation\Console\Commands\SeedCommand;
 use Cortex\Foundation\Console\Commands\InstallCommand;
 use Cortex\Foundation\Console\Commands\MigrateCommand;
 use Cortex\Foundation\Console\Commands\PublishCommand;
@@ -33,6 +34,7 @@ class FoundationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
+        SeedCommand::class => 'command.cortex.foundation.seed',
         InstallCommand::class => 'command.cortex.foundation.install',
         MigrateCommand::class => 'command.cortex.foundation.migrate',
         PublishCommand::class => 'command.cortex.foundation.publish',

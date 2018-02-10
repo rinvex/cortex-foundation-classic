@@ -57,6 +57,7 @@
         "rinvex/pages": "dev-develop",
         "rinvex/support": "dev-develop",
         "rinvex/widgets": "dev-develop",
+        "silber/bouncer": "v1.0.0-rc.1",
         "spatie/laravel-activitylog": "^2.4.0",
         "spatie/laravel-medialibrary": "v7.x-dev",
         "symfony/console": "^3.0.0",
