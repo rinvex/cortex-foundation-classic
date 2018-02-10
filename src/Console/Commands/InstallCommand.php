@@ -33,5 +33,6 @@ class InstallCommand extends Command
 
         $this->call('cortex:migrate:foundation', ['--force' => $this->option('force')]);
         $this->call('cortex:publish:foundation', ['--force' => $this->option('force')]);
+        $this->call('cortex:seed:foundation');
     }
 }
