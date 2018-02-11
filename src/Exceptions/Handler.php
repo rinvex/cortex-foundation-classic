@@ -6,7 +6,6 @@ namespace Cortex\Foundation\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
-use Rinvex\Fort\Exceptions\GenericException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Rinvex\Fort\Exceptions\AuthorizationException;
