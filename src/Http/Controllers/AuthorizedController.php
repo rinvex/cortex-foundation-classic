@@ -42,7 +42,7 @@ class AuthorizedController extends AuthenticatedController
     /**
      * Create a new authorized controller instance.
      *
-     * @throws \Rinvex\Fort\Exceptions\AuthorizationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function __construct()
     {

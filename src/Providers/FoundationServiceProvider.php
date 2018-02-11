@@ -302,9 +302,9 @@ class FoundationServiceProvider extends ServiceProvider
             $alter ? $this->unsignedInteger('updated_by')->after('updated_at')->nullable() : $this->unsignedInteger('updated_by')->nullable();
 
             // Indexes
-            $this->foreign('created_by')->references('id')->on(config('rinvex.fort.tables.users'))
+            $this->foreign('created_by')->references('id')->on(config('cortex.fort.tables.users'))
                  ->onDelete('cascade')->onUpdate('cascade');
-            $this->foreign('updated_by')->references('id')->on(config('rinvex.fort.tables.users'))
+            $this->foreign('updated_by')->references('id')->on(config('cortex.fort.tables.users'))
                  ->onDelete('cascade')->onUpdate('cascade');
         });
 
