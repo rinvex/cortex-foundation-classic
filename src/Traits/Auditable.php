@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 trait Auditable
 {
@@ -28,16 +29,15 @@ trait Auditable
     abstract public static function updating($callback);
 
     /**
-     * Define an inverse one-to-one or many relationship.
+     * Define a polymorphic, inverse one-to-one or many relationship.
      *
-     * @param string $related
-     * @param string $foreignKey
-     * @param string $ownerKey
-     * @param string $relation
+     * @param  string $name
+     * @param  string $type
+     * @param  string $id
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    abstract public function belongsTo($related, $foreignKey = null, $ownerKey = null, $relation = null);
+    abstract public function morphTo($name = null, $type = null, $id = null);
 
     /**
      * Boot the Auditable trait for the model.
@@ -47,36 +47,62 @@ trait Auditable
     public static function bootAuditable()
     {
         static::creating(function (Model $model) {
-            $model->created_by || $model->created_by = auth()->id();
-            $model->updated_by || $model->updated_by = auth()->id();
+            $model->created_by_id || $model->created_by_id = optional(auth()->guard(request('guard'))->user())->getKey();
+            $model->created_by_type || $model->created_by_type = optional(auth()->guard(request('guard'))->user())->getMorphClass();
+
+            $model->updated_by_id || $model->updated_by_id = optional(auth()->guard(request('guard'))->user())->getKey();
+            $model->updated_by_type || $model->updated_by_type = optional(auth()->guard(request('guard'))->user())->getMorphClass();
         });
 
         static::updating(function (Model $model) {
-            $model->isDirty('updated_by') || $model->updated_by = auth()->id();
+            $model->isDirty('updated_by_id') || $model->updated_by_id = optional(auth()->guard(request('guard'))->user())->getKey();
+            $model->isDirty('updated_by_type') || $model->updated_by_type = optional(auth()->guard(request('guard'))->user())->getMorphClass();
         });
     }
 
     /**
-     * Get user model who created the record.
+     * Get the owning creator.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function creator(): BelongsTo
+    public function creator(): MorphTo
     {
-        $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
-
-        return $this->belongsTo($userModel, 'created_by');
+        return $this->morphTo();
     }
 
     /**
-     * Get user model who updated the record.
+     * Get the owning updater.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function updater(): BelongsTo
+    public function updater(): MorphTo
     {
-        $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
+        return $this->morphTo();
+    }
 
-        return $this->belongsTo($userModel, 'updated_by');
+    /**
+     * Get audits of the given creator.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param \Illuminate\Database\Eloquent\Model   $user
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfCreator(Builder $builder, Model $user): Builder
+    {
+        return $builder->where('created_by_type', $user->getMorphClass())->where('created_by_id', $user->getKey());
+    }
+
+    /**
+     * Get audits of the given updater.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param \Illuminate\Database\Eloquent\Model   $user
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfUpdater(Builder $builder, Model $user): Builder
+    {
+        return $builder->where('updated_by_type', $user->getMorphClass())->where('updated_by_id', $user->getKey());
     }
 }

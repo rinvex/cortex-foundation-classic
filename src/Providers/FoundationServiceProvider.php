@@ -296,22 +296,38 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function bindBlueprintMacro(): void
     {
-        Blueprint::macro('auditable', function ($alter = false) {
-            // Columns
-            $alter ? $this->unsignedInteger('created_by')->after('created_at')->nullable() : $this->unsignedInteger('created_by')->nullable();
-            $alter ? $this->unsignedInteger('updated_by')->after('updated_at')->nullable() : $this->unsignedInteger('updated_by')->nullable();
-
-            // Indexes
-            $this->foreign('created_by')->references('id')->on(config('cortex.fort.tables.users'))
-                 ->onDelete('cascade')->onUpdate('cascade');
-            $this->foreign('updated_by')->references('id')->on(config('cortex.fort.tables.users'))
-                 ->onDelete('cascade')->onUpdate('cascade');
+        Blueprint::macro('auditable', function () {
+            $this->unsignedInteger('created_by_id')->after('created_at')->nullable();
+            $this->unsignedInteger('created_by_type')->after('created_at')->nullable();
+            $this->unsignedInteger('updated_by_id')->after('updated_at')->nullable();
+            $this->unsignedInteger('updated_by_type')->after('updated_at')->nullable();
         });
 
         Blueprint::macro('dropAuditable', function () {
-            $this->dropForeign($this->createIndexName('foreign', ['created_by']));
-            $this->dropForeign($this->createIndexName('foreign', ['updated_by']));
-            $this->dropColumn(['created_by', 'updated_by']);
+            $this->dropForeign($this->createIndexName('foreign', ['updated_by_type']));
+            $this->dropForeign($this->createIndexName('foreign', ['updated_by_id']));
+            $this->dropForeign($this->createIndexName('foreign', ['created_by_type']));
+            $this->dropForeign($this->createIndexName('foreign', ['created_by_id']));
+            $this->dropColumn(['updated_by_type', 'updated_by_id', 'created_by_type', 'created_by_id']);
+        });
+
+        Blueprint::macro('auditableAndTimestamps', function ($precision = 0) {
+            $this->timestamp('created_at', $precision)->nullable();
+            $this->unsignedInteger('created_by_id')->nullable();
+            $this->unsignedInteger('created_by_type')->nullable();
+            $this->timestamp('updated_at', $precision)->nullable();
+            $this->unsignedInteger('updated_by_id')->nullable();
+            $this->unsignedInteger('updated_by_type')->nullable();
+        });
+
+        Blueprint::macro('dropauditableAndTimestamps', function () {
+            $this->dropForeign($this->createIndexName('foreign', ['updated_by_type']));
+            $this->dropForeign($this->createIndexName('foreign', ['updated_by_id']));
+            $this->dropForeign($this->createIndexName('foreign', ['updated_at']));
+            $this->dropForeign($this->createIndexName('foreign', ['created_by_type']));
+            $this->dropForeign($this->createIndexName('foreign', ['created_by_id']));
+            $this->dropForeign($this->createIndexName('foreign', ['created_at']));
+            $this->dropColumn(['updated_by_type', 'updated_by_id', 'updated_at', 'created_by_type', 'created_by_id', 'created_at']);
         });
     }
 }
