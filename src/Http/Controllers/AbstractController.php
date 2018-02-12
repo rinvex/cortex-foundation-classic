@@ -43,9 +43,8 @@ abstract class AbstractController extends Controller
      */
     public function __construct()
     {
-        // Set accessarea to the global request parameter bag
-        $accessArea = str_before(Route::currentRouteName(), '.');
-        request()->request->add(['accessarea' => $accessArea]);
+        request()->request->add(['guard' => $this->getGuard()]);
+        request()->request->add(['accessarea' => str_before(Route::currentRouteName(), '.')]);
     }
 
     /**
