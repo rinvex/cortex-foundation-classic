@@ -52,7 +52,6 @@
         "proengsoft/laravel-jsvalidation": "^2.1.0",
         "rinvex/cacheable": "dev-develop",
         "rinvex/composer": "dev-develop",
-        "rinvex/fort": "dev-develop",
         "rinvex/menus": "dev-develop",
         "rinvex/pages": "dev-develop",
         "rinvex/support": "dev-develop",
