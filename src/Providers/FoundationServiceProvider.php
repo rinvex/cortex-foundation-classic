@@ -298,9 +298,9 @@ class FoundationServiceProvider extends ServiceProvider
     {
         Blueprint::macro('auditable', function () {
             $this->unsignedInteger('created_by_id')->after('created_at')->nullable();
-            $this->unsignedInteger('created_by_type')->after('created_at')->nullable();
+            $this->string('created_by_type')->after('created_at')->nullable();
             $this->unsignedInteger('updated_by_id')->after('updated_at')->nullable();
-            $this->unsignedInteger('updated_by_type')->after('updated_at')->nullable();
+            $this->string('updated_by_type')->after('updated_at')->nullable();
         });
 
         Blueprint::macro('dropAuditable', function () {
@@ -314,10 +314,10 @@ class FoundationServiceProvider extends ServiceProvider
         Blueprint::macro('auditableAndTimestamps', function ($precision = 0) {
             $this->timestamp('created_at', $precision)->nullable();
             $this->unsignedInteger('created_by_id')->nullable();
-            $this->unsignedInteger('created_by_type')->nullable();
+            $this->string('created_by_type')->nullable();
             $this->timestamp('updated_at', $precision)->nullable();
             $this->unsignedInteger('updated_by_id')->nullable();
-            $this->unsignedInteger('updated_by_type')->nullable();
+            $this->string('updated_by_type')->nullable();
         });
 
         Blueprint::macro('dropauditableAndTimestamps', function () {
