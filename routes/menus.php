@@ -16,4 +16,6 @@ if (config('cortex.foundation.route.locale_prefix')) {
 
     Menu::register('frontarea.header', $languageMenu);
     Menu::register('adminarea.header', $languageMenu);
+    Menu::register('tenantarea.header', $languageMenu);
+    Menu::register('managerarea.header', $languageMenu);
 }
