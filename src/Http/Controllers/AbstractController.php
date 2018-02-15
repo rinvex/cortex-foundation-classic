@@ -61,7 +61,7 @@ abstract class AbstractController extends Controller
      */
     protected function guessGuard(string $accessarea): ?string
     {
-        return $this->guard = config('auth.guards.'.$guard = str_plural(strstr($accessarea, 'area', true))) ? $guard : null;
+        return $this->guard = config('auth.guards.'.$guard = str_plural(mb_strstr($accessarea, 'area', true))) ? $guard : null;
     }
 
     /**
@@ -73,7 +73,7 @@ abstract class AbstractController extends Controller
      */
     protected function guessBroker(string $accessarea): ?string
     {
-        return $this->broker = config('auth.passwords.'.$broker = str_plural(strstr($accessarea, 'area', true))) ? $broker : null;
+        return $this->broker = config('auth.passwords.'.$broker = str_plural(mb_strstr($accessarea, 'area', true))) ? $broker : null;
     }
 
     /**

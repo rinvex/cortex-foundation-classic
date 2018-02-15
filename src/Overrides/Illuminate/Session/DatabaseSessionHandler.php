@@ -12,7 +12,8 @@ class DatabaseSessionHandler extends BaseDatabaseSessionHandler
     /**
      * Add the user information to the session payload.
      *
-     * @param  array  $payload
+     * @param array $payload
+     *
      * @return $this
      */
     protected function addUserInformation(&$payload)
