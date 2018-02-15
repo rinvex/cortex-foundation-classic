@@ -43,8 +43,37 @@ abstract class AbstractController extends Controller
      */
     public function __construct()
     {
-        request()->request->add(['guard' => $this->getGuard()]);
-        request()->request->add(['accessarea' => str_before(Route::currentRouteName(), '.')]);
+        // Attach accessarea, guard and broker to request parameters dynamically
+        request()->request->add(['accessarea' => $accessarea = str_before(Route::currentRouteName(), '.')]);
+        request()->request->add(['broker' => $this->getBroker() ?? $this->guessBroker($accessarea)]);
+        request()->request->add(['guard' => $this->getGuard() ?? $this->guessGuard($accessarea)]);
+
+        // Activate Sentinels
+        ! in_array($accessarea, config('cortex.fort.sentinels')) || $this->middleware('auth.basic:sentinels');
+    }
+
+    /**
+     * Guess guard from accessarea.
+     *
+     * @param string $accessarea
+     *
+     * @return string|null
+     */
+    protected function guessGuard(string $accessarea): ?string
+    {
+        return $this->guard = config('auth.guards.'.$guard = str_plural(strstr($accessarea, 'area', true))) ? $guard : null;
+    }
+
+    /**
+     * Guess broker from accessarea.
+     *
+     * @param string $accessarea
+     *
+     * @return string|null
+     */
+    protected function guessBroker(string $accessarea): ?string
+    {
+        return $this->broker = config('auth.passwords.'.$broker = str_plural(strstr($accessarea, 'area', true))) ? $broker : null;
     }
 
     /**
