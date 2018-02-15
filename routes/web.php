@@ -29,8 +29,8 @@ Route::domain('{subdomain}.'.domain())->group(function () {
          ->prefix(config('cortex.foundation.route.locale_prefix') ? '{locale}/'.config('cortex.foundation.route.prefix.managerarea') : config('cortex.foundation.route.prefix.managerarea'))->group(function () {
 
             // Managerarea Home route
-            Route::get('/')->name('home')->uses('HomeController@index');
-        });
+             Route::get('/')->name('home')->uses('HomeController@index');
+         });
 
     Route::name('tenantarea.')
          ->middleware(['web', 'nohttpcache'])
@@ -38,6 +38,6 @@ Route::domain('{subdomain}.'.domain())->group(function () {
          ->prefix(config('cortex.foundation.route.locale_prefix') ? '{locale}/'.config('cortex.foundation.route.prefix.frontarea') : config('cortex.foundation.route.prefix.frontarea'))->group(function () {
 
             // Homepage Routes
-            Route::get('/')->name('home')->uses('HomeController@index');
-        });
+             Route::get('/')->name('home')->uses('HomeController@index');
+         });
 });

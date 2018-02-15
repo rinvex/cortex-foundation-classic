@@ -31,9 +31,9 @@ trait Auditable
     /**
      * Define a polymorphic, inverse one-to-one or many relationship.
      *
-     * @param  string $name
-     * @param  string $type
-     * @param  string $id
+     * @param string $name
+     * @param string $type
+     * @param string $id
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
