@@ -50,9 +50,9 @@ abstract class AbstractController extends Controller
     /**
      * Get the broker to be used.
      *
-     * @return string
+     * @return string|null
      */
-    protected function getBroker(): string
+    protected function getBroker(): ?string
     {
         return $this->broker;
     }
