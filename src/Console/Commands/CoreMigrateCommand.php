@@ -34,7 +34,7 @@ class CoreMigrateCommand extends Command
         collect(Artisan::all())->filter(function ($command) {
             return mb_strpos($command->getName(), 'cortex:migrate:') !== false;
         })->partition(function ($command) {
-            return in_array($command->getName(), ['cortex:migrate:foundation', 'cortex:migrate:fort']);
+            return in_array($command->getName(), ['cortex:migrate:foundation', 'cortex:migrate:auth']);
         })->flatten()->each->run(new ArrayInput(['--force' => $this->option('force')]), $this->output);
     }
 }

@@ -34,7 +34,7 @@ class CoreRollbackCommand extends Command
         collect(Artisan::all())->filter(function ($command) {
             return mb_strpos($command->getName(), 'cortex:rollback:') !== false;
         })->partition(function ($command) {
-            return in_array($command->getName(), ['cortex:rollback:foundation', 'cortex:rollback:fort']);
+            return in_array($command->getName(), ['cortex:rollback:foundation', 'cortex:rollback:auth']);
         })->flatten()->each->run(new ArrayInput(['--force' => $this->option('force')]), $this->output);
     }
 }

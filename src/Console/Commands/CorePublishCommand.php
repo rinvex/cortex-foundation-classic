@@ -34,7 +34,7 @@ class CorePublishCommand extends Command
         collect(Artisan::all())->filter(function ($command) {
             return mb_strpos($command->getName(), 'cortex:publish:') !== false;
         })->partition(function ($command) {
-            return in_array($command->getName(), ['cortex:publish:foundation', 'cortex:publish:fort']);
+            return in_array($command->getName(), ['cortex:publish:foundation', 'cortex:publish:auth']);
         })->flatten()->each->run(new ArrayInput(['--force' => $this->option('force')]), $this->output);
     }
 }
