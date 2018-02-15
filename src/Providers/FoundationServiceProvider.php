@@ -16,6 +16,7 @@ use Cortex\Foundation\Console\Commands\MigrateCommand;
 use Cortex\Foundation\Console\Commands\PublishCommand;
 use Cortex\Foundation\Console\Commands\CoreSeedCommand;
 use Cortex\Foundation\Console\Commands\RollbackCommand;
+use Illuminate\Support\Facades\Session as SessionFacade;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
 use Cortex\Foundation\Console\Commands\CorePublishCommand;
@@ -104,6 +105,17 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Publish Resources
         ! $this->app->runningInConsole() || $this->publishResources();
+
+        SessionFacade::extend('database', function ($app) {
+            $table = $app['config']['session.table'];
+
+            $lifetime = $app['config']['session.lifetime'];
+            $connection = $app['config']['session.connection'];
+
+            return new \Cortex\Foundation\Overrides\Illuminate\Session\DatabaseSessionHandler(
+                $app['db']->connection($connection), $table, $lifetime, $app
+            );
+        });
 
         $this->app->booted(function () {
             if ($this->app->routesAreCached()) {
