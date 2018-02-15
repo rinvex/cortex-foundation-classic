@@ -67,13 +67,13 @@ class Handler extends ExceptionHandler
             ]);
         } elseif ($exception instanceof GenericException) {
             return intend([
-                'url' => $exception->getRedirection() ?? route('frontarea.home'),
+                'url' => $exception->getRedirection() ?? route($request->get('accessarea').'.home'),
                 'withInput' => $exception->getInputs() ?? $request->all(),
                 'with' => ['warning' => $exception->getMessage()],
             ]);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
-                'url' => '/',
+                'url' => route($request->get('accessarea').'.home'),
                 'with' => ['warning' => $exception->getMessage()],
             ]);
         } elseif ($exception instanceof NotFoundHttpException) {
@@ -88,7 +88,7 @@ class Handler extends ExceptionHandler
                     app('router')->getRoutes()->match(request()->create($localizedUrl));
 
                     return intend([
-                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route('frontarea.home'),
+                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route($request->get('accessarea').'.home'),
                         'with' => ['warning' => $exception->getMessage()],
                     ]);
                 } catch (Exception $exception) {
@@ -103,7 +103,7 @@ class Handler extends ExceptionHandler
             $plural = str_plural($single);
 
             return intend([
-                'url' => $area ? route("{$area}.{$plural}.index") : route('frontarea.home'),
+                'url' => $area ? route("{$area}.{$plural}.index") : route("{$area}.home"),
                 'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'id' => $request->route()->parameter($single)])],
             ]);
         }
@@ -140,7 +140,7 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return intend([
-            'url' => route('frontarea.login'),
+            'url' => route($request->get('accessarea').'.login'),
             'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
         ]);
     }
