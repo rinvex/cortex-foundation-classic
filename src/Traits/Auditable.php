@@ -34,10 +34,11 @@ trait Auditable
      * @param string $name
      * @param string $type
      * @param string $id
+     * @param string $ownerKey
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    abstract public function morphTo($name = null, $type = null, $id = null);
+    abstract public function morphTo($name = null, $type = null, $id = null, $ownerKey = null);
 
     /**
      * Boot the Auditable trait for the model.
