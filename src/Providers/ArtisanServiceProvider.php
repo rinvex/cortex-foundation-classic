@@ -18,11 +18,14 @@ use Cortex\Foundation\Console\Commands\PolicyMakeCommand;
 use Cortex\Foundation\Console\Commands\SeederMakeCommand;
 use Cortex\Foundation\Console\Commands\ConsoleMakeCommand;
 use Cortex\Foundation\Console\Commands\FactoryMakeCommand;
+use Cortex\Foundation\Console\Commands\ChannelMakeCommand;
 use Cortex\Foundation\Console\Commands\MigrateMakeCommand;
 use Cortex\Foundation\Console\Commands\RequestMakeCommand;
 use Cortex\Foundation\Console\Commands\ListenerMakeCommand;
 use Cortex\Foundation\Console\Commands\ProviderMakeCommand;
 use Cortex\Foundation\Console\Commands\ResourceMakeCommand;
+use Cortex\Foundation\Console\Commands\EventGenerateCommand;
+use Cortex\Foundation\Console\Commands\ExceptionMakeCommand;
 use Cortex\Foundation\Console\Commands\DataTableMakeCommand;
 use Cortex\Foundation\Console\Commands\VendorPublishCommand;
 use Cortex\Foundation\Console\Commands\ControllerMakeCommand;
@@ -56,13 +59,12 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'Environment' => 'command.environment',
         'KeyGenerate' => 'command.key.generate',
         'Migrate' => 'command.migrate',
-        //'MigrateFresh' => 'command.migrate.fresh',
+        'MigrateFresh' => 'command.migrate.fresh',
         'MigrateInstall' => 'command.migrate.install',
         'MigrateRefresh' => 'command.migrate.refresh',
         'MigrateReset' => 'command.migrate.reset',
         'MigrateRollback' => 'command.migrate.rollback',
         'MigrateStatus' => 'command.migrate.status',
-        'Optimize' => 'command.optimize',
         'PackageDiscover' => 'command.package.discover',
         'Preset' => 'command.preset',
         'QueueFailed' => 'command.queue.failed',
@@ -93,11 +95,13 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         //'AuthMake' => 'command.auth.make',
         //'CacheTable' => 'command.cache.table',
         'ConfigMake' => 'command.config.make',
+        'ChannelMake' => 'command.channel.make',
         'ConsoleMake' => 'command.console.make',
         'ControllerMake' => 'command.controller.make',
         'DatatableMake' => 'command.datatable.make',
-        //'EventGenerate' => 'command.event.generate',
+        'EventGenerate' => 'command.event.generate',
         'EventMake' => 'command.event.make',
+        'ExceptionMake' => 'command.exception.make',
         'FactoryMake' => 'command.factory.make',
         'JobMake' => 'command.job.make',
         'ListenerMake' => 'command.listener.make',
@@ -151,10 +155,34 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @return void
      */
+    protected function registerChannelMakeCommand()
+    {
+        $this->app->singleton('command.channel.make', function ($app) {
+            return new ChannelMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
     protected function registerConsoleMakeCommand(): void
     {
         $this->app->singleton('command.console.make', function ($app) {
             return new ConsoleMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerEventGenerateCommand()
+    {
+        $this->app->singleton('command.event.generate', function () {
+            return new EventGenerateCommand;
         });
     }
 
@@ -191,6 +219,18 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->app->singleton('command.event.make', function ($app) {
             return new EventMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerExceptionMakeCommand()
+    {
+        $this->app->singleton('command.exception.make', function ($app) {
+            return new ExceptionMakeCommand($app['files']);
         });
     }
 
