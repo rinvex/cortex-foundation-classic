@@ -142,8 +142,9 @@ class Handler extends ExceptionHandler
     /**
      * Convert a validation exception into a response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Validation\ValidationException  $exception
+     * @param \Illuminate\Http\Request                   $request
+     * @param \Illuminate\Validation\ValidationException $exception
+     *
      * @return \Illuminate\Http\Response
      */
     protected function invalid($request, ValidationException $exception)
