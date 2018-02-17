@@ -16,17 +16,17 @@ use Cortex\Foundation\Console\Commands\ConfigMakeCommand;
 use Cortex\Foundation\Console\Commands\ModuleMakeCommand;
 use Cortex\Foundation\Console\Commands\PolicyMakeCommand;
 use Cortex\Foundation\Console\Commands\SeederMakeCommand;
+use Cortex\Foundation\Console\Commands\ChannelMakeCommand;
 use Cortex\Foundation\Console\Commands\ConsoleMakeCommand;
 use Cortex\Foundation\Console\Commands\FactoryMakeCommand;
-use Cortex\Foundation\Console\Commands\ChannelMakeCommand;
 use Cortex\Foundation\Console\Commands\MigrateMakeCommand;
 use Cortex\Foundation\Console\Commands\RequestMakeCommand;
 use Cortex\Foundation\Console\Commands\ListenerMakeCommand;
 use Cortex\Foundation\Console\Commands\ProviderMakeCommand;
 use Cortex\Foundation\Console\Commands\ResourceMakeCommand;
+use Cortex\Foundation\Console\Commands\DataTableMakeCommand;
 use Cortex\Foundation\Console\Commands\EventGenerateCommand;
 use Cortex\Foundation\Console\Commands\ExceptionMakeCommand;
-use Cortex\Foundation\Console\Commands\DataTableMakeCommand;
 use Cortex\Foundation\Console\Commands\VendorPublishCommand;
 use Cortex\Foundation\Console\Commands\ControllerMakeCommand;
 use Cortex\Foundation\Console\Commands\MiddlewareMakeCommand;
@@ -182,7 +182,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     protected function registerEventGenerateCommand()
     {
         $this->app->singleton('command.event.generate', function () {
-            return new EventGenerateCommand;
+            return new EventGenerateCommand();
         });
     }
 
