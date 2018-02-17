@@ -25,6 +25,16 @@ class Handler extends ExceptionHandler
     protected $dontReport = [];
 
     /**
+     * A list of the inputs that are never flashed for validation exceptions.
+     *
+     * @var array
+     */
+    protected $dontFlash = [
+        'password',
+        'password_confirmation',
+    ];
+
+    /**
      * Report or log an exception.
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
@@ -127,6 +137,25 @@ class Handler extends ExceptionHandler
         } else {
             return parent::renderHttpException($exception);
         }
+    }
+
+    /**
+     * Convert a validation exception into a response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Validation\ValidationException  $exception
+     * @return \Illuminate\Http\Response
+     */
+    protected function invalid($request, ValidationException $exception)
+    {
+        $url = $exception->redirectTo ?? url()->previous();
+
+        return redirect($url)
+            ->withInput($request->except($this->dontFlash))
+            ->withErrors(
+                $exception->errors(),
+                $exception->errorBag
+            );
     }
 
     /**

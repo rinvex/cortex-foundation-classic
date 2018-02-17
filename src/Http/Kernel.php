@@ -49,12 +49,13 @@ class Kernel extends HttpKernel
      * {@inheritdoc}
      */
     protected $routeMiddleware = [
+        'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'nohttpcache' => \Cortex\Foundation\Http\Middleware\NoHttpCache::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
     ];
 
     /**
