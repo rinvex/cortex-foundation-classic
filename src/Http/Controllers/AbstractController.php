@@ -48,8 +48,8 @@ abstract class AbstractController extends Controller
         request()->request->add(['broker' => $this->getBroker() ?? $this->guessBroker($accessarea)]);
         request()->request->add(['guard' => $this->getGuard() ?? $this->guessGuard($accessarea)]);
 
-        // Activate Sentinels
-        ! in_array($accessarea, config('cortex.auth.sentinels')) || $this->middleware('auth.basic:sentinels');
+        // Activate Guardians
+        ! in_array($accessarea, config('cortex.auth.guardians')) || $this->middleware('auth.basic:guardians');
     }
 
     /**
