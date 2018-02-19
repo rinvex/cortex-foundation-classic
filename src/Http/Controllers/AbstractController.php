@@ -49,7 +49,7 @@ abstract class AbstractController extends Controller
         request()->request->add(['guard' => $this->getGuard() ?? $this->guessGuard($accessarea)]);
 
         // Activate Guardians
-        ! in_array($accessarea, config('cortex.auth.guardians')) || $this->middleware('auth.basic:guardians');
+        ! in_array($accessarea, config('cortex.auth.guardians')) || $this->middleware('auth.basic:guardians,username');
     }
 
     /**
