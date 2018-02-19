@@ -21,7 +21,7 @@ class LogTransformer extends TransformerAbstract
             $class = explode('\\', get_class($log->causer));
             $singleResource = lower_case(end($class));
             $pluralResource = str_plural(lower_case(end($class)));
-            $causer = ucfirst($singleResource).': '.($log->causer->username ?? $log->causer->title ?? $log->causer->slug);
+            $causer = ucfirst($singleResource).': '.($log->causer->username ?? $log->causer->title ?? $log->causer->name);
             $causer_route = Route::has("adminarea.{$pluralResource}.edit") ? route("adminarea.{$pluralResource}.edit", [$singleResource => $log->causer]) : null;
         } else {
             $causer = 'System';
