@@ -20,7 +20,7 @@ class ActivityTransformer extends TransformerAbstract
         $route = Route::has("adminarea.{$subjects}.edit") ? route("adminarea.{$subjects}.edit", [$subject => $log->subject]) : null;
 
         if ($log->subject) {
-            $subjectName = ucfirst($subject).': '.($log->subject->username ?? $log->subject->name ?? $log->subject->title ?? $log->subject->slug);
+            $subjectName = ucfirst($subject).': '.($log->subject->username ?? $log->subject->title ?? $log->subject->slug);
         } else {
             $subjectName = ucfirst($subject).': Not Found!';
         }
