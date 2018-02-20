@@ -68,7 +68,7 @@ trait Auditable
      */
     public function creator(): MorphTo
     {
-        return $this->morphTo();
+        return $this->morphTo('creator', 'creator_type', 'creator_id');
     }
 
     /**
@@ -78,7 +78,7 @@ trait Auditable
      */
     public function updater(): MorphTo
     {
-        return $this->morphTo();
+        return $this->morphTo('updater', 'updater_type', 'updater_id');
     }
 
     /**
