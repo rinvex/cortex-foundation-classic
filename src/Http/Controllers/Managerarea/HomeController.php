@@ -11,14 +11,7 @@ class HomeController extends AuthorizedController
     /**
      * {@inheritdoc}
      */
-    protected $resource = 'managerarea';
-
-    /**
-     * {@inheritdoc}
-     */
-    protected $resourceAbilityMap = [
-        'index' => 'access',
-    ];
+    protected $resource = 'access-managerarea';
 
     /**
      * Show managerarea index.

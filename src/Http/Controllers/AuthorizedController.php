@@ -49,7 +49,7 @@ class AuthorizedController extends AuthenticatedController
         parent::__construct();
 
         if (property_exists(static::class, 'resource')) {
-            $this->authorizeResource($this->resource);
+            $this->isClassName($this->resource) ? $this->authorizeResource($this->resource) : $this->authorizeGeneric($this->resource);
         } else {
             // At this stage, sessions still not loaded yet, and `AuthorizationException`
             // depends on seesions to flash redirection error msg, so delegate to a middleware
@@ -75,6 +75,22 @@ class AuthorizedController extends AuthenticatedController
 
         foreach ($middleware as $middlewareName => $methods) {
             $this->middleware($middlewareName, $options)->only($methods);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authorizeGeneric($resource): void
+    {
+        $middleware = [];
+
+        foreach ($this->mapResourceAbilities() as $method => $ability) {
+            $middleware["can:{$resource}"][] = $method;
+        }
+
+        foreach ($middleware as $middlewareName => $methods) {
+            $this->middleware($middlewareName)->only($methods);
         }
     }
 
@@ -120,5 +136,16 @@ class AuthorizedController extends AuthenticatedController
     protected function resourceMethodsWithoutModels()
     {
         return array_merge(parent::resourceMethodsWithoutModels(), $this->resourceMethodsWithoutModels);
+    }
+
+    /**
+     * Checks if the given string looks like a fully qualified class name.
+     *
+     * @param  string  $value
+     * @return bool
+     */
+    protected function isClassName($value)
+    {
+        return strpos($value, '\\') !== false;
     }
 }
