@@ -60,13 +60,13 @@ class Handler extends ExceptionHandler
             ]);
         } elseif ($exception instanceof GenericException) {
             return intend([
-                'url' => $exception->getRedirection() ?? route($request->route()->parameter('accessarea').'.home'),
+                'url' => $exception->getRedirection() ?? route($request->route('accessarea').'.home'),
                 'withInput' => $exception->getInputs() ?? $request->all(),
                 'with' => ['warning' => $exception->getMessage()],
             ]);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
-                'url' => in_array($request->route()->parameter('accessarea'), ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
+                'url' => in_array($request->route('accessarea'), ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
                 'with' => ['warning' => $exception->getMessage()],
             ]);
         } elseif ($exception instanceof NotFoundHttpException) {
@@ -81,7 +81,7 @@ class Handler extends ExceptionHandler
                     app('router')->getRoutes()->match(request()->create($localizedUrl));
 
                     return intend([
-                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route($request->route()->parameter('accessarea').'.home'),
+                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route($request->route('accessarea').'.home'),
                         'with' => ['warning' => $exception->getMessage()],
                     ]);
                 } catch (Exception $exception) {
@@ -90,14 +90,14 @@ class Handler extends ExceptionHandler
 
             return $this->prepareResponse($request, $exception);
         } elseif ($exception instanceof ModelNotFoundException) {
-            $area = $request->route()->parameter('accessarea');
+            $area = $request->route('accessarea');
             $model = str_replace('Contract', '', $exception->getModel());
             $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
             $plural = str_plural($single);
 
             return intend([
                 'url' => $area ? route("{$area}.{$plural}.index") : route("{$area}.home"),
-                'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'id' => $request->route()->parameter($single)])],
+                'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'id' => $request->route($single)])],
             ]);
         }
 
@@ -153,7 +153,7 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return intend([
-            'url' => route($request->route()->parameter('accessarea').'.login'),
+            'url' => route($request->route('accessarea').'.login'),
             'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
         ]);
     }
