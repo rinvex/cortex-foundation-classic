@@ -43,10 +43,12 @@ abstract class AbstractController extends Controller
      */
     public function __construct()
     {
-        // Attach accessarea, guard and broker to request parameters dynamically
-        request()->request->add(['accessarea' => $accessarea = str_before(Route::currentRouteName(), '.')]);
-        request()->request->add(['broker' => $this->getBroker() ?? $this->guessBroker($accessarea)]);
-        request()->request->add(['guard' => $this->getGuard() ?? $this->guessGuard($accessarea)]);
+        $route = request()->route();
+
+        // Attach accessarea, guard and broker to route parameters dynamically
+        $route->setParameter('accessarea', $accessarea = str_before(Route::currentRouteName(), '.'));
+        $route->setParameter('broker', $this->getBroker() ?? $this->guessBroker($accessarea));
+        $route->setParameter('guard', $this->getGuard() ?? $this->guessGuard($accessarea));
 
         // Activate Guardians
         ! in_array($accessarea, config('cortex.auth.guardians')) || $this->middleware('auth.basic:guardians,username');

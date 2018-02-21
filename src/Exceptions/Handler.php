@@ -77,13 +77,13 @@ class Handler extends ExceptionHandler
             ]);
         } elseif ($exception instanceof GenericException) {
             return intend([
-                'url' => $exception->getRedirection() ?? route($request->get('accessarea').'.home'),
+                'url' => $exception->getRedirection() ?? route($request->route()->parameter('accessarea').'.home'),
                 'withInput' => $exception->getInputs() ?? $request->all(),
                 'with' => ['warning' => $exception->getMessage()],
             ]);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
-                'url' => route($request->get('accessarea').'.home'),
+                'url' => in_array($request->route()->parameter('accessarea'), ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
                 'with' => ['warning' => $exception->getMessage()],
             ]);
         } elseif ($exception instanceof NotFoundHttpException) {
@@ -98,7 +98,7 @@ class Handler extends ExceptionHandler
                     app('router')->getRoutes()->match(request()->create($localizedUrl));
 
                     return intend([
-                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route($request->get('accessarea').'.home'),
+                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route($request->route()->parameter('accessarea').'.home'),
                         'with' => ['warning' => $exception->getMessage()],
                     ]);
                 } catch (Exception $exception) {
@@ -107,7 +107,7 @@ class Handler extends ExceptionHandler
 
             return $this->prepareResponse($request, $exception);
         } elseif ($exception instanceof ModelNotFoundException) {
-            $area = $request->get('accessarea');
+            $area = $request->route()->parameter('accessarea');
             $model = str_replace('Contract', '', $exception->getModel());
             $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
             $plural = str_plural($single);
@@ -170,7 +170,7 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return intend([
-            'url' => route($request->get('accessarea').'.login'),
+            'url' => route($request->route()->parameter('accessarea').'.login'),
             'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
         ]);
     }
