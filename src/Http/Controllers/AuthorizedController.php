@@ -141,11 +141,12 @@ class AuthorizedController extends AuthenticatedController
     /**
      * Checks if the given string looks like a fully qualified class name.
      *
-     * @param  string  $value
+     * @param string $value
+     *
      * @return bool
      */
     protected function isClassName($value)
     {
-        return strpos($value, '\\') !== false;
+        return mb_strpos($value, '\\') !== false;
     }
 }
