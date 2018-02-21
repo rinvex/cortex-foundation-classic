@@ -27,7 +27,7 @@ abstract class AbstractDataTable extends DataTable
      *
      * @var string
      */
-    protected $dom = "<'row'<'col-sm-6'B><'col-sm-6'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>";
+    protected $dom = "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>";
 
     /**
      * The datatable create parameter.
