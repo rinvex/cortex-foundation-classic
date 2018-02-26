@@ -11,9 +11,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="#home" class="smothscroll">Home</a></li>
-                <li><a href="#desc" class="smothscroll">Description</a></li>
-                <li><a href="#contact" class="smothScroll">Contact</a></li>
+                <li><a href="{{ route('frontarea.home') }}#home" class="smothscroll">Home</a></li>
+                <li><a href="{{ route('frontarea.home') }}#desc" class="smothscroll">Description</a></li>
+                <li><a href="{{ route('frontarea.home') }}#contact" class="smothScroll">Contact</a></li>
             </ul>
 
             <div class="navbar-right">
