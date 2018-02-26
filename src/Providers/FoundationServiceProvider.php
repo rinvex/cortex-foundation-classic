@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Providers;
 
 use Illuminate\Routing\Router;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -124,6 +125,10 @@ class FoundationServiceProvider extends ServiceProvider
                 $this->app['router']->getRoutes()->refreshNameLookups();
                 $this->app['router']->getRoutes()->refreshActionLookups();
             }
+        });
+
+        Collection::macro('similar', function (Collection $newCollection) {
+            return $newCollection->diff($this)->isEmpty() && $this->diff($newCollection)->isEmpty();
         });
     }
 
