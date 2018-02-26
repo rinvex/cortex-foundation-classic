@@ -24,7 +24,7 @@
     @stack('vendor-scripts')
     <script src="{{ mix('js/app.js', 'assets') }}" defer></script>
 </head>
-<body class="hold-transition skin-green fixed sidebar-mini">
+<body class="hold-transition skin-purple fixed sidebar-mini">
     {{-- Main content --}}
     <div class="wrapper">
         @include('cortex/foundation::managerarea.partials.header')
