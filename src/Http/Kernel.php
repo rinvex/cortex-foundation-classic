@@ -17,6 +17,7 @@ class Kernel extends HttpKernel
         \Cortex\Foundation\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Cortex\Foundation\Http\Middleware\TrailingSlashEnforce::class,
+        \Cortex\Foundation\Http\Middleware\TurbolinksLocation::class,
         \Cortex\Foundation\Http\Middleware\CrawlingRobots::class,
         \Cortex\Foundation\Http\Middleware\TrustProxies::class,
     ];
