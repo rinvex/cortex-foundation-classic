@@ -17,18 +17,25 @@ abstract class AbstractController extends Controller
     use AuthorizesRequests;
 
     /**
-     * The authentication guard.
+     * The authentication guard name.
      *
      * @var string
      */
     protected $guard;
 
     /**
-     * The broker name.
+     * The password reset broker name.
      *
      * @var string
      */
-    protected $broker;
+    protected $passwordResetBroker;
+
+    /**
+     * The email verification broker name.
+     *
+     * @var string
+     */
+    protected $emailVerificationBroker;
 
     /**
      * Whitelisted methods.
@@ -46,11 +53,11 @@ abstract class AbstractController extends Controller
         // Assign global route parameters
         if ($route = request()->route()) {
             $accessarea = str_before(Route::currentRouteName(), '.');
-            $broker = $this->getBroker() ?? $this->guessBroker($accessarea);
-            $guard = $this->getGuard() ?? $this->guessGuard($accessarea);
+            $passwordResetBroker = $this->getPasswordResetBroker();
+            $guard = $this->getGuard();
 
+            $route->setParameter('passwordResetBroker', $passwordResetBroker);
             $route->setParameter('accessarea', $accessarea);
-            $route->setParameter('broker', $broker);
             $route->setParameter('guard', $guard);
 
             // Activate Guardians
@@ -61,45 +68,24 @@ abstract class AbstractController extends Controller
     /**
      * Guess guard from accessarea.
      *
-     * @param string $accessarea
-     *
-     * @return string|null
+     * @return string
      */
-    protected function guessGuard(string $accessarea): ?string
+    protected function guessGuard(): string
     {
-        return $this->guard = config('auth.guards.'.$guard = str_plural(mb_strstr($accessarea, 'area', true))) ? $guard : null;
-    }
+        $accessarea = str_before(Route::currentRouteName(), '.');
+        $guard = str_plural(mb_strstr($accessarea, 'area', true));
 
-    /**
-     * Guess broker from accessarea.
-     *
-     * @param string $accessarea
-     *
-     * @return string|null
-     */
-    protected function guessBroker(string $accessarea): ?string
-    {
-        return $this->broker = config('auth.passwords.'.$broker = str_plural(mb_strstr($accessarea, 'area', true))) ? $broker : null;
-    }
-
-    /**
-     * Get the broker to be used.
-     *
-     * @return string|null
-     */
-    protected function getBroker(): ?string
-    {
-        return $this->broker;
+        return config('auth.guards.'.$guard) ? $guard : config('auth.defaults.guard');
     }
 
     /**
      * Get the guard to be used during authentication.
      *
-     * @return string|null
+     * @return string
      */
-    protected function getGuard(): ?string
+    protected function getGuard(): string
     {
-        return $this->guard;
+        return $this->guard ?? $this->guessGuard();
     }
 
     /**
@@ -118,5 +104,51 @@ abstract class AbstractController extends Controller
     protected function getAuthMiddleware(): string
     {
         return ($guard = $this->getGuard()) ? 'auth:'.$guard : 'auth';
+    }
+
+    /**
+     * Guess password reset broker from accessarea.
+     *
+     * @return string
+     */
+    protected function guessPasswordResetBroker(): string
+    {
+        $accessarea = str_before(Route::currentRouteName(), '.');
+        $passwordResetBroker = str_plural(mb_strstr($accessarea, 'area', true));
+
+        return config('auth.passwords.'.$passwordResetBroker) ? $passwordResetBroker : config('auth.defaults.passwords');
+    }
+
+    /**
+     * Get the password reset broker to be used.
+     *
+     * @return string
+     */
+    protected function getPasswordResetBroker(): string
+    {
+        return $this->passwordResetBroker ?? $this->guessPasswordResetBroker();
+    }
+
+    /**
+     * Guess email verification broker from accessarea.
+     *
+     * @return string
+     */
+    protected function guessEmailVerificationBroker(): string
+    {
+        $accessarea = str_before(Route::currentRouteName(), '.');
+        $emailVerificationBroker = str_plural(mb_strstr($accessarea, 'area', true));
+
+        return config('auth.passwords.'.$emailVerificationBroker) ? $emailVerificationBroker : config('auth.defaults.passwords');
+    }
+
+    /**
+     * Get the email verification broker to be used.
+     *
+     * @return string
+     */
+    protected function getEmailVerificationBroker(): string
+    {
+        return $this->emailVerificationBroker ?? $this->guessEmailVerificationBroker();
     }
 }
