@@ -185,7 +185,9 @@ abstract class AbstractDataTable extends DataTable
      */
     protected function filename(): string
     {
-        $resource = str_plural(mb_strtolower(array_last(explode(class_exists($this->model) ? '\\' : '.', $this->model))));
+        $model = $this->model ?? trim(str_replace('DataTable', '', strrchr(static::class, '\\')), " \t\n\r\0\x0B\\");
+
+        $resource = str_plural(mb_strtolower(array_last(explode(class_exists($model) ? '\\' : '.', $model))));
 
         return $resource.'-export-'.date('Y-m-d').'-'.time();
     }
