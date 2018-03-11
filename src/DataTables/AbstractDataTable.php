@@ -185,7 +185,7 @@ abstract class AbstractDataTable extends DataTable
      */
     protected function filename(): string
     {
-        $model = $this->model ?? trim(str_replace('DataTable', '', strrchr(static::class, '\\')), " \t\n\r\0\x0B\\");
+        $model = $this->model ?? trim(str_replace('DataTable', '', mb_strrchr(static::class, '\\')), " \t\n\r\0\x0B\\");
 
         $resource = str_plural(mb_strtolower(array_last(explode(class_exists($model) ? '\\' : '.', $model))));
 
