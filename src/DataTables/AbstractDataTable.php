@@ -16,6 +16,27 @@ abstract class AbstractDataTable extends DataTable
     protected $model;
 
     /**
+     * The datatable dom parameter.
+     *
+     * @var string
+     */
+    protected $dom = "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>";
+
+    /**
+     * The datatable keys parameter.
+     *
+     * @var bool
+     */
+    protected $keys = true;
+
+    /**
+     * The datatable mark parameter.
+     *
+     * @var bool
+     */
+    protected $mark = true;
+
+    /**
      * The datatable order parameter.
      *
      * @var array
@@ -23,11 +44,32 @@ abstract class AbstractDataTable extends DataTable
     protected $order = [[0, 'asc']];
 
     /**
-     * The datatable dom parameter.
+     * The datatable retrieve parameter.
      *
-     * @var string
+     * @var array
      */
-    protected $dom = "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>";
+    protected $retrieve = true;
+
+    /**
+     * The datatable autoWidth parameter.
+     *
+     * @var array
+     */
+    protected $autoWidth = false;
+
+    /**
+     * The datatable searchPane parameter.
+     *
+     * @var array
+     */
+    protected $searchPane = false;
+
+    /**
+     * The datatable fixedHeader parameter.
+     *
+     * @var array
+     */
+    protected $fixedHeader = true;
 
     /**
      * The datatable create parameter.
@@ -120,11 +162,14 @@ abstract class AbstractDataTable extends DataTable
     protected function getBuilderParameters(): array
     {
         return array_merge([
-            'keys' => true,
-            'retrieve' => true,
-            'autoWidth' => false,
-            'order' => $this->order,
             'dom' => $this->dom,
+            'keys' => $this->keys,
+            'mark' => $this->mark,
+            'order' => $this->order,
+            'retrieve' => $this->retrieve,
+            'autoWidth' => $this->autoWidth,
+            'searchPane' => $this->searchPane,
+            'fixedHeader' => $this->fixedHeader,
             'buttons' => array_merge($this->createButton ? [['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.new')]] : [], [
                 'print', 'reset', 'reload', 'export',
                 ['extend' => 'colvis', 'text' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.columns').' <span class="caret"/>'],

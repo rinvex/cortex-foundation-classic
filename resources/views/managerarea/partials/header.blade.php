@@ -1,4 +1,4 @@
-<header class="main-header">
+<header class="main-header fh-fixedHeader">
     <!-- Logo -->
     <a href="#" class="logo" data-toggle="push-menu" role="button">
         <!-- mini logo for sidebar mini 50x50 pixels -->
