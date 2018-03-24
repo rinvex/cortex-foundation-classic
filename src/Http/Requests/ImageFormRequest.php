@@ -25,6 +25,8 @@ class ImageFormRequest extends FormRequest
      */
     public function rules(): array
     {
-        return ['file' => 'mimetypes:image/jpeg,image/gif,image/png'];
+        return [
+            'file' => 'required|file|mimetypes:image/jpeg,image/gif,image/png',
+        ];
     }
 }
