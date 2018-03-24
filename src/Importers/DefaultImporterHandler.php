@@ -16,7 +16,7 @@ class DefaultImporterHandler implements ImportHandler
         $created = collect();
         $updated = collect();
 
-        $importer->each(function(CellCollection $row) use($importer, &$failed, &$created, &$updated) {
+        $importer->each(function (CellCollection $row) use ($importer, &$failed, &$created, &$updated) {
             $fillable = $row->intersectByKeys(array_flip(app($importer->config['resource'])->getFillable()))->toArray();
 
             try {
@@ -36,7 +36,7 @@ class DefaultImporterHandler implements ImportHandler
             ->performedOn(app($importer->config['resource']))
             ->withProperties([
                     'count' => ['created' => $created->count(), 'updated' => $updated->count(), 'failed' => $failed->count()],
-                    'names' => ['created' => $created, 'updated' => $updated, 'failed' => $failed]]
+                    'names' => ['created' => $created, 'updated' => $updated, 'failed' => $failed], ]
             )
             ->log('imported');
     }
