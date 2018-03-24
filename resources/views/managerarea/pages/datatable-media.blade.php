@@ -22,8 +22,8 @@
 
                 <div class="tab-content">
 
-                    <div class="tab-pane active" id="media-tab">
-                        {{ Form::open(['url' => $url, 'class' => 'dropzone', 'id' => 'media-dropzone']) }} {{ Form::close() }}
+                    <div class="tab-pane active" id="{{ $id }}-media-tab">
+                        {{ Form::open(['url' => $url, 'class' => 'dropzone', 'id' => "{$id}-media-dropzone"]) }} {{ Form::close() }}
                         {!! $dataTable->table(['class' => 'table table-striped table-hover responsive dataTableBuilder', 'id' => "{$id}"]) !!}
                     </div>
 

@@ -22,7 +22,7 @@
 
                 <div class="tab-content">
 
-                    <div class="tab-pane active" id="logs-tab">
+                    <div class="tab-pane active" id="{{ $id }}-tab">
                         {!! $dataTable->table(['class' => 'table table-striped table-hover responsive dataTableBuilder', 'id' => "{$id}"]) !!}
                     </div>
 
