@@ -20,6 +20,7 @@ return [
     'toggle_navigation' => 'Toggle navigation',
 
     'logs' => 'Logs',
+    'import_logs' => 'Import Logs',
     'media' => 'Media',
     'subject' => 'Subject',
     'log_name' => 'Log Name',
@@ -47,5 +48,7 @@ return [
     'file_name' => 'File Name',
     'mime_type' => 'Mime Type',
     'size' => 'Size',
+    'import' => 'Import',
+    'drop_to_import' => 'Drop files here to import',
 
 ];

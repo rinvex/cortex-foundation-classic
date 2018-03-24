@@ -171,7 +171,7 @@ abstract class AbstractDataTable extends DataTable
             'searchPane' => $this->searchPane,
             'fixedHeader' => $this->fixedHeader,
             'buttons' => array_merge($this->createButton ? [['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.new')]] : [], [
-                'print', 'reset', 'reload', 'export',
+                'print', 'reset', 'reload', 'import', 'export',
                 ['extend' => 'colvis', 'text' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.columns').' <span class="caret"/>'],
                 ['extend' => 'pageLength', 'text' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.limit').' <span class="caret"/>'],
             ]),

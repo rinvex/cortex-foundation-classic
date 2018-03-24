@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace DummyNamespace;
 
 use Illuminate\Http\Request;
+use Cortex\Foundation\Importers\DefaultImporter;
+use Cortex\Foundation\DataTables\ImportLogsDataTable;
+use Cortex\Foundation\Http\Requests\ImportFormRequest;
 use Cortex\Foundation\Http\Controllers\AuthorizedController;
 
 class DummyClass extends AuthorizedController
@@ -15,6 +18,41 @@ class DummyClass extends AuthorizedController
      * @return \Illuminate\Http\Response
      */
     public function index()
+    {
+        //
+    }
+
+    /**
+     * Import resources.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function import()
+    {
+        //
+    }
+
+    /**
+     * Hoard resources.
+     *
+     * @param \Cortex\Foundation\Http\Requests\ImportFormRequest $request
+     * @param \Cortex\Foundation\Importers\DefaultImporter       $importer
+     *
+     * @return void
+     */
+    public function hoard(ImportFormRequest $request, DefaultImporter $importer)
+    {
+        //
+    }
+
+    /**
+     * List resource import logs.
+     *
+     * @param \Cortex\Foundation\DataTables\ImportLogsDataTable $importLogsDatatable
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function importLogs(ImportLogsDataTable $importLogsDatatable)
     {
         //
     }
