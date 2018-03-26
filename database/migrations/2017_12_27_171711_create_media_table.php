@@ -21,11 +21,11 @@ class CreateMediaTable extends Migration
             $table->string('file_name');
             $table->string('mime_type')->nullable();
             $table->string('disk');
-            $table->unsignedInteger('size');
+            $table->integer('size')->unsigned();
             $table->json('manipulations');
             $table->json('custom_properties');
             $table->json('responsive_images');
-            $table->unsignedInteger('order_column')->nullable();
+            $table->integer('order_column')->unsigned()->nullable();
             $table->timestamps();
         });
     }
