@@ -29,7 +29,11 @@ class AuthorizedController extends AuthenticatedController
      *
      * @var array
      */
-    protected $resourceMethodsWithoutModels = [];
+    protected $resourceMethodsWithoutModels = [
+        'importLogs',
+        'import',
+        'hoard',
+    ];
 
     /**
      * Resource action whitelist.
