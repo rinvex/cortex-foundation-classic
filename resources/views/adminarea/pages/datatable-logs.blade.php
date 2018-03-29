@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('cortex/foundation::common.adminarea') }} » {{ $phrase }} » {{ $resource->title }} » {{ trans('cortex/foundation::common.logs') }}
+    {{ config('app.name') }} » {{ trans('cortex/foundation::common.adminarea') }} » {{ $phrase }} » {{ $resource->name }} » {{ trans('cortex/foundation::common.logs') }}
 @endsection
 
 {{-- Main Content --}}
