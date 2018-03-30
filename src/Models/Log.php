@@ -11,19 +11,19 @@ use Spatie\Activitylog\Models\Activity;
 /**
  * Cortex\Foundation\Models\Log.
  *
- * @property int                                                $id
- * @property string                                             $log_name
- * @property string                                             $description
- * @property int|null                                           $subject_id
- * @property string|null                                        $subject_type
- * @property int|null                                           $causer_id
- * @property string|null                                        $causer_type
- * @property \Illuminate\Support\Collection                     $properties
- * @property \Carbon\Carbon                                     $created_at
- * @property \Carbon\Carbon                                     $updated_at
- * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $causer
- * @property-read mixed                                         $changes
- * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $subject
+ * @property int                                                                         $id
+ * @property string                                                                      $log_name
+ * @property string                                                                      $description
+ * @property int|null                                                                    $subject_id
+ * @property string|null                                                                 $subject_type
+ * @property int|null                                                                    $causer_id
+ * @property string|null                                                                 $causer_type
+ * @property \Illuminate\Support\Collection                                              $properties
+ * @property \Carbon\Carbon                                                              $created_at
+ * @property \Carbon\Carbon                                                              $updated_at
+ * @property-read \Cortex\Auth\Models\User|\Illuminate\Database\Eloquent\Model|\Eloquent $causer
+ * @property-read mixed                                                                  $changes
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent                          $subject
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Spatie\Activitylog\Models\Activity causedBy(\Illuminate\Database\Eloquent\Model $causer)
  * @method static \Illuminate\Database\Eloquent\Builder|\Spatie\Activitylog\Models\Activity forSubject(\Illuminate\Database\Eloquent\Model $subject)
