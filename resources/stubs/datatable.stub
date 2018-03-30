@@ -18,6 +18,11 @@ class DummyClass extends AbstractDataTable
     /**
      * {@inheritdoc}
      */
+    protected $transformer = DummyTransformer::class;
+
+    /**
+     * {@inheritdoc}
+     */
     protected $dummyTransformer = DummyTransformer::class;
 
     /**

@@ -16,6 +16,13 @@ abstract class AbstractDataTable extends DataTable
     protected $model;
 
     /**
+     * The transformer class.
+     *
+     * @var string
+     */
+    protected $transformer;
+
+    /**
      * The datatable dom parameter.
      *
      * @var string
@@ -112,6 +119,8 @@ abstract class AbstractDataTable extends DataTable
     public function ajax()
     {
         return datatables($this->query())
+            ->setTransformer($this->transformer)
+            ->orderColumn('name', 'name->"$.'.app()->getLocale().'" $1')
             ->make(true);
     }
 
