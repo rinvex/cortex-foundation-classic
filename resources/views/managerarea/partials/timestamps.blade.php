@@ -1,11 +1,5 @@
 <div style="padding-top: 5px;">
     @if($model->exists)
-        <small>
-            <strong>{{ trans('cortex/foundation::common.id') }}:</strong> {{ $model->getRouteKey() }}
-        </small>
-
-        @if($model->created_at || $model->updated_at) | @endif
-
         @if($model->created_at)
             <small>
                 <strong>{{ trans('cortex/foundation::common.created_at') }}:</strong>
