@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace DummyNamespace;
 
 use NamespacedDummyModel;
+use Rinvex\Support\Traits\Escaper;
 use League\Fractal\TransformerAbstract;
 
 class DummyClass extends TransformerAbstract
 {
+    use Escaper;
+
     /**
      * Transform the given model.
      *
@@ -18,8 +21,8 @@ class DummyClass extends TransformerAbstract
      */
     public function transform(DummyModel $dummyModel): array
     {
-        return [
+        return $this->escapeRow([
             //
-        ];
+        ]);
     }
 }

@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Transformers;
 
 use Cortex\Foundation\Models\Log;
+use Rinvex\Support\Traits\Escaper;
 use Illuminate\Support\Facades\Route;
 use League\Fractal\TransformerAbstract;
 
 class ActivityTransformer extends TransformerAbstract
 {
+    use Escaper;
+
     /**
      * @return array
      */
@@ -25,13 +28,13 @@ class ActivityTransformer extends TransformerAbstract
             $subjectName = ucfirst($subject).': Not Found!';
         }
 
-        return [
+        return $this->escapeRow([
             'id' => (int) $log->getKey(),
             'description' => (string) $log->description,
             'subject' => $subjectName,
             'subject_route' => $route,
             'properties' => (object) $log->properties,
             'created_at' => (string) $log->created_at,
-        ];
+        ]);
     }
 }

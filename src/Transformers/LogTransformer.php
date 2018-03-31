@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Transformers;
 
 use Cortex\Foundation\Models\Log;
+use Rinvex\Support\Traits\Escaper;
 use Illuminate\Support\Facades\Route;
 use League\Fractal\TransformerAbstract;
 
 class LogTransformer extends TransformerAbstract
 {
+    use Escaper;
+
     /**
      * @return array
      */
@@ -27,13 +30,13 @@ class LogTransformer extends TransformerAbstract
             $causer = 'System';
         }
 
-        return [
+        return $this->escapeRow([
             'id' => (int) $log->getKey(),
             'description' => (string) $log->description,
             'causer' => $causer,
             'causer_route' => $causer_route,
             'properties' => (object) $log->properties,
             'created_at' => (string) $log->created_at,
-        ];
+        ]);
     }
 }
