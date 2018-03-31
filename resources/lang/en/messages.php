@@ -5,11 +5,11 @@ declare(strict_types=1);
 return [
 
     'already_authenticated' => 'You are already authenticated!',
-    'resource_saved' => 'Congrats! Requested resource [:resource::id] saved successfully.',
-    'resource_deleted' => 'Done! Requested resource [:resource::id] deleted successfully.',
-    'resource_not_found' => 'Sorry! Requested resource [:resource::id] not found!',
+    'resource_saved' => 'Congrats! Requested :resource [:identifier] saved successfully.',
+    'resource_deleted' => 'Done! Requested :resource [:identifier] deleted successfully.',
+    'resource_not_found' => 'Sorry! Requested :resource [:identifier] not found!',
     'delete_confirmation_title' => 'Delete Confirmation',
-    'delete_confirmation_body' => 'Are you sure you want to delete <strong>:name :type</strong>?',
+    'delete_confirmation_body' => 'Are you sure you want to delete :resource [<strong>:identifier</strong>]?',
     'session_required' => 'You must login first!',
     'token_mismatch' => 'The page has expired due to inactivity. Please refresh and try again.',
 
