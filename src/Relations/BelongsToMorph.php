@@ -30,13 +30,14 @@ class BelongsToMorph extends BelongsTo
     /**
      * Create a new belongs to relationship instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Illuminate\Database\Eloquent\Model  $parent
-     * @param  string  $name
-     * @param  string  $type
-     * @param  string  $foreignKey
-     * @param  string  $ownerKey
-     * @param  string  $relation
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Model   $parent
+     * @param string                                $name
+     * @param string                                $type
+     * @param string                                $foreignKey
+     * @param string                                $ownerKey
+     * @param string                                $relation
+     *
      * @return void
      */
     public function __construct(Builder $query, Model $parent, $name, $type, $foreignKey, $ownerKey, $relation)
@@ -50,9 +51,9 @@ class BelongsToMorph extends BelongsTo
     /**
      * Add the constraints for a relationship query.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  \Illuminate\Database\Eloquent\Builder $parent
-     * @param  array|mixed                           $columns
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $parent
+     * @param array|mixed                           $columns
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -74,16 +75,14 @@ class BelongsToMorph extends BelongsTo
         if ($this->getParent()->{$this->morphType} === $this->morphName) {
             return $this->query->first();
         }
-
-        return null;
     }
 
     /**
      * Get the polymorphic relationship columns.
      *
-     * @param  string $name
-     * @param  string $type
-     * @param  string $id
+     * @param string $name
+     * @param string $type
+     * @param string $id
      *
      * @return array
      */
@@ -99,13 +98,13 @@ class BelongsToMorph extends BelongsTo
     /**
      * Define an inverse morph relationship.
      *
-     * @param  Model  $parent
-     * @param  string $related
-     * @param  string $name
-     * @param  string $type
-     * @param  string $id
-     * @param  string $otherKey
-     * @param  string $relation
+     * @param Model  $parent
+     * @param string $related
+     * @param string $name
+     * @param string $type
+     * @param string $id
+     * @param string $otherKey
+     * @param string $relation
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -124,7 +123,7 @@ class BelongsToMorph extends BelongsTo
 
         list($type, $id) = self::getMorphs(Str::snake($name), $type, $id);
 
-        $instance = new $related;
+        $instance = new $related();
 
         // Once we have the foreign key names, we'll just create a new Eloquent query
         // for the related models and returns the relationship instance which will
@@ -133,6 +132,6 @@ class BelongsToMorph extends BelongsTo
 
         $otherKey = $otherKey ?: $instance->getKeyName();
 
-        return new BelongsToMorph($query, $parent, $morphName, $type, $id, $otherKey, $relation);
+        return new self($query, $parent, $morphName, $type, $id, $otherKey, $relation);
     }
 }
