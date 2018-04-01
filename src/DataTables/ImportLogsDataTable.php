@@ -39,7 +39,7 @@ class ImportLogsDataTable extends AbstractDataTable
     public function ajax()
     {
         return datatables($this->query())
-            ->setTransformer($this->transformer)
+            ->setTransformer(app($this->transformer))
             ->make(true);
     }
 

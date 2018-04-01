@@ -119,7 +119,7 @@ abstract class AbstractDataTable extends DataTable
     public function ajax()
     {
         return datatables($this->query())
-            ->setTransformer($this->transformer)
+            ->setTransformer(app($this->transformer))
             ->orderColumn('name', 'name->"$.'.app()->getLocale().'" $1')
             ->make(true);
     }
