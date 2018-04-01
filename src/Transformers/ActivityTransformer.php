@@ -28,7 +28,7 @@ class ActivityTransformer extends TransformerAbstract
             $subjectName = ucfirst($subject).': Not Found!';
         }
 
-        return $this->escapeRow([
+        return $this->escape([
             'id' => (int) $log->getKey(),
             'description' => (string) $log->description,
             'subject' => $subjectName,

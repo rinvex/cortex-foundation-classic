@@ -17,7 +17,7 @@ class MediaTransformer extends TransformerAbstract
      */
     public function transform(Media $media): array
     {
-        return $this->escapeRow([
+        return $this->escape([
             'id' => (int) $media->getKey(),
             'name' => (string) $media->name,
             'file_name' => (string) $media->file_name,

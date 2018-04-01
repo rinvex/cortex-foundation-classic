@@ -30,7 +30,7 @@ class LogTransformer extends TransformerAbstract
             $causer = 'System';
         }
 
-        return $this->escapeRow([
+        return $this->escape([
             'id' => (int) $log->getKey(),
             'description' => (string) $log->description,
             'causer' => $causer,

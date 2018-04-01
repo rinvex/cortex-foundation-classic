@@ -21,7 +21,7 @@ class DummyClass extends TransformerAbstract
      */
     public function transform(DummyModel $dummyModel): array
     {
-        return $this->escapeRow([
+        return $this->escape([
             //
         ]);
     }
