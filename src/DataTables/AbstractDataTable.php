@@ -170,6 +170,10 @@ abstract class AbstractDataTable extends DataTable
      */
     protected function getBuilderParameters(): array
     {
+        $createButton = ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.new')];
+        $columnsButton = ['extend' => 'colvis', 'text' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.columns').' <span class="caret"/>'];
+        $lengthButton = ['extend' => 'pageLength', 'text' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.limit').' <span class="caret"/>'];
+
         return array_merge([
             'dom' => $this->dom,
             'keys' => $this->keys,
@@ -179,11 +183,9 @@ abstract class AbstractDataTable extends DataTable
             'autoWidth' => $this->autoWidth,
             'searchPane' => $this->searchPane,
             'fixedHeader' => $this->fixedHeader,
-            'buttons' => array_merge($this->createButton ? [['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.new')]] : [], [
-                'print', 'reset', 'reload', 'import', 'export',
-                ['extend' => 'colvis', 'text' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.columns').' <span class="caret"/>'],
-                ['extend' => 'pageLength', 'text' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.limit').' <span class="caret"/>'],
-            ]),
+            'buttons' => $this->createButton
+                ? [$createButton, 'print', 'reset', 'reload', 'import', 'export', $columnsButton, $lengthButton,]
+                : ['print', 'reset', 'reload', 'export', $columnsButton, $lengthButton,],
         ], $this->builderParameters);
     }
 
