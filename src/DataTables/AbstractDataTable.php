@@ -184,8 +184,8 @@ abstract class AbstractDataTable extends DataTable
             'searchPane' => $this->searchPane,
             'fixedHeader' => $this->fixedHeader,
             'buttons' => $this->createButton
-                ? [$createButton, 'print', 'reset', 'reload', 'import', 'export', $columnsButton, $lengthButton,]
-                : ['print', 'reset', 'reload', 'export', $columnsButton, $lengthButton,],
+                ? [$createButton, 'print', 'reset', 'reload', 'import', 'export', $columnsButton, $lengthButton]
+                : ['print', 'reset', 'reload', 'export', $columnsButton, $lengthButton],
         ], $this->builderParameters);
     }
 
