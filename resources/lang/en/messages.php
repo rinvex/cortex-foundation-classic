@@ -12,5 +12,6 @@ return [
     'delete_confirmation_body' => 'Are you sure you want to delete :resource [<strong>:identifier</strong>]?',
     'session_required' => 'You must login first!',
     'token_mismatch' => 'The page has expired due to inactivity. Please refresh and try again.',
+    'invalid_phone' => 'Invalid phone number!',
 
 ];
