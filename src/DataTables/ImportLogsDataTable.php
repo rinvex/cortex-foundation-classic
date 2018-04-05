@@ -91,7 +91,7 @@ class ImportLogsDataTable extends AbstractDataTable
             'details' => ['title' => '', 'data' => null, 'defaultContent' => '', 'class' => 'dt-details-control', 'searchable' => false, 'orderable' => false],
             'causer' => ['title' => trans('cortex/foundation::common.causer'), 'name' => 'causer.username', 'searchable' => false, 'orderable' => false, 'render' => 'full.causer_route ? "<a href=\""+full.causer_route+"\">"+data+"</a>" : data', 'responsivePriority' => 0],
             'description' => ['title' => trans('cortex/foundation::common.description'), 'orderable' => false],
-            'created_at' => ['title' => trans('cortex/foundation::common.date'), 'render' => "moment(data).format('MMMM Do YYYY, hh:mm:ss A')"],
+            'created_at' => ['title' => trans('cortex/foundation::common.date'), 'render' => "moment(data).format('YYYY-MM-DD, hh:mm:ss A')"],
         ];
     }
 }
