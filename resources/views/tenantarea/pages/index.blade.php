@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('cortex/foundation::common.tenantarea') }}
+    {{ extract_title(Breadcrumbs::render()) }}
 @endsection
 
 @section('body-attributes')data-spy="scroll" data-offset="0" data-target="#navigation"@endsection
@@ -36,12 +36,10 @@
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                 </div>
             </div>
-        </div> <!--/ .container -->
-    </div><!--/ #headerwrap -->
-
+        </div>
+    </div>
 
     <section id="desc" name="desc"></section>
-    <!-- INTRO WRAP -->
     <div id="intro">
         <div class="container">
             <div class="row centered">
@@ -66,11 +64,10 @@
             </div>
             <br>
             <hr>
-        </div> <!--/ .container -->
-    </div><!--/ #introwrap -->
+        </div>
+    </div>
 
 
-    <!-- FEATURES WRAP -->
     <div id="features">
         <div class="container">
             <div class="row">
@@ -84,20 +81,19 @@
                 <div class="col-lg-6">
                     <h3>Some Features</h3>
                     <br>
-                    <!-- ACCORDION -->
                     <div class="accordion " id="accordion2">
                         <div class="accordion-group">
                             <div class="accordion-heading">
                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
                                     First Class Design
                                 </a>
-                            </div><!-- /accordion-heading -->
+                            </div>
                             <div id="collapseOne" class="accordion-body collapse in">
                                 <div class="accordion-inner">
                                     <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                </div><!-- /accordion-inner -->
-                            </div><!-- /collapse -->
-                        </div><!-- /accordion-group -->
+                                </div>
+                            </div>
+                        </div>
                         <br>
 
                         <div class="accordion-group">
@@ -109,9 +105,9 @@
                             <div id="collapseTwo" class="accordion-body collapse">
                                 <div class="accordion-inner">
                                     <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                </div><!-- /accordion-inner -->
-                            </div><!-- /collapse -->
-                        </div><!-- /accordion-group -->
+                                </div>
+                            </div>
+                        </div>
                         <br>
 
                         <div class="accordion-group">
@@ -123,9 +119,9 @@
                             <div id="collapseThree" class="accordion-body collapse">
                                 <div class="accordion-inner">
                                     <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                </div><!-- /accordion-inner -->
-                            </div><!-- /collapse -->
-                        </div><!-- /accordion-group -->
+                                </div>
+                            </div>
+                        </div>
                         <br>
 
                         <div class="accordion-group">
@@ -137,15 +133,15 @@
                             <div id="collapseFour" class="accordion-body collapse">
                                 <div class="accordion-inner">
                                     <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                </div><!-- /accordion-inner -->
-                            </div><!-- /collapse -->
-                        </div><!-- /accordion-group -->
+                                </div>
+                            </div>
+                        </div>
                         <br>
-                    </div><!-- Accordion -->
+                    </div>
                 </div>
             </div>
-        </div><!--/ .container -->
-    </div><!--/ #features -->
+        </div>
+    </div>
 
 
     <section id="contact" name="contact"></section>

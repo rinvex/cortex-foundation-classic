@@ -1,4 +1,3 @@
-<!-- Fixed navbar -->
 <div id="navigation" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -10,15 +9,12 @@
             <a class="navbar-brand" href="{{ route('tenantarea.home') }}"><b>{{ config('app.name') }}</b></a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="{{ route('frontarea.home') }}#home" class="smothscroll">Home</a></li>
-                <li><a href="{{ route('frontarea.home') }}#desc" class="smothscroll">Description</a></li>
-                <li><a href="{{ route('frontarea.home') }}#contact" class="smothScroll">Contact</a></li>
-            </ul>
+            {!! Menu::render('tenantarea.header.navigation') !!}
 
             <div class="navbar-right">
-                {!! Menu::render('tenantarea.header') !!}
+                {!! Menu::render('tenantarea.header.language') !!}
+                {!! Menu::render('tenantarea.header.user') !!}
             </div>
-        </div><!--/.nav-collapse -->
+        </div>
     </div>
 </div>

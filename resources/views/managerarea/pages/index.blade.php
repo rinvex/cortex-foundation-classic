@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('cortex/foundation::common.managerarea') }}
+    {{ extract_title(Breadcrumbs::render()) }}
 @endsection
 
 {{-- Main Content --}}

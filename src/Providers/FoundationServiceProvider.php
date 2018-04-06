@@ -96,12 +96,18 @@ class FoundationServiceProvider extends ServiceProvider
         ]);
 
         // Load resources
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web/adminarea.php');
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web/frontarea.php');
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web/tenantarea.php');
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web/managerarea.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
         ! $this->app->runningInConsole() || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         $this->app->runningInConsole() || $this->app->afterResolving('blade.compiler', function () {
-            require __DIR__.'/../../routes/menus.php';
+            require __DIR__.'/../../routes/menus/managerarea.php';
+            require __DIR__.'/../../routes/menus/tenantarea.php';
+            require __DIR__.'/../../routes/menus/adminarea.php';
+            require __DIR__.'/../../routes/menus/frontarea.php';
         });
 
         // Publish Resources

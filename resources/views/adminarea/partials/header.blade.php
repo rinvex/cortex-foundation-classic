@@ -1,12 +1,10 @@
 <header class="main-header fh-fixedHeader">
-    <!-- Logo -->
     <a href="#" class="logo" data-toggle="push-menu" role="button">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><i class="fa fa-home"></i></span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg"><b>{{ config('app.name') }}</b></span>
     </a>
-    <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
         <div class="navbar-custom-menu pull-left">
             <ul class="nav navbar-nav">
@@ -15,7 +13,8 @@
         </div>
 
         <div class="navbar-custom-menu">
-            {!! Menu::render('adminarea.header') !!}
+            {!! Menu::render('adminarea.header.language') !!}
+            {!! Menu::render('adminarea.header.user') !!}
         </div>
     </nav>
 </header>
