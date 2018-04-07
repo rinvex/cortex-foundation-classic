@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 use Rinvex\Menus\Models\MenuItem;
 use Rinvex\Menus\Models\MenuGenerator;
-use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
-
-Breadcrumbs::register('frontarea.home', function (BreadcrumbsGenerator $breadcrumbs) {
-    $breadcrumbs->push('<i class="fa fa-dashboard"></i> '.config('app.name'), route('frontarea.home'));
-});
 
 if (config('cortex.foundation.route.locale_prefix')) {
     Menu::register('frontarea.header.language', function (MenuGenerator $menu) {
