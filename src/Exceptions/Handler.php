@@ -97,7 +97,7 @@ class Handler extends ExceptionHandler
 
             return intend([
                 'url' => $area ? route("{$area}.{$plural}.index") : route("{$area}.home"),
-                'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'id' => $request->route($single)])],
+                'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
             ]);
         }
 
