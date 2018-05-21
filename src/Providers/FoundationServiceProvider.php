@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
-use Cortex\Foundation\Models\ImportRecord;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
+use Cortex\Foundation\Models\ImportRecord;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
 use Cortex\Foundation\Console\Commands\SeedCommand;
