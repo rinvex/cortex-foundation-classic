@@ -5,6 +5,7 @@ declare(strict_types=1);
 return [
 
     'already_authenticated' => 'You are already authenticated!',
+    'import_complete' => 'Congrats! Import process completed.',
     'resource_saved' => 'Congrats! Requested :resource [:identifier] saved successfully.',
     'resource_deleted' => 'Done! Requested :resource [:identifier] deleted successfully.',
     'resource_not_found' => 'Sorry! Requested :resource [:identifier] not found!',

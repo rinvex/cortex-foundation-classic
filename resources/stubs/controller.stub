@@ -33,14 +33,26 @@ class DummyClass extends AuthorizedController
     }
 
     /**
-     * Hoard resources.
+     * Stash resources.
      *
      * @param \Cortex\Foundation\Http\Requests\ImportFormRequest $request
      * @param \Cortex\Foundation\Importers\DefaultImporter       $importer
      *
      * @return void
      */
-    public function hoard(ImportFormRequest $request, DefaultImporter $importer)
+    public function stash(ImportFormRequest $request, DefaultImporter $importer)
+    {
+        //
+    }
+
+    /**
+     * Hoard resources.
+     *
+     * @param \Cortex\Foundation\Http\Requests\ImportFormRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function hoard(ImportFormRequest $request)
     {
         //
     }

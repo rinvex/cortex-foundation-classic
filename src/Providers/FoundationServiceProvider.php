@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Cortex\Foundation\Models\ImportRecord;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
@@ -66,6 +67,10 @@ class FoundationServiceProvider extends ServiceProvider
         $this->overrideRedirector();
         $this->bindBladeCompiler();
         $this->overrideLangJS();
+
+        // Bind eloquent models to IoC container
+        $this->app->singleton('cortex.foundation.import_record', $importerModel = $this->app['config']['cortex.foundation.models.import_record']);
+        $importerModel === ImportRecord::class || $this->app->alias('cortex.foundation.import_record', ImportRecord::class);
 
         // Merge config
         $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'cortex.foundation');

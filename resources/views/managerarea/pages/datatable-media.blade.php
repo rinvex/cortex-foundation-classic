@@ -23,7 +23,9 @@
                 <div class="tab-content">
 
                     <div class="tab-pane active" id="{{ $id }}-media-tab">
-                        {{ Form::open(['url' => $url, 'class' => 'dropzone', 'id' => "{$id}-media-dropzone"]) }} {{ Form::close() }}
+                        {{ Form::open(['url' => $url, 'class' => 'dropzone', 'id' => "{$id}-media-dropzone", 'data-dz-accepted-files' => 'application/vnd.ms-excel']) }}
+                            <div class="dz-message" data-dz-message><span>{{ trans('cortex/foundation::common.drop_to_import') }}</span></div>
+                        {{ Form::close() }}
                         {!! $dataTable->table(['class' => 'table table-striped table-hover responsive dataTableBuilder', 'id' => "{$id}"]) !!}
                     </div>
 

@@ -175,6 +175,7 @@ abstract class AbstractDataTable extends DataTable
         $lengthButton = ['extend' => 'pageLength', 'text' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.limit').' <span class="caret"/>'];
 
         return array_merge([
+            'select' => true,
             'dom' => $this->dom,
             'keys' => $this->keys,
             'mark' => $this->mark,
