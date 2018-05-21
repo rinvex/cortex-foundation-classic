@@ -42,10 +42,10 @@
     "require": {
         "php": "^7.1.3",
         "barryvdh/laravel-snappy": "^0.4.0",
-        "davejamesmiller/laravel-breadcrumbs": "^5.0.0",
+        "davejamesmiller/laravel-breadcrumbs": "^5.1.0",
         "edvinaskrucas/notification": "^5.2.0",
         "fideloper/proxy": "^4.0.0",
-        "geoip2/geoip2": "^2.7.0",
+        "geoip2/geoip2": "^2.9.0",
         "h4cc/wkhtmltoimage-amd64": "^0.12.0",
         "h4cc/wkhtmltopdf-amd64": "^0.12.0",
         "laravel/framework": "~5.6.0",
@@ -62,7 +62,7 @@
         "rinvex/widgets": "dev-develop",
         "silber/bouncer": "v1.0.0-rc.1",
         "spatie/laravel-activitylog": "^2.5.0",
-        "spatie/laravel-medialibrary": "v7.x-dev",
+        "spatie/laravel-medialibrary": "^7.3.0",
         "symfony/console": "^4.0.0",
         "symfony/finder": "^4.0.0",
         "symfony/http-kernel": "^4.0.0",
@@ -70,12 +70,12 @@
         "vinkla/hashids": "^5.0.0",
         "watson/validating": "^3.1.0",
         "yajra/laravel-datatables-buttons": "^3.2.0",
-        "yajra/laravel-datatables-fractal": "^1.1.0",
-        "yajra/laravel-datatables-html": "^3.6.0",
-        "yajra/laravel-datatables-oracle": "^8.4.0"
+        "yajra/laravel-datatables-fractal": "^1.2.0",
+        "yajra/laravel-datatables-html": "^3.7.0",
+        "yajra/laravel-datatables-oracle": "^8.6.0"
     },
     "require-dev": {
-        "codedungeon/phpunit-result-printer": "^0.6.0",
+        "codedungeon/phpunit-result-printer": "^0.19.0",
         "phpunit/phpunit": "^7.0.0"
     },
     "autoload": {
