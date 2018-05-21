@@ -57,7 +57,6 @@ class ImportRecordsDataTable extends AbstractDataTable
     let selected = this.rows( { selected: true } );
     if (selected.count()) {
         selected.data().each(function (row) {
-        console.log(row);
             selectedIds.push(row.id);
         });
 
@@ -69,7 +68,7 @@ class ImportRecordsDataTable extends AbstractDataTable
             },
             url: window.location.pathname.replace('/import', '/hoard'),
             success: function(response) {
-                let notification = function() { $.notify({message: response}, {type: 'info', mouse_over: 'pause', z_index: 9999, animate:{enter: \"animated fadeIn\", exit: \"animated fadeOut\"}}); }; console.log('asd'); if (typeof notification === 'function') { notification(); notification = null; };
+                let notification = function() { $.notify({message: response}, {type: 'info', mouse_over: 'pause', z_index: 9999, animate:{enter: \"animated fadeIn\", exit: \"animated fadeOut\"}}); }; if (typeof notification === 'function') { notification(); notification = null; };
                 window.location.reload();
             },
         });
