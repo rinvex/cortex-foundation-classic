@@ -83,7 +83,6 @@ class ImportRecordsDataTable extends AbstractDataTable
             'order' => $this->order,
             'retrieve' => $this->retrieve,
             'autoWidth' => $this->autoWidth,
-            'searchPane' => $this->searchPane,
             'fixedHeader' => $this->fixedHeader,
             'buttons' => ['print', 'reset', 'reload', $importButton, $columnsButton, $lengthButton],
         ], $this->builderParameters);

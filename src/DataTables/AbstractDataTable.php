@@ -65,13 +65,6 @@ abstract class AbstractDataTable extends DataTable
     protected $autoWidth = false;
 
     /**
-     * The datatable searchPane parameter.
-     *
-     * @var array
-     */
-    protected $searchPane = false;
-
-    /**
      * The datatable fixedHeader parameter.
      *
      * @var array
@@ -182,7 +175,6 @@ abstract class AbstractDataTable extends DataTable
             'order' => $this->order,
             'retrieve' => $this->retrieve,
             'autoWidth' => $this->autoWidth,
-            'searchPane' => $this->searchPane,
             'fixedHeader' => $this->fixedHeader,
             'buttons' => $this->createButton
                 ? [$createButton, 'print', 'reset', 'reload', 'import', 'export', $columnsButton, $lengthButton]
