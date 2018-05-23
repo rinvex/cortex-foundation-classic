@@ -75,12 +75,11 @@ class ImportRecordsDataTable extends AbstractDataTable
     }}"];
 
         return array_merge([
-            'select' => true,
-            'stateSave' => true,
             'dom' => $this->dom,
-            'keys' => false,
+            'keys' => $this->keys,
             'mark' => $this->mark,
             'order' => $this->order,
+            'select' => $this->select,
             'retrieve' => $this->retrieve,
             'autoWidth' => $this->autoWidth,
             'fixedHeader' => $this->fixedHeader,

@@ -30,11 +30,18 @@ abstract class AbstractDataTable extends DataTable
     protected $dom = "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>";
 
     /**
+     * The datatable select parameter.
+     *
+     * @var bool
+     */
+    protected $select = true;
+
+    /**
      * The datatable keys parameter.
      *
      * @var bool
      */
-    protected $keys = true;
+    protected $keys = false;
 
     /**
      * The datatable mark parameter.
@@ -168,11 +175,11 @@ abstract class AbstractDataTable extends DataTable
         $lengthButton = ['extend' => 'pageLength', 'text' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.limit').' <span class="caret"/>'];
 
         return array_merge([
-            'select' => true,
             'dom' => $this->dom,
             'keys' => $this->keys,
             'mark' => $this->mark,
             'order' => $this->order,
+            'select' => $this->select,
             'retrieve' => $this->retrieve,
             'autoWidth' => $this->autoWidth,
             'fixedHeader' => $this->fixedHeader,

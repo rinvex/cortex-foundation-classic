@@ -51,11 +51,11 @@ class ImportLogsDataTable extends AbstractDataTable
     protected function getBuilderParameters(): array
     {
         return [
-            'keys' => true,
-            'retrieve' => true,
-            'autoWidth' => false,
-            'order' => $this->order,
             'dom' => $this->dom,
+            'keys' => $this->keys,
+            'order' => $this->order,
+            'retrieve' => $this->retrieve,
+            'autoWidth' => $this->autoWidth,
             'drawCallback' => "function (settings) {
                 var api = this.api();
 
