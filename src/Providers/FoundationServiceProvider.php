@@ -8,6 +8,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Validator;
 use Cortex\Foundation\Models\ImportRecord;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
@@ -89,6 +90,8 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot(Router $router): void
     {
+        $this->registerCustomValidationRules();
+
         // Early set application locale globaly
         $router->pattern('locale', '[a-z]{2}');
         $this->app['laravellocalization']->setLocale();
@@ -317,6 +320,22 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Bind the Laravel JS Localization command into Laravel Artisan.
         $this->commands('localization.js');
+    }
+
+    /**
+     * Register custom validators.
+     *
+     * @return void
+     */
+    protected function registerCustomValidationRules(): void
+    {
+        Validator::extend('exists_model', function ($attribute, $value, $parameters) {
+            return app($parameters[0])->where($attribute, $value)->exists();
+        }, 'The selected :attribute is invalid.');
+
+        Validator::extend('unique_model', function ($attribute, $value, $parameters) {
+            return ! app($parameters[0])->where($attribute, $value)->exists();
+        }, 'The :attribute has already been taken.');
     }
 
     /**
