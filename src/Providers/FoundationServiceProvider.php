@@ -102,6 +102,7 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Load resources
         require __DIR__.'/../../routes/breadcrumbs/frontarea.php';
+        require __DIR__.'/../../routes/breadcrumbs/tenantarea.php';
         $this->loadRoutesFrom(__DIR__.'/../../routes/web/adminarea.php');
         $this->loadRoutesFrom(__DIR__.'/../../routes/web/frontarea.php');
         $this->loadRoutesFrom(__DIR__.'/../../routes/web/tenantarea.php');
