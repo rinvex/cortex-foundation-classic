@@ -35,7 +35,6 @@
 
     </div>
 
-
 @endsection
 
 @push('head-elements')
