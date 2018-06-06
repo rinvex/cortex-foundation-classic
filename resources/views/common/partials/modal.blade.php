@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header{{ isset($hideHeader) ? ' hidden' : '' }}">
-                {{ Form::button('<span aria-hidden="true">&times;</span>', ['class' => 'close', 'data-dismiss' => 'modal', 'aria-label' => 'Close', 'title' => trans('cortex/foundation::common.close')]) }}
+                {{ Form::button('<span aria-hidden="true">&times;</span>', ['class' => 'close', 'data-dismiss' => 'modal', 'aria-label' => trans('cortex/foundation::common.close'), 'title' => trans('cortex/foundation::common.close')]) }}
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body"></div>
