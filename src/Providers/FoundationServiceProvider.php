@@ -333,7 +333,7 @@ class FoundationServiceProvider extends ServiceProvider
     protected function bindPresenceVerifier(): void
     {
         $this->app->bind('cortex.foundation.presence.verifier', function ($app) {
-            return new EloquentPresenceVerifier($app['db'], new $app[AbstractModel::class]);
+            return new EloquentPresenceVerifier($app['db'], new $app[AbstractModel::class]());
         });
     }
 

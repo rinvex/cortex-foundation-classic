@@ -35,12 +35,12 @@ class EloquentPresenceVerifier extends DatabasePresenceVerifier
     /**
      * Count the number of objects in a collection having the given value.
      *
-     * @param  string      $collection
-     * @param  string      $column
-     * @param  string      $value
-     * @param  int|null    $excludeId
-     * @param  string|null $idColumn
-     * @param  array       $extra
+     * @param string      $collection
+     * @param string      $column
+     * @param string      $value
+     * @param int|null    $excludeId
+     * @param string|null $idColumn
+     * @param array       $extra
      *
      * @return int
      */
@@ -58,10 +58,10 @@ class EloquentPresenceVerifier extends DatabasePresenceVerifier
     /**
      * Count the number of objects in a collection with the given values.
      *
-     * @param  string $collection
-     * @param  string $column
-     * @param  array  $values
-     * @param  array  $extra
+     * @param string $collection
+     * @param string $column
+     * @param array  $values
+     * @param array  $extra
      *
      * @return int
      */
