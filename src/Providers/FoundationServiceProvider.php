@@ -8,8 +8,8 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Validator;
 use Cortex\Foundation\Models\ImportRecord;
+use Cortex\Foundation\Models\AbstractModel;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
 use Cortex\Foundation\Console\Commands\SeedCommand;
@@ -20,6 +20,7 @@ use Cortex\Foundation\Console\Commands\PublishCommand;
 use Cortex\Foundation\Console\Commands\CoreSeedCommand;
 use Cortex\Foundation\Console\Commands\RollbackCommand;
 use Illuminate\Support\Facades\Session as SessionFacade;
+use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
 use Cortex\Foundation\Console\Commands\CorePublishCommand;
@@ -64,6 +65,7 @@ class FoundationServiceProvider extends ServiceProvider
         $this->overrideNotificationMiddleware();
         $this->overrideLaravelLocalization();
         $this->overrideUrlGenerator();
+        $this->bindPresenceVerifier();
         $this->bindBlueprintMacro();
         $this->overrideRedirector();
         $this->bindBladeCompiler();
@@ -90,7 +92,8 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot(Router $router): void
     {
-        $this->registerCustomValidationRules();
+        // Override presence verifier
+        $this->app['validator']->setPresenceVerifier($this->app['cortex.foundation.presence.verifier']);
 
         // Early set application locale globaly
         $router->pattern('locale', '[a-z]{2}');
@@ -323,19 +326,15 @@ class FoundationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register custom validators.
+     * Bind presence verifier.
      *
      * @return void
      */
-    protected function registerCustomValidationRules(): void
+    protected function bindPresenceVerifier(): void
     {
-        Validator::extend('exists_model', function ($attribute, $value, $parameters) {
-            return app($parameters[0])->where($attribute, $value)->exists();
-        }, 'The selected :attribute is invalid.');
-
-        Validator::extend('unique_model', function ($attribute, $value, $parameters) {
-            return ! app($parameters[0])->where($attribute, $value)->exists();
-        }, 'The :attribute has already been taken.');
+        $this->app->bind('cortex.foundation.presence.verifier', function ($app) {
+            return new EloquentPresenceVerifier($app['db'], new $app[AbstractModel::class]);
+        });
     }
 
     /**
