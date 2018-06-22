@@ -74,6 +74,11 @@
             "Dummy\\Module\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Dummy\\Module\\Tests\\": "tests"
+        }
+    },
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
