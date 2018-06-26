@@ -25,7 +25,7 @@ class CrawlingRobots
             return $this->responseWithRobots($shouldIndex);
         }
 
-        throw new Exception('An indexing rule needs to return a boolean or a string.');
+        throw new Exception(trans('cortex/foundation::messages.invalid_indexing_rule'));
     }
 
     protected function responseWithRobots(string $contents)
