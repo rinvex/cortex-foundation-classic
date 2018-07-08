@@ -6,6 +6,7 @@ namespace Cortex\Foundation\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Cortex\Foundation\Models\ImportRecord;
@@ -92,6 +93,9 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot(Router $router): void
     {
+        // Fix the specified key was too long error
+        Schema::defaultStringLength(191);
+
         // Override presence verifier
         $this->app['validator']->setPresenceVerifier($this->app['cortex.foundation.presence.verifier']);
 
