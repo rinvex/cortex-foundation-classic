@@ -40,7 +40,7 @@ class LaravelLocalization extends BaseLaravelLocalization
         $url .= isset($parsed_url['port']) ? ':'.$parsed_url['port'] : '';
         $user = isset($parsed_url['user']) ? $parsed_url['user'] : '';
         $pass = isset($parsed_url['pass']) ? ':'.$parsed_url['pass'] : '';
-        $url .= $user.(($user || $pass) ? "$pass@" : '');
+        $url .= $user.(($user || $pass) ? "{$pass}@" : '');
 
         if (! empty($url)) {
             $url .= isset($parsed_url['path']) ? '/'.ltrim($parsed_url['path'], '/').(config('cortex.foundation.route.trailing_slash') ? '/' : '') : '';
