@@ -117,9 +117,9 @@ class Handler extends ExceptionHandler
 
         if (view()->exists("cortex/foundation::common.errors.{$status}")) {
             return response()->view("cortex/foundation::common.errors.{$status}", ['exception' => $exception], $status, $exception->getHeaders());
-        } else {
-            return parent::renderHttpException($exception);
         }
+
+        return parent::renderHttpException($exception);
     }
 
     /**
