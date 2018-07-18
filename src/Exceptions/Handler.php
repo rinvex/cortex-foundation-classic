@@ -46,30 +46,35 @@ class Handler extends ExceptionHandler
                 'back' => true,
                 'with' => ['warning' => trans('cortex/foundation::messages.token_mismatch')],
             ]);
-        } elseif ($exception instanceof WatsonValidationException) {
+        }
+        if ($exception instanceof WatsonValidationException) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
                 'withErrors' => $exception->errors(),
             ]);
-        } elseif ($exception instanceof ValidationException) {
+        }
+        if ($exception instanceof ValidationException) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
                 'withErrors' => $exception->errors(),
             ]);
-        } elseif ($exception instanceof GenericException) {
+        }
+        if ($exception instanceof GenericException) {
             return intend([
                 'url' => $exception->getRedirection() ?? route($request->route('accessarea').'.home'),
                 'withInput' => $exception->getInputs() ?? $request->all(),
                 'with' => ['warning' => $exception->getMessage()],
             ]);
-        } elseif ($exception instanceof AuthorizationException) {
+        }
+        if ($exception instanceof AuthorizationException) {
             return intend([
                 'url' => in_array($request->route('accessarea'), ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
                 'with' => ['warning' => $exception->getMessage()],
             ]);
-        } elseif ($exception instanceof NotFoundHttpException) {
+        }
+        if ($exception instanceof NotFoundHttpException) {
             // Catch localized routes with missing {locale}
             // and redirect them to the correct localized version
             if (config('cortex.foundation.route.locale_redirect')) {
@@ -117,9 +122,9 @@ class Handler extends ExceptionHandler
 
         if (view()->exists("cortex/foundation::common.errors.{$status}")) {
             return response()->view("cortex/foundation::common.errors.{$status}", ['exception' => $exception], $status, $exception->getHeaders());
-        } else {
-            return parent::renderHttpException($exception);
         }
+
+        return parent::renderHttpException($exception);
     }
 
     /**

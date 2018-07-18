@@ -22,9 +22,11 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
     {
         if ($this->option('parent')) {
             return __DIR__.'/../../../resources/stubs/controller.nested.stub';
-        } elseif ($this->option('model')) {
+        }
+        if ($this->option('model')) {
             return __DIR__.'/../../../resources/stubs/controller.model.stub';
-        } elseif ($this->option('resource')) {
+        }
+        if ($this->option('resource')) {
             return __DIR__.'/../../../resources/stubs/controller.stub';
         }
 
