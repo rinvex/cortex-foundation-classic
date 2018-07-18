@@ -7,6 +7,11 @@ namespace Cortex\Foundation\DataTables;
 use Cortex\Foundation\Models\Log;
 use Cortex\Foundation\Transformers\LogTransformer;
 
+/**
+ * @property \Spatie\Activitylog\Traits\HasActivity $resource
+ * @property string                                 $tabs
+ * @property string                                 $id
+ */
 class LogsDataTable extends AbstractDataTable
 {
     /**

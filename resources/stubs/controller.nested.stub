@@ -144,7 +144,7 @@ class DummyClass extends AuthorizedController
      * @param \ParentDummyFullModelClass $ParentDummyModelVariable
      * @param \DummyFullModelClass $DummyModelVariable
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function destroy(ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
     {

@@ -7,6 +7,12 @@ namespace Cortex\Foundation\DataTables;
 use Spatie\MediaLibrary\Models\Media;
 use Cortex\Foundation\Transformers\MediaTransformer;
 
+/**
+ * @property \Spatie\MediaLibrary\HasMedia\HasMedia $resource
+ * @property string                                 $tabs
+ * @property string                                 $id
+ * @property string                                 $url
+ */
 class MediaDataTable extends AbstractDataTable
 {
     /**

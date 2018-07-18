@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
 
 Breadcrumbs::register('frontarea.home', function (BreadcrumbsGenerator $breadcrumbs) {

@@ -7,6 +7,12 @@ namespace Cortex\Foundation\DataTables;
 use Cortex\Foundation\Models\ImportRecord;
 use Cortex\Foundation\Transformers\ImportRecordTransformer;
 
+/**
+ * @property \Illuminate\Database\Eloquent\Model $resource
+ * @property string                              $tabs
+ * @property string                              $id
+ * @property string                              $url
+ */
 class ImportRecordsDataTable extends AbstractDataTable
 {
     /**
