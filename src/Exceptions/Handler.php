@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Exceptions;
 
 use Exception;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
@@ -24,6 +25,8 @@ class Handler extends ExceptionHandler
      *
      * @param \Exception $exception
      *
+     * @throws \Exception
+     *
      * @return void
      */
     public function report(Exception $exception): void
@@ -37,10 +40,12 @@ class Handler extends ExceptionHandler
      * @param \Illuminate\Http\Request $request
      * @param \Exception               $exception
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $exception)
     {
+        $accessarea = str_before(Route::currentRouteName(), '.');
+
         if ($exception instanceof TokenMismatchException) {
             return intend([
                 'back' => true,
@@ -60,13 +65,13 @@ class Handler extends ExceptionHandler
             ]);
         } elseif ($exception instanceof GenericException) {
             return intend([
-                'url' => $exception->getRedirection() ?? route($request->route('accessarea').'.home'),
+                'url' => $exception->getRedirection() ?? route("{$accessarea}.home"),
                 'withInput' => $exception->getInputs() ?? $request->all(),
                 'with' => ['warning' => $exception->getMessage()],
             ]);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
-                'url' => in_array($request->route('accessarea'), ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
+                'url' => in_array($accessarea, ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
                 'with' => ['warning' => $exception->getMessage()],
             ]);
         } elseif ($exception instanceof NotFoundHttpException) {
@@ -74,29 +79,28 @@ class Handler extends ExceptionHandler
             // and redirect them to the correct localized version
             if (config('cortex.foundation.route.locale_redirect')) {
                 $originalUrl = $request->url();
-                $localizedUrl = app('laravellocalization')->getLocalizedURL(null, $originalUrl);
 
                 try {
+                    $localizedUrl = app('laravellocalization')->getLocalizedURL(null, $originalUrl);
+
                     // Will return `NotFoundHttpException` exception if no match found!
                     app('router')->getRoutes()->match(request()->create($localizedUrl));
 
                     return intend([
-                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route($request->route('accessarea').'.home'),
+                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route("{$accessarea}.home"),
                         'with' => ['warning' => $exception->getMessage()],
                     ]);
-                } catch (Exception $exception) {
-                }
+                } catch (Exception $exception) {}
             }
 
             return $this->prepareResponse($request, $exception);
         } elseif ($exception instanceof ModelNotFoundException) {
-            $area = $request->route('accessarea');
-            $model = str_replace('Contract', '', $exception->getModel());
+            $model = $exception->getModel();
             $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
             $plural = str_plural($single);
 
             return intend([
-                'url' => $area ? route("{$area}.{$plural}.index") : route("{$area}.home"),
+                'url' => $model ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),
                 'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
             ]);
         }
