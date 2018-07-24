@@ -90,7 +90,8 @@ class Handler extends ExceptionHandler
                         'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route("{$accessarea}.home"),
                         'with' => ['warning' => $exception->getMessage()],
                     ]);
-                } catch (Exception $exception) {}
+                } catch (Exception $exception) {
+                }
             }
 
             return $this->prepareResponse($request, $exception);
