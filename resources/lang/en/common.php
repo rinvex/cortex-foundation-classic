@@ -39,6 +39,8 @@ return [
     'adminarea_welcome_body' => 'This is your dashboard, a place with your taste to get a glimpse about system vitals, and data metrics in nice widgets.',
     'managerarea_welcome' => 'Welcome to managerarea',
     'managerarea_welcome_body' => 'This is your dashboard, a place with your taste to get a glimpse about system vitals, and data metrics in nice widgets.',
+    'profile_welcome' => 'Profile Dashboard Placeholder',
+    'profile_welcome_body' => 'This is your profile dashboard, a place with some useful data about your account, and public data about your colleagues.',
 
     'taxonomy' => 'Taxonomy',
     'user' => 'User Management',
