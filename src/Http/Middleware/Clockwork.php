@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Cortex Foundation Module.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Cortex Foundation Module
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Cortex\Foundation\Http\Middleware;
@@ -31,7 +18,7 @@ class Clockwork
     protected $app;
 
     /**
-     * Create a new middleware instance.
+     * Create a new Clockwork middleware instance.
      *
      * @param Application $app
      *
@@ -52,7 +39,7 @@ class Clockwork
      */
     public function handle($request, Closure $next)
     {
-        if (app()->environment() !== 'production') {
+        if (app()->environment('local')) {
             $this->app['config']->set('clockwork::config.middleware', true);
 
             try {

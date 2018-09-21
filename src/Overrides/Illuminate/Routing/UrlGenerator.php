@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Cortex Foundation Module.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Cortex Foundation Module
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Illuminate\Routing;
@@ -23,40 +10,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 class UrlGenerator extends BaseUrlGenerator
 {
     /**
-     * The backend URI.
-     *
-     * @var string
-     */
-    protected $backendUri = 'backend';
-
-    /**
-     * Set the backend URI.
-     *
-     * @param string $backendUri
-     *
-     * @return void
-     */
-    public function setBackendUri($backendUri)
-    {
-        $this->backendUri = $backendUri;
-    }
-
-    /**
-     * Generate an absolute URL to the given admin path.
-     *
-     * @param string $path
-     * @param array  $parameters
-     * @param bool   $secure
-     *
-     * @return string
-     */
-    public function toBackend($path, array $parameters = [], $secure = null)
-    {
-        return $this->to("{$this->backendUri}/{$path}", $parameters, $secure);
-    }
-
-    /**
-     * Generate a absolute URL to the given path.
+     * Generate an absolute URL to the given path.
      *
      * @param string    $path
      * @param mixed     $extra
@@ -64,11 +18,33 @@ class UrlGenerator extends BaseUrlGenerator
      *
      * @return string
      */
-    public function to($path, $extra = [], $secure = null)
+    public function to($path, $extra = [], $secure = null): string
     {
-        return config('rinvex.cortex.route.locale_prefix')
-            ? LaravelLocalization::localizeURL(parent::to($path, $extra, $secure))
-            : parent::to($path, $extra, $secure);
+        if (! config('cortex.foundation.route.trailing_slash')) {
+            return parent::to($path, $extra, $secure);
+        }
+
+        // First we will check if the URL is already a valid URL. If it is we will not
+        // try to generate a new one but will simply return the URL as is, which is
+        // convenient since developers do not always have to check if it's valid.
+        if ($this->isValidUrl($path)) {
+            return $path;
+        }
+
+        $tail = implode('/', array_map(
+                'rawurlencode', (array) $this->formatParameters($extra))
+        );
+
+        // Once we have the scheme we will compile the "tail" by collapsing the values
+        // into a single string delimited by slashes. This just makes it convenient
+        // for passing the array of parameters to this URL as a list of segments.
+        $root = $this->formatRoot($this->formatScheme($secure));
+
+        [$path, $query] = $this->extractQueryString($path);
+
+        return $this->format(
+                $root, '/'.trim($path.'/'.$tail, '/')
+            ).'/'.$query;
     }
 
     /**
@@ -76,11 +52,11 @@ class UrlGenerator extends BaseUrlGenerator
      */
     protected function routeUrl()
     {
-        if (! $this->routeGenerator) {
+        if (config('cortex.foundation.route.trailing_slash') && ! $this->routeGenerator) {
             $this->routeGenerator = new RouteUrlGenerator($this, $this->request);
         }
 
-        return $this->routeGenerator;
+        return parent::routeUrl();
     }
 
     /**
@@ -97,8 +73,16 @@ class UrlGenerator extends BaseUrlGenerator
     protected function toRoute($route, $parameters, $absolute)
     {
         // Bind {locale} route parameter
-        if (config('rinvex.cortex.route.locale_prefix') && ! isset($parameters['locale'])) {
-            $parameters['locale'] = LaravelLocalization::getCurrentLocale();
+        if (config('cortex.foundation.route.locale_prefix') && in_array('locale', $route->parameterNames()) && ! isset($parameters['locale'])) {
+            $urlLocale = $this->request->segment(1);
+            $sessionLocale = session('locale', $defaultLocale = app('laravellocalization')->getCurrentLocale());
+            $parameters['locale'] = app('laravellocalization')->checkLocaleInSupportedLocales($urlLocale) ? $urlLocale
+                : (app('laravellocalization')->checkLocaleInSupportedLocales($sessionLocale) ? $sessionLocale : $defaultLocale);
+        }
+
+        // Bind {subdomain} route parameter
+        if (in_array('subdomain', $route->parameterNames()) && ! isset($parameters['subdomain'])) {
+            $parameters['subdomain'] = $route->hasParameter('subdomain') ? $route->parameter('subdomain') : explode('.', $this->request->getHost())[0];
         }
 
         return $this->routeUrl()->to(

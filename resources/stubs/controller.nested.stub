@@ -1,0 +1,153 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DummyNamespace;
+
+use DummyFullModelClass;
+use ParentDummyFullModelClass;
+use Illuminate\Http\Request;
+use Cortex\Foundation\Importers\DefaultImporter;
+use Cortex\Foundation\DataTables\ImportLogsDataTable;
+use Cortex\Foundation\Http\Requests\ImportFormRequest;
+use Cortex\Foundation\Http\Controllers\AuthorizedController;
+
+class DummyClass extends AuthorizedController
+{
+    /**
+     * List all records.
+     *
+     * @param  \ParentDummyFullModelClass  $ParentDummyModelVariable
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(ParentDummyModelClass $ParentDummyModelVariable)
+    {
+        //
+    }
+
+    /**
+     * Import resources.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function import()
+    {
+        //
+    }
+
+    /**
+     * Stash resources.
+     *
+     * @param \Cortex\Foundation\Http\Requests\ImportFormRequest $request
+     * @param \Cortex\Foundation\Importers\DefaultImporter       $importer
+     *
+     * @return void
+     */
+    public function stash(ImportFormRequest $request, DefaultImporter $importer)
+    {
+        //
+    }
+
+    /**
+     * Hoard resources.
+     *
+     * @param \Cortex\Foundation\Http\Requests\ImportFormRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function hoard(ImportFormRequest $request)
+    {
+        //
+    }
+
+    /**
+     * List resource import logs.
+     *
+     * @param \Cortex\Foundation\DataTables\ImportLogsDataTable $importLogsDatatable
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function importLogs(ImportLogsDataTable $importLogsDatatable)
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param  \ParentDummyFullModelClass  $ParentDummyModelVariable
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(ParentDummyModelClass $ParentDummyModelVariable)
+    {
+        //
+    }
+
+    /**
+     * Store new record.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \ParentDummyFullModelClass              $ParentDummyModelVariable
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request, ParentDummyModelClass $ParentDummyModelVariable)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \ParentDummyFullModelClass  $ParentDummyModelVariable
+     * @param  \DummyFullModelClass  $DummyModelVariable
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show(ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
+    {
+        //
+    }
+
+    /**
+     * Edit given record.
+     *
+     * @param  \ParentDummyFullModelClass  $ParentDummyModelVariable
+     * @param  \DummyFullModelClass  $DummyModelVariable
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
+    {
+        //
+    }
+
+    /**
+     * Update given record.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \ParentDummyFullModelClass              $ParentDummyModelVariable
+     * @param  \DummyFullModelClass                    $DummyModelVariable
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
+    {
+        //
+    }
+
+    /**
+     * Destroy given record.
+     *
+     * @param \ParentDummyFullModelClass $ParentDummyModelVariable
+     * @param \DummyFullModelClass $DummyModelVariable
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function destroy(ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
+    {
+        //
+    }
+}

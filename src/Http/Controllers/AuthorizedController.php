@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Cortex Foundation Module.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Cortex Foundation Module
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Cortex\Foundation\Http\Controllers;
@@ -26,12 +13,26 @@ class AuthorizedController extends AuthenticatedController
     use AuthorizesRequests;
 
     /**
-     * Resource Ability Map.
-     * Array of resource ability map.
+     * The resource Ability Map.
      *
      * @var array
      */
-    protected $resourceAbilityMap = [];
+    protected $resourceAbilityMap = [
+        'activities' => 'audit',
+        'index' => 'list',
+        'logs' => 'audit',
+    ];
+
+    /**
+     * The resource methods without models.
+     *
+     * @var array
+     */
+    protected $resourceMethodsWithoutModels = [
+        'importLogs',
+        'import',
+        'stash',
+    ];
 
     /**
      * Resource action whitelist.
@@ -42,16 +43,16 @@ class AuthorizedController extends AuthenticatedController
     protected $resourceActionWhitelist = [];
 
     /**
-     * Create a new manage persistence controller instance.
+     * Create a new authorized controller instance.
      *
-     * @throws \Rinvex\Fort\Exceptions\AuthorizationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function __construct()
     {
         parent::__construct();
 
         if (property_exists(static::class, 'resource')) {
-            $this->authorizeResource($this->resource);
+            $this->isClassName($this->resource) ? $this->authorizeResource($this->resource) : $this->authorizeGeneric($this->resource);
         } else {
             // At this stage, sessions still not loaded yet, and `AuthorizationException`
             // depends on seesions to flash redirection error msg, so delegate to a middleware
@@ -62,28 +63,37 @@ class AuthorizedController extends AuthenticatedController
     }
 
     /**
-     * Authorize a resource action based on the incoming request.
-     *
-     * @param string                        $resource
-     * @param string|null                   $parameter
-     * @param array                         $options
-     * @param \Illuminate\Http\Request|null $request
-     *
-     * @return void
+     * {@inheritdoc}
      */
-    public function authorizeResource($resource, $parameter = null, array $options = [], $request = null)
+    public function authorizeResource($model, $parameter = null, array $options = [], $request = null): void
     {
         $middleware = [];
-        $parameter = $parameter ?: $resource;
+        $parameter = $parameter ?: snake_case(class_basename($model));
 
-        // Prepare middleware
         foreach ($this->mapResourceAbilities() as $method => $ability) {
-            $middleware["can:{$ability}-{$resource},{$parameter}"][] = $method;
+            $modelName = in_array($method, $this->resourceMethodsWithoutModels()) ? $model : $parameter;
+
+            $middleware["can:{$ability},{$modelName}"][] = $method;
         }
 
-        // Attach middleware
         foreach ($middleware as $middlewareName => $methods) {
             $this->middleware($middlewareName, $options)->only($methods);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authorizeGeneric($resource): void
+    {
+        $middleware = [];
+
+        foreach ($this->mapResourceAbilities() as $method => $ability) {
+            $middleware["can:{$resource}"][] = $method;
+        }
+
+        foreach ($middleware as $middlewareName => $methods) {
+            $this->middleware($middlewareName)->only($methods);
         }
     }
 
@@ -92,7 +102,7 @@ class AuthorizedController extends AuthenticatedController
      *
      * @return array
      */
-    protected function mapResourceAbilities()
+    protected function mapResourceAbilities(): array
     {
         // Reflect calling controller
         $controller = new ReflectionClass(static::class);
@@ -116,16 +126,30 @@ class AuthorizedController extends AuthenticatedController
     }
 
     /**
-     * Get the map of resource methods to ability names.
-     *
-     * @return array
+     * {@inheritdoc}
      */
-    protected function resourceAbilityMap()
+    protected function resourceAbilityMap(): array
     {
-        return $this->resourceAbilityMap + [
-                'index' => 'list',
-                'store' => 'create',
-                'edit' => 'update',
-            ];
+        return array_merge(parent::resourceAbilityMap(), $this->resourceAbilityMap);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function resourceMethodsWithoutModels()
+    {
+        return array_merge(parent::resourceMethodsWithoutModels(), $this->resourceMethodsWithoutModels);
+    }
+
+    /**
+     * Checks if the given string looks like a fully qualified class name.
+     *
+     * @param string $value
+     *
+     * @return bool
+     */
+    protected function isClassName($value)
+    {
+        return mb_strpos($value, '\\') !== false;
     }
 }

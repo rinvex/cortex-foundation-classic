@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Cortex Foundation Module.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Cortex Foundation Module
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Cortex\Foundation\Http;
@@ -24,25 +11,15 @@ class Kernel extends HttpKernel
     /**
      * {@inheritdoc}
      */
-    protected $bootstrappers = [
-        \Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables::class,
-        \Illuminate\Foundation\Bootstrap\LoadConfiguration::class,
-        \Illuminate\Foundation\Bootstrap\HandleExceptions::class,
-        \Illuminate\Foundation\Bootstrap\RegisterFacades::class,
-        \Illuminate\Foundation\Bootstrap\RegisterProviders::class,
-        \Cortex\Foundation\Bootstrap\RegisterProviders::class,
-        \Illuminate\Foundation\Bootstrap\BootProviders::class,
-    ];
-
-    /**
-     * {@inheritdoc}
-     */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Cortex\Foundation\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \Fideloper\Proxy\TrustProxies::class,
+        \Cortex\Foundation\Http\Middleware\TrailingSlashEnforce::class,
+        \Cortex\Foundation\Http\Middleware\TurbolinksLocation::class,
+        \Cortex\Foundation\Http\Middleware\CrawlingRobots::class,
+        \Cortex\Foundation\Http\Middleware\TrustProxies::class,
     ];
 
     /**
@@ -50,17 +27,17 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \Cortex\Foundation\Http\Middleware\ForgetLocaleRouteParameter::class,
             \Cortex\Foundation\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
+            \Cortex\Foundation\Http\Middleware\LocalizationRedirect::class,
+            \Cortex\Foundation\Http\Middleware\ForgetLocaleRouteParameter::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Cortex\Foundation\Http\Middleware\NotificationMiddleware::class,
             \Cortex\Foundation\Http\Middleware\Clockwork::class,
-            \Rinvex\Fort\Http\Middleware\Abilities::class,
         ],
 
         'api' => [
@@ -73,13 +50,13 @@ class Kernel extends HttpKernel
      * {@inheritdoc}
      */
     protected $routeMiddleware = [
-        'auth' => \Rinvex\Fort\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated::class,
+        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'nohttpcache' => \Cortex\Foundation\Http\Middleware\NoHttpCache::class,
+        'auth.basic' => \Cortex\Foundation\Http\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'nohttpcache' => \Rinvex\Fort\Http\Middleware\NoHttpCache::class,
     ];
 
     /**
@@ -101,7 +78,7 @@ class Kernel extends HttpKernel
      *
      * @return void
      */
-    public function disableMiddleware()
+    public function disableMiddleware(): void
     {
         $this->disabledMiddleware = $this->middleware;
 
@@ -113,9 +90,9 @@ class Kernel extends HttpKernel
      *
      * @return void
      */
-    public function enableMiddleware()
+    public function enableMiddleware(): void
     {
-        $this->middleware = $this->disableMiddleware;
+        $this->middleware = $this->disabledMiddleware;
 
         $this->disabledMiddleware = [];
     }
@@ -125,7 +102,7 @@ class Kernel extends HttpKernel
      *
      * @return void
      */
-    public function disableRouteMiddleware()
+    public function disableRouteMiddleware(): void
     {
         $this->disabledRouteMiddleware = $this->routeMiddleware;
 
@@ -137,9 +114,9 @@ class Kernel extends HttpKernel
      *
      * @return void
      */
-    public function enableRouteMiddleware()
+    public function enableRouteMiddleware(): void
     {
-        $this->routeMiddleware = $this->disableRouteMiddleware;
+        $this->routeMiddleware = $this->disabledRouteMiddleware;
 
         $this->disabledRouteMiddleware = [];
     }

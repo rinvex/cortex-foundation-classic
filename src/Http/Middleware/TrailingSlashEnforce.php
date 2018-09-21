@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Cortex Foundation Module.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Cortex Foundation Module
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Cortex\Foundation\Http\Middleware;
@@ -31,7 +18,7 @@ class TrailingSlashEnforce
      */
     public function handle($request, Closure $next)
     {
-        if (! $request->ajax()) {
+        if (! $request->ajax() && config('cortex.foundation.route.trailing_slash')) {
             $requestUri = $request->getRequestUri();
             $queryString = $request->getQueryString();
             $untrimmedPath = trim($request->getPathInfo(), '/').'/';
@@ -50,7 +37,7 @@ class TrailingSlashEnforce
      *
      * @return bool
      */
-    protected function checkQueryString($requestUri, $queryString)
+    protected function checkQueryString($requestUri, $queryString): bool
     {
         return (! $queryString && ! ends_with($requestUri, '/')) || ($queryString && ! ends_with(mb_strstr($requestUri, '?', true), '/'));
     }

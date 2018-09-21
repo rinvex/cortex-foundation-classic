@@ -1,48 +1,56 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Cortex Foundation Module.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Cortex Foundation Module
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
 use Illuminate\Routing\Router;
-use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Schema\Blueprint;
+use Cortex\Foundation\Models\ImportRecord;
+use Cortex\Foundation\Models\AbstractModel;
 use Illuminate\View\Compilers\BladeCompiler;
-use Cortex\Foundation\Http\Middleware\TrailingSlashEnforce;
+use Cortex\Foundation\Generators\LangJsGenerator;
+use Cortex\Foundation\Console\Commands\SeedCommand;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Cortex\Foundation\Console\Commands\InstallCommand;
+use Cortex\Foundation\Console\Commands\MigrateCommand;
+use Cortex\Foundation\Console\Commands\PublishCommand;
+use Cortex\Foundation\Console\Commands\CoreSeedCommand;
+use Cortex\Foundation\Console\Commands\RollbackCommand;
+use Illuminate\Support\Facades\Session as SessionFacade;
+use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
+use Cortex\Foundation\Console\Commands\CoreInstallCommand;
+use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
+use Cortex\Foundation\Console\Commands\CorePublishCommand;
+use Mariuzzo\LaravelJsLocalization\Commands\LangJsCommand;
+use Cortex\Foundation\Console\Commands\CoreRollbackCommand;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
-use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
 use Cortex\Foundation\Overrides\Mcamara\LaravelLocalization\LaravelLocalization;
 
 class FoundationServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
+     * The commands to be registered.
      *
-     * @return void
+     * @var array
      */
-    public function boot(Router $router)
-    {
-        // Early set application locale globaly
-        $this->app['laravellocalization']->setLocale();
-
-        // Require Support Files
-        $this->requireSupportFiles();
-    }
+    protected $commands = [
+        SeedCommand::class => 'command.cortex.foundation.seed',
+        InstallCommand::class => 'command.cortex.foundation.install',
+        MigrateCommand::class => 'command.cortex.foundation.migrate',
+        PublishCommand::class => 'command.cortex.foundation.publish',
+        RollbackCommand::class => 'command.cortex.foundation.rollback',
+        CoreSeedCommand::class => 'command.cortex.foundation.coreseed',
+        CoreInstallCommand::class => 'command.cortex.foundation.coreinstall',
+        CoreMigrateCommand::class => 'command.cortex.foundation.coremigrate',
+        CorePublishCommand::class => 'command.cortex.foundation.corempublish',
+        CoreRollbackCommand::class => 'command.cortex.foundation.corerollback',
+    ];
 
     /**
      * Register any application services.
@@ -53,18 +61,98 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->overrideNotificationMiddleware();
-        $this->registerDevelopmentProviders();
         $this->overrideLaravelLocalization();
         $this->overrideUrlGenerator();
+        $this->bindPresenceVerifier();
+        $this->bindBlueprintMacro();
         $this->overrideRedirector();
         $this->bindBladeCompiler();
-        $this->setBackendUri();
+        $this->overrideLangJS();
 
-        // Add required middleware to the stack
-        $this->prependMiddleware();
+        // Bind eloquent models to IoC container
+        $this->app->singleton('cortex.foundation.import_record', $importerModel = $this->app['config']['cortex.foundation.models.import_record']);
+        $importerModel === ImportRecord::class || $this->app->alias('cortex.foundation.import_record', ImportRecord::class);
+
+        // Merge config
+        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'cortex.foundation');
+
+        // Override datatables html builder
+        $this->app->bind(\Yajra\DataTables\Html\Builder::class, \Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder::class);
+
+        // Register console commands
+        ! $this->app->runningInConsole() || $this->registerCommands();
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot(Router $router): void
+    {
+        // Fix the specified key was too long error
+        Schema::defaultStringLength(191);
+
+        // Override presence verifier
+        $this->app['validator']->setPresenceVerifier($this->app['cortex.foundation.presence.verifier']);
+
+        // Early set application locale globaly
+        $router->pattern('locale', '[a-z]{2}');
+        $this->app['laravellocalization']->setLocale();
+
+        $router->model('media', config('medialibrary.media_model'));
+
+        // Map relations
+        Relation::morphMap([
+            'media' => config('medialibrary.media_model'),
+        ]);
+
+        // Load resources
+        require __DIR__.'/../../routes/breadcrumbs/frontarea.php';
+        require __DIR__.'/../../routes/breadcrumbs/tenantarea.php';
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web/adminarea.php');
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web/frontarea.php');
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web/tenantarea.php');
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web/managerarea.php');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
+        ! $this->app->runningInConsole() || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        $this->app->runningInConsole() || $this->app->afterResolving('blade.compiler', function () {
+            require __DIR__.'/../../routes/menus/managerarea.php';
+            require __DIR__.'/../../routes/menus/tenantarea.php';
+            require __DIR__.'/../../routes/menus/adminarea.php';
+            require __DIR__.'/../../routes/menus/frontarea.php';
+        });
+
+        // Publish Resources
+        ! $this->app->runningInConsole() || $this->publishResources();
+
+        SessionFacade::extend('database', function ($app) {
+            $table = $app['config']['session.table'];
+
+            $lifetime = $app['config']['session.lifetime'];
+            $connection = $app['config']['session.connection'];
+
+            return new \Cortex\Foundation\Overrides\Illuminate\Session\DatabaseSessionHandler(
+                $app['db']->connection($connection), $table, $lifetime, $app
+            );
+        });
+
+        $this->app->booted(function () {
+            if ($this->app->routesAreCached()) {
+                require $this->app->getCachedRoutesPath();
+            } else {
+                $this->app['router']->getRoutes()->refreshNameLookups();
+                $this->app['router']->getRoutes()->refreshActionLookups();
+            }
+        });
+
+        Collection::macro('similar', function (Collection $newCollection) {
+            return $newCollection->diff($this)->isEmpty() && $this->diff($newCollection)->isEmpty();
+        });
     }
 
     /**
@@ -72,7 +160,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function overrideNotificationMiddleware()
+    protected function overrideNotificationMiddleware(): void
     {
         $this->app->singleton('Cortex\Foundation\Http\Middleware\NotificationMiddleware', function ($app) {
             return new NotificationMiddleware(
@@ -88,7 +176,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function bindBladeCompiler()
+    protected function bindBladeCompiler(): void
     {
         $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
 
@@ -104,63 +192,11 @@ class FoundationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Prepends the bootstrap middleware.
-     *
-     * @return void
-     */
-    protected function prependMiddleware()
-    {
-        if ($this->app['config']->get('rinvex.cortex.route.locale_prefix') && $this->app['config']->get('rinvex.cortex.route.locale_redirect')) {
-            $this->app[Kernel::class]->prependMiddleware(LaravelLocalizationRedirectFilter::class);
-        }
-
-        if ($this->app['config']->get('rinvex.cortex.route.trailing_slash')) {
-            $this->app[Kernel::class]->prependMiddleware(TrailingSlashEnforce::class);
-        }
-    }
-
-    /**
-     * Require support files.
-     *
-     * @return void
-     */
-    protected function requireSupportFiles()
-    {
-        // Load the functions
-        $helpers = $this->app->path().'/Support/helpers.php';
-
-        if ($this->app['files']->exists($helpers)) {
-            require $helpers;
-        }
-
-        // Load the form macros
-        $macros = $this->app->path().'/Support/macros.php';
-
-        if ($this->app['files']->exists($macros)) {
-            require $macros;
-        }
-    }
-
-    /**
-     * Registers the Generic bindings.
-     *
-     * @return void
-     */
-    protected function registerDevelopmentProviders()
-    {
-        if ($this->app->environment() !== 'production') {
-            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
-            $this->app->register(\Clockwork\Support\Laravel\ClockworkServiceProvider::class);
-            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
-        }
-    }
-
-    /**
      * Override the Redirector instance.
      *
      * @return void
      */
-    protected function overrideRedirector()
+    protected function overrideRedirector(): void
     {
         $this->app->singleton('redirect', function ($app) {
             $redirector = new Redirector($app['url']);
@@ -181,7 +217,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function overrideUrlGenerator()
+    protected function overrideUrlGenerator(): void
     {
         $this->app->singleton('url', function ($app) {
             $routes = $app['router']->getRoutes();
@@ -229,7 +265,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function overrideLaravelLocalization()
+    protected function overrideLaravelLocalization(): void
     {
         $this->app->singleton('laravellocalization', function () {
             return new LaravelLocalization();
@@ -237,12 +273,113 @@ class FoundationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Set the backend uri on the url generator.
+     * Publish resources.
      *
      * @return void
      */
-    protected function setBackendUri()
+    protected function publishResources(): void
     {
-        $this->app['url']->setBackendUri(backend_uri());
+        $this->publishes([realpath(__DIR__.'/../../database/migrations') => database_path('migrations')], 'cortex-foundation-migrations');
+        $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('cortex.foundation.php')], 'cortex-foundation-config');
+        $this->publishes([realpath(__DIR__.'/../../resources/lang') => resource_path('lang/vendor/cortex/foundation')], 'cortex-foundation-lang');
+        $this->publishes([realpath(__DIR__.'/../../resources/views') => resource_path('views/vendor/cortex/foundation')], 'cortex-foundation-views');
+    }
+
+    /**
+     * Register console commands.
+     *
+     * @return void
+     */
+    protected function registerCommands(): void
+    {
+        // Register artisan commands
+        foreach ($this->commands as $key => $value) {
+            $this->app->singleton($value, $key);
+        }
+
+        $this->commands(array_values($this->commands));
+    }
+
+    /**
+     * Register console commands.
+     *
+     * @return void
+     */
+    protected function overrideLangJS(): void
+    {
+        // Bind the Laravel JS Localization command into the app IOC.
+        $this->app->singleton('localization.js', function ($app) {
+            $app = $this->app;
+            $laravelMajorVersion = (int) $app::VERSION;
+
+            $files = $app['files'];
+
+            if ($laravelMajorVersion === 4) {
+                $langs = $app['path.base'].'/app/lang';
+            } elseif ($laravelMajorVersion === 5) {
+                $langs = $app['path.base'].'/resources/lang';
+            }
+            $messages = $app['config']->get('localization-js.messages');
+            $generator = new LangJsGenerator($files, $langs, $messages);
+
+            return new LangJsCommand($generator);
+        });
+
+        // Bind the Laravel JS Localization command into Laravel Artisan.
+        $this->commands('localization.js');
+    }
+
+    /**
+     * Bind presence verifier.
+     *
+     * @return void
+     */
+    protected function bindPresenceVerifier(): void
+    {
+        $this->app->bind('cortex.foundation.presence.verifier', function ($app) {
+            return new EloquentPresenceVerifier($app['db'], new $app[AbstractModel::class]());
+        });
+    }
+
+    /**
+     * Bind blueprint macro.
+     *
+     * @return void
+     */
+    protected function bindBlueprintMacro(): void
+    {
+        Blueprint::macro('auditable', function () {
+            $this->integer('created_by_id')->unsigned()->after('created_at')->nullable();
+            $this->string('created_by_type')->after('created_at')->nullable();
+            $this->integer('updated_by_id')->unsigned()->after('updated_at')->nullable();
+            $this->string('updated_by_type')->after('updated_at')->nullable();
+        });
+
+        Blueprint::macro('dropAuditable', function () {
+            $this->dropForeign($this->createIndexName('foreign', ['updated_by_type']));
+            $this->dropForeign($this->createIndexName('foreign', ['updated_by_id']));
+            $this->dropForeign($this->createIndexName('foreign', ['created_by_type']));
+            $this->dropForeign($this->createIndexName('foreign', ['created_by_id']));
+            $this->dropColumn(['updated_by_type', 'updated_by_id', 'created_by_type', 'created_by_id']);
+        });
+
+        Blueprint::macro('auditableAndTimestamps', function ($precision = 0) {
+            $this->timestamp('created_at', $precision)->nullable();
+            $this->integer('created_by_id')->unsigned()->nullable();
+            $this->string('created_by_type')->nullable();
+            $this->timestamp('updated_at', $precision)->nullable();
+            $this->integer('updated_by_id')->unsigned()->nullable();
+            $this->string('updated_by_type')->nullable();
+        });
+
+        Blueprint::macro('dropauditableAndTimestamps', function () {
+            $this->dropForeign($this->createIndexName('foreign', ['updated_by_type']));
+            $this->dropForeign($this->createIndexName('foreign', ['updated_by_id']));
+            $this->dropForeign($this->createIndexName('foreign', ['updated_at']));
+            $this->dropForeign($this->createIndexName('foreign', ['created_by_type']));
+            $this->dropForeign($this->createIndexName('foreign', ['created_by_id']));
+            $this->dropForeign($this->createIndexName('foreign', ['created_at']));
+            $this->dropColumn(['updated_by_type', 'updated_by_id', 'updated_at', 'created_by_type', 'created_by_id', 'created_at']);
+        });
     }
 }

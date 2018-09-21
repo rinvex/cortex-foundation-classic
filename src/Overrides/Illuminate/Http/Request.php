@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Cortex Foundation Module.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Cortex Foundation Module
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Illuminate\Http;
@@ -26,8 +13,8 @@ class Request extends BaseRequest
      *
      * @return string
      */
-    public function url()
+    public function url(): string
     {
-        return rtrim(preg_replace('/\?.*/', '', $this->getUri()), '/').'/';
+        return parent::url().(config('cortex.foundation.route.trailing_slash') ? '/' : '');
     }
 }

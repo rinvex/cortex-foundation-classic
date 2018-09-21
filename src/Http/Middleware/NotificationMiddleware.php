@@ -1,26 +1,14 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Cortex Foundation Module.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Cortex Foundation Module
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Cortex\Foundation\Http\Middleware;
 
 use Closure;
-use Krucas\Notification\Middleware\NotificationMiddleware as BaseNotificationMiddleware;
+use Illuminate\Support\ViewErrorBag;
+use Krucas\Notification\Middleware\NotificationMiddleware as Middleware;
 
-class NotificationMiddleware extends BaseNotificationMiddleware
+class NotificationMiddleware extends Middleware
 {
     /**
      * Handle an incoming request.
@@ -46,6 +34,13 @@ class NotificationMiddleware extends BaseNotificationMiddleware
         foreach (config('notification.default_types') as $type) {
             if ($request->session()->has($type)) {
                 $message = $request->session()->get($type);
+
+                if ($message instanceof ViewErrorBag) {
+                    foreach ($message->messages() as $key => $values) {
+                        $message = $values[0];
+                    }
+                }
+
                 $this->notification->container(null)->add($type, $message, false);
             }
         }

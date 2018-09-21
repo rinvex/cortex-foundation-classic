@@ -1,48 +1,23 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Cortex Foundation Module.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Cortex Foundation Module
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Cortex\Foundation\Exceptions;
 
 use Exception;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
-use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Watson\Validating\ValidationException as WatsonValidationException;
 
 class Handler extends ExceptionHandler
 {
-    /**
-     * A list of the exception types that should not be reported.
-     *
-     * @var array
-     */
-    protected $dontReport = [
-        AuthenticationException::class,
-        AuthorizationException::class,
-        HttpException::class,
-        ModelNotFoundException::class,
-        TokenMismatchException::class,
-        ValidationException::class,
-    ];
-
     /**
      * Report or log an exception.
      *
@@ -50,9 +25,11 @@ class Handler extends ExceptionHandler
      *
      * @param \Exception $exception
      *
+     * @throws \Exception
+     *
      * @return void
      */
-    public function report(Exception $exception)
+    public function report(Exception $exception): void
     {
         parent::report($exception);
     }
@@ -63,23 +40,111 @@ class Handler extends ExceptionHandler
      * @param \Illuminate\Http\Request $request
      * @param \Exception               $exception
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof InvalidPersistenceException) {
+        $accessarea = str_before(Route::currentRouteName(), '.');
+
+        if ($exception instanceof TokenMismatchException) {
             return intend([
-                'route' => 'rinvex.fort.frontend.auth.login',
-                'withErrors' => ['rinvex.fort.session.expired' => trans('rinvex/fort::frontend/messages.auth.session.expired')],
-            ], 401);
+                'back' => true,
+                'with' => ['warning' => trans('cortex/foundation::messages.token_mismatch')],
+            ]);
+        } elseif ($exception instanceof WatsonValidationException) {
+            return intend([
+                'back' => true,
+                'withInput' => $request->all(),
+                'withErrors' => $exception->errors(),
+            ]);
+        } elseif ($exception instanceof ValidationException) {
+            return intend([
+                'back' => true,
+                'withInput' => $request->all(),
+                'withErrors' => $exception->errors(),
+            ]);
+        } elseif ($exception instanceof GenericException) {
+            return intend([
+                'url' => $exception->getRedirection() ?? route("{$accessarea}.home"),
+                'withInput' => $exception->getInputs() ?? $request->all(),
+                'with' => ['warning' => $exception->getMessage()],
+            ]);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
-                'url' => '/',
-                'withErrors' => ['rinvex.fort.unauthorized' => $exception->getMessage()],
-            ], 403);
+                'url' => in_array($accessarea, ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
+                'with' => ['warning' => $exception->getMessage()],
+            ]);
+        } elseif ($exception instanceof NotFoundHttpException) {
+            // Catch localized routes with missing {locale}
+            // and redirect them to the correct localized version
+            if (config('cortex.foundation.route.locale_redirect')) {
+                $originalUrl = $request->url();
+
+                try {
+                    $localizedUrl = app('laravellocalization')->getLocalizedURL(null, $originalUrl);
+
+                    // Will return `NotFoundHttpException` exception if no match found!
+                    app('router')->getRoutes()->match(request()->create($localizedUrl));
+
+                    return intend([
+                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route("{$accessarea}.home"),
+                        'with' => ['warning' => $exception->getMessage()],
+                    ]);
+                } catch (Exception $exception) {
+                }
+            }
+
+            return $this->prepareResponse($request, $exception);
+        } elseif ($exception instanceof ModelNotFoundException) {
+            $model = $exception->getModel();
+            $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
+            $plural = str_plural($single);
+
+            return intend([
+                'url' => $model ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),
+                'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
+            ]);
         }
 
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Render the given HttpException.
+     *
+     * @param \Symfony\Component\HttpKernel\Exception\HttpException $exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderHttpException(HttpException $exception)
+    {
+        $status = $exception->getStatusCode();
+
+        if (view()->exists("cortex/foundation::common.errors.{$status}")) {
+            return response()->view("cortex/foundation::common.errors.{$status}", ['exception' => $exception], $status, $exception->getHeaders());
+        }
+
+        return parent::renderHttpException($exception);
+    }
+
+    /**
+     * Convert a validation exception into a response.
+     *
+     * @param \Illuminate\Http\Request                   $request
+     * @param \Illuminate\Validation\ValidationException $exception
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function invalid($request, ValidationException $exception)
+    {
+        $url = $exception->redirectTo ?? url()->previous();
+
+        return redirect($url)
+            ->withInput($request->except($this->dontFlash))
+            ->withErrors(
+                $exception->errors(),
+                $exception->errorBag
+            );
     }
 
     /**
@@ -93,8 +158,8 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return intend([
-            'route' => 'rinvex.fort.frontend.auth.login',
-            'withErrors' => ['rinvex.fort.session.required' => trans('rinvex/fort::frontend/messages.auth.session.required')],
-        ], 401);
+            'url' => route($request->route('accessarea').'.login'),
+            'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
+        ]);
     }
 }

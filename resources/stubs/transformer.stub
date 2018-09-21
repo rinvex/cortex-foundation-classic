@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DummyNamespace;
+
+use NamespacedDummyModel;
+use Rinvex\Support\Traits\Escaper;
+use League\Fractal\TransformerAbstract;
+
+class DummyClass extends TransformerAbstract
+{
+    use Escaper;
+
+    /**
+     * Transform the given model.
+     *
+     * @param \NamespacedDummyModel $dummyModel
+     *
+     * @return array
+     */
+    public function transform(DummyModel $dummyModel): array
+    {
+        return $this->escape([
+            //
+        ]);
+    }
+}

@@ -3,13 +3,11 @@
 The core foundation of **Rinvex Cortex** modular application architecture.
 
 [![Packagist](https://img.shields.io/packagist/v/cortex/foundation.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/cortex/foundation)
-[![VersionEye Dependencies](https://img.shields.io/versioneye/d/php/cortex:foundation.svg?label=Dependencies&style=flat-square)](https://www.versioneye.com/php/cortex:foundation/)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/cortex/foundation.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/cortex/foundation/)
-[![Code Climate](https://img.shields.io/codeclimate/github/cortex/foundation.svg?label=CodeClimate&style=flat-square)](https://codeclimate.com/github/cortex/foundation)
-[![Travis](https://img.shields.io/travis/cortex/foundation.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/cortex/foundation)
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/a2cccb54-31b7-49a3-9df2-176a23400fde.svg?label=SensioLabs&style=flat-square)](https://insight.sensiolabs.com/projects/a2cccb54-31b7-49a3-9df2-176a23400fde)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rinvex/cortex-foundation.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/rinvex/cortex-foundation/)
+[![Code Climate](https://img.shields.io/codeclimate/github/rinvex/cortex-foundation.svg?label=CodeClimate&style=flat-square)](https://codeclimate.com/github/rinvex/cortex-foundation)
+[![Travis](https://img.shields.io/travis/rinvex/cortex-foundation.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/rinvex/cortex-foundation)
 [![StyleCI](https://styleci.io/repos/77746390/shield)](https://styleci.io/repos/77746390)
-[![License](https://img.shields.io/packagist/l/cortex/foundation.svg?label=License&style=flat-square)](https://github.com/cortex/foundation/blob/develop/LICENSE)
+[![License](https://img.shields.io/packagist/l/cortex/foundation.svg?label=License&style=flat-square)](https://github.com/rinvex/cortex-foundation/blob/develop/LICENSE)
 
 
 ## Installation and Usage
@@ -50,7 +48,7 @@ Bug reports, feature requests, and pull requests are very welcome.
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within this project, please send an e-mail to [security@rinvex.com](security@rinvex.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within this project, please send an e-mail to [help@rinvex.com](help@rinvex.com). All security vulnerabilities will be promptly addressed.
 
 
 ## About Rinvex
@@ -62,4 +60,4 @@ Rinvex is a software solutions startup, specialized in integrated enterprise sol
 
 This software is released under [The MIT License (MIT)](LICENSE).
 
-(c) 2016-2017 Rinvex LLC, Some rights reserved.
+(c) 2016-2018 Rinvex LLC, Some rights reserved.
