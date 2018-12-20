@@ -81,6 +81,9 @@
         "classmap": [
             "database"
         ],
+        "files": [
+            "src/Support/helpers.php"
+        ],
         "psr-4": {
             "Cortex\\Foundation\\": "src/"
         }
