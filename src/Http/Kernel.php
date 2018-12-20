@@ -56,7 +56,9 @@ class Kernel extends HttpKernel
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'nohttpcache' => \Cortex\Foundation\Http\Middleware\NoHttpCache::class,
+        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified' => \Cortex\Auth\Http\Middleware\EnsureEmailIsVerified::class,
     ];
 
     /**
