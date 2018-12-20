@@ -9,9 +9,9 @@
     @stack('head-elements')
 
     {{-- Styles --}}
-    <link href="{{ mix('css/vendor.css', 'assets') }}" rel="stylesheet">
-    <link href="{{ mix('css/theme-managerarea.css', 'assets') }}" rel="stylesheet">
-    <link href="{{ mix('css/app.css', 'assets') }}" rel="stylesheet">
+    <link href="{{ mix('css/vendor.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/theme-managerarea.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @stack('styles')
 
     {{-- Scripts --}}
@@ -19,10 +19,10 @@
         window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token()]); ?>;
         window.Accessarea = "<?php echo request()->route('accessarea'); ?>";
     </script>
-    <script src="{{ mix('js/manifest.js', 'assets') }}" defer></script>
-    <script src="{{ mix('js/vendor.js', 'assets') }}" defer></script>
+    <script src="{{ mix('js/manifest.js') }}" defer></script>
+    <script src="{{ mix('js/vendor.js') }}" defer></script>
     @stack('vendor-scripts')
-    <script src="{{ mix('js/app.js', 'assets') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body class="hold-transition skin-purple fixed sidebar-mini">
     {{-- Main content --}}

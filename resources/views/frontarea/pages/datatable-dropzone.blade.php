@@ -44,11 +44,11 @@
 @endpush
 
 @push('styles')
-    <link href="{{ mix('css/datatables.css', 'assets') }}" rel="stylesheet">
+    <link href="{{ mix('css/datatables.css') }}" rel="stylesheet">
 @endpush
 
 @push('vendor-scripts')
-    <script src="{{ mix('js/datatables.js', 'assets') }}" defer></script>
+    <script src="{{ mix('js/datatables.js') }}" defer></script>
 @endpush
 
 @push('inline-scripts')

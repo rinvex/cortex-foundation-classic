@@ -24,14 +24,14 @@
                 <div class="col-lg-2">
                     <h5>Amazing Results</h5>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                    <img class="hidden-xs hidden-sm hidden-md" src="assets/img/arrow1.png">
+                    <img class="hidden-xs hidden-sm hidden-md" src="img/arrow1.png">
                 </div>
                 <div class="col-lg-8">
-                    <img class="img-responsive" src="assets/img/app-bg.png" alt="">
+                    <img class="img-responsive" src="img/app-bg.png" alt="">
                 </div>
                 <div class="col-lg-2">
                     <br>
-                    <img class="hidden-xs hidden-sm hidden-md" src="assets/img/arrow2.png">
+                    <img class="hidden-xs hidden-sm hidden-md" src="img/arrow2.png">
                     <h5>Awesome Design</h5>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                 </div>
@@ -48,17 +48,17 @@
                 <br>
                 <br>
                 <div class="col-lg-4">
-                    <img src="assets/img/intro01.png" alt="">
+                    <img src="img/intro01.png" alt="">
                     <h3>Community</h3>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                 </div>
                 <div class="col-lg-4">
-                    <img src="assets/img/intro02.png" alt="">
+                    <img src="img/intro02.png" alt="">
                     <h3>Schedule</h3>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                 </div>
                 <div class="col-lg-4">
-                    <img src="assets/img/intro03.png" alt="">
+                    <img src="img/intro03.png" alt="">
                     <h3>Monitoring</h3>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                 </div>
@@ -76,7 +76,7 @@
                 <br>
                 <br>
                 <div class="col-lg-6 centered">
-                    <img class="centered" src="assets/img/mobile.png" alt="">
+                    <img class="centered" src="img/mobile.png" alt="">
                 </div>
 
                 <div class="col-lg-6">
