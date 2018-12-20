@@ -34,27 +34,27 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
 {{-- Favicon --}}
-<link rel="shortcut icon" href="{{ asset('favicon/favicon.ico') }}" />
-<link rel="icon" type="image/x-icon" href="{{ asset('favicon/favicon.ico') }}" />
-<link rel="fluid-icon" title="Rinvex" href="{{ asset('favicon/favicon-512x512.png') }}" />
-<link rel="mask-icon" href="{{ asset('favicon/favicon-512x512.svg') }}" color="#4078c0" />
-<link rel="apple-touch-icon" href="{{ asset('favicon/apple-icon-120x120.png') }}" />
-<link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon/apple-icon-57x57.png') }}" />
-<link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicon/apple-icon-60x60.png') }}" />
-<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon/apple-icon-72x72.png') }}" />
-<link rel="apple-touch-icon" sizes="76x76" href="{{ asset('favicon/apple-icon-76x76.png') }}" />
-<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon/apple-icon-114x114.png') }}" />
-<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('favicon/apple-icon-120x120.png') }}" />
-<link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicon/apple-icon-144x144.png') }}" />
-<link rel="apple-touch-icon" sizes="152x152" href="{{ asset('favicon/apple-icon-152x152.png') }}" />
-<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-icon-180x180.png') }}" />
-<link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicon/android-icon-192x192.png') }}" />
-<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}" />
-<link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon/favicon-96x96.png') }}" />
-<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}" />
-<link rel="manifest" href="{{ asset('manifest.json') }}" />
+<link rel="shortcut icon" href="{{ asset('assets/favicon/favicon.ico') }}" />
+<link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon/favicon.ico') }}" />
+<link rel="fluid-icon" title="Rinvex" href="{{ asset('assets/favicon/favicon.png') }}" />
+<link rel="mask-icon" href="{{ asset('assets/favicon/favicon.svg') }}" color="#4078c0" />
+<link rel="apple-touch-icon" href="{{ asset('assets/favicon/apple-icon-120x120.png') }}" />
+<link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/favicon/apple-icon-57x57.png') }}" />
+<link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets/favicon/apple-icon-60x60.png') }}" />
+<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/favicon/apple-icon-72x72.png') }}" />
+<link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/favicon/apple-icon-76x76.png') }}" />
+<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/favicon/apple-icon-114x114.png') }}" />
+<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets/favicon/apple-icon-120x120.png') }}" />
+<link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets/favicon/apple-icon-144x144.png') }}" />
+<link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets/favicon/apple-icon-152x152.png') }}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/favicon/apple-icon-180x180.png') }}" />
+<link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/favicon/android-icon-192x192.png') }}" />
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon/favicon-32x32.png') }}" />
+<link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/favicon/favicon-96x96.png') }}" />
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicon/favicon-16x16.png') }}" />
+<link rel="manifest" href="{{ asset('assets/manifest.json') }}" />
 <meta name="msapplication-TileColor" content="#ffffff" />
-<meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}" />
+<meta name="msapplication-TileImage" content="{{ asset('assets/favicon/ms-icon-144x144.png') }}" />
 <meta name="theme-color" content="#ffffff" />
 
 {{-- Open Graph --}}
@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="Rinvex" />
 <meta property="og:title" content="Rinvex - Enterprise Solutions for SMEs" />
 <meta property="og:description" content="Rinvex is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016." />
-<meta property="og:image" content="{{ asset('favicon/favicon-1500x1500.png') }}" />
+<meta property="og:image" content="{{ asset('assets/favicon/favicon-1500x1500.png') }}" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1500" />
 <meta property="og:image:height" content="1500" />
@@ -87,6 +87,6 @@
 <meta property="twitter:card" content="summary" />
 <meta property="twitter:title" content="Rinvex - Enterprise Solutions for SMEs" />
 <meta property="twitter:description" content="Rinvex is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016." />
-<meta property="twitter:image:src" content="{{ asset('favicon/favicon-512x512.png') }}" />
+<meta property="twitter:image:src" content="{{ asset('assets/favicon/favicon-512x512.png') }}" />
 <meta property="twitter:image:width" content="512" />
 <meta property="twitter:image:height" content="512" />
