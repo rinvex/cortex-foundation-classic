@@ -36,8 +36,8 @@
 {{-- Favicon --}}
 <link rel="shortcut icon" href="{{ asset('favicon/favicon.ico') }}" />
 <link rel="icon" type="image/x-icon" href="{{ asset('favicon/favicon.ico') }}" />
-<link rel="fluid-icon" title="Rinvex" href="{{ asset('favicon/favicon-512x512.png') }}" />
-<link rel="mask-icon" href="{{ asset('favicon/favicon-512x512.svg') }}" color="#4078c0" />
+<link rel="fluid-icon" title="Rinvex" href="{{ asset('favicon/favicon.png') }}" />
+<link rel="mask-icon" href="{{ asset('favicon/favicon.svg') }}" color="#4078c0" />
 <link rel="apple-touch-icon" href="{{ asset('favicon/apple-icon-120x120.png') }}" />
 <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon/apple-icon-57x57.png') }}" />
 <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicon/apple-icon-60x60.png') }}" />

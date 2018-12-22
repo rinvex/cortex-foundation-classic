@@ -23,7 +23,7 @@ class Collection extends BaseCollection
         $uri = $route->uri();
         $host = $route->domain();
         $name = $route->getName();
-        $laroute = array_get($route->getAction(), 'laroute', null);
+        $laroute = $route->getAction('laroute');
 
         switch ($filter) {
             case 'all':

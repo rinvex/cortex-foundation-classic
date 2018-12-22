@@ -13,9 +13,9 @@
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
 
     {{-- Styles --}}
-    <link href="{{ mix('css/vendor.css', 'assets') }}" rel="stylesheet">
-    <link href="{{ mix('css/theme-frontarea.css', 'assets') }}" rel="stylesheet">
-    <link href="{{ mix('css/app.css', 'assets') }}" rel="stylesheet">
+    <link href="{{ mix('css/vendor.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/theme-frontarea.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @stack('styles')
 
     {{-- Scripts --}}
@@ -23,10 +23,10 @@
         window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token()]); ?>;
         window.Accessarea = "<?php echo request()->route('accessarea'); ?>";
     </script>
-    <script src="{{ mix('js/manifest.js', 'assets') }}" defer></script>
-    <script src="{{ mix('js/vendor.js', 'assets') }}" defer></script>
+    <script src="{{ mix('js/manifest.js') }}" defer></script>
+    <script src="{{ mix('js/vendor.js') }}" defer></script>
     @stack('vendor-scripts')
-    <script src="{{ mix('js/app.js', 'assets') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body @yield('body-attributes')>
     @include('cortex/foundation::frontarea.partials.header')
