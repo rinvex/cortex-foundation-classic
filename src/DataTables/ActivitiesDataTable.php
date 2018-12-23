@@ -7,9 +7,9 @@ namespace Cortex\Foundation\DataTables;
 use Cortex\Foundation\Transformers\ActivityTransformer;
 
 /**
- * @property \Spatie\Activitylog\Traits\HasActivity $resource
- * @property string                                 $tabs
- * @property string                                 $id
+ * @property \Spatie\Activitylog\Traits\CausesActivity $resource
+ * @property string                                    $tabs
+ * @property string                                    $id
  */
 class ActivitiesDataTable extends LogsDataTable
 {
