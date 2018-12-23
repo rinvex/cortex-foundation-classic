@@ -8,9 +8,9 @@ use Cortex\Foundation\Models\Log;
 use Cortex\Foundation\Transformers\LogTransformer;
 
 /**
- * @property \Spatie\Activitylog\Traits\HasActivity $resource
- * @property string                                 $tabs
- * @property string                                 $id
+ * @property \Spatie\Activitylog\Traits\CausesActivity $resource
+ * @property string                                    $tabs
+ * @property string                                    $id
  */
 class LogsDataTable extends AbstractDataTable
 {
@@ -31,7 +31,7 @@ class LogsDataTable extends AbstractDataTable
      */
     public function query()
     {
-        $query = $this->resource->activity();
+        $query = $this->resource->activities();
 
         return $this->applyScopes($query);
     }
