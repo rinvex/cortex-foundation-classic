@@ -18,7 +18,7 @@
                 <div class="col-lg-12 centered">
                     <h1>Welcome To <b>Homepage</b></h1>
                     <h3>Show your product with this handsome theme.</h3>
-                    <br>
+                    <br />
                 </div>
 
                 <div class="col-lg-2">
@@ -30,7 +30,7 @@
                     <img class="img-responsive" src="img/app-bg.png" alt="">
                 </div>
                 <div class="col-lg-2">
-                    <br>
+                    <br />
                     <img class="hidden-xs hidden-sm hidden-md" src="img/arrow2.png">
                     <h5>Awesome Design</h5>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
@@ -44,8 +44,8 @@
         <div class="container">
             <div class="row centered">
                 <h1>Designed To Excel</h1>
-                <br>
-                <br>
+                <br />
+                <br />
                 <div class="col-lg-4">
                     <img src="img/intro01.png" alt="">
                     <h3>Community</h3>
@@ -62,8 +62,8 @@
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                 </div>
             </div>
-            <br>
-            <hr>
+            <br />
+            <hr />
         </div>
     </div>
 
@@ -72,15 +72,15 @@
         <div class="container">
             <div class="row">
                 <h1 class="centered">What's New?</h1>
-                <br>
-                <br>
+                <br />
+                <br />
                 <div class="col-lg-6 centered">
                     <img class="centered" src="img/mobile.png" alt="">
                 </div>
 
                 <div class="col-lg-6">
                     <h3>Some Features</h3>
-                    <br>
+                    <br />
                     <div class="accordion " id="accordion2">
                         <div class="accordion-group">
                             <div class="accordion-heading">
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
+                        <br />
 
                         <div class="accordion-group">
                             <div class="accordion-heading">
@@ -108,7 +108,7 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
+                        <br />
 
                         <div class="accordion-group">
                             <div class="accordion-heading">
@@ -122,7 +122,7 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
+                        <br />
 
                         <div class="accordion-group">
                             <div class="accordion-heading">
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
+                        <br />
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@
 
             <div class="col-lg-7">
                 <h3>Drop Us A Line</h3>
-                <br>
+                <br />
                 <form role="form" action="#" method="post" enctype="plain">
                     <div class="form-group">
                         <label for="name1">Your Name</label>
@@ -173,7 +173,7 @@
                         <label>Your Text</label>
                         <textarea class="form-control" name="Message" rows="3"></textarea>
                     </div>
-                    <br>
+                    <br />
                     <button type="submit" class="btn btn-large btn-success">SUBMIT</button>
                 </form>
             </div>
