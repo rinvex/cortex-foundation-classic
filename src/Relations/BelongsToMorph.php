@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Relations;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -119,9 +117,9 @@ class BelongsToMorph extends BelongsTo
             $relation = $caller['function'];
         }
 
-        $morphName = Arr::get(array_flip(Relation::morphMap()), $related, $related);
+        $morphName = array_get(array_flip(Relation::morphMap()), $related, $related);
 
-        [$type, $id] = self::getMorphs(Str::snake($name), $type, $id);
+        [$type, $id] = self::getMorphs(snake_case($name), $type, $id);
 
         $instance = new $related();
 
