@@ -13,17 +13,18 @@ class CortexFoundationSeeder extends Seeder
      */
     public function run()
     {
-        Bouncer::allow('admin')->to('access-adminarea');
-        Bouncer::allow('owner')->to('access-managerarea');
+        $abilities = [
+            ['name' => 'access-adminarea', 'title' => 'Access adminarea'],
+            ['name' => 'access-managerarea', 'title' => 'Access managerarea'],
 
-        Bouncer::allow('admin')->to('list', config('medialibrary.media_model'));
-        Bouncer::allow('admin')->to('create', config('medialibrary.media_model'));
-        Bouncer::allow('admin')->to('update', config('medialibrary.media_model'));
-        Bouncer::allow('admin')->to('delete', config('medialibrary.media_model'));
+            ['name' => 'list', 'title' => 'List media', 'entity_type' => 'media'],
+            ['name' => 'create', 'title' => 'Create media', 'entity_type' => 'media'],
+            ['name' => 'update', 'title' => 'Update media', 'entity_type' => 'media'],
+            ['name' => 'delete', 'title' => 'Delete media', 'entity_type' => 'media'],
+        ];
 
-        Bouncer::allow('owner')->to('list', config('medialibrary.media_model'));
-        Bouncer::allow('owner')->to('create', config('medialibrary.media_model'));
-        Bouncer::allow('owner')->to('update', config('medialibrary.media_model'));
-        Bouncer::allow('owner')->to('delete', config('medialibrary.media_model'));
+        collect($abilities)->each(function (array $ability) {
+            app('cortex.auth.ability')->create($ability);
+        });
     }
 }

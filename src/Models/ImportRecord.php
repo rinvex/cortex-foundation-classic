@@ -24,7 +24,7 @@ class ImportRecord extends Model
      */
     protected $casts = [
         'resource' => 'string',
-        'data' => 'json',
+        'data' => 'array',
         'status' => 'nullable|in:init,skip,fail,update,success',
     ];
 

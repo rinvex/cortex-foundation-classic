@@ -100,6 +100,8 @@ class AuthorizedController extends AuthenticatedController
     /**
      * Map resource actions to resource abilities.
      *
+     * @throws \ReflectionException
+     *
      * @return array
      */
     protected function mapResourceAbilities(): array
