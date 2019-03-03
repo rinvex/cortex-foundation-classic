@@ -11,9 +11,9 @@ use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Watson\Validating\ValidationException as WatsonValidationException;
 
 class Handler extends ExceptionHandler
@@ -112,11 +112,11 @@ class Handler extends ExceptionHandler
     /**
      * Render the given HttpException.
      *
-     * @param \Symfony\Component\HttpKernel\Exception\HttpException $exception
+     * @param  \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface $e
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderHttpException(HttpException $exception)
+    protected function renderHttpException(HttpExceptionInterface $exception)
     {
         $status = $exception->getStatusCode();
 

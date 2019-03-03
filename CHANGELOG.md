@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v2.0.3] - 2019-03-04
+- Fix exception handler method signature compatibility issue
+
 ## [v2.0.2] - 2019-03-04
 - Revert "Move lord/laroute composer dependency to project level"
 
@@ -51,6 +54,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v2.0.3]: https://github.com/rinvex/cortex-foundation/compare/v2.0.2...v2.0.3
 [v2.0.2]: https://github.com/rinvex/cortex-foundation/compare/v2.0.1...v2.0.2
 [v2.0.1]: https://github.com/rinvex/cortex-foundation/compare/v2.0.0...v2.0.1
 [v2.0.0]: https://github.com/rinvex/cortex-foundation/compare/v1.0.4...v2.0.0
