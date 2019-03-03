@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v2.0.1] - 2019-03-04
+- Move lord/laroute composer dependency to project level
+
 ## [v2.0.0] - 2019-03-03
 - Require PHP 7.2 & Laravel 5.8
 - Activate AuthenticateSession middleware
@@ -45,6 +48,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v2.0.1]: https://github.com/rinvex/cortex-foundation/compare/v2.0.0...v2.0.1
 [v2.0.0]: https://github.com/rinvex/cortex-foundation/compare/v1.0.4...v2.0.0
 [v1.0.4]: https://github.com/rinvex/cortex-foundation/compare/v1.0.3...v1.0.4
 [v1.0.3]: https://github.com/rinvex/cortex-foundation/compare/v1.0.2...v1.0.3
