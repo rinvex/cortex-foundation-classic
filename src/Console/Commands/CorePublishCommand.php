@@ -40,12 +40,12 @@ class CorePublishCommand extends Command
 
         $progressBar = $this->output->createProgressBar($commands->count());
         $progressBar->setBarCharacter('<fg=green>▒</>');
-        $progressBar->setEmptyBarCharacter("<fg=white>▒</>");
-        $progressBar->setProgressCharacter("<fg=green>➤</>");
-        $progressBar->setFormat("<fg=yellow>$this->description. (Step %current% / %max%)</>\n[%bar%] %percent%%\nElapsed Time: %elapsed%");
+        $progressBar->setEmptyBarCharacter('<fg=white>▒</>');
+        $progressBar->setProgressCharacter('<fg=green>➤</>');
+        $progressBar->setFormat("<fg=yellow>{$this->description}. (Step %current% / %max%)</>\n[%bar%] %percent%%\nElapsed Time: %elapsed%");
         $progressBar->start();
 
-        $output = new BufferedOutput;
+        $output = new BufferedOutput();
         $commands->each(function (Command $command) use ($progressBar, $output) {
             $command->run(new ArrayInput(['--force' => $this->option('force')]), $output);
             $progressBar->advance();

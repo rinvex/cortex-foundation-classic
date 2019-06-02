@@ -16,6 +16,7 @@ class LarouteGeneratorCommand extends BaseLarouteGeneratorCommand
     public function handle()
     {
         $this->line('');
+
         try {
             $filePath = $this->generator->compile(
                 $this->getTemplatePath(),
