@@ -8,6 +8,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Rinvex\Support\Traits\ConsoleTools;
 use Illuminate\Database\Schema\Blueprint;
 use Cortex\Foundation\Models\ImportRecord;
 use Cortex\Foundation\Models\AbstractModel;
@@ -25,15 +26,17 @@ use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
 use Cortex\Foundation\Console\Commands\CorePublishCommand;
-use Mariuzzo\LaravelJsLocalization\Commands\LangJsCommand;
 use Cortex\Foundation\Console\Commands\CoreRollbackCommand;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
 use Cortex\Foundation\Overrides\Mcamara\LaravelLocalization\LaravelLocalization;
+use Cortex\Foundation\Overrides\Mariuzzo\LaravelJsLocalization\Commands\LangJsCommand;
 
 class FoundationServiceProvider extends ServiceProvider
 {
+    use ConsoleTools;
+
     /**
      * The commands to be registered.
      *
@@ -119,7 +122,6 @@ class FoundationServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../../routes/web/managerarea.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
-        ! $this->app->runningInConsole() || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         $this->app->runningInConsole() || $this->app->afterResolving('blade.compiler', function () {
             require __DIR__.'/../../routes/menus/managerarea.php';
             require __DIR__.'/../../routes/menus/tenantarea.php';
@@ -128,7 +130,10 @@ class FoundationServiceProvider extends ServiceProvider
         });
 
         // Publish Resources
-        ! $this->app->runningInConsole() || $this->publishResources();
+        ! $this->app->runningInConsole() || $this->publishesLang('cortex/foundation');
+        ! $this->app->runningInConsole() || $this->publishesViews('cortex/foundation');
+        ! $this->app->runningInConsole() || $this->publishesConfig('cortex/foundation');
+        ! $this->app->runningInConsole() || $this->publishesMigrations('cortex/foundation');
 
         SessionFacade::extend('database', function ($app) {
             $table = $app['config']['session.table'];
@@ -270,34 +275,6 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->singleton('laravellocalization', function () {
             return new LaravelLocalization();
         });
-    }
-
-    /**
-     * Publish resources.
-     *
-     * @return void
-     */
-    protected function publishResources(): void
-    {
-        $this->publishes([realpath(__DIR__.'/../../database/migrations') => database_path('migrations')], 'cortex-foundation-migrations');
-        $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('cortex.foundation.php')], 'cortex-foundation-config');
-        $this->publishes([realpath(__DIR__.'/../../resources/lang') => resource_path('lang/vendor/cortex/foundation')], 'cortex-foundation-lang');
-        $this->publishes([realpath(__DIR__.'/../../resources/views') => resource_path('views/vendor/cortex/foundation')], 'cortex-foundation-views');
-    }
-
-    /**
-     * Register console commands.
-     *
-     * @return void
-     */
-    protected function registerCommands(): void
-    {
-        // Register artisan commands
-        foreach ($this->commands as $key => $value) {
-            $this->app->singleton($value, $key);
-        }
-
-        $this->commands(array_values($this->commands));
     }
 
     /**
