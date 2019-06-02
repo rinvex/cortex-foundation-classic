@@ -13,7 +13,7 @@ class PublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:publish:foundation {--force : Overwrite any existing files.}';
+    protected $signature = 'cortex:publish:foundation {--force : Overwrite any existing files.} {--R|resource=all}';
 
     /**
      * The console command description.
@@ -29,11 +29,29 @@ class PublishCommand extends Command
      */
     public function handle(): void
     {
-        $this->warn($this->description);
+        $this->alert($this->description);
 
-        $this->call('vendor:publish', ['--tag' => 'cortex-foundation-lang', '--force' => $this->option('force')]);
-        $this->call('vendor:publish', ['--tag' => 'cortex-foundation-views', '--force' => $this->option('force')]);
-        $this->call('vendor:publish', ['--tag' => 'cortex-foundation-config', '--force' => $this->option('force')]);
-        $this->call('vendor:publish', ['--tag' => 'cortex-foundation-migrations', '--force' => $this->option('force')]);
+        switch ($this->option('resource')) {
+            case 'lang':
+                $this->call('vendor:publish', ['--tag' => 'cortex-foundation-lang', '--force' => $this->option('force')]);
+                break;
+            case 'views':
+                $this->call('vendor:publish', ['--tag' => 'cortex-foundation-views', '--force' => $this->option('force')]);
+                break;
+            case 'config':
+                $this->call('vendor:publish', ['--tag' => 'cortex-foundation-config', '--force' => $this->option('force')]);
+                break;
+            case 'migrations':
+                $this->call('vendor:publish', ['--tag' => 'cortex-foundation-migrations', '--force' => $this->option('force')]);
+                break;
+            default:
+                $this->call('vendor:publish', ['--tag' => 'cortex-foundation-lang', '--force' => $this->option('force')]);
+                $this->call('vendor:publish', ['--tag' => 'cortex-foundation-views', '--force' => $this->option('force')]);
+                $this->call('vendor:publish', ['--tag' => 'cortex-foundation-config', '--force' => $this->option('force')]);
+                $this->call('vendor:publish', ['--tag' => 'cortex-foundation-migrations', '--force' => $this->option('force')]);
+                break;
+        }
+
+        $this->line('');
     }
 }

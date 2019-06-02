@@ -29,10 +29,10 @@ class CoreInstallCommand extends Command
      */
     public function handle(): void
     {
-        $this->warn($this->description);
+        $this->alert($this->description);
 
-        $this->call('cortex:migrate', ['--force' => $this->option('force')]);
         $this->call('cortex:publish', ['--force' => $this->option('force')]);
+        $this->call('cortex:migrate', ['--force' => $this->option('force')]);
         $this->call('cortex:seed');
     }
 }
