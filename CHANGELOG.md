@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v2.1.1] - 2019-06-02
+- Fix yajra/laravel-datatables-fractal and league/fractal compatibility
+
+## [v2.1.0] - 2019-06-02
+- Update composer deps
+- Drop PHP 7.1 travis test
+- Override Laroute & JSLocalization artisan commands
+- Update edvinaskrucas/notification to dev-master to fix Laravel 5.8 compatibility issues (not tagged yet)
+- Refactor migrations and artisan commands, and tweak service provider publishes functionality
+
 ## [v2.0.3] - 2019-03-04
 - Fix exception handler method signature compatibility issue
 
