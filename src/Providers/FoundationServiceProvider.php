@@ -26,12 +26,12 @@ use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
 use Cortex\Foundation\Console\Commands\CorePublishCommand;
-use Mariuzzo\LaravelJsLocalization\Commands\LangJsCommand;
 use Cortex\Foundation\Console\Commands\CoreRollbackCommand;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
 use Cortex\Foundation\Overrides\Mcamara\LaravelLocalization\LaravelLocalization;
+use Cortex\Foundation\Overrides\Mariuzzo\LaravelJsLocalization\Commands\LangJsCommand;
 
 class FoundationServiceProvider extends ServiceProvider
 {
