@@ -61,7 +61,7 @@ abstract class AbstractController extends Controller
             $route->setParameter('guard', $guard);
 
             // Activate Guardians
-            ! in_array($accessarea, config('cortex.auth.guardians')) || $this->middleware('auth.basic:guardians,username');
+            ! in_array($accessarea, config('cortex.auth.guardians')) || $this->middleware('auth.basic:guardian,username');
         }
     }
 
@@ -73,7 +73,7 @@ abstract class AbstractController extends Controller
     protected function guessGuard(): string
     {
         $accessarea = str_before(Route::currentRouteName(), '.');
-        $guard = str_plural(mb_strstr($accessarea, 'area', true));
+        $guard = mb_strstr($accessarea, 'area', true);
 
         return config('auth.guards.'.$guard) ? $guard : config('auth.defaults.guard');
     }
