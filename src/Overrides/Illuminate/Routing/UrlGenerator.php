@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Overrides\Illuminate\Routing;
 
 use Illuminate\Routing\UrlGenerator as BaseUrlGenerator;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class UrlGenerator extends BaseUrlGenerator
 {
