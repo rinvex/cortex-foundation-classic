@@ -114,8 +114,6 @@ class FoundationServiceProvider extends ServiceProvider
         ]);
 
         // Load resources
-        require __DIR__.'/../../routes/breadcrumbs/frontarea.php';
-        require __DIR__.'/../../routes/breadcrumbs/tenantarea.php';
         $this->loadRoutesFrom(__DIR__.'/../../routes/web/adminarea.php');
         $this->loadRoutesFrom(__DIR__.'/../../routes/web/frontarea.php');
         $this->loadRoutesFrom(__DIR__.'/../../routes/web/tenantarea.php');
@@ -123,10 +121,9 @@ class FoundationServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
         $this->app->runningInConsole() || $this->app->afterResolving('blade.compiler', function () {
-            require __DIR__.'/../../routes/menus/managerarea.php';
-            require __DIR__.'/../../routes/menus/tenantarea.php';
-            require __DIR__.'/../../routes/menus/adminarea.php';
-            require __DIR__.'/../../routes/menus/frontarea.php';
+            $accessarea = $this->app['request']->route('accessarea');
+            ! file_exists($menus = __DIR__."/../../routes/menus/{$accessarea}.php") || require $menus;
+            ! file_exists($breadcrumbs = __DIR__."/../../routes/breadcrumbs/{$accessarea}.php") || require $breadcrumbs;
         });
 
         // Publish Resources
