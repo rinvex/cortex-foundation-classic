@@ -31,9 +31,9 @@ class NoHttpCache
             $response = new Response($response);
         }
 
-        $response->header('Pragma', 'no-cache')
-                 ->header('Expires', 'Sat, 01-Jan-2000 00:00:00 GMT')
-                 ->header('Cache-Control', 'private, no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0, s-maxage=0');
+        $response->headers->set('Pragma' , 'no-cache');
+        $response->headers->set('Expires' , 'Sat, 01-Jan-2000 00:00:00 GMT');
+        $response->headers->set('Cache-Control' , 'private, no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0, s-maxage=0');
 
         return $response;
     }
