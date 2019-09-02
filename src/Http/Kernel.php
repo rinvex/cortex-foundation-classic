@@ -12,6 +12,7 @@ class Kernel extends HttpKernel
      * {@inheritdoc}
      */
     protected $middleware = [
+        \Cortex\Foundation\Http\Middleware\TrustProxies::class,
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Cortex\Foundation\Http\Middleware\TrimStrings::class,
@@ -19,7 +20,6 @@ class Kernel extends HttpKernel
         \Cortex\Foundation\Http\Middleware\TrailingSlashEnforce::class,
         \Cortex\Foundation\Http\Middleware\TurbolinksLocation::class,
         \Cortex\Foundation\Http\Middleware\CrawlingRobots::class,
-        \Cortex\Foundation\Http\Middleware\TrustProxies::class,
     ];
 
     /**
