@@ -25,8 +25,11 @@ class ImageFormRequest extends FormRequest
      */
     public function rules(): array
     {
+        $mediaSize = config('cortex.foundation.media.size');
+        $mediaMimetypes = config('cortex.foundation.media.mimetypes');
+
         return [
-            'file' => 'required|file|mimetypes:image/jpeg,image/gif,image/png',
+            'file' => 'required|mimetypes:'.$mediaMimetypes.'|size'.$mediaSize,
         ];
     }
 }

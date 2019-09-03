@@ -20,7 +20,7 @@ class TurbolinksLocation
     {
         $response = $next($request);
 
-        $response->header('Turbolinks-Location', $request->fullUrl());
+        $response->headers->set('Turbolinks-Location', $request->fullUrl());
 
         return $response;
     }

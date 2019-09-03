@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v2.2.2] - 2019-09-03
+- Enforce profile_picture and cover_photo image validation rules & update media config
+- Update media config options
+- use set function instead of header as BinaryFileResponse doesn't have header funcation (#90)
+- Use $_SERVER instead of $_ENV for PHPUnit
+- Move TrustProxies to highest priority - fixes maintenance mode ip whitelist if behind proxy e.g. Cloudflare (https://github.com/laravel/laravel/pull/5055)
+- Update HttpKernel to use Authenticate middleware under App namespace
+
 ## [v2.2.1] - 2019-08-03
 - Tweak menus & breadcrumbs performance
 
@@ -79,6 +87,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v2.2.2]: https://github.com/rinvex/cortex-foundation/compare/v2.2.1...v2.2.2
 [v2.2.1]: https://github.com/rinvex/cortex-foundation/compare/v2.2.0...v2.2.1
 [v2.2.0]: https://github.com/rinvex/cortex-foundation/compare/v2.1.2...v2.2.0
 [v2.1.2]: https://github.com/rinvex/cortex-foundation/compare/v2.1.1...v2.1.2
