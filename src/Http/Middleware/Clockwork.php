@@ -39,19 +39,15 @@ class Clockwork
      */
     public function handle($request, Closure $next)
     {
-        if (app()->environment('local')) {
-            $this->app['config']->set('clockwork::config.middleware', true);
+        $this->app['config']->set('clockwork::config.middleware', true);
 
-            try {
-                $response = $next($request);
-            } catch (Exception $e) {
-                $this->app['Illuminate\Contracts\Debug\ExceptionHandler']->report($e);
-                $response = $this->app['Illuminate\Contracts\Debug\ExceptionHandler']->render($request, $e);
-            }
-
-            return $this->app['clockwork.support']->process($request, $response);
+        try {
+            $response = $next($request);
+        } catch (Exception $e) {
+            $this->app['Illuminate\Contracts\Debug\ExceptionHandler']->report($e);
+            $response = $this->app['Illuminate\Contracts\Debug\ExceptionHandler']->render($request, $e);
         }
 
-        return $next($request);
+        return $this->app['clockwork.support']->process($request, $response);
     }
 }

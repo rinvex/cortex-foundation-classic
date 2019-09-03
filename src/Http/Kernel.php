@@ -37,7 +37,6 @@ class Kernel extends HttpKernel
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Cortex\Foundation\Http\Middleware\NotificationMiddleware::class,
-            \Cortex\Foundation\Http\Middleware\Clockwork::class,
         ],
 
         'api' => [

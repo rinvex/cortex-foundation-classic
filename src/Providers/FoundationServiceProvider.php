@@ -13,6 +13,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Cortex\Foundation\Models\ImportRecord;
 use Cortex\Foundation\Models\AbstractModel;
 use Illuminate\View\Compilers\BladeCompiler;
+use Cortex\Foundation\Http\Middleware\Clockwork;
 use Cortex\Foundation\Generators\LangJsGenerator;
 use Cortex\Foundation\Console\Commands\SeedCommand;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -151,6 +152,9 @@ class FoundationServiceProvider extends ServiceProvider
                 $this->app['router']->getRoutes()->refreshActionLookups();
             }
         });
+
+        // Append middleware to the 'web' middlware group
+        app()->environment('production') || $router->pushMiddlewareToGroup('web', Clockwork::class);
 
         Collection::macro('similar', function (Collection $newCollection) {
             return $newCollection->diff($this)->isEmpty() && $this->diff($newCollection)->isEmpty();
