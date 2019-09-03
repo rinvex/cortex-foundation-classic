@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v2.2.3] - 2019-09-03
+- Conditionally inject Clockwork middleware to web group if not on production environment
+
 ## [v2.2.2] - 2019-09-03
 - Enforce profile_picture and cover_photo image validation rules & update media config
 - Update media config options
@@ -87,6 +90,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v2.2.3]: https://github.com/rinvex/cortex-foundation/compare/v2.2.2...v2.2.3
 [v2.2.2]: https://github.com/rinvex/cortex-foundation/compare/v2.2.1...v2.2.2
 [v2.2.1]: https://github.com/rinvex/cortex-foundation/compare/v2.2.0...v2.2.1
 [v2.2.0]: https://github.com/rinvex/cortex-foundation/compare/v2.1.2...v2.2.0
