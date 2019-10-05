@@ -12,6 +12,7 @@ use Rinvex\Support\Traits\ConsoleTools;
 use Illuminate\Database\Schema\Blueprint;
 use Cortex\Foundation\Models\ImportRecord;
 use Cortex\Foundation\Models\AbstractModel;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Http\Middleware\Clockwork;
 use Cortex\Foundation\Generators\LangJsGenerator;
@@ -95,7 +96,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Router $router): void
+    public function boot(Router $router, Dispatcher $dispatcher): void
     {
         // Fix the specified key was too long error
         Schema::defaultStringLength(191);
@@ -121,8 +122,8 @@ class FoundationServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../../routes/web/managerarea.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
-        $this->app->runningInConsole() || $this->app->afterResolving('blade.compiler', function () {
-            $accessarea = $this->app['request']->route('accessarea');
+
+        $this->app->runningInConsole() || $dispatcher->listen('controller.constructed', function ($accessarea) {
             ! file_exists($menus = __DIR__."/../../routes/menus/{$accessarea}.php") || require $menus;
             ! file_exists($breadcrumbs = __DIR__."/../../routes/breadcrumbs/{$accessarea}.php") || require $breadcrumbs;
         });
@@ -154,7 +155,7 @@ class FoundationServiceProvider extends ServiceProvider
         });
 
         // Append middleware to the 'web' middlware group
-        app()->environment('production') || $router->pushMiddlewareToGroup('web', Clockwork::class);
+        $this->app->environment('production') || $router->pushMiddlewareToGroup('web', Clockwork::class);
 
         Collection::macro('similar', function (Collection $newCollection) {
             return $newCollection->diff($this)->isEmpty() && $this->diff($newCollection)->isEmpty();
@@ -286,19 +287,10 @@ class FoundationServiceProvider extends ServiceProvider
     protected function overrideLangJS(): void
     {
         // Bind the Laravel JS Localization command into the app IOC.
-        $this->app->singleton('localization.js', function ($app) {
-            $app = $this->app;
-            $laravelMajorVersion = (int) $app::VERSION;
-
-            $files = $app['files'];
-
-            if ($laravelMajorVersion === 4) {
-                $langs = $app['path.base'].'/app/lang';
-            } elseif ($laravelMajorVersion === 5) {
-                $langs = $app['path.base'].'/resources/lang';
-            }
-            $messages = $app['config']->get('localization-js.messages');
-            $generator = new LangJsGenerator($files, $langs, $messages);
+        $this->app->singleton('localization.js', function () {
+            $files = $this->app['files'];
+            $messages = $this->app['config']->get('localization-js.messages');
+            $generator = new LangJsGenerator($files, $this->app['path.base'].'/resources/lang', $messages);
 
             return new LangJsCommand($generator);
         });

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
-use Illuminate\Database\MigrationServiceProvider;
 use Illuminate\Foundation\Providers\ComposerServiceProvider;
 use Illuminate\Support\AggregateServiceProvider as BaseAggregateServiceProvider;
 

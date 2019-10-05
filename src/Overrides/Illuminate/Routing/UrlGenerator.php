@@ -43,7 +43,7 @@ class UrlGenerator extends BaseUrlGenerator
 
         return $this->format(
                 $root, '/'.trim($path.'/'.$tail, '/')
-            ).'/'.$query;
+            ).(config('cortex.foundation.route.trailing_slash') ? '/' : '').$query;
     }
 
     /**
@@ -69,7 +69,7 @@ class UrlGenerator extends BaseUrlGenerator
     /**
      * {@inheritdoc}
      */
-    protected function toRoute($route, $parameters, $absolute)
+    public function toRoute($route, $parameters, $absolute)
     {
         // Bind {locale} route parameter
         if (config('cortex.foundation.route.locale_prefix') && in_array('locale', $route->parameterNames()) && ! isset($parameters['locale'])) {
