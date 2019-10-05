@@ -12,6 +12,7 @@ use Rinvex\Support\Traits\ConsoleTools;
 use Illuminate\Database\Schema\Blueprint;
 use Cortex\Foundation\Models\ImportRecord;
 use Cortex\Foundation\Models\AbstractModel;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Http\Middleware\Clockwork;
 use Cortex\Foundation\Generators\LangJsGenerator;
@@ -95,7 +96,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Router $router): void
+    public function boot(Router $router, Dispatcher $dispatcher): void
     {
         // Fix the specified key was too long error
         Schema::defaultStringLength(191);
@@ -121,8 +122,8 @@ class FoundationServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../../routes/web/managerarea.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
-        $this->app->runningInConsole() || $this->app->afterResolving('blade.compiler', function () {
-            $accessarea = $this->app['request']->route('accessarea');
+
+        $this->app->runningInConsole() || $dispatcher->listen('controller.constructed', function ($accessarea) {
             ! file_exists($menus = __DIR__."/../../routes/menus/{$accessarea}.php") || require $menus;
             ! file_exists($breadcrumbs = __DIR__."/../../routes/breadcrumbs/{$accessarea}.php") || require $breadcrumbs;
         });
