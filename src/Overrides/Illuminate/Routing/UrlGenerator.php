@@ -69,7 +69,7 @@ class UrlGenerator extends BaseUrlGenerator
     /**
      * {@inheritdoc}
      */
-    protected function toRoute($route, $parameters, $absolute)
+    public function toRoute($route, $parameters, $absolute)
     {
         // Bind {locale} route parameter
         if (config('cortex.foundation.route.locale_prefix') && in_array('locale', $route->parameterNames()) && ! isset($parameters['locale'])) {
