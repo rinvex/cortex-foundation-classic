@@ -55,16 +55,15 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         //'ClearResets' => 'command.auth.resets.clear',
         'ConfigCache' => 'command.config.cache',
         'ConfigClear' => 'command.config.clear',
+        'DbWipe' => 'command.db.wipe',
         'Down' => 'command.down',
         'Environment' => 'command.environment',
+        'EventCache' => 'command.event.cache',
+        'EventClear' => 'command.event.clear',
+        'EventList' => 'command.event.list',
         'KeyGenerate' => 'command.key.generate',
-        'Migrate' => 'command.migrate',
-        'MigrateFresh' => 'command.migrate.fresh',
-        'MigrateInstall' => 'command.migrate.install',
-        'MigrateRefresh' => 'command.migrate.refresh',
-        'MigrateReset' => 'command.migrate.reset',
-        'MigrateRollback' => 'command.migrate.rollback',
-        'MigrateStatus' => 'command.migrate.status',
+        'Optimize' => 'command.optimize',
+        'OptimizeClear' => 'command.optimize.clear',
         'PackageDiscover' => 'command.package.discover',
         'Preset' => 'command.preset',
         'QueueFailed' => 'command.queue.failed',
@@ -82,6 +81,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'ScheduleRun' => ScheduleRunCommand::class,
         'StorageLink' => 'command.storage.link',
         'Up' => 'command.up',
+        'ViewCache' => 'command.view.cache',
         'ViewClear' => 'command.view.clear',
     ];
 
@@ -91,8 +91,6 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      * @var array
      */
     protected $devCommands = [
-        //'AppName' => 'command.app.name',
-        //'AuthMake' => 'command.auth.make',
         //'CacheTable' => 'command.cache.table',
         'ConfigMake' => 'command.config.make',
         'ChannelMake' => 'command.channel.make',
@@ -107,11 +105,11 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'ListenerMake' => 'command.listener.make',
         'MailMake' => 'command.mail.make',
         'MiddlewareMake' => 'command.middleware.make',
-        'MigrateMake' => 'command.migrate.make',
         'ModelMake' => 'command.model.make',
         'ModuleMake' => 'command.module.make',
         'NotificationMake' => 'command.notification.make',
         //'NotificationTable' => 'command.notification.table',
+        'ObserverMake' => 'command.observer.make',
         'PolicyMake' => 'command.policy.make',
         'ProviderMake' => 'command.provider.make',
         //'QueueFailedTable' => 'command.queue.failed-table',
@@ -135,7 +133,18 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     public function register(): void
     {
         ! $this->app->runningInConsole() || $this->registerCommands($this->commands);
-        ! $this->app->runningInConsole() || $this->registerCommands($this->devCommands);
+        (! $this->app->runningInConsole() || $this->app->environment('production')) || $this->registerCommands($this->devCommands);
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return $this->app->environment('production') ?
+            array_merge(array_values($this->commands), array_values($this->devCommands)) : $this->commands;
     }
 
     /**
@@ -291,25 +300,6 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->app->singleton('command.middleware.make', function ($app) {
             return new MiddlewareMakeCommand($app['files']);
-        });
-    }
-
-    /**
-     * Register the command.
-     *
-     * @return void
-     */
-    protected function registerMigrateMakeCommand(): void
-    {
-        $this->app->singleton('command.migrate.make', function ($app) {
-            // Once we have the migration creator registered, we will create the command
-            // and inject the creator. The creator is responsible for the actual file
-            // creation of the migrations, and may be extended by these developers.
-            $creator = $app['migration.creator'];
-
-            $composer = $app['composer'];
-
-            return new MigrateMakeCommand($creator, $composer);
         });
     }
 
