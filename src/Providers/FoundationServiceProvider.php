@@ -287,19 +287,10 @@ class FoundationServiceProvider extends ServiceProvider
     protected function overrideLangJS(): void
     {
         // Bind the Laravel JS Localization command into the app IOC.
-        $this->app->singleton('localization.js', function ($app) {
-            $app = $this->app;
-            $laravelMajorVersion = (int) $app::VERSION;
-
-            $files = $app['files'];
-
-            if ($laravelMajorVersion === 4) {
-                $langs = $app['path.base'].'/app/lang';
-            } elseif ($laravelMajorVersion === 5) {
-                $langs = $app['path.base'].'/resources/lang';
-            }
-            $messages = $app['config']->get('localization-js.messages');
-            $generator = new LangJsGenerator($files, $langs, $messages);
+        $this->app->singleton('localization.js', function () {
+            $files = $this->app['files'];
+            $messages = $this->app['config']->get('localization-js.messages');
+            $generator = new LangJsGenerator($files, $this->app['path.base'].'/resources/lang', $messages);
 
             return new LangJsCommand($generator);
         });
