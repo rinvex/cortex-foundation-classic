@@ -25,7 +25,7 @@ class RouteUrlGenerator extends BaseRouteUrlGenerator
             $uri = preg_replace('/#.*/', '', $uri);
         }
 
-        $uri .= '/'.$this->getRouteQueryString($parameters);
+        $uri .= (config('cortex.foundation.route.trailing_slash') ? '/' : '').$this->getRouteQueryString($parameters);
 
         return is_null($fragment) ? $uri : $uri."#{$fragment}";
     }

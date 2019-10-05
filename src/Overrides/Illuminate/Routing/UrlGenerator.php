@@ -43,7 +43,7 @@ class UrlGenerator extends BaseUrlGenerator
 
         return $this->format(
                 $root, '/'.trim($path.'/'.$tail, '/')
-            ).'/'.$query;
+            ).(config('cortex.foundation.route.trailing_slash') ? '/' : '').$query;
     }
 
     /**
