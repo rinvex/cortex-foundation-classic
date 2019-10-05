@@ -155,7 +155,7 @@ class FoundationServiceProvider extends ServiceProvider
         });
 
         // Append middleware to the 'web' middlware group
-        app()->environment('production') || $router->pushMiddlewareToGroup('web', Clockwork::class);
+        $this->app->environment('production') || $router->pushMiddlewareToGroup('web', Clockwork::class);
 
         Collection::macro('similar', function (Collection $newCollection) {
             return $newCollection->diff($this)->isEmpty() && $this->diff($newCollection)->isEmpty();

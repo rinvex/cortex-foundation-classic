@@ -10,11 +10,7 @@ use Illuminate\Session\DatabaseSessionHandler as BaseDatabaseSessionHandler;
 class DatabaseSessionHandler extends BaseDatabaseSessionHandler
 {
     /**
-     * Add the user information to the session payload.
-     *
-     * @param array $payload
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     protected function addUserInformation(&$payload)
     {
