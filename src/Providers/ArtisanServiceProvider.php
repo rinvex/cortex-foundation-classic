@@ -19,7 +19,6 @@ use Cortex\Foundation\Console\Commands\SeederMakeCommand;
 use Cortex\Foundation\Console\Commands\ChannelMakeCommand;
 use Cortex\Foundation\Console\Commands\ConsoleMakeCommand;
 use Cortex\Foundation\Console\Commands\FactoryMakeCommand;
-use Cortex\Foundation\Console\Commands\MigrateMakeCommand;
 use Cortex\Foundation\Console\Commands\RequestMakeCommand;
 use Cortex\Foundation\Console\Commands\ListenerMakeCommand;
 use Cortex\Foundation\Console\Commands\ProviderMakeCommand;
