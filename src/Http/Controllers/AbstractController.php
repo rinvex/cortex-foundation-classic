@@ -62,9 +62,6 @@ abstract class AbstractController extends Controller
 
             // Activate Guardians
             ! in_array($accessarea, config('cortex.auth.guardians')) || $this->middleware('auth.basic:guardian,username');
-
-            // We're all set to process request and execute controller
-            event('controller.constructed', [$accessarea, $guard]);
         }
     }
 
@@ -117,7 +114,7 @@ abstract class AbstractController extends Controller
     protected function guessPasswordResetBroker(): string
     {
         $accessarea = str_before(Route::currentRouteName(), '.');
-        $passwordResetBroker = str_plural(mb_strstr($accessarea, 'area', true));
+        $passwordResetBroker = mb_strstr($accessarea, 'area', true);
 
         return config('auth.passwords.'.$passwordResetBroker) ? $passwordResetBroker : config('auth.defaults.passwords');
     }
@@ -140,7 +137,7 @@ abstract class AbstractController extends Controller
     protected function guessEmailVerificationBroker(): string
     {
         $accessarea = str_before(Route::currentRouteName(), '.');
-        $emailVerificationBroker = str_plural(mb_strstr($accessarea, 'area', true));
+        $emailVerificationBroker = mb_strstr($accessarea, 'area', true);
 
         return config('auth.passwords.'.$emailVerificationBroker) ? $emailVerificationBroker : config('auth.defaults.passwords');
     }
