@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v3.0.3] - 2019-10-14
+- Update menus & breadcrumbs event listener to accessarea.ready
+- Fix wrong dependencies letter case
+- Fix & tweak event dispatcher for menus & breadcrumbs to use middleware instead of AbstractController
+- Update middleware priority
+- Remove unused overridden middleware to reduce confusion
+- Fix guard names singular / plural
+
 ## [v3.0.2] - 2019-10-06
 - Refactor menus and breadcrumb bindings to utilize event dispatcher
 - Fix compatibility with Laravel v6
@@ -110,6 +118,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v3.0.3]: https://github.com/rinvex/cortex-foundation/compare/v3.0.2...v3.0.3
 [v3.0.2]: https://github.com/rinvex/cortex-foundation/compare/v3.0.1...v3.0.2
 [v3.0.1]: https://github.com/rinvex/cortex-foundation/compare/v3.0.0...v3.0.1
 [v3.0.0]: https://github.com/rinvex/cortex-foundation/compare/v2.2.5...v3.0.0
