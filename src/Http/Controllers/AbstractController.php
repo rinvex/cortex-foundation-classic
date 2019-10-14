@@ -62,9 +62,6 @@ abstract class AbstractController extends Controller
 
             // Activate Guardians
             ! in_array($accessarea, config('cortex.auth.guardians')) || $this->middleware('auth.basic:guardian,username');
-
-            // We're all set to process request and execute controller
-            event('controller.constructed', [$accessarea, $guard]);
         }
     }
 
