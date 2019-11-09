@@ -6,7 +6,7 @@ namespace Cortex\Foundation\Http\Middleware;
 
 use Closure;
 
-class AccessArea
+class SetAccessArea
 {
     /**
      * Handle an incoming request.
