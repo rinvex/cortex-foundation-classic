@@ -144,6 +144,9 @@ class Handler extends ExceptionHandler
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
+        // Remember current URL for later redirect
+        session()->put('url.intended', url()->current());
+
         return intend([
             'url' => route($request->route('accessarea').'.login'),
             'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
