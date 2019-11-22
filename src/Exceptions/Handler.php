@@ -11,6 +11,7 @@ use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -103,6 +104,12 @@ class Handler extends ExceptionHandler
             return intend([
                 'url' => $model ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),
                 'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
+            ]);
+        } elseif ($exception instanceof ThrottleRequestsException) {
+            return intend([
+                'back' => true,
+                'withInput' => $request->all(),
+                'with' => ['warning' => $exception->getMessage()],
             ]);
         }
 
