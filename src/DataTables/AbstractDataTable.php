@@ -97,7 +97,7 @@ abstract class AbstractDataTable extends DataTable
      *
      * @return array
      */
-    abstract protected function getColumns();
+    abstract protected function getColumns(): array;
 
     /**
      * Get the query object to be processed by dataTables.
@@ -132,9 +132,9 @@ abstract class AbstractDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->minifiedAjax()
                     ->columns($this->getColumns())
-                    ->parameters($this->getBuilderParameters());
+                    ->parameters($this->getBuilderParameters())
+                    ->ajaxWithForm($this->getAjaxUrl(), $this->getAjaxForm());
     }
 
     /**
@@ -186,7 +186,33 @@ abstract class AbstractDataTable extends DataTable
             'buttons' => $this->createButton
                 ? [$createButton, 'print', 'reset', 'reload', 'import', 'export', $columnsButton, $lengthButton]
                 : ['print', 'reset', 'reload', 'export', $columnsButton, $lengthButton],
+            'initComplete' => $this->getAjaxForm() ? "function () {
+                $('".$this->getAjaxForm()."').on('change',  (e)=> {
+                    e.preventDefault();
+                    this.api().draw();
+                });
+            }" : '',
         ], $this->builderParameters);
+    }
+
+    /**
+     * Get Ajax URL.
+     *
+     * @return string
+     */
+    protected function getAjaxUrl(): string
+    {
+        return '';
+    }
+
+    /**
+     * Get Ajax form.
+     *
+     * @return string
+     */
+    protected function getAjaxForm(): string
+    {
+        return '';
     }
 
     /**
