@@ -36,7 +36,7 @@ class Kernel extends HttpKernel
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Cortex\Foundation\Http\Middleware\NotificationMiddleware::class,
-            \Cortex\Foundation\Http\Middleware\AccessArea::class,
+            \Cortex\Foundation\Http\Middleware\SetAccessArea::class,
         ],
 
         'api' => [
@@ -56,7 +56,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'nohttpcache' => \Cortex\Foundation\Http\Middleware\NoHttpCache::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'throttle' => \Cortex\Foundation\Http\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 
@@ -69,10 +69,12 @@ class Kernel extends HttpKernel
      */
     protected $middlewarePriority = [
         \Illuminate\Session\Middleware\StartSession::class,
+        \Cortex\Foundation\Http\Middleware\SetAccessArea::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \Cortex\Auth\Http\Middleware\Authenticate::class,
         \Cortex\Auth\Http\Middleware\AuthenticateSession::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        \Cortex\Auth\Http\Middleware\Reauthenticate::class,
         \Illuminate\Auth\Middleware\Authorize::class,
     ];
 
