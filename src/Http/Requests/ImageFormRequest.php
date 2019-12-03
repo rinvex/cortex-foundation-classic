@@ -29,7 +29,7 @@ class ImageFormRequest extends FormRequest
         $mediaMimetypes = config('cortex.foundation.media.mimetypes');
 
         return [
-            'file' => 'required|mimetypes:'.$mediaMimetypes.'|size:'.$mediaSize,
+            'file' => 'required|mimetypes:'.$mediaMimetypes.'|max:'.$mediaSize,
         ];
     }
 }
