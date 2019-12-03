@@ -29,16 +29,22 @@
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body @yield('body-attributes')>
-    @include('cortex/foundation::frontarea.partials.header')
 
-    @yield('content')
+    <div id="app">
 
-    @include('cortex/foundation::frontarea.partials.footer')
+        @include('cortex/foundation::frontarea.partials.header')
+
+        @yield('content')
+
+        @include('cortex/foundation::frontarea.partials.footer')
+
+    </div>
 
     {{-- Scripts --}}
     @stack('inline-scripts')
 
     {{-- Alerts --}}
     @alerts('default')
+
 </body>
 </html>

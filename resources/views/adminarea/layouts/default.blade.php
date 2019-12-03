@@ -25,14 +25,17 @@
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body class="hold-transition skin-blue fixed sidebar-mini">
+
     {{-- Main content --}}
-    <div class="wrapper">
+    <div id="app" class="wrapper">
+
         @include('cortex/foundation::adminarea.partials.header')
         @include('cortex/foundation::adminarea.partials.sidebar')
 
         @yield('content')
 
         @include('cortex/foundation::adminarea.partials.footer')
+
     </div>
 
     {{-- Scripts --}}
