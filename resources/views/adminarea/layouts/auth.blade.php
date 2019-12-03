@@ -25,8 +25,9 @@
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body class="hold-transition login-page">
+
     {{-- Main content --}}
-    <div class="wrapper">
+    <div id="app" class="wrapper">
 
         @yield('content')
 
