@@ -23,6 +23,7 @@
                 <div class="tab-content">
 
                     <div class="tab-pane active" id="{{ $id }}-tab">
+                        @yield('datatable-filters')
                         {!! $dataTable->table(['class' => 'table table-striped table-hover responsive dataTableBuilder', 'id' => "{$id}"]) !!}
                     </div>
 
