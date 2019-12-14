@@ -40,6 +40,6 @@ class CrawlingRobots
      */
     protected function shouldIndex(Request $request)
     {
-        return app()->environment('production') && array_key_exists($request->route('accessarea'), config('cortex.foundation.indexable'));
+        return app()->environment('production') && in_array($request->route('accessarea'), config('cortex.foundation.indexable'));
     }
 }
