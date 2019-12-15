@@ -13,8 +13,9 @@ class DiscoverEvents extends BaseDiscoverEvents
     /**
      * Extract the class name from the given file path.
      *
-     * @param  \SplFileInfo  $file
-     * @param  string  $basePath
+     * @param \SplFileInfo $file
+     * @param string       $basePath
+     *
      * @return string
      */
     protected static function classFromFile(SplFileInfo $file, $basePath)
