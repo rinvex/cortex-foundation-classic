@@ -102,6 +102,7 @@
     "extra": {
         "laravel": {
             "providers": [
+                "Cortex\\Foundation\\Providers\\EventServiceProvider",
                 "Cortex\\Foundation\\Providers\\FoundationServiceProvider",
                 "Cortex\\Foundation\\Providers\\ConsoleSupportServiceProvider",
                 "Cortex\\Foundation\\Overrides\\Lord\\Laroute\\LarouteServiceProvider"
