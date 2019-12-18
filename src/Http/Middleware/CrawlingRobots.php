@@ -12,6 +12,16 @@ class CrawlingRobots
 {
     protected $response;
 
+    /**
+     * Handle an incoming request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
+     * @throws \Exception
+     *
+     * @return mixed
+     */
     public function handle(Request $request, Closure $next)
     {
         $this->response = $next($request);
@@ -28,6 +38,13 @@ class CrawlingRobots
         throw new Exception(trans('cortex/foundation::messages.invalid_indexing_rule'));
     }
 
+    /**
+     * Response with robots.
+     *
+     * @param string $contents
+     *
+     * @return mixed
+     */
     protected function responseWithRobots(string $contents)
     {
         $this->response->headers->set('x-robots-tag', $contents, false);
@@ -40,6 +57,6 @@ class CrawlingRobots
      */
     protected function shouldIndex(Request $request)
     {
-        return app()->environment('production') && array_key_exists($request->route('accessarea'), config('cortex.foundation.indexable'));
+        return app()->environment('production') && in_array($request->route('accessarea'), config('cortex.foundation.indexable'));
     }
 }

@@ -11,5 +11,6 @@ Route::domain(domain())->group(function () {
             // Homepage Routes
              Route::get('/')->name('home')->uses('HomeController@index');
              Route::post('country')->name('country')->uses('GenericController@country');
+             Route::match(['get', 'post'], 'broadcasting/auth')->name('broadcast')->uses('BroadcastController@authenticate');
          });
 });
