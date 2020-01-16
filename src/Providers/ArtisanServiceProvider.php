@@ -142,8 +142,8 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      */
     public function provides()
     {
-        return $this->app->environment('production') ?
-            array_merge(array_values($this->commands), array_values($this->devCommands)) : $this->commands;
+        return $this->app->environment('production') ? $this->commands :
+            array_merge(array_values($this->commands), array_values($this->devCommands));
     }
 
     /**
