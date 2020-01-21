@@ -133,6 +133,7 @@ class FoundationServiceProvider extends ServiceProvider
         ! $this->app->runningInConsole() || $this->publishesViews('cortex/foundation', true);
         ! $this->app->runningInConsole() || $this->publishesConfig('cortex/foundation', true);
         ! $this->app->runningInConsole() || $this->publishesMigrations('cortex/foundation', true);
+        ! $this->app['config']['cortex.foundation.autoload_migrations'] || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         SessionFacade::extend('database', function ($app) {
             $table = $app['config']['session.table'];
