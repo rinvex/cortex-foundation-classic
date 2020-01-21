@@ -129,11 +129,11 @@ class FoundationServiceProvider extends ServiceProvider
         });
 
         // Publish Resources
-        ! $this->app->runningInConsole() || $this->publishesLang('cortex/foundation', true);
-        ! $this->app->runningInConsole() || $this->publishesViews('cortex/foundation', true);
-        ! $this->app->runningInConsole() || $this->publishesConfig('cortex/foundation', true);
-        ! $this->app->runningInConsole() || $this->publishesMigrations('cortex/foundation', true);
-        ! $this->app['config']['cortex.foundation.autoload_migrations'] || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        $this->publishesLang('cortex/foundation', true);
+        $this->publishesViews('cortex/foundation', true);
+        $this->publishesConfig('cortex/foundation', true);
+        $this->publishesMigrations('cortex/foundation', true);
+        ! $this->autoloadMigrations('cortex.foundation') || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         SessionFacade::extend('database', function ($app) {
             $table = $app['config']['session.table'];
