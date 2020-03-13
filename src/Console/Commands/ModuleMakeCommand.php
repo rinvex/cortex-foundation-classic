@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Console\ConfirmableTrait;
-use Illuminate\Support\Str;
 
 class ModuleMakeCommand extends Command
 {
