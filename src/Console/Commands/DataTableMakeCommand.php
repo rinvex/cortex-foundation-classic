@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Illuminate\Support\Str;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
@@ -84,7 +85,7 @@ class DataTableMakeCommand extends GeneratorCommand
 
             $namespaceTransformer = $this->rootNamespace().'\Transformers\\'.$transformer;
 
-            if (starts_with($transformer, '\\')) {
+            if (Str::startsWith($transformer, '\\')) {
                 $stub = str_replace('NamespacedDummyTransformer', trim($transformer, '\\'), $stub);
             } else {
                 $stub = str_replace('NamespacedDummyTransformer', $namespaceTransformer, $stub);
@@ -98,14 +99,14 @@ class DataTableMakeCommand extends GeneratorCommand
 
             $stub = str_replace('DummyTransformer', $transformer, $stub);
 
-            $stub = str_replace('dummyTransformer', camel_case($transformer), $stub);
+            $stub = str_replace('dummyTransformer', Str::camel($transformer), $stub);
         }
 
         $model = str_replace('/', '\\', $model);
 
         $namespaceModel = $this->rootNamespace().'\Models\\'.$model;
 
-        if (starts_with($model, '\\')) {
+        if (Str::startsWith($model, '\\')) {
             $stub = str_replace('NamespacedDummyModel', trim($model, '\\'), $stub);
         } else {
             $stub = str_replace('NamespacedDummyModel', $namespaceModel, $stub);
@@ -119,7 +120,7 @@ class DataTableMakeCommand extends GeneratorCommand
 
         $stub = str_replace('DummyModel', $model, $stub);
 
-        return str_replace('dummyModel', camel_case($model), $stub);
+        return str_replace('dummyModel', Str::camel($model), $stub);
     }
 
     /**

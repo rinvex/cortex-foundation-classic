@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Processors;
 
+use Illuminate\Support\Arr;
 use Yajra\DataTables\Processors\DataProcessor as BaseDataProcessor;
 
 class DataProcessor extends BaseDataProcessor
@@ -17,7 +18,7 @@ class DataProcessor extends BaseDataProcessor
      */
     protected function escapeRow(array $row)
     {
-        $arrayDot = array_filter(array_dot($row));
+        $arrayDot = array_filter(Arr::dot($row));
 
         foreach ($arrayDot as $key => $value) {
             if (! in_array($key, $this->rawColumns) && is_string($value)) {
@@ -26,7 +27,7 @@ class DataProcessor extends BaseDataProcessor
         }
 
         foreach ($arrayDot as $key => $value) {
-            array_set($row, $key, $value);
+            Arr::set($row, $key, $value);
         }
 
         return $row;

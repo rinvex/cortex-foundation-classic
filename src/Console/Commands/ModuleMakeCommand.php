@@ -7,6 +7,7 @@ namespace Cortex\Foundation\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Console\ConfirmableTrait;
+use Illuminate\Support\Str;
 
 class ModuleMakeCommand extends Command
 {
@@ -107,7 +108,7 @@ class ModuleMakeCommand extends Command
      */
     protected function generateSamples(): void
     {
-        $module = str_after($this->getNameInput(), '/');
+        $module = Str::after($this->getNameInput(), '/');
 
         $this->call('make:config', ['name' => 'config', '--module' => $this->getNameInput()]);
         $this->call('make:model', ['name' => 'Example', '--module' => $this->getNameInput()]);
@@ -145,7 +146,7 @@ class ModuleMakeCommand extends Command
             ($readme = $path.DIRECTORY_SEPARATOR.'README.md') => $this->files->get($readme),
         ];
 
-        $module = ucfirst(str_after($this->getNameInput(), '/'));
+        $module = ucfirst(Str::after($this->getNameInput(), '/'));
         $name = implode(' ', array_map('ucfirst', explode('/', $this->getNameInput())));
         $jsonNamespace = implode('\\\\', array_map('ucfirst', explode('/', $this->getNameInput())));
 

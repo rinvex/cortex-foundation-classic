@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Illuminate\Support\Str;
 use Illuminate\Console\ConfirmableTrait;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 use Illuminate\Foundation\Console\ListenerMakeCommand as BaseListenerMakeCommand;
@@ -24,7 +25,7 @@ class ListenerMakeCommand extends BaseListenerMakeCommand
     {
         $event = $this->option('event');
 
-        if (! starts_with($event, [
+        if (! Str::startsWith($event, [
             $this->rootNamespace(),
             'Illuminate',
             '\\',

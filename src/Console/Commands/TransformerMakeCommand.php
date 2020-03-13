@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Illuminate\Support\Str;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
@@ -66,7 +67,7 @@ class TransformerMakeCommand extends GeneratorCommand
 
         $namespaceModel = $this->rootNamespace().'\Models\\'.$model;
 
-        if (starts_with($model, '\\')) {
+        if (Str::startsWith($model, '\\')) {
             $stub = str_replace('NamespacedDummyModel', trim($model, '\\'), $stub);
         } else {
             $stub = str_replace('NamespacedDummyModel', $namespaceModel, $stub);
@@ -80,7 +81,7 @@ class TransformerMakeCommand extends GeneratorCommand
 
         $stub = str_replace('DummyModel', $model, $stub);
 
-        return str_replace('dummyModel', camel_case($model), $stub);
+        return str_replace('dummyModel', Str::camel($model), $stub);
     }
 
     /**

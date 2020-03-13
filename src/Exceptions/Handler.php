@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Exceptions;
 
 use Exception;
+use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\AuthenticationException;
@@ -48,7 +49,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        $accessarea = str_before(Route::currentRouteName(), '.');
+        $accessarea = Str::before(Route::currentRouteName(), '.');
 
         if ($e instanceof TokenMismatchException) {
             return intend([
@@ -102,7 +103,7 @@ class Handler extends ExceptionHandler
         } elseif ($e instanceof ModelNotFoundException) {
             $model = $e->getModel();
             $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
-            $plural = str_plural($single);
+            $plural = Str::plural($single);
 
             return intend([
                 'url' => $model ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),

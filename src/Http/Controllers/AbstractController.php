@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -52,7 +53,7 @@ abstract class AbstractController extends Controller
     {
         // Assign global route parameters
         if ($route = request()->route()) {
-            $accessarea = str_before(Route::currentRouteName(), '.');
+            $accessarea = Str::before(Route::currentRouteName(), '.');
             $passwordResetBroker = $this->getPasswordResetBroker();
             $guard = $this->getGuard();
 
@@ -72,7 +73,7 @@ abstract class AbstractController extends Controller
      */
     protected function guessGuard(): string
     {
-        $accessarea = str_before(Route::currentRouteName(), '.');
+        $accessarea = Str::before(Route::currentRouteName(), '.');
         $guard = mb_strstr($accessarea, 'area', true);
 
         return config('auth.guards.'.$guard) ? $guard : config('auth.defaults.guard');
@@ -113,7 +114,7 @@ abstract class AbstractController extends Controller
      */
     protected function guessPasswordResetBroker(): string
     {
-        $accessarea = str_before(Route::currentRouteName(), '.');
+        $accessarea = Str::before(Route::currentRouteName(), '.');
         $passwordResetBroker = mb_strstr($accessarea, 'area', true);
 
         return config('auth.passwords.'.$passwordResetBroker) ? $passwordResetBroker : config('auth.defaults.passwords');
@@ -136,7 +137,7 @@ abstract class AbstractController extends Controller
      */
     protected function guessEmailVerificationBroker(): string
     {
-        $accessarea = str_before(Route::currentRouteName(), '.');
+        $accessarea = Str::before(Route::currentRouteName(), '.');
         $emailVerificationBroker = mb_strstr($accessarea, 'area', true);
 
         return config('auth.passwords.'.$emailVerificationBroker) ? $emailVerificationBroker : config('auth.defaults.passwords');

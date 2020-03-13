@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Str;
 
 class TrailingSlashEnforce
 {
@@ -39,6 +40,6 @@ class TrailingSlashEnforce
      */
     protected function checkQueryString($requestUri, $queryString): bool
     {
-        return (! $queryString && ! ends_with($requestUri, '/')) || ($queryString && ! ends_with(mb_strstr($requestUri, '?', true), '/'));
+        return (! $queryString && ! Str::endsWith($requestUri, '/')) || ($queryString && ! Str::endsWith(mb_strstr($requestUri, '?', true), '/'));
     }
 }
