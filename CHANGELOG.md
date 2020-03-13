@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v3.1.4] - 2020-03-13
+- Install felixkiss/uniquewith-validator composer package
+
 ## [v3.1.3] - 2020-03-13
 - Tweak TravisCI config
 - Fix production artisan commands registration	764d9ee	Abdelrahman Omran <me@omranic.com>	Jan 16, 2020 at 9:39 AM
@@ -152,6 +155,8 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v3.1.4]: https://github.com/rinvex/cortex-foundation/compare/v3.1.3...v3.1.4
+[v3.1.3]: https://github.com/rinvex/cortex-foundation/compare/v3.1.2...v3.1.3
 [v3.1.2]: https://github.com/rinvex/cortex-foundation/compare/v3.1.1...v3.1.2
 [v3.1.1]: https://github.com/rinvex/cortex-foundation/compare/v3.1.0...v3.1.1
 [v3.1.0]: https://github.com/rinvex/cortex-foundation/compare/v3.0.3...v3.1.0
