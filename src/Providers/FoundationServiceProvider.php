@@ -142,7 +142,10 @@ class FoundationServiceProvider extends ServiceProvider
             $connection = $app['config']['session.connection'];
 
             return new \Cortex\Foundation\Overrides\Illuminate\Session\DatabaseSessionHandler(
-                $app['db']->connection($connection), $table, $lifetime, $app
+                $app['db']->connection($connection),
+                $table,
+                $lifetime,
+                $app
             );
         });
 
@@ -236,8 +239,10 @@ class FoundationServiceProvider extends ServiceProvider
             $app->instance('routes', $routes);
 
             $url = new UrlGenerator(
-                $routes, $app->rebinding(
-                    'request', $this->requestRebinder()
+                $routes,
+                $app->rebinding(
+                    'request',
+                    $this->requestRebinder()
                 )
             );
 

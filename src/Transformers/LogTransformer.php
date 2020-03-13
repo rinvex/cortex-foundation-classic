@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Transformers;
 
-use Cortex\Foundation\Models\Log;
 use Illuminate\Support\Str;
+use Cortex\Foundation\Models\Log;
 use Rinvex\Support\Traits\Escaper;
 use Illuminate\Support\Facades\Route;
 use League\Fractal\TransformerAbstract;

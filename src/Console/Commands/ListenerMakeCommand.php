@@ -34,11 +34,15 @@ class ListenerMakeCommand extends BaseListenerMakeCommand
         }
 
         $stub = str_replace(
-            'DummyEvent', class_basename($event), $this->defaultBuildClass($name)
+            'DummyEvent',
+            class_basename($event),
+            $this->defaultBuildClass($name)
         );
 
         return str_replace(
-            'DummyFullEvent', $event, $stub
+            'DummyFullEvent',
+            $event,
+            $stub
         );
     }
 
