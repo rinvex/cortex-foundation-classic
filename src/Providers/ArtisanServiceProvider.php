@@ -54,7 +54,6 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         //'ClearResets' => 'command.auth.resets.clear',
         'ConfigCache' => 'command.config.cache',
         'ConfigClear' => 'command.config.clear',
-        'DbWipe' => 'command.db.wipe',
         'Down' => 'command.down',
         'Environment' => 'command.environment',
         'EventCache' => 'command.event.cache',
@@ -64,7 +63,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'Optimize' => 'command.optimize',
         'OptimizeClear' => 'command.optimize.clear',
         'PackageDiscover' => 'command.package.discover',
-        'Preset' => 'command.preset',
+        //'Preset' => 'command.preset',
         'QueueFailed' => 'command.queue.failed',
         'QueueFlush' => 'command.queue.flush',
         'QueueForget' => 'command.queue.forget',
@@ -96,6 +95,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'ConsoleMake' => 'command.console.make',
         'ControllerMake' => 'command.controller.make',
         'DatatableMake' => 'command.datatable.make',
+        'DbWipe' => 'command.db.wipe',
         'EventGenerate' => 'command.event.generate',
         'EventMake' => 'command.event.make',
         'ExceptionMake' => 'command.exception.make',
@@ -131,8 +131,8 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      */
     public function register(): void
     {
-        ! $this->app->runningInConsole() || $this->registerCommands($this->commands);
-        (! $this->app->runningInConsole() || $this->app->environment('production')) || $this->registerCommands($this->devCommands);
+        $this->registerCommands($this->commands);
+        $this->app->environment('production') || $this->registerCommands($this->devCommands);
     }
 
     /**
