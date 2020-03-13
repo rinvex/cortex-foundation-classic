@@ -92,7 +92,9 @@ class DataTableMakeCommand extends GeneratorCommand
             }
 
             $stub = str_replace(
-                "use {$namespaceTransformer};\nuse {$namespaceTransformer};", "use {$namespaceTransformer};", $stub
+                "use {$namespaceTransformer};\nuse {$namespaceTransformer};",
+                "use {$namespaceTransformer};",
+                $stub
             );
 
             $transformer = class_basename(trim($transformer, '\\'));
@@ -113,7 +115,9 @@ class DataTableMakeCommand extends GeneratorCommand
         }
 
         $stub = str_replace(
-            "use {$namespaceModel};\nuse {$namespaceModel};", "use {$namespaceModel};", $stub
+            "use {$namespaceModel};\nuse {$namespaceModel};",
+            "use {$namespaceModel};",
+            $stub
         );
 
         $model = class_basename(trim($model, '\\'));

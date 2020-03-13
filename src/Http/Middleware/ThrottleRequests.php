@@ -67,7 +67,8 @@ class ThrottleRequests
         $response = $next($request);
 
         return $this->addHeaders(
-            $response, $maxAttempts,
+            $response,
+            $maxAttempts,
             $this->calculateRemainingAttempts($key, $maxAttempts)
         );
     }
@@ -139,7 +140,9 @@ class ThrottleRequests
         );
 
         return new ThrottleRequestsException(
-            trans('cortex/auth::messages.lockout', ['seconds' => $retryAfter]), null, $headers
+            trans('cortex/auth::messages.lockout', ['seconds' => $retryAfter]),
+            null,
+            $headers
         );
     }
 

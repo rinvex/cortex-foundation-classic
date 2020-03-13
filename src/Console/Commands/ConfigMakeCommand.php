@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Illuminate\Support\Str;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Console\GeneratorCommand;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
-use Illuminate\Support\Str;
 
 class ConfigMakeCommand extends GeneratorCommand
 {

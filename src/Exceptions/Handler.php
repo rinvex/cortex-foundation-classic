@@ -43,9 +43,9 @@ class Handler extends ExceptionHandler
      * @param \Illuminate\Http\Request $request
      * @param \Exception               $e
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $e)
     {
@@ -130,7 +130,7 @@ class Handler extends ExceptionHandler
     protected function renderHttpException(HttpExceptionInterface $e)
     {
         if (view()->exists($view = $this->getHttpExceptionView($e))) {
-            return response()->view($view, ['errors' => new ViewErrorBag, 'exception' => $e], $e->getStatusCode(), $e->getHeaders());
+            return response()->view($view, ['errors' => new ViewErrorBag(), 'exception' => $e], $e->getStatusCode(), $e->getHeaders());
         }
 
         return parent::renderHttpException($e);
@@ -139,7 +139,8 @@ class Handler extends ExceptionHandler
     /**
      * Get the view used to render HTTP exceptions.
      *
-     * @param  \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface  $e
+     * @param \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface $e
+     *
      * @return string
      */
     protected function getHttpExceptionView(HttpExceptionInterface $e)
