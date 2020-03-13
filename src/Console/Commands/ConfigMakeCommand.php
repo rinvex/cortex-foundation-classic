@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Illuminate\Support\Str;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Console\GeneratorCommand;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
@@ -55,7 +56,7 @@ class ConfigMakeCommand extends GeneratorCommand
      */
     protected function getPath($name): string
     {
-        $name = str_replace_first($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'config', $name);
+        $name = Str::replaceFirst($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'config', $name);
 
         if (! $this->files->exists($path = $this->laravel['path'].DIRECTORY_SEPARATOR.$this->moduleName())) {
             throw new \Exception("Invalid path: {$path}");

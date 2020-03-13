@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Transformers;
 
+use Illuminate\Support\Str;
 use Cortex\Foundation\Models\Log;
 use Rinvex\Support\Traits\Escaper;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,7 @@ class LogTransformer extends TransformerAbstract
         if ($log->causer) {
             $class = explode('\\', get_class($log->causer));
             $singleResource = lower_case(end($class));
-            $pluralResource = str_plural(lower_case(end($class)));
+            $pluralResource = Str::plural(lower_case(end($class)));
             $causer = ucfirst($singleResource).': '.($log->causer->username ?? $log->causer->name ?? $log->causer->slug);
             $causer_route = Route::has("adminarea.{$pluralResource}.edit") ? route("adminarea.{$pluralResource}.edit", [$singleResource => $log->causer]) : null;
         } else {

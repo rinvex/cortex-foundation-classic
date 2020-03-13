@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Generators;
 
+use Illuminate\Support\Str;
 use Mariuzzo\LaravelJsLocalization\Generators\LangJsGenerator as BaseLangJsGenerator;
 
 /**
@@ -47,7 +48,7 @@ class LangJsGenerator extends BaseLangJsGenerator
                     $key = mb_substr($key, 0, mb_strpos($key, '.') + 1).str_replace('/', '.', $namespace).'::'.mb_substr($key, mb_strpos($key, '.') + 1);
                 }
 
-                if (starts_with($key, 'vendor')) {
+                if (Str::startsWith($key, 'vendor')) {
                     $key = $this->getVendorKey($key);
                 }
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\DataTables;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Services\DataTable;
 
 abstract class AbstractDataTable extends DataTable
@@ -224,7 +226,7 @@ abstract class AbstractDataTable extends DataTable
     {
         $model = $this->model ?? trim(str_replace('DataTable', '', mb_strrchr(static::class, '\\')), " \t\n\r\0\x0B\\");
 
-        $resource = str_plural(mb_strtolower(array_last(explode(class_exists($model) ? '\\' : '.', $model))));
+        $resource = Str::plural(mb_strtolower(Arr::last(explode(class_exists($model) ? '\\' : '.', $model))));
 
         return $resource.'-export-'.date('Y-m-d').'-'.time();
     }

@@ -6,6 +6,8 @@ namespace Cortex\Foundation\Http\Controllers;
 
 use ReflectionClass;
 use ReflectionMethod;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class AuthorizedController extends AuthenticatedController
@@ -68,7 +70,7 @@ class AuthorizedController extends AuthenticatedController
     public function authorizeResource($model, $parameter = null, array $options = [], $request = null): void
     {
         $middleware = [];
-        $parameter = $parameter ?: snake_case(class_basename($model));
+        $parameter = $parameter ?: Str::snake(class_basename($model));
 
         foreach ($this->mapResourceAbilities() as $method => $ability) {
             $modelName = in_array($method, $this->resourceMethodsWithoutModels()) ? $model : $parameter;
@@ -121,7 +123,7 @@ class AuthorizedController extends AuthenticatedController
 
         // Map resource actions to resourse abilities
         array_walk($actions, function ($value, $key) use (&$actions) {
-            $actions[$key] = array_get($this->resourceAbilityMap(), $key, $value);
+            $actions[$key] = Arr::get($this->resourceAbilityMap(), $key, $value);
         });
 
         return $actions;

@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v3.1.3] - 2020-03-13
+- Tweak TravisCI config
+- Fix production artisan commands registration	764d9ee	Abdelrahman Omran <me@omranic.com>	Jan 16, 2020 at 9:39 AM
+- Add migrations autoload option to the package
+- Tweak service provider `publishesResources` & `autoloadMigrations`
+- Update composer dependencies
+- Update tenant name in tenantarea
+- Update meta tags for tenant in tenantarea
+- Update StyleCI config
+- Drop using global helpers
+- Check if ability exists before seeding
+
 ## [v3.1.2] - 2019-12-18
 - Fix `migrate:reset` args as it doesn't accept --step
 - Fix Crawling Robots indexable access areas check (#97)

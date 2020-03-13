@@ -30,6 +30,8 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
      * @param string $table
      * @param bool   $create
      *
+     * @throws \Exception
+     *
      * @return void
      */
     protected function writeMigration($name, $table, $create): void

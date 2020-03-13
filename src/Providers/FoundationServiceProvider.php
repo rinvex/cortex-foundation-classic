@@ -129,10 +129,11 @@ class FoundationServiceProvider extends ServiceProvider
         });
 
         // Publish Resources
-        ! $this->app->runningInConsole() || $this->publishesLang('cortex/foundation', true);
-        ! $this->app->runningInConsole() || $this->publishesViews('cortex/foundation', true);
-        ! $this->app->runningInConsole() || $this->publishesConfig('cortex/foundation', true);
-        ! $this->app->runningInConsole() || $this->publishesMigrations('cortex/foundation', true);
+        $this->publishesLang('cortex/foundation', true);
+        $this->publishesViews('cortex/foundation', true);
+        $this->publishesConfig('cortex/foundation', true);
+        $this->publishesMigrations('cortex/foundation', true);
+        ! $this->autoloadMigrations('cortex.foundation') || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         SessionFacade::extend('database', function ($app) {
             $table = $app['config']['session.table'];
@@ -141,7 +142,10 @@ class FoundationServiceProvider extends ServiceProvider
             $connection = $app['config']['session.connection'];
 
             return new \Cortex\Foundation\Overrides\Illuminate\Session\DatabaseSessionHandler(
-                $app['db']->connection($connection), $table, $lifetime, $app
+                $app['db']->connection($connection),
+                $table,
+                $lifetime,
+                $app
             );
         });
 
@@ -235,8 +239,10 @@ class FoundationServiceProvider extends ServiceProvider
             $app->instance('routes', $routes);
 
             $url = new UrlGenerator(
-                $routes, $app->rebinding(
-                    'request', $this->requestRebinder()
+                $routes,
+                $app->rebinding(
+                    'request',
+                    $this->requestRebinder()
                 )
             );
 

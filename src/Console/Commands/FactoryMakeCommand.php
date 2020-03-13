@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Illuminate\Support\Str;
 use Illuminate\Console\ConfirmableTrait;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 use Illuminate\Database\Console\Factories\FactoryMakeCommand as BaseFactoryMakeCommand;
@@ -24,7 +25,7 @@ class FactoryMakeCommand extends BaseFactoryMakeCommand
      */
     protected function getPath($name): string
     {
-        $name = str_replace_first($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'factories', $name);
+        $name = Str::replaceFirst($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'factories', $name);
 
         if (! $this->files->exists($path = $this->laravel['path'].DIRECTORY_SEPARATOR.$this->moduleName().DIRECTORY_SEPARATOR)) {
             throw new \Exception("Invalid path: {$path}");
