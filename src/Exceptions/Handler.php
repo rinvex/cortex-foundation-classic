@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Exceptions;
 
 use Exception;
+use Throwable;
 use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Support\Facades\Route;
@@ -22,17 +23,36 @@ use Watson\Validating\ValidationException as WatsonValidationException;
 class Handler extends ExceptionHandler
 {
     /**
+     * A list of the exception types that are not reported.
+     *
+     * @var array
+     */
+    protected $dontReport = [
+        //
+    ];
+
+    /**
+     * A list of the inputs that are never flashed for validation exceptions.
+     *
+     * @var array
+     */
+    protected $dontFlash = [
+        'password',
+        'password_confirmation',
+    ];
+
+    /**
      * Report or log an exception.
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param \Exception $e
+     * @param \Throwable $e
      *
      * @throws \Exception
      *
      * @return void
      */
-    public function report(Exception $e): void
+    public function report(Throwable $e)
     {
         parent::report($e);
     }
@@ -41,13 +61,13 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Exception               $e
+     * @param \Throwable               $e
      *
-     * @throws \Exception
+     * @throws \Throwable
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function render($request, Exception $e)
+    public function render($request, Throwable $e)
     {
         $accessarea = Str::before(Route::currentRouteName(), '.');
 
