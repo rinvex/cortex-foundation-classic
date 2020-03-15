@@ -54,7 +54,7 @@
         "illuminate/support": "^7.0.0",
         "laravelcollective/html": "^6.1.0",
         "league/fractal": "^0.18.0",
-        "proengsoft/laravel-jsvalidation": "^2.5.0",
+        "proengsoft/laravel-jsvalidation": "^3.0.0",
         "rinvex/laravel-composer": "^4.0.0",
         "rinvex/laravel-menus": "^4.0.0",
         "rinvex/laravel-support": "^4.0.0",
