@@ -52,7 +52,7 @@
         "illuminate/http": "^7.0.0",
         "illuminate/routing": "^7.0.0",
         "illuminate/support": "^7.0.0",
-        "laravelcollective/html": "^7.0.0",
+        "laravelcollective/html": "^6.1.0",
         "league/fractal": "^0.19.0",
         "proengsoft/laravel-jsvalidation": "^2.5.0",
         "rinvex/laravel-composer": "^4.0.0",

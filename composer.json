@@ -51,7 +51,7 @@
         "h4cc/wkhtmltopdf-amd64": "^0.12.0",
         "laravel/framework": "^7.0.0",
         "laravel/helpers": "^1.2.0",
-        "laravelcollective/html": "^7.0.0",
+        "laravelcollective/html": "^6.1.0",
         "league/fractal": "^0.19.0",
         "lord/laroute": "^2.4.0",
         "mcamara/laravel-localization": "^1.5.0",
