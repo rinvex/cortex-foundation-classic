@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Exceptions;
 
-use Throwable;
 use Exception;
+use Throwable;
 use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Support\Facades\Route;
@@ -63,9 +63,9 @@ class Handler extends ExceptionHandler
      * @param \Illuminate\Http\Request $request
      * @param \Throwable               $e
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Throwable
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Throwable $e)
     {
