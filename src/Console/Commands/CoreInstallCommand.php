@@ -13,7 +13,7 @@ class CoreInstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:install {--force : Force the operation to run when in production.}';
+    protected $signature = 'cortex:install {--f|force : Force the operation to run when in production.}';
 
     /**
      * The console command description.
