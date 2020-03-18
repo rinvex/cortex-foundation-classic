@@ -16,6 +16,8 @@ class DummyClass extends TransformerAbstract
      *
      * @param mixed $dummyModel
      *
+     * @throws \Exception
+     *
      * @return array
      */
     public function transform($dummyModel): array

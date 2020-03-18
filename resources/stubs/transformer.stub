@@ -17,6 +17,8 @@ class DummyClass extends TransformerAbstract
      *
      * @param \NamespacedDummyModel $dummyModel
      *
+     * @throws \Exception
+     *
      * @return array
      */
     public function transform(DummyModel $dummyModel): array

@@ -15,6 +15,10 @@ class LogTransformer extends TransformerAbstract
     use Escaper;
 
     /**
+     * Transform log model.
+     *
+     * @param \Cortex\Foundation\Models\Log $log
+     *
      * @return array
      */
     public function transform(Log $log): array
