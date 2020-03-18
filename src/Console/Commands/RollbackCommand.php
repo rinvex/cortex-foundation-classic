@@ -31,7 +31,11 @@ class RollbackCommand extends Command
     {
         $this->alert($this->description);
 
-        if (file_exists($path = 'database/migrations/cortex/foundation')) {
+        $path = config('cortex.foundation.autoload_migrations') ?
+            'app/cortex/foundation/database/migrations' :
+            'database/migrations/cortex/foundation';
+
+        if (file_exists($path)) {
             $this->call('migrate:reset', [
                 '--path' => $path,
                 '--force' => $this->option('force'),
