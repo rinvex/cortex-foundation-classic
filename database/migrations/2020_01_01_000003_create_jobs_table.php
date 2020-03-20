@@ -20,9 +20,9 @@ class CreateJobsTable extends Migration
             $table->string('queue');
             $table->longText('payload');
             $table->tinyInteger('attempts')->unsigned();
-            $table->integer('reserved_at')->unsigned()->nullable();
-            $table->integer('available_at')->unsigned();
-            $table->integer('created_at')->unsigned();
+            $table->bigInteger('reserved_at')->unsigned()->nullable();
+            $table->bigInteger('available_at')->unsigned();
+            $table->bigInteger('created_at')->unsigned();
 
             // Indexes
             $table->index('queue');

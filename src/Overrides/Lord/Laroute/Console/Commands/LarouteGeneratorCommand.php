@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cortex\Foundation\Overrides\Lord\Laroute\Console\Commans;
+namespace Cortex\Foundation\Overrides\Lord\Laroute\Console\Commands;
 
 use Lord\Laroute\Console\Commands\LarouteGeneratorCommand as BaseLarouteGeneratorCommand;
 

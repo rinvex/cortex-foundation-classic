@@ -16,7 +16,7 @@ class CoreMigrateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:migrate {--force : Force the operation to run when in production.}';
+    protected $signature = 'cortex:migrate {--f|force : Force the operation to run when in production.}';
 
     /**
      * The console command description.

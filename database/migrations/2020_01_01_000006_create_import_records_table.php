@@ -16,7 +16,7 @@ class CreateImportRecordsTable extends Migration
     public function up()
     {
         Schema::create(config('cortex.foundation.tables.import_records'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('resource');
             $table->{$this->jsonable()}('data')->nullable();
             $table->string('status')->default('init');
