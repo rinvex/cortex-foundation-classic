@@ -18,9 +18,10 @@ class LangJsGenerator extends BaseLangJsGenerator
      * Return all language messages.
      *
      * @param bool $noSort Whether sorting of the messages should be skipped.
-     * @return array
      *
      * @throws \Exception
+     *
+     * @return array
      */
     protected function getMessages($noSort)
     {
