@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Generators;
 
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Mariuzzo\LaravelJsLocalization\Generators\LangJsGenerator as BaseLangJsGenerator;
 
 /**
@@ -54,17 +55,26 @@ class LangJsGenerator extends BaseLangJsGenerator
                     $key = $this->getVendorKey($key);
                 }
 
+                $fullPath = $file->getRealPath();
+
                 if ($extension === 'php') {
-                    $messages[$key] = include $file->getRealPath();
+                    $messages[$key] = include $fullPath;
                 } else {
                     $key = $key.$this->stringsDomain;
-                    $fileContent = file_get_contents($file->getRealPath());
+                    $fileContent = file_get_contents($fullPath);
                     $messages[$key] = json_decode($fileContent, true);
+
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        throw new InvalidArgumentException('Error while decode ' . basename($fullPath) . ': ' . json_last_error_msg());
+                    }
                 }
             }
         }
 
-        $this->sortMessages($messages);
+        if (!$noSort)
+        {
+            $this->sortMessages($messages);
+        }
 
         return $messages;
     }
