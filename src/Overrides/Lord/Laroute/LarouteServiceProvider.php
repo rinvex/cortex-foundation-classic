@@ -6,7 +6,7 @@ namespace Cortex\Foundation\Overrides\Lord\Laroute;
 
 use Cortex\Foundation\Overrides\Lord\Laroute\Routes\Collection;
 use Lord\Laroute\LarouteServiceProvider as BaseLarouteServiceProvider;
-use Cortex\Foundation\Overrides\Lord\Laroute\Console\Commans\LarouteGeneratorCommand;
+use Cortex\Foundation\Overrides\Lord\Laroute\Console\Commands\LarouteGeneratorCommand;
 
 class LarouteServiceProvider extends BaseLarouteServiceProvider
 {
