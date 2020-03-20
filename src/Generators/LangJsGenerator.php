@@ -65,14 +65,13 @@ class LangJsGenerator extends BaseLangJsGenerator
                     $messages[$key] = json_decode($fileContent, true);
 
                     if (json_last_error() !== JSON_ERROR_NONE) {
-                        throw new InvalidArgumentException('Error while decode ' . basename($fullPath) . ': ' . json_last_error_msg());
+                        throw new InvalidArgumentException('Error while decode '.basename($fullPath).': '.json_last_error_msg());
                     }
                 }
             }
         }
 
-        if (!$noSort)
-        {
+        if (! $noSort) {
             $this->sortMessages($messages);
         }
 
