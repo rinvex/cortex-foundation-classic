@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Generators;
 
 use Illuminate\Support\Str;
-use Spatie\MediaLibrary\Models\Media;
-use Spatie\MediaLibrary\PathGenerator\BasePathGenerator;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator;
 
-class PathGenerator extends BasePathGenerator
+class PathGenerator extends DefaultPathGenerator
 {
     protected function getBasePath(Media $media): string
     {
