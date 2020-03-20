@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\DataTables;
 
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Cortex\Foundation\Transformers\MediaTransformer;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * @property \Spatie\MediaLibrary\HasMedia $resource
