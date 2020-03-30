@@ -2,15 +2,15 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 {{-- Basic Meta --}}
-<meta name="title" content="Rinvex - Enterprise Solutions for SMEs" />
-<meta name="headline" content="Rinvex - Enterprise Solutions for SMEs" />
+<meta name="title" content="@yield('meta-title', 'Rinvex - Enterprise Solutions for SMEs')" />
+<meta name="headline" content="@yield('meta-headline', 'Rinvex - Enterprise Solutions for SMEs')" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Rinvex is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016." />
-<meta name="keywords" content="Rinvex Integrated Enterprise Software Solutions SMEs Opesource Laravel Package" />
+<meta name="description" content="@yield('meta-description', 'Rinvex is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016.')" />
+<meta name="keywords" content="@yield('meta-keywords', 'Rinvex Integrated Enterprise Software Solutions SMEs Opesource Laravel Package')" />
 <meta name="author" content="Rinvex" />
 <meta name="kind" content="SMEs & Developers" />
 <meta name="generator" content="Rinvex" />
-<meta name="copyright" content="2016 © Rinvex LLC. Some Rights Reserved." />
+<meta name="copyright" content="2016-{{ date('Y') }} © Rinvex LLC. Some Rights Reserved." />
 <meta name="subject" content="Enterprise Solutions for SMEs" />
 <meta name="coverage" content="Worldwide" />
 <meta name="directory" content="submission" />
@@ -62,9 +62,9 @@
 <meta property="og:url" content="https://rinvex.com" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Rinvex" />
-<meta property="og:title" content="Rinvex - Enterprise Solutions for SMEs" />
-<meta property="og:description" content="Rinvex is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016." />
-<meta property="og:image" content="{{ asset('favicon/favicon-1500x1500.png') }}" />
+<meta property="og:title" content="@yield('meta-title', 'Rinvex - Enterprise Solutions for SMEs')" />
+<meta property="og:description" content="@yield('meta-description', 'Rinvex is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016.')" />
+<meta property="og:image" content="{{ asset('images/favicon/favicon-1500x1500.png') }}" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1500" />
 <meta property="og:image:height" content="1500" />
@@ -85,8 +85,8 @@
 <meta property="twitter:creator" content="@omranic" />
 <meta property="twitter:creator:id" content="19497181" />
 <meta property="twitter:card" content="summary" />
-<meta property="twitter:title" content="Rinvex - Enterprise Solutions for SMEs" />
-<meta property="twitter:description" content="Rinvex is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016." />
-<meta property="twitter:image:src" content="{{ asset('favicon/favicon-512x512.png') }}" />
+<meta property="twitter:title" content="@yield('meta-title', 'Rinvex - Enterprise Solutions for SMEs')" />
+<meta property="twitter:description" content="@yield('meta-description', 'Rinvex is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016.')" />
+<meta property="twitter:image:src" content="{{ asset('images/favicon/favicon-512x512.png') }}" />
 <meta property="twitter:image:width" content="512" />
 <meta property="twitter:image:height" content="512" />
