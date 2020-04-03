@@ -122,6 +122,7 @@ class FoundationServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../../routes/web/managerarea.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
+        ! $this->autoloadMigrations('cortex/foundation') || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         $this->app->runningInConsole() || $dispatcher->listen('accessarea.ready', function ($accessarea) {
             ! file_exists($menus = __DIR__."/../../routes/menus/{$accessarea}.php") || require $menus;
@@ -133,7 +134,6 @@ class FoundationServiceProvider extends ServiceProvider
         $this->publishesViews('cortex/foundation', true);
         $this->publishesConfig('cortex/foundation', true);
         $this->publishesMigrations('cortex/foundation', true);
-        ! $this->autoloadMigrations('cortex.foundation') || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         SessionFacade::extend('database', function ($app) {
             $table = $app['config']['session.table'];
