@@ -47,7 +47,7 @@ class CorePublishCommand extends Command
 
         $output = new BufferedOutput();
         $commands->each(function (Command $command) use ($progressBar, $output) {
-            $command->run(new ArrayInput(['--force' => $this->option('force')]), $output);
+            $command->run(new ArrayInput(['--force' => $this->option('force'), '--resource' => $this->option('resource')]), $output);
             $progressBar->advance();
         });
 
