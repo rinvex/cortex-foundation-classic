@@ -8,8 +8,8 @@
 
 @section('body-attributes')data-spy="scroll" data-offset="0" data-target="#navigation"@endsection
 
-@section('meta-title', $currentTenant->name )
-@section('meta-description', strip_tags($currentTenant->description) )
+@section('meta-title', $currentTenant->name)
+@section('meta-description', strip_tags($currentTenant->description))
 
 @if($currentTenant->getFirstMediaUrl('cover_photo'))
     @section('meta-image', $currentTenant->getFirstMediaUrl('cover_photo'))
