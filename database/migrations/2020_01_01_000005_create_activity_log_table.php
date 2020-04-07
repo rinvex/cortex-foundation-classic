@@ -14,12 +14,12 @@ class CreateActivityLogTable extends Migration
     {
         Schema::create(config('cortex.foundation.tables.activity_log'), function (Blueprint $table) {
             // Columns
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('log_name');
             $table->string('description');
-            $table->bigInteger('subject_id')->nullable();
+            $table->integer('subject_id')->nullable();
             $table->string('subject_type')->nullable();
-            $table->bigInteger('causer_id')->nullable();
+            $table->integer('causer_id')->nullable();
             $table->string('causer_type')->nullable();
             $table->{$this->jsonable()}('properties')->nullable();
             $table->timestamps();
