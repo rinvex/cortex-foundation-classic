@@ -16,13 +16,13 @@ class CreateQueueJobsTable extends Migration
     public function up(): void
     {
         Schema::create(config('queue.connections.database.table'), function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('queue');
             $table->longText('payload');
             $table->tinyInteger('attempts')->unsigned();
-            $table->bigInteger('reserved_at')->unsigned()->nullable();
-            $table->bigInteger('available_at')->unsigned();
-            $table->bigInteger('created_at')->unsigned();
+            $table->integer('reserved_at')->unsigned()->nullable();
+            $table->integer('available_at')->unsigned();
+            $table->integer('created_at')->unsigned();
 
             // Indexes
             $table->index('queue');

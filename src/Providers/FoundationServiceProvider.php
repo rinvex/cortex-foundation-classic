@@ -88,7 +88,7 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->bind(\Yajra\DataTables\Html\Builder::class, \Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder::class);
 
         // Register console commands
-        ! $this->app->runningInConsole() || $this->registerCommands();
+        $this->registerCommands();
     }
 
     /**
@@ -325,9 +325,9 @@ class FoundationServiceProvider extends ServiceProvider
     protected function bindBlueprintMacro(): void
     {
         Blueprint::macro('auditable', function () {
-            $this->bigInteger('created_by_id')->unsigned()->after('created_at')->nullable();
+            $this->integer('created_by_id')->unsigned()->after('created_at')->nullable();
             $this->string('created_by_type')->after('created_at')->nullable();
-            $this->bigInteger('updated_by_id')->unsigned()->after('updated_at')->nullable();
+            $this->integer('updated_by_id')->unsigned()->after('updated_at')->nullable();
             $this->string('updated_by_type')->after('updated_at')->nullable();
         });
 
@@ -341,10 +341,10 @@ class FoundationServiceProvider extends ServiceProvider
 
         Blueprint::macro('auditableAndTimestamps', function ($precision = 0) {
             $this->timestamp('created_at', $precision)->nullable();
-            $this->bigInteger('created_by_id')->unsigned()->nullable();
+            $this->integer('created_by_id')->unsigned()->nullable();
             $this->string('created_by_type')->nullable();
             $this->timestamp('updated_at', $precision)->nullable();
-            $this->bigInteger('updated_by_id')->unsigned()->nullable();
+            $this->integer('updated_by_id')->unsigned()->nullable();
             $this->string('updated_by_type')->nullable();
         });
 

@@ -46,8 +46,8 @@ class MigrationServiceProvider extends BaseMigrationServiceProvider
 
         $this->registerCreator();
 
-        ! $this->app->runningInConsole() || $this->registerCommands($this->commands);
-        (! $this->app->runningInConsole() || $this->app->environment('production')) || $this->registerCommands($this->devCommands);
+        (! $this->app->runningInConsole() && ! $this->runningInDevzone()) || $this->registerCommands($this->commands);
+        ($this->app->environment('production') || (! $this->app->runningInConsole() && ! $this->runningInDevzone())) || $this->registerCommands($this->devCommands);
     }
 
     /**
