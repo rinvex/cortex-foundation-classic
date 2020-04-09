@@ -16,7 +16,7 @@ class CorePublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:publish {--f|force : Overwrite any existing files.} {--r|resource=all}';
+    protected $signature = 'cortex:publish {--f|force : Overwrite any existing files.} {--r|resource=* : Specify which resources to publish.}';
 
     /**
      * The console command description.
