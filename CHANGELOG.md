@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v4.0.8] - 2020-04-12
+- Fix ServiceProvider registerCommands method compatibility
+
 ## [v4.0.7] - 2020-04-09
 - Tweak artisan command registration
 - Refactor publish command and allow multiple resource values
@@ -187,6 +190,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v4.0.8]: https://github.com/rinvex/cortex-foundation/compare/v4.0.7...v4.0.8
 [v4.0.7]: https://github.com/rinvex/cortex-foundation/compare/v4.0.6...v4.0.7
 [v4.0.6]: https://github.com/rinvex/cortex-foundation/compare/v4.0.5...v4.0.6
 [v4.0.5]: https://github.com/rinvex/cortex-foundation/compare/v4.0.4...v4.0.5
