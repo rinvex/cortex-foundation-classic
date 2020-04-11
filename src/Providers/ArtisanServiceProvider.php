@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Rinvex\Support\Traits\ConsoleTools;
 use Cortex\Foundation\Console\Commands\ServeCommand;
 use Illuminate\Console\Scheduling\ScheduleRunCommand;
 use Cortex\Foundation\Console\Commands\JobMakeCommand;
@@ -35,6 +36,8 @@ use Illuminate\Foundation\Providers\ArtisanServiceProvider as BaseArtisanService
 
 class ArtisanServiceProvider extends BaseArtisanServiceProvider
 {
+    use ConsoleTools;
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -131,8 +134,8 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      */
     public function register(): void
     {
-        (! $this->app->runningInConsole() && ! $this->runningInDevzone()) || $this->registerCommands($this->commands);
-        ($this->app->environment('production') || (! $this->app->runningInConsole() && ! $this->runningInDevzone())) || $this->registerCommands($this->devCommands);
+        $this->registerCommands($this->commands);
+        $this->app->environment('production') || $this->registerCommands($this->devCommands);
     }
 
     /**
@@ -144,6 +147,21 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         return $this->app->environment('production') ? $this->commands :
             array_merge(array_values($this->commands), array_values($this->devCommands));
+    }
+
+    /**
+     * Register the given commands.
+     *
+     * @param  array  $commands
+     * @return void
+     */
+    protected function registerCommands(array $commands)
+    {
+        foreach (array_keys($commands) as $command) {
+            call_user_func_array([$this, "register{$command}Command"], []);
+        }
+
+        $this->commands(array_values($commands));
     }
 
     /**
