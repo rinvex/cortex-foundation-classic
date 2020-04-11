@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Rinvex\Support\Traits\ConsoleTools;
 use Cortex\Foundation\Console\Commands\MigrateMakeCommand;
 use Illuminate\Database\MigrationServiceProvider as BaseMigrationServiceProvider;
 
 class MigrationServiceProvider extends BaseMigrationServiceProvider
 {
+    use ConsoleTools;
+
     /**
      * The commands to be registered.
      *
@@ -46,8 +49,23 @@ class MigrationServiceProvider extends BaseMigrationServiceProvider
 
         $this->registerCreator();
 
-        (! $this->app->runningInConsole() && ! $this->runningInDevzone()) || $this->registerCommands($this->commands);
-        ($this->app->environment('production') || (! $this->app->runningInConsole() && ! $this->runningInDevzone())) || $this->registerCommands($this->devCommands);
+        $this->registerCommands($this->commands);
+        $this->app->environment('production') || $this->registerCommands($this->devCommands);
+    }
+
+    /**
+     * Register the given commands.
+     *
+     * @param  array  $commands
+     * @return void
+     */
+    protected function registerCommands(array $commands)
+    {
+        foreach (array_keys($commands) as $command) {
+            call_user_func_array([$this, "register{$command}Command"], []);
+        }
+
+        $this->commands(array_values($commands));
     }
 
     /**
