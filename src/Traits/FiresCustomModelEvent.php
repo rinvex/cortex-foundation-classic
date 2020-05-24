@@ -9,8 +9,8 @@ trait FiresCustomModelEvent
     /**
      * Fire a custom model event for the given event.
      *
-     * @param  string  $event
-     * @param  string  $method
+     * @param string $event
+     * @param string $method
      *
      * @return mixed|null
      */
@@ -20,7 +20,7 @@ trait FiresCustomModelEvent
             return;
         }
 
-        $result = static::$dispatcher->$method(new $this->dispatchesEvents[$event]($this, $event));
+        $result = static::$dispatcher->{$method}(new $this->dispatchesEvents[$event]($this, $event));
 
         if (! is_null($result)) {
             return $result;
