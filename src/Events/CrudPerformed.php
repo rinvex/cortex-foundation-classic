@@ -52,7 +52,7 @@ class CrudPerformed implements ShouldBroadcast
         $this->attributes = [
             'event' => $event,
             'resource' => $resource,
-            'action' => substr($event, 0, -1),
+            'action' => mb_substr($event, 0, -1),
             'collection' => Str::plural($resource),
         ];
     }
