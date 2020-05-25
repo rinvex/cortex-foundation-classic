@@ -56,11 +56,11 @@ class LogsDataTable extends AbstractDataTable
     protected function getBuilderParameters(): array
     {
         return [
-            'dom' => $this->dom,
-            'keys' => $this->keys,
-            'order' => $this->order,
-            'retrieve' => $this->retrieve,
-            'autoWidth' => $this->autoWidth,
+            'dom' => $this->options['dom'],
+            'keys' => $this->options['keys'],
+            'order' => $this->options['order'],
+            'retrieve' => $this->options['retrieve'],
+            'autoWidth' => $this->options['autoWidth'],
             'drawCallback' => "function (settings) {
                 var api = this.api();
 

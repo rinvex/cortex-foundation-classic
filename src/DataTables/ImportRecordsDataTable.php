@@ -81,14 +81,14 @@ class ImportRecordsDataTable extends AbstractDataTable
     }}"];
 
         return array_merge([
-            'dom' => $this->dom,
-            'keys' => $this->keys,
-            'mark' => $this->mark,
-            'order' => $this->order,
-            'select' => $this->select,
-            'retrieve' => $this->retrieve,
-            'autoWidth' => $this->autoWidth,
-            'fixedHeader' => $this->fixedHeader,
+            'dom' => $this->options['dom'],
+            'keys' => $this->options['keys'],
+            'mark' => $this->options['mark'],
+            'order' => $this->options['order'],
+            'select' => $this->options['select'],
+            'retrieve' => $this->options['retrieve'],
+            'autoWidth' => $this->options['autoWidth'],
+            'fixedHeader' => $this->options['fixedHeader'],
             'buttons' => ['print', 'reset', 'reload', $importButton, $columnsButton, $lengthButton],
         ], $this->builderParameters);
     }

@@ -6,6 +6,7 @@ namespace Cortex\Foundation\DataTables;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Vinkla\Hashids\Facades\Hashids;
 use Yajra\DataTables\Services\DataTable;
 
 abstract class AbstractDataTable extends DataTable
@@ -25,67 +26,45 @@ abstract class AbstractDataTable extends DataTable
     protected $transformer;
 
     /**
-     * The datatable dom parameter.
+     * Set default options.
      *
-     * @var string
+     * @var mixed
      */
-    protected $dom = "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>";
+    protected $options = [
+        'dom' => "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>",
+        'select' => '{"style":"multi"}',
+        'order' => [[1, 'asc']],
+        'mark' => true,
+        'keys' => false,
+        'retrieve' => true,
+        'autoWidth' => false,
+        'fixedHeader' => true,
+        'checkbox' => true,
+    ];
 
     /**
-     * The datatable select parameter.
+     * Set action buttons.
      *
-     * @var bool
+     * @var mixed
      */
-    protected $select = true;
+    protected $buttons = [
+        'create' => true,
+        'import' => true,
 
-    /**
-     * The datatable keys parameter.
-     *
-     * @var bool
-     */
-    protected $keys = false;
+        'export' => true,
+        'print' => true,
+        'showSelected' => true,
 
-    /**
-     * The datatable mark parameter.
-     *
-     * @var bool
-     */
-    protected $mark = true;
+        'reset' => true,
+        'reload' => true,
 
-    /**
-     * The datatable order parameter.
-     *
-     * @var array
-     */
-    protected $order = [[0, 'asc']];
+        'bulkDelete' => true,
+        'bulkEnable' => false,
+        'bulkDisable' => false,
 
-    /**
-     * The datatable retrieve parameter.
-     *
-     * @var array
-     */
-    protected $retrieve = true;
-
-    /**
-     * The datatable autoWidth parameter.
-     *
-     * @var array
-     */
-    protected $autoWidth = false;
-
-    /**
-     * The datatable fixedHeader parameter.
-     *
-     * @var array
-     */
-    protected $fixedHeader = true;
-
-    /**
-     * The datatable create parameter.
-     *
-     * @var bool
-     */
-    protected $createButton = true;
+        'colvis' => true,
+        'pageLength' => true,
+    ];
 
     /**
      * The datatable builder parameters.
@@ -108,7 +87,23 @@ abstract class AbstractDataTable extends DataTable
      */
     public function query()
     {
-        $query = app($this->model)->query();
+        $model = app($this->model);
+        $query = $model->query();
+
+        if (! empty($this->request->get('selectedId'))) {
+            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
+            $ids = explode(',', $this->request->get('selectedId'));
+
+            if (in_array(request()->route('accessarea'), $obscure['areas'])) {
+                $ids = collect($ids)->map(function ($value) {
+                    return optional(Hashids::decode($value))[0];
+                });
+
+                $query->whereIn($model->getKeyName(), $ids);
+            } else {
+                $query->whereIn($model->getRouteKeyName(), $ids);
+            }
+        }
 
         return $this->applyScopes($query);
     }
@@ -172,22 +167,41 @@ abstract class AbstractDataTable extends DataTable
      */
     protected function getBuilderParameters(): array
     {
-        $createButton = ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.new')];
-        $columnsButton = ['extend' => 'colvis', 'text' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.columns').' <span class="caret"/>'];
-        $lengthButton = ['extend' => 'pageLength', 'text' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.limit').' <span class="caret"/>'];
+        $text = [
+            'create' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.create'),
+            'import' => '<i class="fa fa-upload"></i> '.trans('cortex/foundation::common.import'),
+
+            'bulkDelete' => '<i class="fa fa-trash"></i> '.trans('cortex/foundation::common.bulkDelete'),
+            'bulkEnable' => '<i class="fa fa-power-off"></i> '.trans('cortex/foundation::common.bulkEnable'),
+            'bulkDisable' => '<i class="fa fa-power-off"></i> '.trans('cortex/foundation::common.bulkDisable'),
+
+            'reset' => '<i class="fa fa-undo"></i> '.trans('cortex/foundation::common.reset'),
+            'reload' => '<i class="fa fa-refresh"></i> '.trans('cortex/foundation::common.reload'),
+
+            'print' => '<i class="fa fa-print"></i> '.trans('cortex/foundation::common.print'),
+            'export' => '<i class="fa fa-download"></i> '.trans('cortex/foundation::common.export'),
+            'showSelected' => '<i class="fa fa-check"></i> '.trans('cortex/foundation::common.showSelected'),
+
+            'colvis' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.colvis').' <span class="caret"></span>',
+            'pageLength' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.pageLength').' <span class="caret"></span>',
+        ];
+
+        $buttons = collect($this->buttons)->filter(function ($value) {
+            return $value;
+        })->keys()->map(function ($value) use ($text) {
+            return ['extend' => $value, 'text' => $text[$value]];
+        });
 
         return array_merge([
-            'dom' => $this->dom,
-            'keys' => $this->keys,
-            'mark' => $this->mark,
-            'order' => $this->order,
-            'select' => $this->select,
-            'retrieve' => $this->retrieve,
-            'autoWidth' => $this->autoWidth,
-            'fixedHeader' => $this->fixedHeader,
-            'buttons' => $this->createButton
-                ? [$createButton, 'print', 'reset', 'reload', 'import', 'export', $columnsButton, $lengthButton]
-                : ['print', 'reset', 'reload', 'export', $columnsButton, $lengthButton],
+            'dom' => $this->options['dom'],
+            'keys' => $this->options['keys'],
+            'mark' => $this->options['mark'],
+            'order' => $this->options['order'],
+            'select' => $this->options['select'],
+            'retrieve' => $this->options['retrieve'],
+            'autoWidth' => $this->options['autoWidth'],
+            'fixedHeader' => $this->options['fixedHeader'],
+            'buttons' => $buttons,
             'initComplete' => $this->getAjaxForm() ? "function () {
                 $('".$this->getAjaxForm()."').on('change',  (e)=> {
                     e.preventDefault();

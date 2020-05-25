@@ -6,8 +6,6 @@ return [
 
     'id' => 'ID',
     'new' => 'New',
-    'columns' => 'Columns',
-    'limit' => 'Limit',
     'cancel' => 'Cancel',
     'close' => 'Close',
     'delete' => 'Delete',
@@ -53,7 +51,24 @@ return [
     'file_name' => 'File Name',
     'mime_type' => 'Mime Type',
     'size' => 'Size',
-    'import' => 'Import',
     'drop_to_import' => 'Drop files here to import',
+
+    // Datatables buttons
+    'create' => 'Create',
+    'import' => 'Import',
+
+    'bulkDelete' => 'Bulk Delete',
+    'bulkEnable' => 'Bulk Enable',
+    'bulkDisable' => 'Bulk Disable',
+
+    'reset' => 'Reset',
+    'reload' => 'Reload',
+
+    'print' => 'Print',
+    'export' => 'Export',
+    'showSelected' => 'Show Selected',
+
+    'colvis' => 'Columns',
+    'pageLength' => 'Length',
 
 ];
