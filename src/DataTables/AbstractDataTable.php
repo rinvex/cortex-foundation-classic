@@ -40,6 +40,8 @@ abstract class AbstractDataTable extends DataTable
         'autoWidth' => false,
         'fixedHeader' => true,
         'checkbox' => true,
+        'pageLength' => 10,
+        'lengthMenu' => [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     ];
 
     /**
@@ -200,6 +202,8 @@ abstract class AbstractDataTable extends DataTable
             'retrieve' => $this->options['retrieve'],
             'autoWidth' => $this->options['autoWidth'],
             'fixedHeader' => $this->options['fixedHeader'],
+            'pageLength' => $this->options['pageLength'],
+            'lengthMenu' => $this->options['lengthMenu'],
             'buttons' => $buttons,
             'initComplete' => $this->getAjaxForm() ? "function () {
                 $('".$this->getAjaxForm()."').on('change',  (e)=> {
