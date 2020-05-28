@@ -26,6 +26,15 @@ abstract class AbstractDataTable extends DataTable
     protected $transformer;
 
     /**
+     * Available button actions. When calling an action, the value will be used
+     * as the function name (so it should be available)
+     * If you want to add or disable an action, overload and modify this property.
+     *
+     * @var array
+     */
+    protected $actions = ['print', 'csv', 'excel', 'pdf', 'delete', 'activate', 'deactivate'];
+
+    /**
      * Set default options.
      *
      * @var mixed
@@ -155,16 +164,28 @@ CDATA;
      */
     public function render($view, $data = [], $mergeData = [])
     {
-        if ($this->request()->ajax() && $this->request()->wantsJson()) {
-            return app()->call([$this, 'ajax']);
+        if (($action = $this->request()->get('action')) && in_array($action, $this->actions)) {
+            switch ($action) {
+                case 'print':
+                    return app()->call([$this, 'printPreview']);
+                    break;
+                case 'delete':
+                    return app()->call([$this, 'bulkDelete']);
+                    break;
+                case 'activate':
+                    return app()->call([$this, 'bulkActivate']);
+                    break;
+                case 'deactivate':
+                    return app()->call([$this, 'bulkDeactivate']);
+                    break;
+                default:
+                    return app()->call([$this, $action]);
+                    break;
+            }
         }
 
-        if (($action = $this->request()->get('action')) && in_array($action, $this->actions)) {
-            if ($action === 'print') {
-                return app()->call([$this, 'printPreview']);
-            }
-
-            return app()->call([$this, $action]);
+        if ($this->request()->ajax() && $this->request()->wantsJson()) {
+            return app()->call([$this, 'ajax']);
         }
 
         return view($view, array_merge($this->attributes, $data), $mergeData)->with($this->dataTableVariable, $this->getHtmlBuilder());
@@ -255,5 +276,104 @@ CDATA;
         $resource = Str::plural(mb_strtolower(Arr::last(explode(class_exists($model) ? '\\' : '.', $model))));
 
         return $resource.'-export-'.date('Y-m-d').'-'.time();
+    }
+
+    /**
+     * Perform bulk delete action.
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function bulkDelete()
+    {
+        if (! empty($selectedIds = $this->request->get('selected_ids'))) {
+            $model = app($this->model);
+            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
+
+            if (in_array($this->request()->route('accessarea'), $obscure['areas'])) {
+                $selectedIds = collect($selectedIds)->map(function ($value) {
+                    return optional(Hashids::decode($value))[0];
+                });
+
+                $model->whereIn($model->getKeyName(), $selectedIds)->get()->each->delete();
+            } else {
+                $model->whereIn($model->getRouteKeyName(), $selectedIds)->get()->each->delete();
+            }
+
+            return intend([
+                'back' => true,
+                'with' => ['success' => trans('cortex/foundation::messages.records_deleted')],
+            ]);
+        }
+
+        return intend([
+            'back' => true,
+            'with' => ['warning' => trans('cortex/foundation::messages.no_records_selected')],
+        ]);
+    }
+
+    /**
+     * Perform bulk activate action.
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function bulkActivate()
+    {
+        if (! empty($selectedIds = $this->request->get('selected_ids'))) {
+            $model = app($this->model);
+            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
+
+            if (in_array($this->request()->route('accessarea'), $obscure['areas'])) {
+                $selectedIds = collect($selectedIds)->map(function ($value) {
+                    return optional(Hashids::decode($value))[0];
+                });
+
+                $model->whereIn($model->getKeyName(), $selectedIds)->get()->each->activate();
+            } else {
+                $model->whereIn($model->getRouteKeyName(), $selectedIds)->get()->each->activate();
+            }
+
+            return intend([
+                'back' => true,
+                'with' => ['success' => trans('cortex/foundation::messages.records_activated')],
+            ]);
+        }
+
+        return intend([
+            'back' => true,
+            'with' => ['warning' => trans('cortex/foundation::messages.no_records_activated')],
+        ]);
+    }
+
+    /**
+     * Perform bulk deactivate action.
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function bulkDeactivate()
+    {
+        if (! empty($selectedIds = $this->request->get('selected_ids'))) {
+            $model = app($this->model);
+            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
+
+            if (in_array($this->request()->route('accessarea'), $obscure['areas'])) {
+                $selectedIds = collect($selectedIds)->map(function ($value) {
+                    return optional(Hashids::decode($value))[0];
+                });
+
+                $model->whereIn($model->getKeyName(), $selectedIds)->get()->each->deactivate();
+            } else {
+                $model->whereIn($model->getRouteKeyName(), $selectedIds)->get()->each->deactivate();
+            }
+
+            return intend([
+                'back' => true,
+                'with' => ['success' => trans('cortex/foundation::messages.records_deactivated')],
+            ]);
+        }
+
+        return intend([
+            'back' => true,
+            'with' => ['warning' => trans('cortex/foundation::messages.no_records_deactivated')],
+        ]);
     }
 }
