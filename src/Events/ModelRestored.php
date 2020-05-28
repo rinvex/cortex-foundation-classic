@@ -12,7 +12,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class CrudPerformed implements ShouldBroadcast
+class ModelRestored implements ShouldBroadcast
 {
     use SerializesModels;
     use InteractsWithSockets;

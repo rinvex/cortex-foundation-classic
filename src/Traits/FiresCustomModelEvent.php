@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Traits;
 
+use Illuminate\Support\Str;
+
 trait FiresCustomModelEvent
 {
     /**
@@ -20,7 +22,18 @@ trait FiresCustomModelEvent
             return;
         }
 
-        $result = static::$dispatcher->{$method}(new $this->dispatchesEvents[$event]($this, $event));
+        if ($event === 'deleted') {
+            $modelArray = $this->setAttribute('resource', $resource = $this->getMorphClass())
+                               ->setAttribute('collection', Str::plural($resource))
+                               ->setAttribute('action', mb_substr($event, 0, -1))
+                               ->setAttribute('route_key', $this->getRouteKey())
+                               ->setAttribute('event', $event)
+                               ->toArray();
+
+            $result = static::$dispatcher->{$method}(new $this->dispatchesEvents[$event]($modelArray));
+        } else {
+            $result = static::$dispatcher->{$method}(new $this->dispatchesEvents[$event]($this, $event));
+        }
 
         if (! is_null($result)) {
             return $result;
