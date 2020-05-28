@@ -129,10 +129,19 @@ abstract class AbstractDataTable extends DataTable
      */
     public function html()
     {
+        $data = <<<CDATA
+function(data){
+    var formData = $("{$this->getAjaxForm()}").find("input, select").serializeArray();
+    $.each(formData, function(i, obj){
+        data[obj.name] = obj.value;
+    });
+}
+CDATA;
+
         return $this->builder()
                     ->columns($this->getColumns())
                     ->parameters($this->getBuilderParameters())
-                    ->ajaxWithForm($this->getAjaxUrl(), $this->getAjaxForm());
+                    ->postAjax(['url' => $this->getAjaxUrl(), 'data' => $data]);
     }
 
     /**
