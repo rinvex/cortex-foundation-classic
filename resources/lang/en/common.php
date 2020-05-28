@@ -57,13 +57,14 @@ return [
     'create' => 'Create',
     'import' => 'Import',
 
-    'bulkDelete' => 'Bulk Delete',
-    'bulkEnable' => 'Bulk Enable',
-    'bulkDisable' => 'Bulk Disable',
+    'bulk_delete' => 'Bulk Delete',
+    'bulk_activate' => 'Bulk Activate',
+    'bulk_deactivate' => 'Bulk Deactivate',
 
     'reset' => 'Reset',
     'reload' => 'Reload',
 
+    'bulk' => 'Bulk',
     'print' => 'Print',
     'export' => 'Export',
     'showSelected' => 'Show Selected',

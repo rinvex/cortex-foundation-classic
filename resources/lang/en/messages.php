@@ -15,5 +15,7 @@ return [
     'token_mismatch' => 'The page has expired due to inactivity. Please refresh and try again.',
     'invalid_phone' => 'Invalid phone number!',
     'invalid_indexing_rule' => 'An indexing rule needs to return a boolean or a string.',
+    'no_records_selected' => 'No selected records!',
+    'records_deleted' => 'Records deleted!',
 
 ];
