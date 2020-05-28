@@ -17,5 +17,7 @@ return [
     'invalid_indexing_rule' => 'An indexing rule needs to return a boolean or a string.',
     'no_records_selected' => 'No selected records!',
     'records_deleted' => 'Records deleted!',
+    'records_activated' => 'Records activated!',
+    'records_deactivated' => 'Records deactivated!',
 
 ];
