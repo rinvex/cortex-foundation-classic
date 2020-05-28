@@ -198,30 +198,7 @@ CDATA;
      */
     protected function getBuilderParameters(): array
     {
-        $text = [
-            'create' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.create'),
-            'import' => '<i class="fa fa-upload"></i> '.trans('cortex/foundation::common.import'),
-
-            'bulkDelete' => '<i class="fa fa-trash"></i> '.trans('cortex/foundation::common.bulkDelete'),
-            'bulkEnable' => '<i class="fa fa-power-off"></i> '.trans('cortex/foundation::common.bulkEnable'),
-            'bulkDisable' => '<i class="fa fa-power-off"></i> '.trans('cortex/foundation::common.bulkDisable'),
-
-            'reset' => '<i class="fa fa-undo"></i> '.trans('cortex/foundation::common.reset'),
-            'reload' => '<i class="fa fa-refresh"></i> '.trans('cortex/foundation::common.reload'),
-
-            'print' => '<i class="fa fa-print"></i> '.trans('cortex/foundation::common.print'),
-            'export' => '<i class="fa fa-download"></i> '.trans('cortex/foundation::common.export'),
-            'showSelected' => '<i class="fa fa-check"></i> '.trans('cortex/foundation::common.showSelected'),
-
-            'colvis' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.colvis').' <span class="caret"></span>',
-            'pageLength' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.pageLength').' <span class="caret"></span>',
-        ];
-
-        $buttons = collect($this->buttons)->filter(function ($value) {
-            return $value;
-        })->keys()->map(function ($value) use ($text) {
-            return ['extend' => $value, 'text' => $text[$value]];
-        });
+        $buttons = $this->getButtons();
 
         return array_merge([
             'dom' => $this->options['dom'],
@@ -242,6 +219,37 @@ CDATA;
                 });
             }" : '',
         ], $this->builderParameters);
+    }
+
+    /**
+     * Get buttons for datatable.
+     *
+     * @return array
+     */
+    protected function getButtons(): array
+    {
+        $this->buttons['bulk'] = $this->buttons['bulkDelete']
+                                 || $this->buttons['bulkActivate']
+                                 || $this->buttons['bulkDeactivate'];
+
+        $buttons = collect($this->buttons)->filter(fn($value) => $value);
+        $bulkButtons = $buttons->only(['bulkDelete', 'bulkActivate', 'bulkDeactivate']);
+
+        return collect([
+            'create' => ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.create')],
+            'import' => ['extend' => 'import', 'text' => '<i class="fa fa-upload"></i> '.trans('cortex/foundation::common.import')],
+
+            'reset' => ['extend' => 'reset', 'text' => '<i class="fa fa-undo"></i> '.trans('cortex/foundation::common.reset')],
+            'reload' => ['extend' => 'reload', 'text' => '<i class="fa fa-refresh"></i> '.trans('cortex/foundation::common.reload')],
+            'showSelected' => ['extend' => 'showSelected', 'text' => '<i class="fa fa-check"></i> '.trans('cortex/foundation::common.showSelected')],
+
+            'print' => ['extend' => 'print', 'text' => '<i class="fa fa-print"></i> '.trans('cortex/foundation::common.print')],
+            'export' => ['extend' => 'export', 'text' => '<i class="fa fa-download"></i> '.trans('cortex/foundation::common.export').'&nbsp;<span class="caret"/>'],
+
+            'bulk' => ['extend' => 'bulk', 'text' => '<i class="fa fa-list"></i> '.trans('cortex/foundation::common.bulk').'&nbsp;<span class="caret"/>', 'buttons' => $bulkButtons->keys()],
+            'colvis' => ['extend' => 'colvis', 'text' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.colvis').'&nbsp;<span class="caret"/>'],
+            'pageLength' => ['extend' => 'pageLength', 'text' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.pageLength').'&nbsp;<span class="caret"/>'],
+        ])->only($buttons->keys())->values()->toArray();
     }
 
     /**
