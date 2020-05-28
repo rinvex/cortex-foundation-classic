@@ -53,16 +53,16 @@ abstract class AbstractDataTable extends DataTable
         'create' => true,
         'import' => true,
 
-        'export' => true,
-        'print' => true,
-        'showSelected' => true,
-
         'reset' => true,
         'reload' => true,
+        'showSelected' => true,
+
+        'print' => true,
+        'export' => true,
 
         'bulkDelete' => true,
-        'bulkEnable' => false,
-        'bulkDisable' => false,
+        'bulkActivate' => false,
+        'bulkDeactivate' => false,
 
         'colvis' => true,
         'pageLength' => true,
