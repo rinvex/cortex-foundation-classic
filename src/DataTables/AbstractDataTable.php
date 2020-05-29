@@ -231,7 +231,7 @@ CDATA;
                                  || $this->buttons['bulkActivate']
                                  || $this->buttons['bulkDeactivate'];
 
-        $buttons = collect($this->buttons)->filter(fn($value) => $value);
+        $buttons = collect($this->buttons)->filter(fn ($value) => $value);
         $bulkButtons = $buttons->only(['bulkDelete', 'bulkActivate', 'bulkDeactivate']);
 
         return collect([

@@ -31,7 +31,7 @@ class ModelDeleted implements ShouldBroadcast
     /**
      * Update a new event instance.
      *
-     * @param array  $attributes
+     * @param array $attributes
      */
     public function __construct(array $attributes)
     {
