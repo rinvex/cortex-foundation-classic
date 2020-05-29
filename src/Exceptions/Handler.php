@@ -127,7 +127,7 @@ class Handler extends ExceptionHandler
 
             return intend([
                 'url' => $model ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),
-                'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => strip_tags($request->route($single))])],
+                'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
             ]);
         } elseif ($e instanceof ThrottleRequestsException) {
             return intend([
