@@ -32,9 +32,7 @@ class ImportRecordsDataTable extends AbstractDataTable
      */
     public function query()
     {
-        $query = app($this->model)->query()->where('resource', $this->resource->getMorphClass());
-
-        return $this->applyScopes($query);
+        return parent::query()->where('resource', $this->resource->getMorphClass());
     }
 
     /**
