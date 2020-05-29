@@ -101,6 +101,7 @@ class ImportRecordsDataTable extends AbstractDataTable
     protected function getColumns(): array
     {
         return [
+            'id' => ['checkboxes' => '{"selectRow": true}', 'exportable' => false, 'printable' => false],
             'resource' => ['title' => trans('cortex/foundation::common.resource')],
             'status' => ['title' => trans('cortex/foundation::common.status')],
             'data' => ['title' => trans('cortex/foundation::common.data'), 'orderable' => false],

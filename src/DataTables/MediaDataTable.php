@@ -90,6 +90,7 @@ class MediaDataTable extends AbstractDataTable
     protected function getColumns(): array
     {
         return [
+            'id' => ['checkboxes' => '{"selectRow": true}', 'exportable' => false, 'printable' => false],
             'name' => ['title' => trans('cortex/foundation::common.name'), 'responsivePriority' => 0],
             'file_name' => ['title' => trans('cortex/foundation::common.file_name')],
             'mime_type' => ['title' => trans('cortex/foundation::common.mime_type')],

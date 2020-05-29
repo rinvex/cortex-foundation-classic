@@ -93,6 +93,7 @@ class ImportLogsDataTable extends AbstractDataTable
     protected function getColumns(): array
     {
         return [
+            'id' => ['checkboxes' => '{"selectRow": true}', 'exportable' => false, 'printable' => false],
             'details' => ['title' => '', 'data' => null, 'defaultContent' => '', 'class' => 'dt-details-control', 'searchable' => false, 'orderable' => false],
             'causer' => ['title' => trans('cortex/foundation::common.causer'), 'name' => 'causer.username', 'searchable' => false, 'orderable' => false, 'render' => 'full.causer_route ? "<a href=\""+full.causer_route+"\">"+data+"</a>" : data', 'responsivePriority' => 0],
             'description' => ['title' => trans('cortex/foundation::common.description'), 'orderable' => false],
