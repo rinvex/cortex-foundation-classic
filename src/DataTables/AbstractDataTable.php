@@ -48,7 +48,6 @@ abstract class AbstractDataTable extends DataTable
         'retrieve' => true,
         'autoWidth' => false,
         'fixedHeader' => true,
-        'checkbox' => true,
         'pageLength' => 10,
         'lengthMenu' => [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     ];
