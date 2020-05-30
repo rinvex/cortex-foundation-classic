@@ -116,10 +116,6 @@ class FoundationServiceProvider extends ServiceProvider
         ]);
 
         // Load resources
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web/adminarea.php');
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web/frontarea.php');
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web/tenantarea.php');
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web/managerarea.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
         ! $this->autoloadMigrations('cortex/foundation') || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
@@ -147,15 +143,6 @@ class FoundationServiceProvider extends ServiceProvider
                 $lifetime,
                 $app
             );
-        });
-
-        $this->app->booted(function () {
-            if ($this->app->routesAreCached()) {
-                require $this->app->getCachedRoutesPath();
-            } else {
-                $this->app['router']->getRoutes()->refreshNameLookups();
-                $this->app['router']->getRoutes()->refreshActionLookups();
-            }
         });
 
         // Append middleware to the 'web' middlware group

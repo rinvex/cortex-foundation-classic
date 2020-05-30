@@ -10,10 +10,14 @@ return [
     'resource_deleted' => 'Done! Requested :resource [:identifier] deleted successfully.',
     'resource_not_found' => 'Sorry! Requested :resource [:identifier] not found!',
     'delete_confirmation_title' => 'Delete Confirmation',
-    'delete_confirmation_body' => 'Are you sure you want to delete :resource [<strong>:identifier</strong>]?',
+    'delete_confirmation_body' => 'Are you sure you want to delete :resource [:identifier]?',
     'session_required' => 'You must login first!',
     'token_mismatch' => 'The page has expired due to inactivity. Please refresh and try again.',
     'invalid_phone' => 'Invalid phone number!',
     'invalid_indexing_rule' => 'An indexing rule needs to return a boolean or a string.',
+    'no_records_selected' => 'No selected records!',
+    'records_deleted' => 'Records deleted!',
+    'records_activated' => 'Records activated!',
+    'records_deactivated' => 'Records deactivated!',
 
 ];

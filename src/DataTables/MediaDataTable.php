@@ -21,9 +21,28 @@ class MediaDataTable extends AbstractDataTable
     protected $model = Media::class;
 
     /**
-     * {@inheritdoc}
+     * Set action buttons.
+     *
+     * @var mixed
      */
-    protected $createButton = false;
+    protected $buttons = [
+        'create' => false,
+        'import' => false,
+
+        'reset' => true,
+        'reload' => true,
+        'showSelected' => true,
+
+        'print' => true,
+        'export' => true,
+
+        'bulkDelete' => true,
+        'bulkActivate' => false,
+        'bulkDeactivate' => false,
+
+        'colvis' => true,
+        'pageLength' => true,
+    ];
 
     /**
      * {@inheritdoc}
@@ -42,11 +61,13 @@ class MediaDataTable extends AbstractDataTable
     /**
      * Get the query object to be processed by dataTables.
      *
+     * @TODO: Apply row selection and bulk actions, check parent::query() for reference.
+     *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Support\Collection
      */
     public function query()
     {
-        $query = $this->resource->media()->orderBy('order_column', 'ASC');
+        $query = $this->resource->media();
 
         return $this->applyScopes($query);
     }
@@ -71,6 +92,7 @@ class MediaDataTable extends AbstractDataTable
     protected function getColumns(): array
     {
         return [
+            'id' => ['checkboxes' => '{"selectRow": true}', 'exportable' => false, 'printable' => false],
             'name' => ['title' => trans('cortex/foundation::common.name'), 'responsivePriority' => 0],
             'file_name' => ['title' => trans('cortex/foundation::common.file_name')],
             'mime_type' => ['title' => trans('cortex/foundation::common.mime_type')],

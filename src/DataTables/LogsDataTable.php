@@ -27,6 +27,8 @@ class LogsDataTable extends AbstractDataTable
     /**
      * Get the query object to be processed by dataTables.
      *
+     * @TODO: Apply row selection and bulk actions, check parent::query() for reference.
+     *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Support\Collection
      */
     public function query()
@@ -56,11 +58,11 @@ class LogsDataTable extends AbstractDataTable
     protected function getBuilderParameters(): array
     {
         return [
-            'dom' => $this->dom,
-            'keys' => $this->keys,
-            'order' => $this->order,
-            'retrieve' => $this->retrieve,
-            'autoWidth' => $this->autoWidth,
+            'dom' => $this->options['dom'],
+            'keys' => $this->options['keys'],
+            'order' => $this->options['order'],
+            'retrieve' => $this->options['retrieve'],
+            'autoWidth' => $this->options['autoWidth'],
             'drawCallback' => "function (settings) {
                 var api = this.api();
 
@@ -93,6 +95,7 @@ class LogsDataTable extends AbstractDataTable
     protected function getColumns(): array
     {
         return [
+            'id' => ['checkboxes' => '{"selectRow": true}', 'exportable' => false, 'printable' => false],
             'details' => ['title' => '', 'data' => null, 'defaultContent' => '', 'class' => 'dt-details-control', 'searchable' => false, 'orderable' => false],
             'causer' => ['title' => trans('cortex/foundation::common.causer'), 'name' => 'causer.username', 'searchable' => false, 'orderable' => false, 'render' => 'full.causer_route ? "<a href=\""+full.causer_route+"\">"+data+"</a>" : data', 'responsivePriority' => 0],
             'description' => ['title' => trans('cortex/foundation::common.description'), 'orderable' => false],
