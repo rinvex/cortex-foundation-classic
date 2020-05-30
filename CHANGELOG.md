@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v4.1.1] - 2020-05-30
+- Update composer dependencies
+
 ## [v4.1.0] - 2020-05-30
 - With the significance of recent updates, new minor release required
 
@@ -224,6 +227,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v4.1.1]: https://github.com/rinvex/cortex-foundation/compare/v4.1.0...v4.1.1
 [v4.1.0]: https://github.com/rinvex/cortex-foundation/compare/v4.0.8...v4.1.0
 [v4.0.9]: https://github.com/rinvex/cortex-foundation/compare/v4.0.8...v4.0.9
 [v4.0.8]: https://github.com/rinvex/cortex-foundation/compare/v4.0.7...v4.0.8
