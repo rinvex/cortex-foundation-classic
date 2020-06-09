@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Models;
 
 use Watson\Validating\ValidatingTrait;
-use Rinvex\Cacheable\CacheableEloquent;
 use Spatie\Activitylog\Models\Activity;
 
 /**
@@ -43,7 +42,6 @@ use Spatie\Activitylog\Models\Activity;
 class Log extends Activity
 {
     use ValidatingTrait;
-    use CacheableEloquent;
 
     /**
      * {@inheritdoc}

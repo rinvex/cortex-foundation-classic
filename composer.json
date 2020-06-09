@@ -57,7 +57,6 @@
         "mcamara/laravel-localization": "^1.5.0",
         "mariuzzo/laravel-js-localization": "^1.5.0",
         "proengsoft/laravel-jsvalidation": "^3.0.0",
-        "rinvex/laravel-cacheable": "^4.0.0",
         "rinvex/laravel-composer": "^4.0.0",
         "rinvex/laravel-menus": "^4.0.0",
         "rinvex/laravel-pages": "^4.0.0",
