@@ -129,14 +129,14 @@ class DiscoveryServiceProvider extends ServiceProvider
      */
     public function discoverConfig(): void
     {
-        $configFiles = $this->app['files']->glob($this->app->path("*/*/config/config.php"));
+        $configFiles = $this->app['files']->glob($this->app->path('*/*/config/config.php'));
 
         collect($configFiles)
             ->reject(function ($file) {
                 return ! is_file($file);
             })
             ->each(function ($file) {
-                $module = str_replace([$this->app->basePath('app/'), "/config/config.php", '/'], ['', '', '.'], $file);
+                $module = str_replace([$this->app->basePath('app/'), '/config/config.php', '/'], ['', '', '.'], $file);
 
                 $this->mergeConfigFrom($file, $module);
                 $this->publishesConfig($module, true);
