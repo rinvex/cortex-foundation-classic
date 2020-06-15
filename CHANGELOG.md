@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v4.2.0] - 2020-06-15
+- Autoload config, views, language, menus, breadcrumbs, and migrations for all modules
+- Add intl-tel-input images to webpack processing
+- Drop using rinvex/laravel-cacheable from core packages for more flexibility
+  - Caching should be handled on the application layer, not enforced from the core packages
+- Drop PHP 7.2 & 7.3 support from travis
+- Tweak selected_ids collection filtration and check
+
 ## [v4.1.1] - 2020-05-30
 - Update composer dependencies
 
@@ -227,6 +235,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v4.2.0]: https://github.com/rinvex/cortex-foundation/compare/v4.1.1...v4.2.0
 [v4.1.1]: https://github.com/rinvex/cortex-foundation/compare/v4.1.0...v4.1.1
 [v4.1.0]: https://github.com/rinvex/cortex-foundation/compare/v4.0.8...v4.1.0
 [v4.0.9]: https://github.com/rinvex/cortex-foundation/compare/v4.0.8...v4.0.9
