@@ -99,12 +99,13 @@ abstract class AbstractDataTable extends DataTable
     {
         $model = app($this->model);
         $query = $model->query();
+        $selectedIds = collect($this->request->get('selected_ids'))->filter();
 
-        if (! empty($selectedIds = $this->request->get('selected_ids'))) {
+        if ($selectedIds->isNotEmpty()) {
             $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
 
             if (in_array(request()->route('accessarea'), $obscure['areas'])) {
-                $selectedIds = collect($selectedIds)->map(function ($value) {
+                $selectedIds = $selectedIds->map(function ($value) {
                     return optional(Hashids::decode($value))[0];
                 });
 
@@ -292,12 +293,14 @@ CDATA;
      */
     public function bulkDelete()
     {
-        if (! empty($selectedIds = $this->request->get('selected_ids'))) {
+        $selectedIds = collect($this->request->get('selected_ids'))->filter();
+
+        if ($selectedIds->isNotEmpty()) {
             $model = app($this->model);
             $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
 
             if (in_array($this->request()->route('accessarea'), $obscure['areas'])) {
-                $selectedIds = collect($selectedIds)->map(function ($value) {
+                $selectedIds = $selectedIds->map(function ($value) {
                     return optional(Hashids::decode($value))[0];
                 });
 
@@ -325,12 +328,14 @@ CDATA;
      */
     public function bulkActivate()
     {
-        if (! empty($selectedIds = $this->request->get('selected_ids'))) {
+        $selectedIds = collect($this->request->get('selected_ids'))->filter();
+
+        if ($selectedIds->isNotEmpty()) {
             $model = app($this->model);
             $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
 
             if (in_array($this->request()->route('accessarea'), $obscure['areas'])) {
-                $selectedIds = collect($selectedIds)->map(function ($value) {
+                $selectedIds = $selectedIds->map(function ($value) {
                     return optional(Hashids::decode($value))[0];
                 });
 
@@ -358,12 +363,14 @@ CDATA;
      */
     public function bulkDeactivate()
     {
-        if (! empty($selectedIds = $this->request->get('selected_ids'))) {
+        $selectedIds = collect($this->request->get('selected_ids'))->filter();
+
+        if ($selectedIds->isNotEmpty()) {
             $model = app($this->model);
             $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
 
             if (in_array($this->request()->route('accessarea'), $obscure['areas'])) {
-                $selectedIds = collect($selectedIds)->map(function ($value) {
+                $selectedIds = $selectedIds->map(function ($value) {
                     return optional(Hashids::decode($value))[0];
                 });
 

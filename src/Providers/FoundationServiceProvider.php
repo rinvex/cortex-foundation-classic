@@ -81,9 +81,6 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->singleton('cortex.foundation.import_record', $importerModel = $this->app['config']['cortex.foundation.models.import_record']);
         $importerModel === ImportRecord::class || $this->app->alias('cortex.foundation.import_record', ImportRecord::class);
 
-        // Merge config
-        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'cortex.foundation');
-
         // Override datatables html builder
         $this->app->bind(\Yajra\DataTables\Html\Builder::class, \Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder::class);
 
@@ -114,22 +111,6 @@ class FoundationServiceProvider extends ServiceProvider
         Relation::morphMap([
             'media' => config('medialibrary.media_model'),
         ]);
-
-        // Load resources
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
-        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
-        ! $this->autoloadMigrations('cortex/foundation') || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
-
-        $this->app->runningInConsole() || $dispatcher->listen('accessarea.ready', function ($accessarea) {
-            ! file_exists($menus = __DIR__."/../../routes/menus/{$accessarea}.php") || require $menus;
-            ! file_exists($breadcrumbs = __DIR__."/../../routes/breadcrumbs/{$accessarea}.php") || require $breadcrumbs;
-        });
-
-        // Publish Resources
-        $this->publishesLang('cortex/foundation', true);
-        $this->publishesViews('cortex/foundation', true);
-        $this->publishesConfig('cortex/foundation', true);
-        $this->publishesMigrations('cortex/foundation', true);
 
         SessionFacade::extend('database', function ($app) {
             $table = $app['config']['session.table'];
