@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
 use Illuminate\Contracts\Foundation\CachesRoutes;
+use Cortex\Foundation\Overrides\Illuminate\Foundation\Events\DiscoverEvents;
 
 class DiscoveryServiceProvider extends ServiceProvider
 {
     use ConsoleTools;
+
+    /**
+     * The event handler mappings for the application.
+     *
+     * @var array
+     */
+    protected $listen = [];
+
+    /**
+     * The subscriber classes to register.
+     *
+     * @var array
+     */
+    protected $subscribe = [];
 
     /**
      * Register any application services.
@@ -36,10 +52,62 @@ class DiscoveryServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->bootDiscoveredEvents();
         $this->bootDiscoveredRoutes();
+
         $this->discoverResources('resources/lang');
         $this->discoverResources('resources/views');
         $this->discoverResources('database/migrations');
+    }
+
+    /**
+     * Register the application's event listeners.
+     *
+     * @return void
+     */
+    public function bootDiscoveredEvents()
+    {
+        if ($this->app->eventsAreCached()) {
+            $cache = require $this->app->getCachedEventsPath();
+
+            $events = $cache[get_class($this)] ?? [];
+        } else {
+            $events = array_merge_recursive(
+                $this->discoverEvents(),
+                $this->listen
+            );
+        }
+
+        foreach ($events as $event => $listeners) {
+            foreach (array_unique($listeners) as $listener) {
+                Event::listen($event, $listener);
+            }
+        }
+
+        foreach ($this->subscribe as $subscriber) {
+            Event::subscribe($subscriber);
+        }
+    }
+
+    /**
+     * Discover the events and listeners for the application.
+     *
+     * @return array
+     */
+    public function discoverEvents()
+    {
+        $eventFiles = $this->app['files']->glob($this->app->path('*/*/src/Listeners'));
+
+        return collect($eventFiles)
+            ->reject(function ($directory) {
+                return ! is_dir($directory);
+            })
+            ->reduce(function ($discovered, $directory) {
+                return array_merge_recursive(
+                    $discovered,
+                    DiscoverEvents::within($directory, base_path())
+                );
+            }, []);
     }
 
     /**
