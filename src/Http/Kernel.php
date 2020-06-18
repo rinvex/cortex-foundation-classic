@@ -43,7 +43,7 @@ class Kernel extends HttpKernel
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Cortex\Foundation\Http\Middleware\NotificationMiddleware::class,
-            \Cortex\Foundation\Http\Middleware\SetAccessArea::class,
+            \Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes::class,
         ],
 
         'api' => [
@@ -80,7 +80,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewarePriority = [
         \Illuminate\Session\Middleware\StartSession::class,
-        \Cortex\Foundation\Http\Middleware\SetAccessArea::class,
+        \Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \Cortex\Auth\Http\Middleware\Authenticate::class,
         \Cortex\Auth\Http\Middleware\AuthenticateSession::class,

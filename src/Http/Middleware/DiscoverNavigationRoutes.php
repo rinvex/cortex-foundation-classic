@@ -6,7 +6,7 @@ namespace Cortex\Foundation\Http\Middleware;
 
 use Closure;
 
-class SetAccessArea
+class DiscoverNavigationRoutes
 {
     /**
      * Handle an incoming request.
