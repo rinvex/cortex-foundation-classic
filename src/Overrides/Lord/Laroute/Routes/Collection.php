@@ -20,11 +20,12 @@ class Collection extends BaseCollection
      * Parse the routes into a jsonable output.
      *
      * @param AbstractRouteCollection $routes
-     * @param string $filter
-     * @param string $namespace
+     * @param string                  $filter
+     * @param string                  $namespace
+     *
+     * @throws ZeroRoutesException
      *
      * @return array
-     * @throws ZeroRoutesException
      */
     protected function parseRoutes(AbstractRouteCollection $routes, $filter, $namespace)
     {
@@ -40,7 +41,7 @@ class Collection extends BaseCollection
     }
 
     /**
-     * Throw an exception if there aren't any routes to process
+     * Throw an exception if there aren't any routes to process.
      *
      * @param AbstractRouteCollection $routes
      *
