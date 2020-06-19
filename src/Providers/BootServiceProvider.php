@@ -17,6 +17,7 @@ class BootServiceProvider extends ServiceProvider
     {
         $this->bootstrapModules();
     }
+
     /**
      * Bootstrap application modules.
      *
