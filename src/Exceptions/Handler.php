@@ -182,7 +182,7 @@ class Handler extends ExceptionHandler
         session()->put('url.intended', url()->current());
 
         return intend([
-            'url' => route($request->route('accessarea').'.login'),
+            'url' => route(app('request.accessarea').'.login'),
             'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
         ]);
     }
