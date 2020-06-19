@@ -48,16 +48,16 @@ trait Auditable
     public static function bootAuditable()
     {
         static::creating(function (Model $model) {
-            $model->created_by_id || $model->created_by_id = optional(auth()->guard(request()->route('guard'))->user())->getKey();
-            $model->created_by_type || $model->created_by_type = optional(auth()->guard(request()->route('guard'))->user())->getMorphClass();
+            $model->created_by_id || $model->created_by_id = optional(auth()->guard(app('request.guard'))->user())->getKey();
+            $model->created_by_type || $model->created_by_type = optional(auth()->guard(app('request.guard'))->user())->getMorphClass();
 
-            $model->updated_by_id || $model->updated_by_id = optional(auth()->guard(request()->route('guard'))->user())->getKey();
-            $model->updated_by_type || $model->updated_by_type = optional(auth()->guard(request()->route('guard'))->user())->getMorphClass();
+            $model->updated_by_id || $model->updated_by_id = optional(auth()->guard(app('request.guard'))->user())->getKey();
+            $model->updated_by_type || $model->updated_by_type = optional(auth()->guard(app('request.guard'))->user())->getMorphClass();
         });
 
         static::updating(function (Model $model) {
-            $model->isDirty('updated_by_id') || $model->updated_by_id = optional(auth()->guard(request()->route('guard'))->user())->getKey();
-            $model->isDirty('updated_by_type') || $model->updated_by_type = optional(auth()->guard(request()->route('guard'))->user())->getMorphClass();
+            $model->isDirty('updated_by_id') || $model->updated_by_id = optional(auth()->guard(app('request.guard'))->user())->getKey();
+            $model->isDirty('updated_by_type') || $model->updated_by_type = optional(auth()->guard(app('request.guard'))->user())->getMorphClass();
         });
     }
 

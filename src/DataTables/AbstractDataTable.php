@@ -104,7 +104,7 @@ abstract class AbstractDataTable extends DataTable
         if ($selectedIds->isNotEmpty()) {
             $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
 
-            if (in_array(request()->route('accessarea'), $obscure['areas'])) {
+            if (in_array(app('request.accessarea'), $obscure['areas'])) {
                 $selectedIds = $selectedIds->map(function ($value) {
                     return optional(Hashids::decode($value))[0];
                 });
@@ -299,7 +299,7 @@ CDATA;
             $model = app($this->model);
             $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
 
-            if (in_array($this->request()->route('accessarea'), $obscure['areas'])) {
+            if (in_array($this->app('request.accessarea'), $obscure['areas'])) {
                 $selectedIds = $selectedIds->map(function ($value) {
                     return optional(Hashids::decode($value))[0];
                 });
@@ -334,7 +334,7 @@ CDATA;
             $model = app($this->model);
             $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
 
-            if (in_array($this->request()->route('accessarea'), $obscure['areas'])) {
+            if (in_array($this->app('request.accessarea'), $obscure['areas'])) {
                 $selectedIds = $selectedIds->map(function ($value) {
                     return optional(Hashids::decode($value))[0];
                 });
@@ -369,7 +369,7 @@ CDATA;
             $model = app($this->model);
             $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
 
-            if (in_array($this->request()->route('accessarea'), $obscure['areas'])) {
+            if (in_array($this->app('request.accessarea'), $obscure['areas'])) {
                 $selectedIds = $selectedIds->map(function ($value) {
                     return optional(Hashids::decode($value))[0];
                 });

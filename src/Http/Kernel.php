@@ -38,12 +38,12 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Cortex\Foundation\Http\Middleware\LocalizationRedirect::class,
-            \Cortex\Foundation\Http\Middleware\ForgetLocaleRouteParameter::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Cortex\Foundation\Http\Middleware\NotificationMiddleware::class,
-            \Cortex\Foundation\Http\Middleware\SetAccessArea::class,
+            \Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes::class,
+            \Cortex\Foundation\Http\Middleware\UnbindRouteParameters::class,
         ],
 
         'api' => [
@@ -80,7 +80,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewarePriority = [
         \Illuminate\Session\Middleware\StartSession::class,
-        \Cortex\Foundation\Http\Middleware\SetAccessArea::class,
+        \Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \Cortex\Auth\Http\Middleware\Authenticate::class,
         \Cortex\Auth\Http\Middleware\AuthenticateSession::class,

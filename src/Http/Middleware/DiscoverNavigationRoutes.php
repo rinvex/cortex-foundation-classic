@@ -6,7 +6,7 @@ namespace Cortex\Foundation\Http\Middleware;
 
 use Closure;
 
-class SetAccessArea
+class DiscoverNavigationRoutes
 {
     /**
      * Handle an incoming request.
@@ -22,7 +22,7 @@ class SetAccessArea
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        $accessarea = $request->route('accessarea');
+        $accessarea = app('request.accessarea');
 
         $menuFiles = app('files')->glob(app()->path("*/*/routes/menus/{$accessarea}.php"));
         $breadcrumbFiles = app('files')->glob(app()->path("*/*/routes/breadcrumbs/{$accessarea}.php"));

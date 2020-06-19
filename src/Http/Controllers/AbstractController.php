@@ -53,17 +53,18 @@ abstract class AbstractController extends Controller
     {
         // Assign global route parameters
         if ($route = request()->route()) {
-            $accessarea = Str::before(Route::currentRouteName(), '.');
             $passwordResetBroker = $this->getPasswordResetBroker();
+            $accessarea = $this->getAccessarea();
             $guard = $this->getGuard();
-
-            $route->setParameter('passwordResetBroker', $passwordResetBroker);
-            $route->setParameter('accessarea', $accessarea);
-            $route->setParameter('guard', $guard);
 
             // Activate Guardians
             ! in_array($accessarea, config('cortex.auth.guardians')) || $this->middleware('auth.basic:guardian,username');
         }
+
+        app()->singleton('request.passwordResetBroker', fn() => $passwordResetBroker ?? null);
+        app()->singleton('request.accessarea', fn() => $accessarea ?? null);
+        app()->singleton('request.guard', fn() => $guard ?? null);
+
     }
 
     /**
@@ -73,8 +74,7 @@ abstract class AbstractController extends Controller
      */
     protected function guessGuard(): string
     {
-        $accessarea = Str::before(Route::currentRouteName(), '.');
-        $guard = mb_strstr($accessarea, 'area', true);
+        $guard = mb_strstr($this->getAccessarea(), 'area', true);
 
         return config('auth.guards.'.$guard) ? $guard : config('auth.defaults.guard');
     }
@@ -114,8 +114,7 @@ abstract class AbstractController extends Controller
      */
     protected function guessPasswordResetBroker(): string
     {
-        $accessarea = Str::before(Route::currentRouteName(), '.');
-        $passwordResetBroker = mb_strstr($accessarea, 'area', true);
+        $passwordResetBroker = mb_strstr($this->getAccessarea(), 'area', true);
 
         return config('auth.passwords.'.$passwordResetBroker) ? $passwordResetBroker : config('auth.defaults.passwords');
     }
@@ -137,8 +136,7 @@ abstract class AbstractController extends Controller
      */
     protected function guessEmailVerificationBroker(): string
     {
-        $accessarea = Str::before(Route::currentRouteName(), '.');
-        $emailVerificationBroker = mb_strstr($accessarea, 'area', true);
+        $emailVerificationBroker = mb_strstr($this->getAccessarea(), 'area', true);
 
         return config('auth.passwords.'.$emailVerificationBroker) ? $emailVerificationBroker : config('auth.defaults.passwords');
     }
@@ -151,5 +149,15 @@ abstract class AbstractController extends Controller
     protected function getEmailVerificationBroker(): string
     {
         return $this->emailVerificationBroker ?? $this->guessEmailVerificationBroker();
+    }
+
+    /**
+     * Get the accessarea.
+     *
+     * @return string
+     */
+    protected function getAccessarea(): string
+    {
+        return Str::before(Route::currentRouteName(), '.');
     }
 }
