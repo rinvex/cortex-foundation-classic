@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v5.0.0] - 2020-06-19
+- Update composer dependencies
+- Introducing module early bootstrapping feature
+- Override core Application foundation class and PackageManifest bootstrap cache builder
+- Override LarouteCollection to fix issues with cached routes
+- Refactor route parameters to container service binding
+- Rename ForgetLocaleRouteParameter to UnbindRouteParameters and change execution order - Plus unbind {subdomain} route parameter
+- Refactor route parameters to container service binding
+- Rename SetAccessArea Middleware to DiscoverNavigationRoutes
+- Merge event discovery into DiscoveryServiceProvider
+- Stick to composer version constraints recommendations and ease minimum required version of modules
+
 ## [v4.2.0] - 2020-06-15
 - Autoload config, views, language, menus, breadcrumbs, and migrations for all modules
 - Add intl-tel-input images to webpack processing
@@ -235,6 +247,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v5.0.0]: https://github.com/rinvex/cortex-foundation/compare/v4.2.0...v5.0.0
 [v4.2.0]: https://github.com/rinvex/cortex-foundation/compare/v4.1.1...v4.2.0
 [v4.1.1]: https://github.com/rinvex/cortex-foundation/compare/v4.1.0...v4.1.1
 [v4.1.0]: https://github.com/rinvex/cortex-foundation/compare/v4.0.8...v4.1.0
