@@ -105,6 +105,7 @@
     "extra": {
         "laravel": {
             "providers": [
+                "Cortex\\Foundation\\Providers\\BootServiceProvider",
                 "Cortex\\Foundation\\Providers\\DiscoveryServiceProvider",
                 "Cortex\\Foundation\\Providers\\FoundationServiceProvider",
                 "Cortex\\Foundation\\Providers\\ConsoleSupportServiceProvider",
