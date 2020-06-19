@@ -6,7 +6,7 @@ namespace Cortex\Foundation\Http\Middleware;
 
 use Closure;
 
-class ForgetLocaleRouteParameter
+class UnbindRouteParameters
 {
     /**
      * Handle an incoming request.
@@ -19,7 +19,10 @@ class ForgetLocaleRouteParameter
     public function handle($request, Closure $next)
     {
         // unBind {locale} route parameter
-        ! $request->route('locale') || $request->route()->forgetParameter('locale');
+        $request->route()->forgetParameter('locale');
+
+        // unBind {subdomain} route parameter
+        $request->route()->forgetParameter('subdomain');
 
         return $next($request);
     }
