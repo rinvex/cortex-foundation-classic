@@ -61,10 +61,9 @@ abstract class AbstractController extends Controller
             ! in_array($accessarea, config('cortex.auth.guardians')) || $this->middleware('auth.basic:guardian,username');
         }
 
-        app()->singleton('request.passwordResetBroker', fn() => $passwordResetBroker ?? null);
-        app()->singleton('request.accessarea', fn() => $accessarea ?? null);
-        app()->singleton('request.guard', fn() => $guard ?? null);
-
+        app()->singleton('request.passwordResetBroker', fn () => $passwordResetBroker ?? null);
+        app()->singleton('request.accessarea', fn () => $accessarea ?? null);
+        app()->singleton('request.guard', fn () => $guard ?? null);
     }
 
     /**

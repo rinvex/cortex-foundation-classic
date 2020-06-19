@@ -28,7 +28,9 @@ class Application extends BaseApplication
 
         $this->singleton(BasePackageManifest::class, function () {
             return new PackageManifest(
-                new Filesystem, $this->basePath(), $this->getCachedPackagesPath()
+                new Filesystem(),
+                $this->basePath(),
+                $this->getCachedPackagesPath()
             );
         });
     }
