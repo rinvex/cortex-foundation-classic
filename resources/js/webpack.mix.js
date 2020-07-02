@@ -10,6 +10,7 @@ module.exports = {
         {from: 'node_modules/tinymce/skins/', to: 'public/tinymce/'},
         {from: 'node_modules/intl-tel-input/build/img/flags.png', to: 'public/images/'},
         {from: 'node_modules/intl-tel-input/build/img/flags@2x.png', to: 'public/images/'},
+        {from: 'node_modules/tinymce/plugins', to: 'public/js/plugins'},
     ],
     mix: {
         css: [
