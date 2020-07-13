@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Rinvex\Support\Traits\ConsoleTools;
 use Cortex\Foundation\Console\Commands\ServeCommand;
 use Illuminate\Console\Scheduling\ScheduleRunCommand;
 use Cortex\Foundation\Console\Commands\JobMakeCommand;
@@ -35,6 +36,8 @@ use Illuminate\Foundation\Providers\ArtisanServiceProvider as BaseArtisanService
 
 class ArtisanServiceProvider extends BaseArtisanServiceProvider
 {
+    use ConsoleTools;
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -54,7 +57,6 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         //'ClearResets' => 'command.auth.resets.clear',
         'ConfigCache' => 'command.config.cache',
         'ConfigClear' => 'command.config.clear',
-        'DbWipe' => 'command.db.wipe',
         'Down' => 'command.down',
         'Environment' => 'command.environment',
         'EventCache' => 'command.event.cache',
@@ -64,7 +66,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'Optimize' => 'command.optimize',
         'OptimizeClear' => 'command.optimize.clear',
         'PackageDiscover' => 'command.package.discover',
-        'Preset' => 'command.preset',
+        //'Preset' => 'command.preset',
         'QueueFailed' => 'command.queue.failed',
         'QueueFlush' => 'command.queue.flush',
         'QueueForget' => 'command.queue.forget',
@@ -96,6 +98,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'ConsoleMake' => 'command.console.make',
         'ControllerMake' => 'command.controller.make',
         'DatatableMake' => 'command.datatable.make',
+        'DbWipe' => 'command.db.wipe',
         'EventGenerate' => 'command.event.generate',
         'EventMake' => 'command.event.make',
         'ExceptionMake' => 'command.exception.make',
@@ -131,8 +134,8 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      */
     public function register(): void
     {
-        ! $this->app->runningInConsole() || $this->registerCommands($this->commands);
-        (! $this->app->runningInConsole() || $this->app->environment('production')) || $this->registerCommands($this->devCommands);
+        $this->registerCommands($this->commands);
+        $this->app->environment('production') || $this->registerCommands($this->devCommands);
     }
 
     /**
@@ -142,8 +145,24 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      */
     public function provides()
     {
-        return $this->app->environment('production') ?
-            array_merge(array_values($this->commands), array_values($this->devCommands)) : $this->commands;
+        return $this->app->environment('production') ? $this->commands :
+            array_merge(array_values($this->commands), array_values($this->devCommands));
+    }
+
+    /**
+     * Register the given commands.
+     *
+     * @param array $commands
+     *
+     * @return void
+     */
+    protected function registerCommands(array $commands)
+    {
+        foreach (array_keys($commands) as $command) {
+            call_user_func_array([$this, "register{$command}Command"], []);
+        }
+
+        $this->commands(array_values($commands));
     }
 
     /**

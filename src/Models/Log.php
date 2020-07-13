@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Models;
 
 use Watson\Validating\ValidatingTrait;
-use Rinvex\Cacheable\CacheableEloquent;
 use Spatie\Activitylog\Models\Activity;
 
 /**
@@ -43,7 +42,6 @@ use Spatie\Activitylog\Models\Activity;
 class Log extends Activity
 {
     use ValidatingTrait;
-    use CacheableEloquent;
 
     /**
      * {@inheritdoc}
@@ -85,12 +83,12 @@ class Log extends Activity
      * @var array
      */
     protected $rules = [
-        'log_name' => 'required|string|max:150',
+        'log_name' => 'required|string|strip_tags|max:150',
         'description' => 'nullable|string|max:10000',
         'subject_id' => 'nullable|integer',
-        'subject_type' => 'nullable|string|max:150',
+        'subject_type' => 'nullable|string|strip_tags|max:150',
         'causer_id' => 'nullable|integer',
-        'causer_type' => 'nullable|string|max:150',
+        'causer_type' => 'nullable|string|strip_tags|max:150',
     ];
 
     /**

@@ -13,7 +13,7 @@ class RollbackCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:rollback:foundation {--force : Force the operation to run when in production.}';
+    protected $signature = 'cortex:rollback:foundation {--f|force : Force the operation to run when in production.}';
 
     /**
      * The console command description.
@@ -31,9 +31,12 @@ class RollbackCommand extends Command
     {
         $this->alert($this->description);
 
-        if (file_exists($path = 'database/migrations/cortex/foundation')) {
+        $path = config('cortex.foundation.autoload_migrations') ?
+            'app/cortex/foundation/database/migrations' :
+            'database/migrations/cortex/foundation';
+
+        if (file_exists($path)) {
             $this->call('migrate:reset', [
-                '--step' => true,
                 '--path' => $path,
                 '--force' => $this->option('force'),
             ]);

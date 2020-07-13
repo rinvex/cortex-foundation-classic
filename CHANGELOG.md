@@ -5,6 +5,126 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v5.0.2] - 2020-06-21
+- Tweak subdomain route parameter binding
+
+## [v5.0.1] - 2020-06-19
+- Fix request.guard binding issue when running in console
+
+## [v5.0.0] - 2020-06-19
+- Update composer dependencies
+- Introducing module early bootstrapping feature
+- Override core Application foundation class and PackageManifest bootstrap cache builder
+- Override LarouteCollection to fix issues with cached routes
+- Refactor route parameters to container service binding
+- Rename ForgetLocaleRouteParameter to UnbindRouteParameters and change execution order - Plus unbind {subdomain} route parameter
+- Refactor route parameters to container service binding
+- Rename SetAccessArea Middleware to DiscoverNavigationRoutes
+- Merge event discovery into DiscoveryServiceProvider
+- Stick to composer version constraints recommendations and ease minimum required version of modules
+
+## [v4.2.0] - 2020-06-15
+- Autoload config, views, language, menus, breadcrumbs, and migrations for all modules
+- Add intl-tel-input images to webpack processing
+- Drop using rinvex/laravel-cacheable from core packages for more flexibility
+  - Caching should be handled on the application layer, not enforced from the core packages
+- Drop PHP 7.2 & 7.3 support from travis
+- Tweak selected_ids collection filtration and check
+
+## [v4.1.1] - 2020-05-30
+- Update composer dependencies
+
+## [v4.1.0] - 2020-05-30
+- With the significance of recent updates, new minor release required
+
+## [v4.0.9] - 2020-05-30
+- Disable datatables button fade effect
+- Update datatables query method
+- Remove useless datatables checkbox config option
+- Add datatables checkbox column for bulk actions
+- Always use parent::query() when overriding datatables query() methods
+- Drop using strip_tags on redirect identifiers as they will use ->getRouteKey() which is already safe
+- Auto close bulk menu after child actions are clicked
+- Move datatable buttons creation to separate method
+- Add missing phrases for datatables bulk actions
+- Add support for datatables to render bulk delete, activate, and deactivate actions implictly
+- Reorder datatables buttons
+- Add support for customizing pageLength and lengthMenu datatables options
+- Convert datatables to work completely in POST ajax requests instead of GET requests for better security and to overcome long query strings / requests parameters and add support for datatable filter forms
+- Add missing phrases for datatables bulk actions
+- Add support for customizing pageLength and lengthMenu datatables options
+- Rename selectedIds variables for consistency
+- Refactor model CRUD dispatched events
+- Refactor datatables default options and serverside buttons and support selected rows
+- Move broadcasting authentication route to cortex/auth module
+- Fire custom model events from CRUD actions
+- Explicitly specify relationship attributes
+- Load module routes automatically
+- Revert back breadcrumbs escaping, this is handled individually as we may pass HTML intentionally
+- Strip tags of language phrase parameters with potential user inputs
+- Escape breadcrumb titles
+- Escape language phrases
+- Update model validation rules
+- Add strip_tags validation rule to string fields
+- Remove default indent size config
+
+## [v4.0.8] - 2020-04-12
+- Fix ServiceProvider registerCommands method compatibility
+
+## [v4.0.7] - 2020-04-09
+- Tweak artisan command registration
+- Refactor publish command and allow multiple resource values
+
+## [v4.0.6] - 2020-04-07
+- Fix wrong module webpack config file name
+
+## [v4.0.5] - 2020-04-04
+- Enforce consistent artisan command tag namespacing
+- Enforce consistent package namespace
+- Drop laravel/helpers usage as it's no longer used
+- Upgrade silber/bouncer composer package
+
+## [v4.0.4] - 2020-03-20
+- Add shortcut -f (force) for artisan publish commands
+- Fix migrations path condition
+- Convert database int fields into bigInteger
+- Upgrade spatie/laravel-medialibrary to v8.x
+- Fix couple issues and enforce consistency
+
+## [v4.0.3] - 2020-03-16
+- Update compatibility with Laravel v7.x
+
+## [v4.0.2] - 2020-03-15
+- Fix incompatible package version league/fractal
+
+## [v4.0.1] - 2020-03-15
+- Fix wrong package version laravelcollective/html
+
+## [v4.0.0] - 2020-03-15
+- Upgrade to Laravel v7.1.x & PHP v7.4.x
+
+## [v3.1.4] - 2020-03-13
+- Install felixkiss/uniquewith-validator composer package
+
+## [v3.1.3] - 2020-03-13
+- Tweak TravisCI config
+- Fix production artisan commands registration	764d9ee	Abdelrahman Omran <me@omranic.com>	Jan 16, 2020 at 9:39 AM
+- Add migrations autoload option to the package
+- Tweak service provider `publishesResources` & `autoloadMigrations`
+- Update composer dependencies
+- Update tenant name in tenantarea
+- Update meta tags for tenant in tenantarea
+- Update StyleCI config
+- Drop using global helpers
+- Check if ability exists before seeding
+
+## [v3.1.2] - 2019-12-18
+- Fix `migrate:reset` args as it doesn't accept --step
+- Fix Crawling Robots indexable access areas check (#97)
+  - fix should index checker by check if access area listed in cortex.foundation.route.prefix 
+  - Fix Crawling Robots indexable access areas check 
+- Auto discover events listeners and register events automatically
+
 ## [v3.1.1] - 2019-12-04
 - Add ajax filters capabilities to datatables
 - Tweak obscure feature
@@ -133,6 +253,25 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v5.0.2]: https://github.com/rinvex/cortex-foundation/compare/v5.0.1...v5.0.2
+[v5.0.1]: https://github.com/rinvex/cortex-foundation/compare/v5.0.0...v5.0.1
+[v5.0.0]: https://github.com/rinvex/cortex-foundation/compare/v4.2.0...v5.0.0
+[v4.2.0]: https://github.com/rinvex/cortex-foundation/compare/v4.1.1...v4.2.0
+[v4.1.1]: https://github.com/rinvex/cortex-foundation/compare/v4.1.0...v4.1.1
+[v4.1.0]: https://github.com/rinvex/cortex-foundation/compare/v4.0.8...v4.1.0
+[v4.0.9]: https://github.com/rinvex/cortex-foundation/compare/v4.0.8...v4.0.9
+[v4.0.8]: https://github.com/rinvex/cortex-foundation/compare/v4.0.7...v4.0.8
+[v4.0.7]: https://github.com/rinvex/cortex-foundation/compare/v4.0.6...v4.0.7
+[v4.0.6]: https://github.com/rinvex/cortex-foundation/compare/v4.0.5...v4.0.6
+[v4.0.5]: https://github.com/rinvex/cortex-foundation/compare/v4.0.4...v4.0.5
+[v4.0.4]: https://github.com/rinvex/cortex-foundation/compare/v4.0.3...v4.0.4
+[v4.0.3]: https://github.com/rinvex/cortex-foundation/compare/v4.0.2...v4.0.3
+[v4.0.2]: https://github.com/rinvex/cortex-foundation/compare/v4.0.1...v4.0.2
+[v4.0.1]: https://github.com/rinvex/cortex-foundation/compare/v4.0.0...v4.0.1
+[v4.0.0]: https://github.com/rinvex/cortex-foundation/compare/v3.1.4...v4.0.0
+[v3.1.4]: https://github.com/rinvex/cortex-foundation/compare/v3.1.3...v3.1.4
+[v3.1.3]: https://github.com/rinvex/cortex-foundation/compare/v3.1.2...v3.1.3
+[v3.1.2]: https://github.com/rinvex/cortex-foundation/compare/v3.1.1...v3.1.2
 [v3.1.1]: https://github.com/rinvex/cortex-foundation/compare/v3.1.0...v3.1.1
 [v3.1.0]: https://github.com/rinvex/cortex-foundation/compare/v3.0.3...v3.1.0
 [v3.0.3]: https://github.com/rinvex/cortex-foundation/compare/v3.0.2...v3.0.3

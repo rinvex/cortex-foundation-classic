@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Exceptions;
 
 use Exception;
+use Throwable;
+use Illuminate\Support\Str;
+use Illuminate\Support\ViewErrorBag;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Session\TokenMismatchException;
@@ -20,62 +23,83 @@ use Watson\Validating\ValidationException as WatsonValidationException;
 class Handler extends ExceptionHandler
 {
     /**
+     * A list of the exception types that are not reported.
+     *
+     * @var array
+     */
+    protected $dontReport = [
+        //
+    ];
+
+    /**
+     * A list of the inputs that are never flashed for validation exceptions.
+     *
+     * @var array
+     */
+    protected $dontFlash = [
+        'password',
+        'password_confirmation',
+    ];
+
+    /**
      * Report or log an exception.
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param \Exception $exception
+     * @param \Throwable $e
      *
      * @throws \Exception
      *
      * @return void
      */
-    public function report(Exception $exception): void
+    public function report(Throwable $e)
     {
-        parent::report($exception);
+        parent::report($e);
     }
 
     /**
      * Render an exception into an HTTP response.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Exception               $exception
+     * @param \Throwable               $e
      *
-     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
+     * @throws \Throwable
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable $e)
     {
-        $accessarea = str_before(Route::currentRouteName(), '.');
+        $accessarea = Str::before(Route::currentRouteName(), '.');
 
-        if ($exception instanceof TokenMismatchException) {
+        if ($e instanceof TokenMismatchException) {
             return intend([
                 'back' => true,
                 'with' => ['warning' => trans('cortex/foundation::messages.token_mismatch')],
             ]);
-        } elseif ($exception instanceof WatsonValidationException) {
+        } elseif ($e instanceof WatsonValidationException) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
-                'withErrors' => $exception->errors(),
+                'withErrors' => $e->errors(),
             ]);
-        } elseif ($exception instanceof ValidationException) {
+        } elseif ($e instanceof ValidationException) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
-                'withErrors' => $exception->errors(),
+                'withErrors' => $e->errors(),
             ]);
-        } elseif ($exception instanceof GenericException) {
+        } elseif ($e instanceof GenericException) {
             return intend([
-                'url' => $exception->getRedirection() ?? route("{$accessarea}.home"),
-                'withInput' => $exception->getInputs() ?? $request->all(),
-                'with' => ['warning' => $exception->getMessage()],
+                'url' => $e->getRedirection() ?? route("{$accessarea}.home"),
+                'withInput' => $e->getInputs() ?? $request->all(),
+                'with' => ['warning' => $e->getMessage()],
             ]);
-        } elseif ($exception instanceof AuthorizationException) {
+        } elseif ($e instanceof AuthorizationException) {
             return intend([
                 'url' => in_array($accessarea, ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
-                'with' => ['warning' => $exception->getMessage()],
+                'with' => ['warning' => $e->getMessage()],
             ]);
-        } elseif ($exception instanceof NotFoundHttpException) {
+        } elseif ($e instanceof NotFoundHttpException) {
             // Catch localized routes with missing {locale}
             // and redirect them to the correct localized version
             if (config('cortex.foundation.route.locale_redirect')) {
@@ -89,31 +113,31 @@ class Handler extends ExceptionHandler
 
                     return intend([
                         'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route("{$accessarea}.home"),
-                        'with' => ['warning' => $exception->getMessage()],
+                        'with' => ['warning' => $e->getMessage()],
                     ]);
-                } catch (Exception $exception) {
+                } catch (Exception $e) {
                 }
             }
 
-            return $this->prepareResponse($request, $exception);
-        } elseif ($exception instanceof ModelNotFoundException) {
-            $model = $exception->getModel();
+            return $this->prepareResponse($request, $e);
+        } elseif ($e instanceof ModelNotFoundException) {
+            $model = $e->getModel();
             $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
-            $plural = str_plural($single);
+            $plural = Str::plural($single);
 
             return intend([
                 'url' => $model ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),
                 'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
             ]);
-        } elseif ($exception instanceof ThrottleRequestsException) {
+        } elseif ($e instanceof ThrottleRequestsException) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
-                'with' => ['warning' => $exception->getMessage()],
+                'with' => ['warning' => $e->getMessage()],
             ]);
         }
 
-        return parent::render($request, $exception);
+        return parent::render($request, $e);
     }
 
     /**
@@ -123,32 +147,42 @@ class Handler extends ExceptionHandler
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderHttpException(HttpExceptionInterface $exception)
+    protected function renderHttpException(HttpExceptionInterface $e)
     {
-        $status = $exception->getStatusCode();
-
-        if (view()->exists("cortex/foundation::common.errors.{$status}")) {
-            return response()->view("cortex/foundation::common.errors.{$status}", ['exception' => $exception], $status, $exception->getHeaders());
+        if (view()->exists($view = $this->getHttpExceptionView($e))) {
+            return response()->view($view, ['errors' => new ViewErrorBag(), 'exception' => $e], $e->getStatusCode(), $e->getHeaders());
         }
 
-        return parent::renderHttpException($exception);
+        return parent::renderHttpException($e);
+    }
+
+    /**
+     * Get the view used to render HTTP exceptions.
+     *
+     * @param \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface $e
+     *
+     * @return string
+     */
+    protected function getHttpExceptionView(HttpExceptionInterface $e)
+    {
+        return "cortex/foundation::common.errors.{$e->getStatusCode()}";
     }
 
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
      * @param \Illuminate\Http\Request                 $request
-     * @param \Illuminate\Auth\AuthenticationException $exception
+     * @param \Illuminate\Auth\AuthenticationException $e
      *
      * @return \Illuminate\Http\Response
      */
-    protected function unauthenticated($request, AuthenticationException $exception)
+    protected function unauthenticated($request, AuthenticationException $e)
     {
         // Remember current URL for later redirect
         session()->put('url.intended', url()->current());
 
         return intend([
-            'url' => route($request->route('accessarea').'.login'),
+            'url' => route(app('request.accessarea').'.login'),
             'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
         ]);
     }

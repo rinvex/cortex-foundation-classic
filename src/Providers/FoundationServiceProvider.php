@@ -81,14 +81,11 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->singleton('cortex.foundation.import_record', $importerModel = $this->app['config']['cortex.foundation.models.import_record']);
         $importerModel === ImportRecord::class || $this->app->alias('cortex.foundation.import_record', ImportRecord::class);
 
-        // Merge config
-        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'cortex.foundation');
-
         // Override datatables html builder
         $this->app->bind(\Yajra\DataTables\Html\Builder::class, \Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder::class);
 
         // Register console commands
-        ! $this->app->runningInConsole() || $this->registerCommands();
+        $this->registerCommands($this->commands);
     }
 
     /**
@@ -115,25 +112,6 @@ class FoundationServiceProvider extends ServiceProvider
             'media' => config('medialibrary.media_model'),
         ]);
 
-        // Load resources
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web/adminarea.php');
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web/frontarea.php');
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web/tenantarea.php');
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web/managerarea.php');
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cortex/foundation');
-        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cortex/foundation');
-
-        $this->app->runningInConsole() || $dispatcher->listen('accessarea.ready', function ($accessarea) {
-            ! file_exists($menus = __DIR__."/../../routes/menus/{$accessarea}.php") || require $menus;
-            ! file_exists($breadcrumbs = __DIR__."/../../routes/breadcrumbs/{$accessarea}.php") || require $breadcrumbs;
-        });
-
-        // Publish Resources
-        ! $this->app->runningInConsole() || $this->publishesLang('cortex/foundation', true);
-        ! $this->app->runningInConsole() || $this->publishesViews('cortex/foundation', true);
-        ! $this->app->runningInConsole() || $this->publishesConfig('cortex/foundation', true);
-        ! $this->app->runningInConsole() || $this->publishesMigrations('cortex/foundation', true);
-
         SessionFacade::extend('database', function ($app) {
             $table = $app['config']['session.table'];
 
@@ -141,17 +119,11 @@ class FoundationServiceProvider extends ServiceProvider
             $connection = $app['config']['session.connection'];
 
             return new \Cortex\Foundation\Overrides\Illuminate\Session\DatabaseSessionHandler(
-                $app['db']->connection($connection), $table, $lifetime, $app
+                $app['db']->connection($connection),
+                $table,
+                $lifetime,
+                $app
             );
-        });
-
-        $this->app->booted(function () {
-            if ($this->app->routesAreCached()) {
-                require $this->app->getCachedRoutesPath();
-            } else {
-                $this->app['router']->getRoutes()->refreshNameLookups();
-                $this->app['router']->getRoutes()->refreshActionLookups();
-            }
         });
 
         // Append middleware to the 'web' middlware group
@@ -235,8 +207,10 @@ class FoundationServiceProvider extends ServiceProvider
             $app->instance('routes', $routes);
 
             $url = new UrlGenerator(
-                $routes, $app->rebinding(
-                    'request', $this->requestRebinder()
+                $routes,
+                $app->rebinding(
+                    'request',
+                    $this->requestRebinder()
                 )
             );
 

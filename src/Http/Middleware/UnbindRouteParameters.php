@@ -6,20 +6,23 @@ namespace Cortex\Foundation\Http\Middleware;
 
 use Closure;
 
-class SetAccessArea
+class UnbindRouteParameters
 {
     /**
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
-     * @param string|null              $guard
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
-        event('accessarea.ready', [$request->route('accessarea'), $guard]);
+        // unBind {locale} route parameter
+        $request->route()->forgetParameter('locale');
+
+        // unBind {subdomain} route parameter
+        $request->route()->forgetParameter('subdomain');
 
         return $next($request);
     }

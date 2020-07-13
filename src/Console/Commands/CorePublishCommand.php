@@ -16,7 +16,7 @@ class CorePublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:publish {--force : Overwrite any existing files.} {--R|resource=all}';
+    protected $signature = 'cortex:publish {--f|force : Overwrite any existing files.} {--r|resource=* : Specify which resources to publish.}';
 
     /**
      * The console command description.
@@ -47,7 +47,7 @@ class CorePublishCommand extends Command
 
         $output = new BufferedOutput();
         $commands->each(function (Command $command) use ($progressBar, $output) {
-            $command->run(new ArrayInput(['--force' => $this->option('force')]), $output);
+            $command->run(new ArrayInput(['--force' => $this->option('force'), '--resource' => $this->option('resource')]), $output);
             $progressBar->advance();
         });
 

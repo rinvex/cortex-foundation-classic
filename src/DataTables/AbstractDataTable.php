@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\DataTables;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Vinkla\Hashids\Facades\Hashids;
 use Yajra\DataTables\Services\DataTable;
 
 abstract class AbstractDataTable extends DataTable
@@ -23,67 +26,55 @@ abstract class AbstractDataTable extends DataTable
     protected $transformer;
 
     /**
-     * The datatable dom parameter.
-     *
-     * @var string
-     */
-    protected $dom = "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>";
-
-    /**
-     * The datatable select parameter.
-     *
-     * @var bool
-     */
-    protected $select = true;
-
-    /**
-     * The datatable keys parameter.
-     *
-     * @var bool
-     */
-    protected $keys = false;
-
-    /**
-     * The datatable mark parameter.
-     *
-     * @var bool
-     */
-    protected $mark = true;
-
-    /**
-     * The datatable order parameter.
+     * Available button actions. When calling an action, the value will be used
+     * as the function name (so it should be available)
+     * If you want to add or disable an action, overload and modify this property.
      *
      * @var array
      */
-    protected $order = [[0, 'asc']];
+    protected $actions = ['print', 'csv', 'excel', 'pdf', 'delete', 'activate', 'deactivate'];
 
     /**
-     * The datatable retrieve parameter.
+     * Set default options.
      *
-     * @var array
+     * @var mixed
      */
-    protected $retrieve = true;
+    protected $options = [
+        'dom' => "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>",
+        'select' => '{"style":"multi"}',
+        'order' => [[1, 'asc']],
+        'mark' => true,
+        'keys' => false,
+        'retrieve' => true,
+        'autoWidth' => false,
+        'fixedHeader' => true,
+        'pageLength' => 10,
+        'lengthMenu' => [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+    ];
 
     /**
-     * The datatable autoWidth parameter.
+     * Set action buttons.
      *
-     * @var array
+     * @var mixed
      */
-    protected $autoWidth = false;
+    protected $buttons = [
+        'create' => true,
+        'import' => true,
 
-    /**
-     * The datatable fixedHeader parameter.
-     *
-     * @var array
-     */
-    protected $fixedHeader = true;
+        'reset' => true,
+        'reload' => true,
+        'showSelected' => true,
 
-    /**
-     * The datatable create parameter.
-     *
-     * @var bool
-     */
-    protected $createButton = true;
+        'print' => true,
+        'export' => true,
+
+        'bulkDelete' => true,
+        'bulkActivate' => false,
+        'bulkDeactivate' => false,
+
+        'colvis' => true,
+        'pageLength' => true,
+    ];
 
     /**
      * The datatable builder parameters.
@@ -106,7 +97,23 @@ abstract class AbstractDataTable extends DataTable
      */
     public function query()
     {
-        $query = app($this->model)->query();
+        $model = app($this->model);
+        $query = $model->query();
+        $selectedIds = collect($this->request->get('selected_ids'))->filter();
+
+        if ($selectedIds->isNotEmpty()) {
+            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
+
+            if (in_array(app('request.accessarea'), $obscure['areas'])) {
+                $selectedIds = $selectedIds->map(function ($value) {
+                    return optional(Hashids::decode($value))[0];
+                });
+
+                $query->whereIn($model->getKeyName(), $selectedIds);
+            } else {
+                $query->whereIn($model->getRouteKeyName(), $selectedIds);
+            }
+        }
 
         return $this->applyScopes($query);
     }
@@ -131,10 +138,19 @@ abstract class AbstractDataTable extends DataTable
      */
     public function html()
     {
+        $data = <<<CDATA
+function(data){
+    var formData = $("{$this->getAjaxForm()}").find("input, select").serializeArray();
+    $.each(formData, function(i, obj){
+        data[obj.name] = obj.value;
+    });
+}
+CDATA;
+
         return $this->builder()
                     ->columns($this->getColumns())
                     ->parameters($this->getBuilderParameters())
-                    ->ajaxWithForm($this->getAjaxUrl(), $this->getAjaxForm());
+                    ->postAjax(['url' => $this->getAjaxUrl(), 'data' => $data]);
     }
 
     /**
@@ -148,16 +164,28 @@ abstract class AbstractDataTable extends DataTable
      */
     public function render($view, $data = [], $mergeData = [])
     {
-        if ($this->request()->ajax() && $this->request()->wantsJson()) {
-            return app()->call([$this, 'ajax']);
+        if (($action = $this->request()->get('action')) && in_array($action, $this->actions)) {
+            switch ($action) {
+                case 'print':
+                    return app()->call([$this, 'printPreview']);
+                    break;
+                case 'delete':
+                    return app()->call([$this, 'bulkDelete']);
+                    break;
+                case 'activate':
+                    return app()->call([$this, 'bulkActivate']);
+                    break;
+                case 'deactivate':
+                    return app()->call([$this, 'bulkDeactivate']);
+                    break;
+                default:
+                    return app()->call([$this, $action]);
+                    break;
+            }
         }
 
-        if (($action = $this->request()->get('action')) && in_array($action, $this->actions)) {
-            if ($action === 'print') {
-                return app()->call([$this, 'printPreview']);
-            }
-
-            return app()->call([$this, $action]);
+        if ($this->request()->ajax() && $this->request()->wantsJson()) {
+            return app()->call([$this, 'ajax']);
         }
 
         return view($view, array_merge($this->attributes, $data), $mergeData)->with($this->dataTableVariable, $this->getHtmlBuilder());
@@ -170,22 +198,20 @@ abstract class AbstractDataTable extends DataTable
      */
     protected function getBuilderParameters(): array
     {
-        $createButton = ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.new')];
-        $columnsButton = ['extend' => 'colvis', 'text' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.columns').' <span class="caret"/>'];
-        $lengthButton = ['extend' => 'pageLength', 'text' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.limit').' <span class="caret"/>'];
+        $buttons = $this->getButtons();
 
         return array_merge([
-            'dom' => $this->dom,
-            'keys' => $this->keys,
-            'mark' => $this->mark,
-            'order' => $this->order,
-            'select' => $this->select,
-            'retrieve' => $this->retrieve,
-            'autoWidth' => $this->autoWidth,
-            'fixedHeader' => $this->fixedHeader,
-            'buttons' => $this->createButton
-                ? [$createButton, 'print', 'reset', 'reload', 'import', 'export', $columnsButton, $lengthButton]
-                : ['print', 'reset', 'reload', 'export', $columnsButton, $lengthButton],
+            'dom' => $this->options['dom'],
+            'keys' => $this->options['keys'],
+            'mark' => $this->options['mark'],
+            'order' => $this->options['order'],
+            'select' => $this->options['select'],
+            'retrieve' => $this->options['retrieve'],
+            'autoWidth' => $this->options['autoWidth'],
+            'fixedHeader' => $this->options['fixedHeader'],
+            'pageLength' => $this->options['pageLength'],
+            'lengthMenu' => $this->options['lengthMenu'],
+            'buttons' => $buttons,
             'initComplete' => $this->getAjaxForm() ? "function () {
                 $('".$this->getAjaxForm()."').on('change',  (e)=> {
                     e.preventDefault();
@@ -193,6 +219,37 @@ abstract class AbstractDataTable extends DataTable
                 });
             }" : '',
         ], $this->builderParameters);
+    }
+
+    /**
+     * Get buttons for datatable.
+     *
+     * @return array
+     */
+    protected function getButtons(): array
+    {
+        $this->buttons['bulk'] = $this->buttons['bulkDelete']
+                                 || $this->buttons['bulkActivate']
+                                 || $this->buttons['bulkDeactivate'];
+
+        $buttons = collect($this->buttons)->filter(fn ($value) => $value);
+        $bulkButtons = $buttons->only(['bulkDelete', 'bulkActivate', 'bulkDeactivate']);
+
+        return collect([
+            'create' => ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.create')],
+            'import' => ['extend' => 'import', 'text' => '<i class="fa fa-upload"></i> '.trans('cortex/foundation::common.import')],
+
+            'reset' => ['extend' => 'reset', 'text' => '<i class="fa fa-undo"></i> '.trans('cortex/foundation::common.reset')],
+            'reload' => ['extend' => 'reload', 'text' => '<i class="fa fa-refresh"></i> '.trans('cortex/foundation::common.reload')],
+            'showSelected' => ['extend' => 'showSelected', 'text' => '<i class="fa fa-check"></i> '.trans('cortex/foundation::common.showSelected')],
+
+            'print' => ['extend' => 'print', 'text' => '<i class="fa fa-print"></i> '.trans('cortex/foundation::common.print')],
+            'export' => ['extend' => 'export', 'text' => '<i class="fa fa-download"></i> '.trans('cortex/foundation::common.export').'&nbsp;<span class="caret"/>', 'autoClose' => true, 'fade' => 0],
+
+            'bulk' => ['extend' => 'bulk', 'text' => '<i class="fa fa-list"></i> '.trans('cortex/foundation::common.bulk').'&nbsp;<span class="caret"/>', 'buttons' => $bulkButtons->keys(), 'autoClose' => true, 'fade' => 0],
+            'colvis' => ['extend' => 'colvis', 'text' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.colvis').'&nbsp;<span class="caret"/>', 'fade' => 0],
+            'pageLength' => ['extend' => 'pageLength', 'text' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.pageLength').'&nbsp;<span class="caret"/>', 'fade' => 0],
+        ])->only($buttons->keys())->values()->toArray();
     }
 
     /**
@@ -224,8 +281,113 @@ abstract class AbstractDataTable extends DataTable
     {
         $model = $this->model ?? trim(str_replace('DataTable', '', mb_strrchr(static::class, '\\')), " \t\n\r\0\x0B\\");
 
-        $resource = str_plural(mb_strtolower(array_last(explode(class_exists($model) ? '\\' : '.', $model))));
+        $resource = Str::plural(mb_strtolower(Arr::last(explode(class_exists($model) ? '\\' : '.', $model))));
 
         return $resource.'-export-'.date('Y-m-d').'-'.time();
+    }
+
+    /**
+     * Perform bulk delete action.
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function bulkDelete()
+    {
+        $selectedIds = collect($this->request->get('selected_ids'))->filter();
+
+        if ($selectedIds->isNotEmpty()) {
+            $model = app($this->model);
+            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
+
+            if (in_array($this->app('request.accessarea'), $obscure['areas'])) {
+                $selectedIds = $selectedIds->map(function ($value) {
+                    return optional(Hashids::decode($value))[0];
+                });
+
+                $model->whereIn($model->getKeyName(), $selectedIds)->get()->each->delete();
+            } else {
+                $model->whereIn($model->getRouteKeyName(), $selectedIds)->get()->each->delete();
+            }
+
+            return intend([
+                'back' => true,
+                'with' => ['success' => trans('cortex/foundation::messages.records_deleted')],
+            ]);
+        }
+
+        return intend([
+            'back' => true,
+            'with' => ['warning' => trans('cortex/foundation::messages.no_records_selected')],
+        ]);
+    }
+
+    /**
+     * Perform bulk activate action.
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function bulkActivate()
+    {
+        $selectedIds = collect($this->request->get('selected_ids'))->filter();
+
+        if ($selectedIds->isNotEmpty()) {
+            $model = app($this->model);
+            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
+
+            if (in_array($this->app('request.accessarea'), $obscure['areas'])) {
+                $selectedIds = $selectedIds->map(function ($value) {
+                    return optional(Hashids::decode($value))[0];
+                });
+
+                $model->whereIn($model->getKeyName(), $selectedIds)->get()->each->activate();
+            } else {
+                $model->whereIn($model->getRouteKeyName(), $selectedIds)->get()->each->activate();
+            }
+
+            return intend([
+                'back' => true,
+                'with' => ['success' => trans('cortex/foundation::messages.records_activated')],
+            ]);
+        }
+
+        return intend([
+            'back' => true,
+            'with' => ['warning' => trans('cortex/foundation::messages.no_records_activated')],
+        ]);
+    }
+
+    /**
+     * Perform bulk deactivate action.
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function bulkDeactivate()
+    {
+        $selectedIds = collect($this->request->get('selected_ids'))->filter();
+
+        if ($selectedIds->isNotEmpty()) {
+            $model = app($this->model);
+            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
+
+            if (in_array($this->app('request.accessarea'), $obscure['areas'])) {
+                $selectedIds = $selectedIds->map(function ($value) {
+                    return optional(Hashids::decode($value))[0];
+                });
+
+                $model->whereIn($model->getKeyName(), $selectedIds)->get()->each->deactivate();
+            } else {
+                $model->whereIn($model->getRouteKeyName(), $selectedIds)->get()->each->deactivate();
+            }
+
+            return intend([
+                'back' => true,
+                'with' => ['success' => trans('cortex/foundation::messages.records_deactivated')],
+            ]);
+        }
+
+        return intend([
+            'back' => true,
+            'with' => ['warning' => trans('cortex/foundation::messages.no_records_deactivated')],
+        ]);
     }
 }

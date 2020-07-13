@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Traits;
 
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
 trait ConsoleMakeModuleCommand
@@ -33,7 +34,7 @@ trait ConsoleMakeModuleCommand
      */
     protected function getPath($name): string
     {
-        $name = str_replace_first($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'src', $name);
+        $name = Str::replaceFirst($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'src', $name);
 
         if (! $this->files->exists($path = $this->laravel['path'].DIRECTORY_SEPARATOR.$this->moduleName())) {
             throw new \Exception("Invalid path: {$path}");

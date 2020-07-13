@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Transformers;
 
+use Illuminate\Support\Str;
 use Cortex\Foundation\Models\Log;
 use Rinvex\Support\Traits\Escaper;
 use Illuminate\Support\Facades\Route;
@@ -14,12 +15,16 @@ class ActivityTransformer extends TransformerAbstract
     use Escaper;
 
     /**
+     * Transform log model.
+     *
+     * @param \Cortex\Foundation\Models\Log $log
+     *
      * @return array
      */
     public function transform(Log $log): array
     {
         $subject = $log->subject_type;
-        $subjects = str_plural($subject);
+        $subjects = Str::plural($subject);
         $route = Route::has("adminarea.{$subjects}.edit") ? route("adminarea.{$subjects}.edit", [$subject => $log->subject]) : null;
 
         if ($log->subject) {

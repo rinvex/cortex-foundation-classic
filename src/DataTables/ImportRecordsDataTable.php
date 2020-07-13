@@ -32,9 +32,7 @@ class ImportRecordsDataTable extends AbstractDataTable
      */
     public function query()
     {
-        $query = app($this->model)->query()->where('resource', $this->resource->getMorphClass());
-
-        return $this->applyScopes($query);
+        return parent::query()->where('resource', $this->resource->getMorphClass());
     }
 
     /**
@@ -81,14 +79,16 @@ class ImportRecordsDataTable extends AbstractDataTable
     }}"];
 
         return array_merge([
-            'dom' => $this->dom,
-            'keys' => $this->keys,
-            'mark' => $this->mark,
-            'order' => $this->order,
-            'select' => $this->select,
-            'retrieve' => $this->retrieve,
-            'autoWidth' => $this->autoWidth,
-            'fixedHeader' => $this->fixedHeader,
+            'dom' => $this->options['dom'],
+            'keys' => $this->options['keys'],
+            'mark' => $this->options['mark'],
+            'order' => $this->options['order'],
+            'select' => $this->options['select'],
+            'retrieve' => $this->options['retrieve'],
+            'autoWidth' => $this->options['autoWidth'],
+            'fixedHeader' => $this->options['fixedHeader'],
+            'pageLength' => $this->options['pageLength'],
+            'lengthMenu' => $this->options['lengthMenu'],
             'buttons' => ['print', 'reset', 'reload', $importButton, $columnsButton, $lengthButton],
         ], $this->builderParameters);
     }
@@ -101,6 +101,7 @@ class ImportRecordsDataTable extends AbstractDataTable
     protected function getColumns(): array
     {
         return [
+            'id' => ['checkboxes' => '{"selectRow": true}', 'exportable' => false, 'printable' => false],
             'resource' => ['title' => trans('cortex/foundation::common.resource')],
             'status' => ['title' => trans('cortex/foundation::common.status')],
             'data' => ['title' => trans('cortex/foundation::common.data'), 'orderable' => false],

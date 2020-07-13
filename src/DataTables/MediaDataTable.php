@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\DataTables;
 
-use Spatie\MediaLibrary\Models\Media;
 use Cortex\Foundation\Transformers\MediaTransformer;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
- * @property \Spatie\MediaLibrary\HasMedia\HasMedia $resource
+ * @property \Spatie\MediaLibrary\HasMedia $resource
  * @property string                                 $tabs
  * @property string                                 $id
  * @property string                                 $url
@@ -21,9 +21,28 @@ class MediaDataTable extends AbstractDataTable
     protected $model = Media::class;
 
     /**
-     * {@inheritdoc}
+     * Set action buttons.
+     *
+     * @var mixed
      */
-    protected $createButton = false;
+    protected $buttons = [
+        'create' => false,
+        'import' => false,
+
+        'reset' => true,
+        'reload' => true,
+        'showSelected' => true,
+
+        'print' => true,
+        'export' => true,
+
+        'bulkDelete' => true,
+        'bulkActivate' => false,
+        'bulkDeactivate' => false,
+
+        'colvis' => true,
+        'pageLength' => true,
+    ];
 
     /**
      * {@inheritdoc}
@@ -42,11 +61,13 @@ class MediaDataTable extends AbstractDataTable
     /**
      * Get the query object to be processed by dataTables.
      *
+     * @TODO: Apply row selection and bulk actions, check parent::query() for reference.
+     *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Support\Collection
      */
     public function query()
     {
-        $query = $this->resource->media()->orderBy('order_column', 'ASC');
+        $query = $this->resource->media();
 
         return $this->applyScopes($query);
     }
@@ -71,14 +92,15 @@ class MediaDataTable extends AbstractDataTable
     protected function getColumns(): array
     {
         return [
+            'id' => ['checkboxes' => '{"selectRow": true}', 'exportable' => false, 'printable' => false],
             'name' => ['title' => trans('cortex/foundation::common.name'), 'responsivePriority' => 0],
             'file_name' => ['title' => trans('cortex/foundation::common.file_name')],
             'mime_type' => ['title' => trans('cortex/foundation::common.mime_type')],
             'size' => ['title' => trans('cortex/foundation::common.size')],
             'created_at' => ['title' => trans('cortex/foundation::common.created_at'), 'render' => "moment(data).format('YYYY-MM-DD, hh:mm:ss A')"],
             'updated_at' => ['title' => trans('cortex/foundation::common.updated_at'), 'render' => "moment(data).format('YYYY-MM-DD, hh:mm:ss A')"],
-            'delete' => ['title' => trans('cortex/foundation::common.delete'), 'orderable' => false, 'searchable' => false, 'render' => '"<a href=\"#\" data-toggle=\"modal\" data-target=\"#delete-confirmation\" 
-                data-modal-action=\""+data+"\" 
+            'delete' => ['title' => trans('cortex/foundation::common.delete'), 'orderable' => false, 'searchable' => false, 'render' => '"<a href=\"#\" data-toggle=\"modal\" data-target=\"#delete-confirmation\"
+                data-modal-action=\""+data+"\"
                 data-modal-title=\"" + Lang.trans(\'cortex/foundation::messages.delete_confirmation_title\') + "\"
                 data-modal-button=\"<a href=\'#\' class=\'btn btn-danger\' data-form=\'delete\' data-token=\''.csrf_token().'\'><i class=\'fa fa-trash-o\'></i> \"" + Lang.trans(\'cortex/foundation::common.delete\') + "\"</a>\"
                 data-modal-body=\"" + Lang.trans(\'cortex/foundation::messages.delete_confirmation_body\', {type: \'media\', name: full.name}) + "\"

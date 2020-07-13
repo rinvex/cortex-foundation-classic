@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJobsTable extends Migration
+class CreateQueueJobsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class CreateJobsTable extends Migration
     public function up(): void
     {
         Schema::create(config('queue.connections.database.table'), function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('queue');
             $table->longText('payload');
             $table->tinyInteger('attempts')->unsigned();

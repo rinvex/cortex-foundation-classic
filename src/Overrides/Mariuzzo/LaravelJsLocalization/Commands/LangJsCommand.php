@@ -20,6 +20,7 @@ class LangJsCommand extends BaseLangJsCommand
             'json' => $this->option('json'),
             'no-lib' => $this->option('no-lib'),
             'source' => $this->option('source'),
+            'no-sort' => $this->option('no-sort'),
         ];
 
         if ($this->generator->generate($target, $options)) {

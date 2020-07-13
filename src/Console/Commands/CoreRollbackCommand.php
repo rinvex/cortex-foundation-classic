@@ -16,7 +16,7 @@ class CoreRollbackCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:rollback {--force : Force the operation to run when in production.}';
+    protected $signature = 'cortex:rollback {--f|force : Force the operation to run when in production.}';
 
     /**
      * The console command description.

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFailedJobsTable extends Migration
+class CreateFailedQueueJobsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class CreateFailedJobsTable extends Migration
     public function up(): void
     {
         Schema::create(config('queue.failed.table'), function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->text('connection');
             $table->text('queue');
             $table->longText('payload');
