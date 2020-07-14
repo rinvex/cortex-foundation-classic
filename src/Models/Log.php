@@ -84,7 +84,7 @@ class Log extends Activity
      */
     protected $rules = [
         'log_name' => 'required|string|strip_tags|max:150',
-        'description' => 'nullable|string|max:10000',
+        'description' => 'nullable|string|max:32768',
         'subject_id' => 'nullable|integer',
         'subject_type' => 'nullable|string|strip_tags|max:150',
         'causer_id' => 'nullable|integer',
