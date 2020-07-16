@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="@yield('meta-description', 'Rinvex is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016.')" />
 <meta name="keywords" content="@yield('meta-keywords', 'Rinvex Integrated Enterprise Software Solutions SMEs Opesource Laravel Package')" />
-<meta name="author" content="Rinvex" />
+<meta name="author" content="@yield('meta-author', config('app.name'))" />
 <meta name="kind" content="SMEs & Developers" />
-<meta name="generator" content="Rinvex" />
+<meta name="generator" content="@yield('meta-generator', config('app.name'))" />
 <meta name="copyright" content="{!! config('app.copyright') !!}" />
 <meta name="subject" content="Enterprise Solutions for SMEs" />
 <meta name="coverage" content="Worldwide" />
@@ -61,7 +61,7 @@
 <meta property="og:locale" content="en_US" />
 <meta property="og:url" content="https://rinvex.com" />
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="Rinvex" />
+<meta property="og:site_name" content="@yield('meta-site-name', config('app.name'))" />
 <meta property="og:title" content="@yield('meta-title', 'Rinvex - Enterprise Solutions for SMEs')" />
 <meta property="og:description" content="@yield('meta-description', 'Rinvex is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016.')" />
 <meta property="og:image" content="@yield('meta-image', asset('images/favicon/favicon-1500x1500.png'))" />

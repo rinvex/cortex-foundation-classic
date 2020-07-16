@@ -3,7 +3,7 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><i class="fa fa-home"></i></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>{{ $currentTenant->name }}</b></span>
+        <span class="logo-lg"><b>{{ app('request.tenant')->name }}</b></span>
     </a>
     <nav class="navbar navbar-static-top">
         <div class="navbar-custom-menu pull-left">

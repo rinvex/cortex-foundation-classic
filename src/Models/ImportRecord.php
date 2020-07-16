@@ -6,10 +6,12 @@ namespace Cortex\Foundation\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Support\Traits\HashidsTrait;
+use Rinvex\Support\Traits\HasTimezones;
 
 class ImportRecord extends Model
 {
     use HashidsTrait;
+    use HasTimezones;
 
     /**
      * {@inheritdoc}

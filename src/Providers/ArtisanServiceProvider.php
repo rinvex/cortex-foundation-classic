@@ -13,6 +13,7 @@ use Cortex\Foundation\Console\Commands\RuleMakeCommand;
 use Cortex\Foundation\Console\Commands\EventMakeCommand;
 use Cortex\Foundation\Console\Commands\ModelMakeCommand;
 use Illuminate\Console\Scheduling\ScheduleFinishCommand;
+use Cortex\Foundation\Console\Commands\EventListCommand;
 use Cortex\Foundation\Console\Commands\ConfigMakeCommand;
 use Cortex\Foundation\Console\Commands\ModuleMakeCommand;
 use Cortex\Foundation\Console\Commands\PolicyMakeCommand;
@@ -210,6 +211,18 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->app->singleton('command.event.generate', function () {
             return new EventGenerateCommand();
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerEventListCommand()
+    {
+        $this->app->singleton('command.event.list', function () {
+            return new EventListCommand();
         });
     }
 

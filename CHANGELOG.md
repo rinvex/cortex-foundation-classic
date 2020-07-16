@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v5.1.0] - 2020-07-16
+- Utilize timezones
+- Override artisan EventListCommand
+- Tweak events discovery in DiscoveryServiceProvider
+- fix wrong access for app helper (#147)
+- Bind app('request.user') into service container
+- Use app('request.tenant') instead of $currentTenant
+- Add missing language phrases
+- Allow override of meta author, generator, and site name attributes
+- Update validation rules
+- Enforce consistency
+- Copy tinymce plugins
+
 ## [v5.0.2] - 2020-06-21
 - Tweak subdomain route parameter binding
 
@@ -253,6 +266,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v5.1.0]: https://github.com/rinvex/cortex-foundation/compare/v5.0.2...v5.1.0
 [v5.0.2]: https://github.com/rinvex/cortex-foundation/compare/v5.0.1...v5.0.2
 [v5.0.1]: https://github.com/rinvex/cortex-foundation/compare/v5.0.0...v5.0.1
 [v5.0.0]: https://github.com/rinvex/cortex-foundation/compare/v4.2.0...v5.0.0

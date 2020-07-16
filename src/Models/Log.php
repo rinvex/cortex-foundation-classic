@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Models;
 
 use Watson\Validating\ValidatingTrait;
+use Rinvex\Support\Traits\HasTimezones;
 use Spatie\Activitylog\Models\Activity;
 
 /**
@@ -41,6 +42,7 @@ use Spatie\Activitylog\Models\Activity;
  */
 class Log extends Activity
 {
+    use HasTimezones;
     use ValidatingTrait;
 
     /**
@@ -84,7 +86,7 @@ class Log extends Activity
      */
     protected $rules = [
         'log_name' => 'required|string|strip_tags|max:150',
-        'description' => 'nullable|string|max:10000',
+        'description' => 'nullable|string|max:32768',
         'subject_id' => 'nullable|integer',
         'subject_type' => 'nullable|string|strip_tags|max:150',
         'causer_id' => 'nullable|integer',

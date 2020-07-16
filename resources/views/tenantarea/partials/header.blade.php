@@ -6,7 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ route('tenantarea.home') }}"><b>{{ $currentTenant->name }}</b></a>
+            <a class="navbar-brand" href="{{ route('tenantarea.home') }}"><b>{{ app('request.tenant')->name }}</b></a>
         </div>
         <div class="navbar-collapse collapse">
             {!! Menu::render('tenantarea.header.navigation') !!}

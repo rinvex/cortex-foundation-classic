@@ -62,6 +62,7 @@ abstract class AbstractController extends Controller
         }
 
         app()->singleton('request.passwordResetBroker', fn () => $passwordResetBroker ?? null);
+        app()->singleton('request.user', fn () => auth()->guard($guard ?? null)->user());
         app()->singleton('request.accessarea', fn () => $accessarea ?? null);
         app()->singleton('request.guard', fn () => $guard ?? null);
     }
