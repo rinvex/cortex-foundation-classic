@@ -74,7 +74,7 @@ class DiscoveryServiceProvider extends ServiceProvider
         } else {
             $events = array_merge_recursive(
                 $this->discoverEvents(),
-                $this->listen
+                $this->listens()
             );
         }
 
@@ -108,6 +108,16 @@ class DiscoveryServiceProvider extends ServiceProvider
                     DiscoverEvents::within($directory, base_path())
                 );
             }, []);
+    }
+
+    /**
+     * Get the events and handlers.
+     *
+     * @return array
+     */
+    public function listens()
+    {
+        return $this->listen;
     }
 
     /**
