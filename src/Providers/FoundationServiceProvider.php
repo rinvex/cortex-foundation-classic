@@ -18,12 +18,16 @@ use Cortex\Foundation\Http\Middleware\Clockwork;
 use Cortex\Foundation\Generators\LangJsGenerator;
 use Cortex\Foundation\Console\Commands\SeedCommand;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Cortex\Foundation\Console\Commands\UnloadCommand;
 use Cortex\Foundation\Console\Commands\InstallCommand;
 use Cortex\Foundation\Console\Commands\MigrateCommand;
 use Cortex\Foundation\Console\Commands\PublishCommand;
+use Cortex\Foundation\Console\Commands\ActivateCommand;
+use Cortex\Foundation\Console\Commands\AutoloadCommand;
 use Cortex\Foundation\Console\Commands\CoreSeedCommand;
 use Cortex\Foundation\Console\Commands\RollbackCommand;
 use Illuminate\Support\Facades\Session as SessionFacade;
+use Cortex\Foundation\Console\Commands\DeactivateCommand;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
@@ -45,6 +49,10 @@ class FoundationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
+        ActivateCommand::class => 'command.cortex.foundation.activate',
+        DeactivateCommand::class => 'command.cortex.foundation.deactivate',
+        AutoloadCommand::class => 'command.cortex.foundation.autoload',
+        UnloadCommand::class => 'command.cortex.foundation.unload',
         SeedCommand::class => 'command.cortex.foundation.seed',
         InstallCommand::class => 'command.cortex.foundation.install',
         MigrateCommand::class => 'command.cortex.foundation.migrate',

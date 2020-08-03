@@ -26,6 +26,10 @@ class BootServiceProvider extends ServiceProvider
     public function bootstrapModules(): void
     {
         $bootstrapFiles = $this->app['files']->glob($this->app->path('*/*/bootstrap/module.php'));
+        $disabledModules = collect($this->app['request.modules'])->reject(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
+
+        // @TODO: Improve regex, or better filter `glob` results itself!
+        $bootstrapFiles = preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $bootstrapFiles, PREG_GREP_INVERT);
 
         collect($bootstrapFiles)
             ->reject(function ($file) {
