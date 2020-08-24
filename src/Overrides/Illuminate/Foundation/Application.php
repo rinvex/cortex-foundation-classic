@@ -13,6 +13,16 @@ use Illuminate\Foundation\PackageManifest as BasePackageManifest;
 class Application extends BaseApplication
 {
     /**
+     * Get the path to the cached packages.php file.
+     *
+     * @return string
+     */
+    public function getCachedModulesPath()
+    {
+        return $this->normalizeCachePath('APP_MODULES_CACHE', 'cache/modules.php');
+    }
+
+    /**
      * Register the basic bindings into the container.
      *
      * @return void

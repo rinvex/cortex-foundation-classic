@@ -66,7 +66,7 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
      */
     protected function getMigrationPath(): string
     {
-        if (! $this->laravel->files->exists($path = $this->laravel['path'].DIRECTORY_SEPARATOR.$this->moduleName())) {
+        if (! $this->laravel['files']->exists($path = $this->laravel['path'].DIRECTORY_SEPARATOR.$this->moduleName())) {
             throw new \Exception("Invalid path: {$path}");
         }
 

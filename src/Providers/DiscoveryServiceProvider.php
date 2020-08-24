@@ -29,6 +29,13 @@ class DiscoveryServiceProvider extends ServiceProvider
     protected $subscribe = [];
 
     /**
+     * List of disabled modules.
+     *
+     * @var array
+     */
+    protected $disabledModules = [];
+
+    /**
      * Register any application services.
      *
      * This service provider is a great spot to register your various container
@@ -39,14 +46,17 @@ class DiscoveryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Register modules list
+        $modulesManifestPath = $this->app->getCachedModulesPath();
+        $modulesManifest = file_exists($modulesManifestPath) ? $this->app['files']->getRequire($modulesManifestPath) : [];
+        $this->disabledModules = collect($modulesManifest)->reject(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
+        $this->app->singleton('request.modules', fn () => $modulesManifest);
+
         $this->discoverConfig();
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @TODO: Check for enabled modules only!
-     *      We should have the ability to disable modules without uninstalling!!
      *
      * @return void
      */
@@ -97,6 +107,9 @@ class DiscoveryServiceProvider extends ServiceProvider
     public function discoverEvents()
     {
         $eventFiles = $this->app['files']->glob($this->app->path('*/*/src/Listeners'));
+
+        // @TODO: Improve regex, or better filter `glob` results itself!
+        $eventFiles = preg_grep('/('.str_replace('/', '\/', implode('|', $this->disabledModules)).')/', $eventFiles, PREG_GREP_INVERT);
 
         return collect($eventFiles)
             ->reject(function ($directory) {
@@ -156,6 +169,9 @@ class DiscoveryServiceProvider extends ServiceProvider
     {
         $routeFiles = $this->app['files']->glob($this->app->path("*/*/routes/{$type}/*"));
 
+        // @TODO: Improve regex, or better filter `glob` results itself!
+        $routeFiles = preg_grep('/('.str_replace('/', '\/', implode('|', $this->disabledModules)).')/', $routeFiles, PREG_GREP_INVERT);
+
         collect($routeFiles)
             ->reject(function ($file) {
                 return ! is_file($file);
@@ -175,6 +191,9 @@ class DiscoveryServiceProvider extends ServiceProvider
     public function discoverResources(string $type): void
     {
         $resourceDirs = $this->app['files']->glob($this->app->path("*/*/{$type}"));
+
+        // @TODO: Improve regex, or better filter `glob` results itself!
+        $resourceDirs = preg_grep('/('.str_replace('/', '\/', implode('|', $this->disabledModules)).')/', $resourceDirs, PREG_GREP_INVERT);
 
         collect($resourceDirs)
             ->reject(function ($dir) {
@@ -208,6 +227,9 @@ class DiscoveryServiceProvider extends ServiceProvider
     public function discoverConfig(): void
     {
         $configFiles = $this->app['files']->glob($this->app->path('*/*/config/config.php'));
+
+        // @TODO: Improve regex, or better filter `glob` results itself!
+        $configFiles = preg_grep('/('.str_replace('/', '\/', implode('|', $this->disabledModules)).')/', $configFiles, PREG_GREP_INVERT);
 
         collect($configFiles)
             ->reject(function ($file) {
