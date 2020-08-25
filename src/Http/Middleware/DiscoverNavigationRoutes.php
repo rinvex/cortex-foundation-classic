@@ -26,8 +26,8 @@ class DiscoverNavigationRoutes
 
         // @TODO: Improve this regex, or even better filter `glob` results itself!
         $disabledModules = collect(app('request.modules'))->reject(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
-        $menuFiles = preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $menuFiles, PREG_GREP_INVERT);
-        $breadcrumbFiles = preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $breadcrumbFiles, PREG_GREP_INVERT);
+        $menuFiles = $disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $menuFiles, PREG_GREP_INVERT) : $menuFiles;
+        $breadcrumbFiles = $disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $breadcrumbFiles, PREG_GREP_INVERT) : $breadcrumbFiles;
 
         collect($menuFiles)->merge($breadcrumbFiles)
                            ->reject(function ($file) {

@@ -29,7 +29,7 @@ class BootServiceProvider extends ServiceProvider
         $disabledModules = collect($this->app['request.modules'])->reject(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
 
         // @TODO: Improve regex, or better filter `glob` results itself!
-        $bootstrapFiles = preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $bootstrapFiles, PREG_GREP_INVERT);
+        $bootstrapFiles = $disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $bootstrapFiles, PREG_GREP_INVERT) : $bootstrapFiles;
 
         collect($bootstrapFiles)
             ->reject(function ($file) {
