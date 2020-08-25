@@ -109,7 +109,7 @@ class DiscoveryServiceProvider extends ServiceProvider
         $eventFiles = $this->app['files']->glob($this->app->path('*/*/src/Listeners'));
 
         // @TODO: Improve regex, or better filter `glob` results itself!
-        $eventFiles = preg_grep('/('.str_replace('/', '\/', implode('|', $this->disabledModules)).')/', $eventFiles, PREG_GREP_INVERT);
+        $eventFiles = $this->disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->disabledModules)).')/', $eventFiles, PREG_GREP_INVERT) : $eventFiles;
 
         return collect($eventFiles)
             ->reject(function ($directory) {
@@ -170,7 +170,7 @@ class DiscoveryServiceProvider extends ServiceProvider
         $routeFiles = $this->app['files']->glob($this->app->path("*/*/routes/{$type}/*"));
 
         // @TODO: Improve regex, or better filter `glob` results itself!
-        $routeFiles = preg_grep('/('.str_replace('/', '\/', implode('|', $this->disabledModules)).')/', $routeFiles, PREG_GREP_INVERT);
+        $routeFiles = $this->disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->disabledModules)).')/', $routeFiles, PREG_GREP_INVERT) : $routeFiles;
 
         collect($routeFiles)
             ->reject(function ($file) {
@@ -193,7 +193,7 @@ class DiscoveryServiceProvider extends ServiceProvider
         $resourceDirs = $this->app['files']->glob($this->app->path("*/*/{$type}"));
 
         // @TODO: Improve regex, or better filter `glob` results itself!
-        $resourceDirs = preg_grep('/('.str_replace('/', '\/', implode('|', $this->disabledModules)).')/', $resourceDirs, PREG_GREP_INVERT);
+        $resourceDirs = $this->disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->disabledModules)).')/', $resourceDirs, PREG_GREP_INVERT) : $resourceDirs;
 
         collect($resourceDirs)
             ->reject(function ($dir) {
@@ -229,7 +229,7 @@ class DiscoveryServiceProvider extends ServiceProvider
         $configFiles = $this->app['files']->glob($this->app->path('*/*/config/config.php'));
 
         // @TODO: Improve regex, or better filter `glob` results itself!
-        $configFiles = preg_grep('/('.str_replace('/', '\/', implode('|', $this->disabledModules)).')/', $configFiles, PREG_GREP_INVERT);
+        $configFiles = $this->disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->disabledModules)).')/', $configFiles, PREG_GREP_INVERT) : $configFiles;
 
         collect($configFiles)
             ->reject(function ($file) {
