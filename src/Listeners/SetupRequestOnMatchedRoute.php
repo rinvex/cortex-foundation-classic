@@ -18,7 +18,7 @@ class SetupRequestOnMatchedRoute
     protected $guard;
 
     /**
-     * Listen to the authentication lockout event.
+     * Setup request params on RouteMatched event.
      *
      * @param \Illuminate\Auth\Events\Lockout $event
      *
