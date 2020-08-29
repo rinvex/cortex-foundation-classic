@@ -19,23 +19,25 @@ class DiscoverNavigationRoutes
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        $accessarea = app('request.accessarea');
+        if (app()->bound('request.accessarea')) {
+            $accessarea = app('request.accessarea');
 
-        $menuFiles = app('files')->glob(app()->path("*/*/routes/menus/{$accessarea}.php"));
-        $breadcrumbFiles = app('files')->glob(app()->path("*/*/routes/breadcrumbs/{$accessarea}.php"));
+            $menuFiles = app('files')->glob(app()->path("*/*/routes/menus/{$accessarea}.php"));
+            $breadcrumbFiles = app('files')->glob(app()->path("*/*/routes/breadcrumbs/{$accessarea}.php"));
 
-        // @TODO: Improve this regex, or even better filter `glob` results itself!
-        $disabledModules = collect(app('request.modules'))->reject(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
-        $menuFiles = $disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $menuFiles, PREG_GREP_INVERT) : $menuFiles;
-        $breadcrumbFiles = $disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $breadcrumbFiles, PREG_GREP_INVERT) : $breadcrumbFiles;
+            // @TODO: Improve this regex, or even better filter `glob` results itself!
+            $disabledModules = collect(app('request.modules'))->reject(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
+            $menuFiles = $disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $menuFiles, PREG_GREP_INVERT) : $menuFiles;
+            $breadcrumbFiles = $disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $breadcrumbFiles, PREG_GREP_INVERT) : $breadcrumbFiles;
 
-        collect($menuFiles)->merge($breadcrumbFiles)
-                           ->reject(function ($file) {
-                               return ! is_file($file);
-                           })
-                           ->each(function ($file) {
-                               require $file;
-                           }, []);
+            collect($menuFiles)->merge($breadcrumbFiles)
+                               ->reject(function ($file) {
+                                   return ! is_file($file);
+                               })
+                               ->each(function ($file) {
+                                   require $file;
+                               }, []);
+        }
 
         return $next($request);
     }
