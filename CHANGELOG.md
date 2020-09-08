@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v5.1.6] - 2020-09-08
+- Check for app()->bound('request.accessarea') && app()->bound('request.guard') first before using in controller constructors
+
 ## [v5.1.5] - 2020-08-29
 - Fix EventCacheCommand, CastMake, ComponentMake, StubPublish artisan commands
 
@@ -283,6 +286,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v5.1.6]: https://github.com/rinvex/cortex-foundation/compare/v5.1.5...v5.1.6
 [v5.1.5]: https://github.com/rinvex/cortex-foundation/compare/v5.1.4...v5.1.5
 [v5.1.4]: https://github.com/rinvex/cortex-foundation/compare/v5.1.3...v5.1.4
 [v5.1.3]: https://github.com/rinvex/cortex-foundation/compare/v5.1.2...v5.1.3
