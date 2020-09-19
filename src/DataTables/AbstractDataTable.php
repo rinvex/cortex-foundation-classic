@@ -60,6 +60,7 @@ abstract class AbstractDataTable extends DataTable
     protected $buttons = [
         'create' => true,
         'import' => true,
+        'create_popup' => false,
 
         'reset' => true,
         'reload' => true,
@@ -238,6 +239,7 @@ CDATA;
         return collect([
             'create' => ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.create')],
             'import' => ['extend' => 'import', 'text' => '<i class="fa fa-upload"></i> '.trans('cortex/foundation::common.import')],
+            'create_popup' => ['extend' => 'create_popup', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.create')],
 
             'reset' => ['extend' => 'reset', 'text' => '<i class="fa fa-undo"></i> '.trans('cortex/foundation::common.reset')],
             'reload' => ['extend' => 'reload', 'text' => '<i class="fa fa-refresh"></i> '.trans('cortex/foundation::common.reload')],
