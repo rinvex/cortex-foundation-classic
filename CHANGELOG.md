@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v5.1.8] - 2020-09-22
+- Check if route exists first before redirection on exception handler
+
 ## [v5.1.7] - 2020-09-19
 - Add create_popup support for datatable buttons
 
@@ -289,6 +292,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v5.1.8]: https://github.com/rinvex/cortex-foundation/compare/v5.1.7...v5.1.8
 [v5.1.7]: https://github.com/rinvex/cortex-foundation/compare/v5.1.6...v5.1.7
 [v5.1.6]: https://github.com/rinvex/cortex-foundation/compare/v5.1.5...v5.1.6
 [v5.1.5]: https://github.com/rinvex/cortex-foundation/compare/v5.1.4...v5.1.5
