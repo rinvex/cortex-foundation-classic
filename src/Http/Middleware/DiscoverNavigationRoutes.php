@@ -25,10 +25,10 @@ class DiscoverNavigationRoutes
             $menuFiles = app('files')->glob(app()->path("*/*/routes/menus/{$accessarea}.php"));
             $breadcrumbFiles = app('files')->glob(app()->path("*/*/routes/breadcrumbs/{$accessarea}.php"));
 
-            // @TODO: Improve this regex, or even better filter `glob` results itself!
-            $disabledModules = collect(app('request.modules'))->reject(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
-            $menuFiles = $disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $menuFiles, PREG_GREP_INVERT) : $menuFiles;
-            $breadcrumbFiles = $disabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $disabledModules)).')/', $breadcrumbFiles, PREG_GREP_INVERT) : $breadcrumbFiles;
+            // @TODO: Improve regex, or better filter `glob` results itself!
+            $enabledModules = collect(app('request.modules'))->filter(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
+            $menuFiles = $enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $enabledModules)).')/', $menuFiles) : $menuFiles;
+            $breadcrumbFiles = $enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $enabledModules)).')/', $breadcrumbFiles) : $breadcrumbFiles;
 
             collect($menuFiles)->merge($breadcrumbFiles)
                                ->reject(function ($file) {
