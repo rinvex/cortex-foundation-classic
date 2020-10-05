@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Listeners;
 
 use Illuminate\Support\Str;
+use Silber\Bouncer\Database\Models;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Events\RouteMatched;
 
@@ -32,6 +33,7 @@ class SetupRequestOnMatchedRoute
             $passwordResetBroker = $this->getPasswordResetBroker();
             $accessarea = $this->getAccessarea();
             $guard = $this->getGuard();
+            Models::setUsersModel(config("cortex.auth.models.{$guard}"));
         }
 
         app()->singleton('request.emailVerificationBroker', fn () => $emailVerificationBroker ?? null);
