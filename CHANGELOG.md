@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v5.1.10] - 2020-10-05
+- Setup Bouncer users model on route matched event
+- Whitelist enabled modules instead of blacklisting disabled modules
+
 ## [v5.1.9] - 2020-09-22
 - Don't report GenericException
 
@@ -295,6 +299,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v5.1.10]: https://github.com/rinvex/cortex-foundation/compare/v5.1.9...v5.1.10
 [v5.1.9]: https://github.com/rinvex/cortex-foundation/compare/v5.1.8...v5.1.9
 [v5.1.8]: https://github.com/rinvex/cortex-foundation/compare/v5.1.7...v5.1.8
 [v5.1.7]: https://github.com/rinvex/cortex-foundation/compare/v5.1.6...v5.1.7
