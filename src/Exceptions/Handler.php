@@ -28,7 +28,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        GenericException::class,
     ];
 
     /**
@@ -126,7 +126,7 @@ class Handler extends ExceptionHandler
             $plural = Str::plural($single);
 
             return intend([
-                'url' => $model ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),
+                'url' => Route::has("{$accessarea}.{$plural}.index") ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),
                 'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
             ]);
         } elseif ($e instanceof ThrottleRequestsException) {
@@ -182,7 +182,7 @@ class Handler extends ExceptionHandler
         session()->put('url.intended', url()->current());
 
         return intend([
-            'url' => route(app('request.accessarea').'.login'),
+            'url' => app()->bound('request.accessarea') ? route(app('request.accessarea').'.login') : route('frontarea.login'),
             'with' => ['warning' => trans('cortex/foundation::messages.session_required')],
         ]);
     }

@@ -34,5 +34,7 @@ class CoreInstallCommand extends Command
         $this->call('cortex:publish', ['--force' => $this->option('force'), '--resource' => $this->option('resource') ?: ['config']]);
         $this->call('cortex:migrate', ['--force' => $this->option('force')]);
         $this->call('cortex:seed');
+
+        $this->call('cortex:activate');
     }
 }

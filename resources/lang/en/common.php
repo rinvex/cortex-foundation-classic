@@ -72,4 +72,7 @@ return [
     'colvis' => 'Columns',
     'pageLength' => 'Length',
 
+    'created_at_from' => 'Created From',
+    'created_at_to' => 'Created To',
+
 ];

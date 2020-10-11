@@ -5,6 +5,52 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v5.1.10] - 2020-10-05
+- Setup Bouncer users model on route matched event
+- Whitelist enabled modules instead of blacklisting disabled modules
+
+## [v5.1.9] - 2020-09-22
+- Don't report GenericException
+
+## [v5.1.8] - 2020-09-22
+- Check if route exists first before redirection on exception handler
+
+## [v5.1.7] - 2020-09-19
+- Add create_popup support for datatable buttons
+
+## [v5.1.6] - 2020-09-08
+- Check for app()->bound('request.accessarea') && app()->bound('request.guard') first before using in controller constructors
+
+## [v5.1.5] - 2020-08-29
+- Fix EventCacheCommand, CastMake, ComponentMake, StubPublish artisan commands
+
+## [v5.1.4] - 2020-08-28
+- Refactor request params setup
+
+## [v5.1.3] - 2020-08-27
+- Don't crawl page if page is not found a.k.a app('request.accessarea') is not bound
+
+## [v5.1.2] - 2020-08-26
+- Tweak auto discovery disabled modules
+
+## [v5.1.1] - 2020-08-25
+- Add functionality to activate, deactivate, autoload, unload modules
+- Activate module after installation
+- Fix service container usage
+
+## [v5.1.0] - 2020-07-16
+- Utilize timezones
+- Override artisan EventListCommand
+- Tweak events discovery in DiscoveryServiceProvider
+- fix wrong access for app helper (#147)
+- Bind app('request.user') into service container
+- Use app('request.tenant') instead of $currentTenant
+- Add missing language phrases
+- Allow override of meta author, generator, and site name attributes
+- Update validation rules
+- Enforce consistency
+- Copy tinymce plugins
+
 ## [v5.0.2] - 2020-06-21
 - Tweak subdomain route parameter binding
 
@@ -253,6 +299,17 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v5.1.10]: https://github.com/rinvex/cortex-foundation/compare/v5.1.9...v5.1.10
+[v5.1.9]: https://github.com/rinvex/cortex-foundation/compare/v5.1.8...v5.1.9
+[v5.1.8]: https://github.com/rinvex/cortex-foundation/compare/v5.1.7...v5.1.8
+[v5.1.7]: https://github.com/rinvex/cortex-foundation/compare/v5.1.6...v5.1.7
+[v5.1.6]: https://github.com/rinvex/cortex-foundation/compare/v5.1.5...v5.1.6
+[v5.1.5]: https://github.com/rinvex/cortex-foundation/compare/v5.1.4...v5.1.5
+[v5.1.4]: https://github.com/rinvex/cortex-foundation/compare/v5.1.3...v5.1.4
+[v5.1.3]: https://github.com/rinvex/cortex-foundation/compare/v5.1.2...v5.1.3
+[v5.1.2]: https://github.com/rinvex/cortex-foundation/compare/v5.1.1...v5.1.2
+[v5.1.1]: https://github.com/rinvex/cortex-foundation/compare/v5.1.0...v5.1.1
+[v5.1.0]: https://github.com/rinvex/cortex-foundation/compare/v5.0.2...v5.1.0
 [v5.0.2]: https://github.com/rinvex/cortex-foundation/compare/v5.0.1...v5.0.2
 [v5.0.1]: https://github.com/rinvex/cortex-foundation/compare/v5.0.0...v5.0.1
 [v5.0.0]: https://github.com/rinvex/cortex-foundation/compare/v4.2.0...v5.0.0

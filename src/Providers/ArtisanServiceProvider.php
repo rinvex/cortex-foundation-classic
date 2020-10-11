@@ -10,10 +10,12 @@ use Illuminate\Console\Scheduling\ScheduleRunCommand;
 use Cortex\Foundation\Console\Commands\JobMakeCommand;
 use Cortex\Foundation\Console\Commands\MailMakeCommand;
 use Cortex\Foundation\Console\Commands\RuleMakeCommand;
+use Cortex\Foundation\Console\Commands\EventListCommand;
 use Cortex\Foundation\Console\Commands\EventMakeCommand;
 use Cortex\Foundation\Console\Commands\ModelMakeCommand;
 use Illuminate\Console\Scheduling\ScheduleFinishCommand;
 use Cortex\Foundation\Console\Commands\ConfigMakeCommand;
+use Cortex\Foundation\Console\Commands\EventCacheCommand;
 use Cortex\Foundation\Console\Commands\ModuleMakeCommand;
 use Cortex\Foundation\Console\Commands\PolicyMakeCommand;
 use Cortex\Foundation\Console\Commands\SeederMakeCommand;
@@ -66,7 +68,6 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'Optimize' => 'command.optimize',
         'OptimizeClear' => 'command.optimize.clear',
         'PackageDiscover' => 'command.package.discover',
-        //'Preset' => 'command.preset',
         'QueueFailed' => 'command.queue.failed',
         'QueueFlush' => 'command.queue.flush',
         'QueueForget' => 'command.queue.forget',
@@ -94,7 +95,9 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     protected $devCommands = [
         //'CacheTable' => 'command.cache.table',
         'ConfigMake' => 'command.config.make',
+        'CastMake' => 'command.cast.make',
         'ChannelMake' => 'command.channel.make',
+        'ComponentMake' => 'command.component.make',
         'ConsoleMake' => 'command.console.make',
         'ControllerMake' => 'command.controller.make',
         'DatatableMake' => 'command.datatable.make',
@@ -122,6 +125,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'SeederMake' => 'command.seeder.make',
         //'SessionTable' => 'command.session.table',
         'Serve' => 'command.serve',
+        'StubPublish' => 'command.stub.publish',
         'TestMake' => 'command.test.make',
         'TransformerMake' => 'command.transformer.make',
         'VendorPublish' => 'command.vendor.publish',
@@ -210,6 +214,30 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->app->singleton('command.event.generate', function () {
             return new EventGenerateCommand();
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerEventCacheCommand()
+    {
+        $this->app->singleton('command.event.cache', function () {
+            return new EventCacheCommand;
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerEventListCommand()
+    {
+        $this->app->singleton('command.event.list', function () {
+            return new EventListCommand();
         });
     }
 
