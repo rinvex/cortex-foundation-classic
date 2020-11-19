@@ -49,6 +49,8 @@ abstract class AbstractDataTable extends DataTable
         'autoWidth' => false,
         'stateSave' => true,
         'fixedHeader' => true,
+        'responsive' => false,
+        'scrollX' => true,
         'pageLength' => 10,
         'lengthMenu' => [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     ];
@@ -212,6 +214,8 @@ CDATA;
             'autoWidth' => $this->options['autoWidth'],
             'stateSave' => $this->options['stateSave'],
             'fixedHeader' => $this->options['fixedHeader'],
+            'responsive' => $this->options['responsive'],
+            'scrollX' => $this->options['scrollX'],
             'pageLength' => $this->options['pageLength'],
             'lengthMenu' => $this->options['lengthMenu'],
             'buttons' => $buttons,
