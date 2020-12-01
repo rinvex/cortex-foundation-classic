@@ -10,29 +10,26 @@
 @section('content')
 
     <div class="container">
-        <section class="content-header">
-            <h1>{{ Breadcrumbs::render() }}</h1>
-        </section>
 
-        {{-- Main content --}}
-        <section class="content">
-
-            <div class="row">
-
-                <div class="col-md-12">
-
-                    <div class="box">
-                        <div class="box-body">
-                            @yield('datatable-filters')
-                            {!! $dataTable->table(['class' => 'table table-striped table-hover responsive dataTableBuilder', 'id' => "{$id}"]) !!}
-                        </div>
-                    </div>
-
-                </div>
-
+        <div class="row profile">
+            <div class="col-md-3">
+                @include('cortex/auth::frontarea.partials.sidebar')
             </div>
 
-        </section>
+            <div class="col-md-9">
+
+                <div class="profile-content">
+
+                    <nav aria-label="breadcrumb">
+                        {{ Breadcrumbs::render() }}
+                    </nav>
+
+                    @yield('datatable-filters')
+                    {!! $dataTable->table(['class' => 'table table-striped table-hover responsive dataTableBuilder', 'id' => "{$id}"]) !!}
+
+                </div>
+            </div>
+        </div>
 
     </div>
 
