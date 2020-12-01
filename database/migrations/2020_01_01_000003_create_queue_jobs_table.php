@@ -25,7 +25,7 @@ class CreateQueueJobsTable extends Migration
             $table->integer('created_at')->unsigned();
 
             // Indexes
-            $table->index('queue');
+            $table->index(['queue']);
         });
     }
 
