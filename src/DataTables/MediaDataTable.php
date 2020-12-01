@@ -71,7 +71,7 @@ class MediaDataTable extends AbstractDataTable
     {
         $query = $this->resource->media();
 
-        return $this->applyScopes($query);
+        return $this->scope()->applyScopes($query);
     }
 
     /**

@@ -35,7 +35,7 @@ class LogsDataTable extends AbstractDataTable
     {
         $query = $this->resource->activities();
 
-        return $this->applyScopes($query);
+        return $this->scope()->applyScopes($query);
     }
 
     /**

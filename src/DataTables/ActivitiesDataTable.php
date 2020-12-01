@@ -29,7 +29,7 @@ class ActivitiesDataTable extends LogsDataTable
     {
         $query = $this->resource->actions();
 
-        return $this->applyScopes($query);
+        return $this->scope()->applyScopes($query);
     }
 
     /**

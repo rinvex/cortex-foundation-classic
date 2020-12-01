@@ -116,7 +116,7 @@ abstract class AbstractDataTable extends DataTable
             }
         }
 
-        return $this->applyScopes($query);
+        return $this->scope()->applyScopes($query);
     }
 
     /**

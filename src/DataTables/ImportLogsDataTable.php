@@ -35,7 +35,7 @@ class ImportLogsDataTable extends AbstractDataTable
     {
         $query = Log::where('description', 'imported')->where('subject_type', $this->resource);
 
-        return $this->applyScopes($query);
+        return $this->scope()->applyScopes($query);
     }
 
     /**
