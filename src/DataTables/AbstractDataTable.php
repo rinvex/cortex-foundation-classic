@@ -209,11 +209,12 @@ CDATA;
     protected function getButtons(): array
     {
         $this->buttons['bulk'] = $this->buttons['bulkDelete']
-                                 || $this->buttons['bulkActivate']
-                                 || $this->buttons['bulkDeactivate'];
+                                || $this->buttons['bulkActivate']
+                                || $this->buttons['bulkDeactivate']
+                                || $this->buttons['bulkRevoke'];
 
         $buttons = collect($this->buttons)->filter(fn ($value) => $value);
-        $bulkButtons = $buttons->only(['bulkDelete', 'bulkActivate', 'bulkDeactivate']);
+        $bulkButtons = $buttons->only(['bulkDelete', 'bulkActivate', 'bulkDeactivate', 'bulkRevoke']);
 
         return collect([
             'create' => ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.create')],
