@@ -100,6 +100,35 @@ abstract class AbstractDataTable extends DataTable
     }
 
     /**
+     * Perform bulk action.
+     *
+     * @param string $action
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function bulkAction(string $action)
+    {
+        if ($results = $this->query()->get()) {
+            $results->each(function ($item) use ($action) {
+                // Check if current user can execute this action on that model
+                if ($this->request()->user(app('request.guard'))->can($action, $item)) {
+                    $item->{$action};
+                }
+            });
+
+            return intend([
+                'back' => true,
+                'with' => ['success' => trans("cortex/foundation::messages.records_{$action}d")],
+            ]);
+        }
+
+        return intend([
+            'back' => true,
+            'with' => ['warning' => trans("cortex/foundation::messages.no_records_selected")],
+        ]);
+    }
+
+    /**
      * Display ajax response.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -148,19 +177,13 @@ CDATA;
             switch ($action) {
                 case 'print':
                     return app()->call([$this, 'printPreview']);
-                    break;
+                case 'revoke':
                 case 'delete':
-                    return app()->call([$this, 'bulkDelete']);
-                    break;
                 case 'activate':
-                    return app()->call([$this, 'bulkActivate']);
-                    break;
                 case 'deactivate':
-                    return app()->call([$this, 'bulkDeactivate']);
-                    break;
+                    return app()->call([$this, 'bulkAction'], ['action' => $action]);
                 default:
                     return app()->call([$this, $action]);
-                    break;
             }
         }
 
@@ -266,110 +289,5 @@ CDATA;
         $resource = Str::plural(mb_strtolower(Arr::last(explode(class_exists($model) ? '\\' : '.', $model))));
 
         return $resource.'-export-'.date('Y-m-d').'-'.time();
-    }
-
-    /**
-     * Perform bulk delete action.
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function bulkDelete()
-    {
-        $selectedIds = collect($this->request->get('selected_ids'))->filter();
-
-        if ($selectedIds->isNotEmpty()) {
-            $model = app($this->model);
-            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
-
-            if (in_array(app('request.accessarea'), $obscure['areas'])) {
-                $selectedIds = $selectedIds->map(function ($value) {
-                    return optional(Hashids::decode($value))[0];
-                });
-
-                $model->whereIn($model->getKeyName(), $selectedIds)->get()->each->delete();
-            } else {
-                $model->whereIn($model->getRouteKeyName(), $selectedIds)->get()->each->delete();
-            }
-
-            return intend([
-                'back' => true,
-                'with' => ['success' => trans('cortex/foundation::messages.records_deleted')],
-            ]);
-        }
-
-        return intend([
-            'back' => true,
-            'with' => ['warning' => trans('cortex/foundation::messages.no_records_selected')],
-        ]);
-    }
-
-    /**
-     * Perform bulk activate action.
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function bulkActivate()
-    {
-        $selectedIds = collect($this->request->get('selected_ids'))->filter();
-
-        if ($selectedIds->isNotEmpty()) {
-            $model = app($this->model);
-            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
-
-            if (in_array(app('request.accessarea'), $obscure['areas'])) {
-                $selectedIds = $selectedIds->map(function ($value) {
-                    return optional(Hashids::decode($value))[0];
-                });
-
-                $model->whereIn($model->getKeyName(), $selectedIds)->get()->each->activate();
-            } else {
-                $model->whereIn($model->getRouteKeyName(), $selectedIds)->get()->each->activate();
-            }
-
-            return intend([
-                'back' => true,
-                'with' => ['success' => trans('cortex/foundation::messages.records_activated')],
-            ]);
-        }
-
-        return intend([
-            'back' => true,
-            'with' => ['warning' => trans('cortex/foundation::messages.no_records_activated')],
-        ]);
-    }
-
-    /**
-     * Perform bulk deactivate action.
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function bulkDeactivate()
-    {
-        $selectedIds = collect($this->request->get('selected_ids'))->filter();
-
-        if ($selectedIds->isNotEmpty()) {
-            $model = app($this->model);
-            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
-
-            if (in_array(app('request.accessarea'), $obscure['areas'])) {
-                $selectedIds = $selectedIds->map(function ($value) {
-                    return optional(Hashids::decode($value))[0];
-                });
-
-                $model->whereIn($model->getKeyName(), $selectedIds)->get()->each->deactivate();
-            } else {
-                $model->whereIn($model->getRouteKeyName(), $selectedIds)->get()->each->deactivate();
-            }
-
-            return intend([
-                'back' => true,
-                'with' => ['success' => trans('cortex/foundation::messages.records_deactivated')],
-            ]);
-        }
-
-        return intend([
-            'back' => true,
-            'with' => ['warning' => trans('cortex/foundation::messages.no_records_deactivated')],
-        ]);
     }
 }
