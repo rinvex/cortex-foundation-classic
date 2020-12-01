@@ -100,6 +100,16 @@ abstract class AbstractDataTable extends DataTable
     }
 
     /**
+     * Add scopes to the datatable.
+     *
+     * @return $this
+     */
+    public function scope()
+    {
+        return $this;
+    }
+
+    /**
      * Perform bulk action.
      *
      * @param string $action
