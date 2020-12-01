@@ -39,18 +39,6 @@ class LogsDataTable extends AbstractDataTable
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function ajax()
-    {
-        return datatables($this->query())
-            ->setTransformer(app($this->transformer))
-            ->make(true);
-    }
-
-    /**
      * Get default builder parameters.
      *
      * @return array
