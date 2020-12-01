@@ -9,6 +9,7 @@ return [
     'cancel' => 'Cancel',
     'close' => 'Close',
     'delete' => 'Delete',
+    'revoke' => 'Revoke',
     'status' => 'Status',
     'resource' => 'Resource',
     'data' => 'Data',

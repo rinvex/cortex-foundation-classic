@@ -40,6 +40,7 @@ class MediaDataTable extends AbstractDataTable
         'bulkDelete' => true,
         'bulkActivate' => false,
         'bulkDeactivate' => false,
+        'bulkRevoke' => false,
 
         'colvis' => true,
         'pageLength' => true,
