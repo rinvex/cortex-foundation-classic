@@ -37,45 +37,16 @@ abstract class AbstractDataTable extends DataTable
     /**
      * Set default options.
      *
-     * @var mixed
+     * @var array
      */
-    protected $options = [
-        'dom' => "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>",
-        'select' => '{"style":"multi"}',
-        'order' => [[1, 'asc']],
-        'mark' => true,
-        'keys' => false,
-        'retrieve' => true,
-        'autoWidth' => false,
-        'fixedHeader' => true,
-        'pageLength' => 10,
-        'lengthMenu' => [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-    ];
+    protected $options;
 
     /**
      * Set action buttons.
      *
-     * @var mixed
+     * @var array
      */
-    protected $buttons = [
-        'create' => true,
-        'import' => true,
-        'create_popup' => false,
-
-        'reset' => true,
-        'reload' => true,
-        'showSelected' => true,
-
-        'print' => true,
-        'export' => true,
-
-        'bulkDelete' => true,
-        'bulkActivate' => false,
-        'bulkDeactivate' => false,
-
-        'colvis' => true,
-        'pageLength' => true,
-    ];
+    protected $buttons;
 
     /**
      * The datatable builder parameters.
@@ -90,6 +61,15 @@ abstract class AbstractDataTable extends DataTable
      * @return array
      */
     abstract protected function getColumns(): array;
+
+    /**
+     * Create new instance of datatables.
+     */
+    public function __construct()
+    {
+        $this->options = $this->options ?? config("cortex.foundation.datatables.options");
+        $this->buttons = $this->buttons ?? config("cortex.foundation.datatables.buttons");
+    }
 
     /**
      * Get the query object to be processed by dataTables.
