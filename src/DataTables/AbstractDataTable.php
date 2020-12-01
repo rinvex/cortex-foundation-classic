@@ -128,7 +128,6 @@ abstract class AbstractDataTable extends DataTable
     {
         return datatables($this->query())
             ->setTransformer(app($this->transformer))
-            ->orderColumn('name', 'name->"$.'.app()->getLocale().'" $1')
             ->make(true);
     }
 
