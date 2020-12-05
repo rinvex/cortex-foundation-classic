@@ -24,7 +24,7 @@
                     <div class="box">
                         <div class="box-body">
                             @yield('datatable-filters')
-                            {!! $dataTable->table(['class' => 'table table-striped table-hover responsive dataTableBuilder', 'id' => "{$id}"]) !!}
+                            {!! $dataTable->pusher($pusher ?? null)->table(['id' => $id]) !!}
                         </div>
                     </div>
 
