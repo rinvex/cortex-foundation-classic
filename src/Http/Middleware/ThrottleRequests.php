@@ -107,7 +107,7 @@ class ThrottleRequests
     protected function resolveRequestSignature($request, string $field = null)
     {
         if ($user = $request->user()) {
-            return sha1($user->getAuthIdentifier());
+            return sha1((string) $user->getAuthIdentifier());
         }
 
         if (! is_null($field)) {
