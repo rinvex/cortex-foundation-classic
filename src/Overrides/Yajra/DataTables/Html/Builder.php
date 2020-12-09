@@ -10,6 +10,13 @@ use Yajra\DataTables\Html\Builder as BaseBuilder;
 class Builder extends BaseBuilder
 {
     /**
+     * Array of pusher parameters.
+     *
+     * @var array
+     */
+    protected $pusher = [];
+
+    /**
      * Generate DataTable's table html.
      *
      * @param array $attributes
@@ -25,5 +32,36 @@ class Builder extends BaseBuilder
         $tableHtml = '<table '.$htmlAttr.'></table>';
 
         return new HtmlString($tableHtml);
+    }
+
+    /**
+     * Get javascript template to use.
+     *
+     * @return string
+     */
+    protected function template()
+    {
+        $template = $this->template ?: $this->config->get('datatables-html.script', 'datatables::script');
+
+        return $this->view->make($template, [
+            'id' => $this->getTableAttribute('id'),
+            'options' => $this->generateJson(),
+            'editors' => $this->editors,
+            'pusher' => $this->pusher,
+        ])->render();
+    }
+
+    /**
+     * Configure DataTable's pusher parameters.
+     *
+     * @param  array|null $pusher
+     *
+     * @return $this
+     */
+    public function pusher(array $pusher = null)
+    {
+        ! $pusher || $this->pusher = array_merge($this->pusher, $pusher);
+
+        return $this;
     }
 }
