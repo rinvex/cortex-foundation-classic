@@ -12,16 +12,6 @@ class OpcacheServiceProvider extends BaseOpcacheServiceProvider
     public function register()
     {
         // config
-        $this->mergeConfigFrom(__DIR__.'/../config/opcache.php', 'opcache');
-
-        // bind routes
-        // @TODO: refactor routes
-        $this->app->router->group([
-            'middleware'    => [\Appstract\Opcache\Http\Middleware\Request::class],
-            'prefix'        => config('opcache.prefix'),
-            'namespace'     => 'Appstract\Opcache\Http\Controllers',
-        ], function ($router) {
-            require __DIR__.'/Http/routes.php';
-        });
+        $this->mergeConfigFrom($this->app->basePath('/vendor/appstract/laravel-opcache/config/opcache.php'), 'opcache');
     }
 }
