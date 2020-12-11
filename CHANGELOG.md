@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v5.1.12] - 2020-12-12
+- Fix OpcacheServiceProvider config file include, and drop route registration
+
 ## [v5.1.11] - 2020-12-11
 - Add stateSave, responsive, scrollX options to datatables and fix some datatable options
 - Import AdminLTE base styles in frontarea theme to inherit needed styles
@@ -321,6 +324,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v5.1.12]: https://github.com/rinvex/cortex-foundation/compare/v5.1.11...v5.1.12
 [v5.1.11]: https://github.com/rinvex/cortex-foundation/compare/v5.1.10...v5.1.11
 [v5.1.10]: https://github.com/rinvex/cortex-foundation/compare/v5.1.9...v5.1.10
 [v5.1.9]: https://github.com/rinvex/cortex-foundation/compare/v5.1.8...v5.1.9
