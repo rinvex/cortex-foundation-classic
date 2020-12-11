@@ -25,6 +25,7 @@ class ActivityTransformer extends TransformerAbstract
     {
         $subject = $log->subject_type;
         $subjects = Str::plural($subject);
+        // @TODO: identify the new route name. ex: adminarea.cortex.auth.roles.edit
         $route = Route::has("adminarea.{$subjects}.edit") ? route("adminarea.{$subjects}.edit", [$subject => $log->subject]) : null;
 
         if ($log->subject) {

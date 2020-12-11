@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v5.1.11] - 2020-12-11
+- Add stateSave, responsive, scrollX options to datatables and fix some datatable options
+- Import AdminLTE base styles in frontarea theme to inherit needed styles
+- Cast $user->getAuthIdentifier() to string to avoid sha1 datatype issues
+- Override datatables HTML builder, template method and add pusher support
+- Override DebugbarServiceProvider & OpcacheServiceProvider
+- Rename routes, channels, menus, breadcrumbs, datatable & form IDs to follow same modular naming conventions
+- Tweak and simplify datatables method call and realtime
+- Refactor and tweak Eloquent Events
+- Ad support for query scopes
+- Move EloquentDataTable class to correct overrides namespace
+- Refactor and simplify datatables bulk actions
+- Add support for datatables bulkRevoke
+- Enforce consistent datatables request object usage
+- Move datatables options and buttons to config files and support class based override as well
+- Refactor frontarea datatables views and add missing partial
+- Automatically add query scopes to datatables if exists
+- Enforce consistent database table index definition
+- Add support for bulkRevoke
+- Drop useless datatables ajax method override
+- Reset default custom order column: 'name' in ajax method
+
 ## [v5.1.10] - 2020-10-05
 - Setup Bouncer users model on route matched event
 - Whitelist enabled modules instead of blacklisting disabled modules
@@ -299,6 +321,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v5.1.11]: https://github.com/rinvex/cortex-foundation/compare/v5.1.10...v5.1.11
 [v5.1.10]: https://github.com/rinvex/cortex-foundation/compare/v5.1.9...v5.1.10
 [v5.1.9]: https://github.com/rinvex/cortex-foundation/compare/v5.1.8...v5.1.9
 [v5.1.8]: https://github.com/rinvex/cortex-foundation/compare/v5.1.7...v5.1.8

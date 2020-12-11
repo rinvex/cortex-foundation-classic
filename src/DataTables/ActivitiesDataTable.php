@@ -29,19 +29,7 @@ class ActivitiesDataTable extends LogsDataTable
     {
         $query = $this->resource->actions();
 
-        return $this->applyScopes($query);
-    }
-
-    /**
-     * Display ajax response.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function ajax()
-    {
-        return datatables($this->query())
-            ->setTransformer(app($this->transformer))
-            ->make(true);
+        return $this->scope()->applyScopes($query);
     }
 
     /**

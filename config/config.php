@@ -80,4 +80,50 @@ return [
         'mimetypes' => 'image/jpeg,image/gif,image/png',
     ],
 
+    // Datatables
+    'datatables' => [
+
+        // Available button actions. When calling an action, the value will be used as the
+        // function name. If you want to add or disable an action, overload and modify this config.
+        'actions' => ['print', 'csv', 'excel', 'pdf', 'delete', 'activate', 'deactivate', 'revoke'],
+
+        'options' => [
+            'dom' => "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>",
+            'select' => '{"style":"multi"}',
+            'order' => [[1, 'asc']],
+            'mark' => true,
+            'keys' => false,
+            'retrieve' => true,
+            'autoWidth' => false,
+            'fixedHeader' => true,
+            'responsive' => true,
+            'stateSave' => false,
+            'scrollX' => false,
+            'pageLength' => 10,
+            'lengthMenu' => [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+        ],
+
+        'buttons' => [
+            'create' => true,
+            'import' => true,
+            'create_popup' => false,
+
+            'reset' => true,
+            'reload' => true,
+            'showSelected' => true,
+
+            'print' => true,
+            'export' => true,
+
+            'bulkDelete' => true,
+            'bulkActivate' => false,
+            'bulkDeactivate' => false,
+            'bulkRevoke' => false,
+
+            'colvis' => true,
+            'pageLength' => true,
+        ],
+
+    ],
+
 ];

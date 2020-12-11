@@ -35,19 +35,7 @@ class LogsDataTable extends AbstractDataTable
     {
         $query = $this->resource->activities();
 
-        return $this->applyScopes($query);
-    }
-
-    /**
-     * Display ajax response.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function ajax()
-    {
-        return datatables($this->query())
-            ->setTransformer(app($this->transformer))
-            ->make(true);
+        return $this->scope()->applyScopes($query);
     }
 
     /**
@@ -57,12 +45,23 @@ class LogsDataTable extends AbstractDataTable
      */
     protected function getBuilderParameters(): array
     {
+        $buttons = $this->getButtons();
+
         return [
             'dom' => $this->options['dom'],
             'keys' => $this->options['keys'],
+            'mark' => $this->options['mark'],
             'order' => $this->options['order'],
+            'select' => $this->options['select'],
             'retrieve' => $this->options['retrieve'],
             'autoWidth' => $this->options['autoWidth'],
+            'fixedHeader' => $this->options['fixedHeader'],
+            'responsive' => $this->options['responsive'],
+            'stateSave' => $this->options['stateSave'],
+            'scrollX' => $this->options['scrollX'],
+            'pageLength' => $this->options['pageLength'],
+            'lengthMenu' => $this->options['lengthMenu'],
+            'buttons' => $buttons,
             'drawCallback' => "function (settings) {
                 var api = this.api();
 
@@ -79,11 +78,6 @@ class LogsDataTable extends AbstractDataTable
                     }
                 });
             }",
-            'buttons' => [
-                'print', 'reset', 'reload', 'export',
-                ['extend' => 'colvis', 'text' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.columns').' <span class="caret"/>'],
-                ['extend' => 'pageLength', 'text' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.limit').' <span class="caret"/>'],
-            ],
         ];
     }
 

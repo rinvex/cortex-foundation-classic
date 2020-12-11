@@ -30,6 +30,7 @@ class LogTransformer extends TransformerAbstract
             $singleResource = Str::lower(end($class));
             $pluralResource = Str::plural(Str::lower(end($class)));
             $causer = ucfirst($singleResource).': '.($log->causer->username ?? $log->causer->name ?? $log->causer->slug);
+            // @TODO: identify the new route name. ex: adminarea.cortex.auth.members.edit
             $causer_route = Route::has("adminarea.{$pluralResource}.edit") ? route("adminarea.{$pluralResource}.edit", [$singleResource => $log->causer]) : null;
         } else {
             $causer = 'System';

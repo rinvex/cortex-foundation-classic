@@ -37,45 +37,16 @@ abstract class AbstractDataTable extends DataTable
     /**
      * Set default options.
      *
-     * @var mixed
+     * @var array
      */
-    protected $options = [
-        'dom' => "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>",
-        'select' => '{"style":"multi"}',
-        'order' => [[1, 'asc']],
-        'mark' => true,
-        'keys' => false,
-        'retrieve' => true,
-        'autoWidth' => false,
-        'fixedHeader' => true,
-        'pageLength' => 10,
-        'lengthMenu' => [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-    ];
+    protected $options;
 
     /**
      * Set action buttons.
      *
-     * @var mixed
+     * @var array
      */
-    protected $buttons = [
-        'create' => true,
-        'import' => true,
-        'create_popup' => false,
-
-        'reset' => true,
-        'reload' => true,
-        'showSelected' => true,
-
-        'print' => true,
-        'export' => true,
-
-        'bulkDelete' => true,
-        'bulkActivate' => false,
-        'bulkDeactivate' => false,
-
-        'colvis' => true,
-        'pageLength' => true,
-    ];
+    protected $buttons;
 
     /**
      * The datatable builder parameters.
@@ -92,6 +63,15 @@ abstract class AbstractDataTable extends DataTable
     abstract protected function getColumns(): array;
 
     /**
+     * Create new instance of datatables.
+     */
+    public function __construct()
+    {
+        $this->options = $this->options ?? config("cortex.foundation.datatables.options");
+        $this->buttons = $this->buttons ?? config("cortex.foundation.datatables.buttons");
+    }
+
+    /**
      * Get the query object to be processed by dataTables.
      *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Support\Collection
@@ -100,7 +80,7 @@ abstract class AbstractDataTable extends DataTable
     {
         $model = app($this->model);
         $query = $model->query();
-        $selectedIds = collect($this->request->get('selected_ids'))->filter();
+        $selectedIds = collect($this->request()->get('selected_ids'))->filter();
 
         if ($selectedIds->isNotEmpty()) {
             $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
@@ -116,7 +96,46 @@ abstract class AbstractDataTable extends DataTable
             }
         }
 
-        return $this->applyScopes($query);
+        return $this->scope()->applyScopes($query);
+    }
+
+    /**
+     * Add scopes to the datatable.
+     *
+     * @return $this
+     */
+    public function scope()
+    {
+        return $this;
+    }
+
+    /**
+     * Perform bulk action.
+     *
+     * @param string $action
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function bulkAction(string $action)
+    {
+        if ($results = $this->query()->get()) {
+            $results->each(function ($item) use ($action) {
+                // Check if current user can execute this action on that model
+                if ($this->request()->user(app('request.guard'))->can($action, $item)) {
+                    $item->{$action};
+                }
+            });
+
+            return intend([
+                'back' => true,
+                'with' => ['success' => trans("cortex/foundation::messages.records_{$action}d")],
+            ]);
+        }
+
+        return intend([
+            'back' => true,
+            'with' => ['warning' => trans("cortex/foundation::messages.no_records_selected")],
+        ]);
     }
 
     /**
@@ -128,7 +147,6 @@ abstract class AbstractDataTable extends DataTable
     {
         return datatables($this->query())
             ->setTransformer(app($this->transformer))
-            ->orderColumn('name', 'name->"$.'.app()->getLocale().'" $1')
             ->make(true);
     }
 
@@ -169,19 +187,13 @@ CDATA;
             switch ($action) {
                 case 'print':
                     return app()->call([$this, 'printPreview']);
-                    break;
+                case 'revoke':
                 case 'delete':
-                    return app()->call([$this, 'bulkDelete']);
-                    break;
                 case 'activate':
-                    return app()->call([$this, 'bulkActivate']);
-                    break;
                 case 'deactivate':
-                    return app()->call([$this, 'bulkDeactivate']);
-                    break;
+                    return app()->call([$this, 'bulkAction'], ['action' => $action]);
                 default:
                     return app()->call([$this, $action]);
-                    break;
             }
         }
 
@@ -210,6 +222,9 @@ CDATA;
             'retrieve' => $this->options['retrieve'],
             'autoWidth' => $this->options['autoWidth'],
             'fixedHeader' => $this->options['fixedHeader'],
+            'responsive' => $this->options['responsive'],
+            'stateSave' => $this->options['stateSave'],
+            'scrollX' => $this->options['scrollX'],
             'pageLength' => $this->options['pageLength'],
             'lengthMenu' => $this->options['lengthMenu'],
             'buttons' => $buttons,
@@ -230,11 +245,12 @@ CDATA;
     protected function getButtons(): array
     {
         $this->buttons['bulk'] = $this->buttons['bulkDelete']
-                                 || $this->buttons['bulkActivate']
-                                 || $this->buttons['bulkDeactivate'];
+                                || $this->buttons['bulkActivate']
+                                || $this->buttons['bulkDeactivate']
+                                || $this->buttons['bulkRevoke'];
 
         $buttons = collect($this->buttons)->filter(fn ($value) => $value);
-        $bulkButtons = $buttons->only(['bulkDelete', 'bulkActivate', 'bulkDeactivate']);
+        $bulkButtons = $buttons->only(['bulkDelete', 'bulkActivate', 'bulkDeactivate', 'bulkRevoke']);
 
         return collect([
             'create' => ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.create')],
@@ -286,110 +302,5 @@ CDATA;
         $resource = Str::plural(mb_strtolower(Arr::last(explode(class_exists($model) ? '\\' : '.', $model))));
 
         return $resource.'-export-'.date('Y-m-d').'-'.time();
-    }
-
-    /**
-     * Perform bulk delete action.
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function bulkDelete()
-    {
-        $selectedIds = collect($this->request->get('selected_ids'))->filter();
-
-        if ($selectedIds->isNotEmpty()) {
-            $model = app($this->model);
-            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
-
-            if (in_array(app('request.accessarea'), $obscure['areas'])) {
-                $selectedIds = $selectedIds->map(function ($value) {
-                    return optional(Hashids::decode($value))[0];
-                });
-
-                $model->whereIn($model->getKeyName(), $selectedIds)->get()->each->delete();
-            } else {
-                $model->whereIn($model->getRouteKeyName(), $selectedIds)->get()->each->delete();
-            }
-
-            return intend([
-                'back' => true,
-                'with' => ['success' => trans('cortex/foundation::messages.records_deleted')],
-            ]);
-        }
-
-        return intend([
-            'back' => true,
-            'with' => ['warning' => trans('cortex/foundation::messages.no_records_selected')],
-        ]);
-    }
-
-    /**
-     * Perform bulk activate action.
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function bulkActivate()
-    {
-        $selectedIds = collect($this->request->get('selected_ids'))->filter();
-
-        if ($selectedIds->isNotEmpty()) {
-            $model = app($this->model);
-            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
-
-            if (in_array(app('request.accessarea'), $obscure['areas'])) {
-                $selectedIds = $selectedIds->map(function ($value) {
-                    return optional(Hashids::decode($value))[0];
-                });
-
-                $model->whereIn($model->getKeyName(), $selectedIds)->get()->each->activate();
-            } else {
-                $model->whereIn($model->getRouteKeyName(), $selectedIds)->get()->each->activate();
-            }
-
-            return intend([
-                'back' => true,
-                'with' => ['success' => trans('cortex/foundation::messages.records_activated')],
-            ]);
-        }
-
-        return intend([
-            'back' => true,
-            'with' => ['warning' => trans('cortex/foundation::messages.no_records_activated')],
-        ]);
-    }
-
-    /**
-     * Perform bulk deactivate action.
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function bulkDeactivate()
-    {
-        $selectedIds = collect($this->request->get('selected_ids'))->filter();
-
-        if ($selectedIds->isNotEmpty()) {
-            $model = app($this->model);
-            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
-
-            if (in_array(app('request.accessarea'), $obscure['areas'])) {
-                $selectedIds = $selectedIds->map(function ($value) {
-                    return optional(Hashids::decode($value))[0];
-                });
-
-                $model->whereIn($model->getKeyName(), $selectedIds)->get()->each->deactivate();
-            } else {
-                $model->whereIn($model->getRouteKeyName(), $selectedIds)->get()->each->deactivate();
-            }
-
-            return intend([
-                'back' => true,
-                'with' => ['success' => trans('cortex/foundation::messages.records_deactivated')],
-            ]);
-        }
-
-        return intend([
-            'back' => true,
-            'with' => ['warning' => trans('cortex/foundation::messages.no_records_deactivated')],
-        ]);
     }
 }

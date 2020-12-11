@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cortex\Foundation\DataTables;
+namespace Cortex\Foundation\Overrides\Yajra\DataTables;
 
 use Cortex\Foundation\Processors\DataProcessor;
 use Yajra\DataTables\EloquentDataTable as BaseEloquentDataTable;

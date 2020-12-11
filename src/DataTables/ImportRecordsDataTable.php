@@ -36,18 +36,6 @@ class ImportRecordsDataTable extends AbstractDataTable
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function ajax()
-    {
-        return datatables($this->query())
-            ->setTransformer(app($this->transformer))
-            ->make(true);
-    }
-
-    /**
      * Get default builder parameters.
      *
      * @return array
@@ -87,6 +75,9 @@ class ImportRecordsDataTable extends AbstractDataTable
             'retrieve' => $this->options['retrieve'],
             'autoWidth' => $this->options['autoWidth'],
             'fixedHeader' => $this->options['fixedHeader'],
+            'responsive' => $this->options['responsive'],
+            'stateSave' => $this->options['stateSave'],
+            'scrollX' => $this->options['scrollX'],
             'pageLength' => $this->options['pageLength'],
             'lengthMenu' => $this->options['lengthMenu'],
             'buttons' => ['print', 'reset', 'reload', $importButton, $columnsButton, $lengthButton],
