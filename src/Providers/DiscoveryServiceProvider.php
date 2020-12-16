@@ -238,7 +238,7 @@ class DiscoveryServiceProvider extends ServiceProvider
             ->each(function ($file) {
                 $module = str_replace([$this->app->basePath('app/'), '/config/config.php'], '', $file);
 
-                $this->mergeConfigFrom($file, $module);
+                $this->mergeConfigFrom($file, str_replace('/', '.', $module));
                 $this->publishesConfig($module, true);
             }, []);
     }
