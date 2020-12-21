@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.0] - 2020-12-22
+- Upgrade to Laravel v8
+
 ## [v5.1.14] - 2020-12-16
 - Fix merge config in auto discovery
 
@@ -330,6 +333,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.0]: https://github.com/rinvex/cortex-foundation/compare/v5.1.14...v6.0.0
 [v5.1.14]: https://github.com/rinvex/cortex-foundation/compare/v5.1.13...v5.1.14
 [v5.1.13]: https://github.com/rinvex/cortex-foundation/compare/v5.1.12...v5.1.13
 [v5.1.12]: https://github.com/rinvex/cortex-foundation/compare/v5.1.11...v5.1.12
