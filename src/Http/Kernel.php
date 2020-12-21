@@ -16,15 +16,16 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+        \Cortex\Foundation\Http\Middleware\TrustHosts::class,
         \Cortex\Foundation\Http\Middleware\TrustProxies::class,
         \Fruitcake\Cors\HandleCors::class,
-        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \Cortex\Foundation\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Cortex\Foundation\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \Cortex\Foundation\Http\Middleware\TrailingSlashEnforce::class,
-        \Cortex\Foundation\Http\Middleware\TurbolinksLocation::class,
-        \Cortex\Foundation\Http\Middleware\CrawlingRobots::class,
+        \Cortex\Foundation\Http\Middleware\EnforceTrailingSlash::class,
+        \Cortex\Foundation\Http\Middleware\SetTurbolinksLocationHeaders::class,
+        \Cortex\Foundation\Http\Middleware\SetCrawlingRobotsHeaders::class,
     ];
 
     /**
@@ -45,11 +46,6 @@ class Kernel extends HttpKernel
             \Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes::class,
             \Cortex\Foundation\Http\Middleware\UnbindRouteParameters::class,
         ],
-
-        'api' => [
-            'throttle:60,1',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ],
     ];
 
     /**
@@ -64,11 +60,9 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'nohttpcache' => \Cortex\Foundation\Http\Middleware\NoHttpCache::class,
+        'nohttpcache' => \Cortex\Foundation\Http\Middleware\SetNoCacheHeaders::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Cortex\Foundation\Http\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 
     /**

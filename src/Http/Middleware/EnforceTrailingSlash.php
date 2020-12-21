@@ -7,7 +7,7 @@ namespace Cortex\Foundation\Http\Middleware;
 use Closure;
 use Illuminate\Support\Str;
 
-class TrailingSlashEnforce
+class EnforceTrailingSlash
 {
     /**
      * Handle an incoming request.

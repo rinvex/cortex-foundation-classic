@@ -6,6 +6,7 @@ namespace Cortex\Foundation\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
@@ -105,6 +106,9 @@ class FoundationServiceProvider extends ServiceProvider
     {
         // Fix the specified key was too long error
         Schema::defaultStringLength(191);
+
+        // Use Pagination bootstrap styles
+        Paginator::useBootstrap();
 
         // Override presence verifier
         $this->app['validator']->setPresenceVerifier($this->app['cortex.foundation.presence.verifier']);

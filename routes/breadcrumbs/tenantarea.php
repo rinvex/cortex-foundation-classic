@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
-use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
+use Diglactic\Breadcrumbs\Breadcrumbs;
+use Diglactic\Breadcrumbs\Generator;
 
-Breadcrumbs::register('tenantarea.home', function (BreadcrumbsGenerator $breadcrumbs) {
+Breadcrumbs::register('tenantarea.home', function (Generator $breadcrumbs) {
     $breadcrumbs->push('<i class="fa fa-home"></i> '.config('app.name'), route('tenantarea.home'));
 });

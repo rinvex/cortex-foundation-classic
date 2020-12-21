@@ -6,9 +6,9 @@ namespace Cortex\Foundation\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\ViewErrorBag;
-use Krucas\Notification\Middleware\NotificationMiddleware as Middleware;
+use Krucas\Notification\Middleware\NotificationMiddleware as BaseNotificationMiddleware;
 
-class NotificationMiddleware extends Middleware
+class NotificationMiddleware extends BaseNotificationMiddleware
 {
     /**
      * Handle an incoming request.
