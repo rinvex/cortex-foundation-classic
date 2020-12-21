@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
-class NoHttpCache
+class SetNoCacheHeaders
 {
     /**
      * Handle an incoming request.

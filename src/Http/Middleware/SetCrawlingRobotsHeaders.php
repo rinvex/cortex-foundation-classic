@@ -8,7 +8,7 @@ use Closure;
 use Exception;
 use Illuminate\Http\Request;
 
-class CrawlingRobots
+class SetCrawlingRobotsHeaders
 {
     protected $response;
 
