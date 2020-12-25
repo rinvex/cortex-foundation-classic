@@ -6,6 +6,7 @@ namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
+use Rinvex\Composer\Services\ModuleManifest;
 
 class AutoloadCommand extends Command
 {
@@ -28,54 +29,21 @@ class AutoloadCommand extends Command
     /**
      * Execute the console command.
      *
+     * @throws \Exception
+     *
      * @return int
      */
     public function handle(): int
     {
-        return $this->writeModulesManifest(true);
-    }
-
-    /**
-     * Write the given manifest array to disk.
-     *
-     * @param bool $status
-     *
-     * @return int
-     */
-    protected function writeModulesManifest(bool $status): int
-    {
         $this->call('clear-compiled');
 
-        $modules = $this->option('module');
-        $path = $this->laravel->getCachedModulesPath();
-        $statusStr = $status ? 'autoload' : 'unload';
+        $moduleManifest = new ModuleManifest($this->laravel->getCachedModulesPath());
 
-        $modulesManifest = collect($this->laravel['request.modules'])->map(function ($attributes, $module) use ($modules, $status) {
-            switch ($module) {
-                case 'cortex/auth':
-                case 'cortex/foundation':
-                    return ['active' => true, 'autoload' => true];
-                    break;
-                default:
-                    return ! $modules || in_array($module, $modules) ? ['active' => $attributes['active'], 'autoload' => $status ? true : false] : $attributes;
-                    break;
-            }
-        })->toArray();
+        collect($this->option('module'))->intersect($this->laravel['request.modules'])->map(function ($attributes, $module) use ($moduleManifest) {
+            $attributes['autoload'] = true;
+            $moduleManifest->add($module, $attributes, true);
+        });
 
-        if (! is_writable($dirname = dirname($path))) {
-            $this->error("Failed to {$statusStr} application modules.");
-
-            $this->error("The {$dirname} directory must be present and writable.");
-
-            return 1;
-        }
-
-        $this->laravel['files']->replace(
-            $path, '<?php return '.var_export($modulesManifest, true).';'
-        );
-
-        $this->comment("Application modules {$statusStr}ed!");
-
-        return 0;
+        $moduleManifest->persist();
     }
 }
