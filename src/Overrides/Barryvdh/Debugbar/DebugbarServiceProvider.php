@@ -17,7 +17,7 @@ class DebugbarServiceProvider extends BaseDebugbarServiceProvider
      */
     public function boot()
     {
-        $configPath = __DIR__ . '/../config/debugbar.php';
+        $configPath = __DIR__.'/../config/debugbar.php';
         $this->publishes([$configPath => $this->getConfigPath()], 'config');
 
         // @TODO: refactor routes
@@ -28,7 +28,7 @@ class DebugbarServiceProvider extends BaseDebugbarServiceProvider
             'middleware' => [DebugbarEnabled::class],
         ];
 
-        $this->getRouter()->group($routeConfig, function($router) {
+        $this->getRouter()->group($routeConfig, function ($router) {
             $router->get('open', [
                 'uses' => 'OpenHandlerController@handle',
                 'as' => 'debugbar.openhandler',
