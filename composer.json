@@ -40,7 +40,7 @@
         }
     ],
     "require": {
-        "php": "^7.4.0",
+        "php": "^7.4.0 || ^8.0.0",
         "barryvdh/laravel-snappy": "^0.4.0",
         "diglactic/laravel-breadcrumbs": "^6.0.0",
         "edvinaskrucas/notification": "dev-master",
