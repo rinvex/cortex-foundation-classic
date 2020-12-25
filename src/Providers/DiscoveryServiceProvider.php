@@ -48,7 +48,7 @@ class DiscoveryServiceProvider extends ServiceProvider
     {
         // Register modules list
         $modulesManifestPath = $this->app->getCachedModulesPath();
-        $modulesManifest = file_exists($modulesManifestPath) ? $this->app['files']->getRequire($modulesManifestPath) : [];
+        $modulesManifest = is_file($modulesManifestPath) ? $this->app['files']->getRequire($modulesManifestPath) : [];
         $this->enabledModules = collect($modulesManifest)->filter(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
         $this->app->singleton('request.modules', fn () => $modulesManifest);
 
