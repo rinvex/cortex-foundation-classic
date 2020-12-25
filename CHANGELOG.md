@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.2] - 2020-12-25
+- Switch outdated composer dependencies to temporary compatible forks until it's updated
+
 ## [v6.0.1] - 2020-12-25
 - Add support for PHP v8
 
@@ -336,6 +339,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.2]: https://github.com/rinvex/cortex-foundation/compare/v6.0.1...v6.0.2
 [v6.0.1]: https://github.com/rinvex/cortex-foundation/compare/v6.0.0...v6.0.1
 [v6.0.0]: https://github.com/rinvex/cortex-foundation/compare/v5.1.14...v6.0.0
 [v5.1.14]: https://github.com/rinvex/cortex-foundation/compare/v5.1.13...v5.1.14
