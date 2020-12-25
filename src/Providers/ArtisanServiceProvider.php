@@ -225,7 +225,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     protected function registerEventCacheCommand()
     {
         $this->app->singleton('command.event.cache', function () {
-            return new EventCacheCommand;
+            return new EventCacheCommand();
         });
     }
 

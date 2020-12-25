@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Cortex\Foundation\Overrides\Appstract\Opcache;
 
 use Appstract\Opcache\OpcacheServiceProvider as BaseOpcacheServiceProvider;

@@ -54,7 +54,7 @@ class Builder extends BaseBuilder
     /**
      * Configure DataTable's pusher parameters.
      *
-     * @param  array|null $pusher
+     * @param array|null $pusher
      *
      * @return $this
      */

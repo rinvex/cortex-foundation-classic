@@ -9,9 +9,9 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * @property \Spatie\MediaLibrary\HasMedia $resource
- * @property string                                 $tabs
- * @property string                                 $id
- * @property string                                 $url
+ * @property string                        $tabs
+ * @property string                        $id
+ * @property string                        $url
  */
 class MediaDataTable extends AbstractDataTable
 {
