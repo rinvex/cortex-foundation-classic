@@ -67,8 +67,8 @@ abstract class AbstractDataTable extends DataTable
      */
     public function __construct()
     {
-        $this->options = $this->options ?? config("cortex.foundation.datatables.options");
-        $this->buttons = $this->buttons ?? config("cortex.foundation.datatables.buttons");
+        $this->options = $this->options ?? config('cortex.foundation.datatables.options');
+        $this->buttons = $this->buttons ?? config('cortex.foundation.datatables.buttons');
     }
 
     /**
@@ -134,7 +134,7 @@ abstract class AbstractDataTable extends DataTable
 
         return intend([
             'back' => true,
-            'with' => ['warning' => trans("cortex/foundation::messages.no_records_selected")],
+            'with' => ['warning' => trans('cortex/foundation::messages.no_records_selected')],
         ]);
     }
 
