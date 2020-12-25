@@ -6,8 +6,8 @@ namespace Cortex\Foundation\Overrides\Illuminate\Foundation;
 
 use Illuminate\Support\Str;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Foundation\PackageManifest as BasePackageManifest;
 use Rinvex\Composer\Services\ModuleManifest;
+use Illuminate\Foundation\PackageManifest as BasePackageManifest;
 
 class PackageManifest extends BasePackageManifest
 {
@@ -35,9 +35,10 @@ class PackageManifest extends BasePackageManifest
     /**
      * Create a new package manifest instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @param  string  $basePath
-     * @param  string  $manifestPath
+     * @param \Illuminate\Filesystem\Filesystem $files
+     * @param string                            $basePath
+     * @param string                            $manifestPath
+     *
      * @return void
      */
     public function __construct(Filesystem $files, $basePath, $manifestPath)
