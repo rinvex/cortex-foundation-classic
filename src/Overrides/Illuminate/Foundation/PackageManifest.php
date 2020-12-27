@@ -85,12 +85,14 @@ class PackageManifest extends BasePackageManifest
             return $this->modulesManifest;
         }
 
-        if (! is_file($this->modulesManifestPath)) {
+        $this->modulesManifest = is_file($this->modulesManifestPath) ?
+            $this->files->getRequire($this->modulesManifestPath) : [];
+
+        if (! is_file($this->modulesManifestPath) || empty($this->modulesManifest)) {
             $this->writeModulesManifest();
         }
 
-        return $this->modulesManifest = is_file($this->modulesManifestPath) ?
-            $this->files->getRequire($this->modulesManifestPath) : [];
+        return $this->modulesManifest;
     }
 
     /**
@@ -119,7 +121,7 @@ class PackageManifest extends BasePackageManifest
         })->filter();
 
         $callback = function ($configuration, $package) {
-            return in_array($package, config('rinvex.composer.core'));
+            return in_array($package, config('rinvex.composer.core_modules'));
         };
 
         $disabledModules = collect($this->getModulesManifest())->reject(fn ($attributes, $module) => $attributes['autoload'])->keys();
@@ -136,15 +138,17 @@ class PackageManifest extends BasePackageManifest
      */
     protected function writeModulesManifest(): void
     {
+        $modulePath = app()->path().DIRECTORY_SEPARATOR;
+        $installedPackages = collect($this->installedPackages);
         $paths = $this->files->glob(app()->path('*/*'), GLOB_ONLYDIR);
         $moduleManifest = new ModuleManifest($this->modulesManifestPath);
 
-        collect($paths)->flatMap(function ($path) use ($moduleManifest) {
-            $module = Str::after($path, app()->path().DIRECTORY_SEPARATOR);
+        collect($paths)->flatMap(function ($path) use ($modulePath, $moduleManifest, $installedPackages) {
+            $module = Str::after($path, $modulePath);
             $moduleManifest->add($module, [
-                'active' => in_array($module, config('rinvex.composer.core')) ? true : false,
-                'autoload' => in_array($module, config('rinvex.composer.core')) ? true : false,
-                'version' => $this->installedPackages[$module]['version'],
+                'active' => in_array($module, config('rinvex.composer.core_modules')) ? true : false,
+                'autoload' => in_array($module, config('rinvex.composer.core_modules')) ? true : false,
+                'version' => $installedPackages->firstWhere('name', $module)['version'],
             ]);
         });
 
