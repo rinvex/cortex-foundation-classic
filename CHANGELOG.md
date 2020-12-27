@@ -5,7 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
-## [v6.0.2] - 2020-12-25
+## [v6.0.4] - 2020-12-27
+- Tweak and optimize module and custom composer installer
+
+## [v6.0.3] - 2020-12-25
 - Fix wrong composer dependency version constraints
 
 ## [v6.0.2] - 2020-12-25
@@ -342,6 +345,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.4]: https://github.com/rinvex/cortex-foundation/compare/v6.0.3...v6.0.4
 [v6.0.3]: https://github.com/rinvex/cortex-foundation/compare/v6.0.2...v6.0.3
 [v6.0.2]: https://github.com/rinvex/cortex-foundation/compare/v6.0.1...v6.0.2
 [v6.0.1]: https://github.com/rinvex/cortex-foundation/compare/v6.0.0...v6.0.1
