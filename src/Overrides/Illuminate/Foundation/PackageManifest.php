@@ -145,11 +145,14 @@ class PackageManifest extends BasePackageManifest
 
         collect($paths)->flatMap(function ($path) use ($modulePath, $moduleManifest, $installedPackages) {
             $module = Str::after($path, $modulePath);
-            $moduleManifest->add($module, [
-                'active' => in_array($module, config('rinvex.composer.core_modules')) ? true : false,
-                'autoload' => in_array($module, config('rinvex.composer.core_modules')) ? true : false,
-                'version' => $installedPackages->firstWhere('name', $module)['version'],
-            ]);
+
+            if ($installed = $installedPackages->firstWhere('name', $module)) {
+                $moduleManifest->add($module, [
+                    'active' => in_array($module, config('rinvex.composer.core_modules')) ? true : false,
+                    'autoload' => in_array($module, config('rinvex.composer.core_modules')) ? true : false,
+                    'version' => $installed['version'],
+                ]);
+            }
         });
 
         $moduleManifest->persist();
