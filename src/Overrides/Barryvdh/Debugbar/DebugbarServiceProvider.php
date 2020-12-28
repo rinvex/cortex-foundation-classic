@@ -17,7 +17,7 @@ class DebugbarServiceProvider extends BaseDebugbarServiceProvider
      */
     public function boot()
     {
-        $configPath = __DIR__.'/../config/debugbar.php';
+        $configPath = $this->app->basePath('vendor/barryvdh/laravel-debugbar/config/debugbar.php');
         $this->publishes([$configPath => $this->getConfigPath()], 'config');
 
         // @TODO: refactor routes
