@@ -98,6 +98,7 @@ class PackageManifest extends BasePackageManifest
     /**
      * Build the manifest and write it to disk.
      *
+     * @throws \Exception
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
      * @return void
@@ -118,15 +119,31 @@ class PackageManifest extends BasePackageManifest
             $ignore = array_merge($ignore, $configuration['dont-discover'] ?? []);
         })->reject(function ($configuration, $package) use ($ignore, $ignoreAll) {
             return $ignoreAll || in_array($package, $ignore);
-        })->filter();
-
-        $callback = function ($configuration, $package) {
-            return in_array($package, config('rinvex.composer.core_modules'));
-        };
+        })->filter()->partition(function ($item, $key) {
+            return Str::startsWith($key, config('app.provider_loading.priority_5'));
+        })->flatMap(function ($values) {
+            return $values;
+        })->partition(function ($item, $key) {
+            return Str::startsWith($key, config('app.provider_loading.priority_4'));
+        })->flatMap(function ($values) {
+            return $values;
+        })->partition(function ($item, $key) {
+            return Str::startsWith($key, config('app.provider_loading.priority_3'));
+        })->flatMap(function ($values) {
+            return $values;
+        })->partition(function ($item, $key) {
+            return Str::startsWith($key, config('app.provider_loading.priority_2'));
+        })->flatMap(function ($values) {
+            return $values;
+        })->partition(function ($item, $key) {
+            return Str::startsWith($key, config('app.provider_loading.priority_1'));
+        })->flatMap(function ($values) {
+            return $values;
+        });
 
         $disabledModules = collect($this->getModulesManifest())->reject(fn ($attributes, $module) => $attributes['autoload'])->keys();
 
-        $this->write($list->filter($callback)->union($list->reject($callback))->except($disabledModules)->all());
+        $this->write($list->except($disabledModules)->all());
     }
 
     /**
