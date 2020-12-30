@@ -148,8 +148,8 @@ class PackageManifest extends BasePackageManifest
 
             if ($installed = $installedPackages->firstWhere('name', $module)) {
                 $moduleManifest->add($module, [
-                    'active' => in_array($module, config('rinvex.composer.core_modules')) ? true : false,
-                    'autoload' => in_array($module, config('rinvex.composer.core_modules')) ? true : false,
+                    'active' => in_array($module, config('rinvex.composer.always_active')) ? true : false,
+                    'autoload' => in_array($module, config('rinvex.composer.always_active')) ? true : false,
                     'version' => $installed['version'],
                 ]);
             }
