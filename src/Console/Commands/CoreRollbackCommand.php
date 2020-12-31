@@ -35,7 +35,10 @@ class CoreRollbackCommand extends Command
         $commands = collect(Artisan::all())->filter(function ($command) {
             return mb_strpos($command->getName(), 'cortex:rollback:') !== false;
         })->partition(function ($command) {
-            return in_array($command->getName(), ['cortex:rollback:foundation', 'cortex:rollback:auth']);
+            [$vendor, , $namespace] = explode(':', $command->getName());
+            $module = $vendor.'/'.$namespace;
+
+            return in_array($module, config('rinvex.composer.always_active'));
         })->flatten();
 
         $progressBar = $this->output->createProgressBar($commands->count());

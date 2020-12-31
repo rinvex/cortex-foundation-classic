@@ -17,6 +17,17 @@ class Builder extends BaseBuilder
     protected $pusher = [];
 
     /**
+     * Get generated raw scripts.
+     *
+     * @return \Illuminate\Support\HtmlString
+     * @throws \Exception
+     */
+    public function generateScripts()
+    {
+        return new HtmlString($this->template());
+    }
+
+    /**
      * Generate DataTable's table html.
      *
      * @param array $attributes

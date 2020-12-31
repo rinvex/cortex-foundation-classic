@@ -9,21 +9,21 @@ use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-class CorePublishCommand extends Command
+class CoreActivateCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cortex:publish {--f|force : Overwrite any existing files.} {--r|resource=* : Specify which resources to publish.}';
+    protected $signature = 'cortex:activate {--f|force : Force the operation to run when in production.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Publish Cortex Foundation Resources.';
+    protected $description = 'Activate Cortex Modules.';
 
     /**
      * Execute the console command.
@@ -33,7 +33,7 @@ class CorePublishCommand extends Command
     public function handle(): void
     {
         $commands = collect(Artisan::all())->filter(function ($command) {
-            return mb_strpos($command->getName(), 'cortex:publish:') !== false;
+            return mb_strpos($command->getName(), 'cortex:activate:') !== false;
         })->partition(function ($command) {
             [$vendor, , $namespace] = explode(':', $command->getName());
             $module = $vendor.'/'.$namespace;
@@ -50,7 +50,7 @@ class CorePublishCommand extends Command
 
         $output = new BufferedOutput();
         $commands->each(function (Command $command) use ($progressBar, $output) {
-            $command->run(new ArrayInput(['--force' => $this->option('force'), '--resource' => $this->option('resource')]), $output);
+            $command->run(new ArrayInput(['--force' => $this->option('force')]), $output);
             $progressBar->advance();
         });
 
