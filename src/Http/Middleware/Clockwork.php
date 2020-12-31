@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Http\Middleware;
 
 use Closure;
-use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Foundation\Application;
 
