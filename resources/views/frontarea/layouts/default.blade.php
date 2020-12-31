@@ -9,8 +9,8 @@
     @stack('head-elements')
 
     {{-- Fonts --}}
-    <link href='http://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;300italic;400italic&display=swap' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css2?family=Raleway:wght@400;300;700&display=swap' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap' rel='stylesheet' type='text/css'>
 
     {{-- Styles --}}
     <link href="{{ mix('css/vendor.css') }}" rel="stylesheet">

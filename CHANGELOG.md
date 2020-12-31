@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.5] - 2020-12-29
+- Skip modules that are not installed via composer
+- Rename seeders directory
+- Fix debugbar config file path
+- Update Clockwork middleware
+- Rename core_modules to always_active
+- Refactor service provider loading priorities
+- Add core activate, deactivate, autoload, unload artisan commands
+- Utilize rinvex.composer.always_active config option
+- Fix Google font API links
+- Override DataTable Builder generateScripts to drop using sprintf - sprintf used to cause issues when using % symbols in attributes
+
 ## [v6.0.4] - 2020-12-27
 - Tweak and optimize module and custom composer installer
 
@@ -345,6 +357,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.5]: https://github.com/rinvex/cortex-foundation/compare/v6.0.4...v6.0.5
 [v6.0.4]: https://github.com/rinvex/cortex-foundation/compare/v6.0.3...v6.0.4
 [v6.0.3]: https://github.com/rinvex/cortex-foundation/compare/v6.0.2...v6.0.3
 [v6.0.2]: https://github.com/rinvex/cortex-foundation/compare/v6.0.1...v6.0.2

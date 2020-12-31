@@ -6,12 +6,13 @@ namespace Cortex\Foundation\Http\Middleware;
 
 use Closure;
 use Exception;
-use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Contracts\Foundation\Application;
 
 class Clockwork
 {
     /**
-     * The Laravel Application.
+     * The Laravel Application instance.
      *
      * @var Application
      */
@@ -35,19 +36,31 @@ class Clockwork
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
      *
+     * @throws \Throwable
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        $this->app['config']->set('clockwork::config.middleware', true);
+        $this->app['clockwork']->event('Controller')->begin();
 
         try {
             $response = $next($request);
-        } catch (Exception $e) {
-            $this->app['Illuminate\Contracts\Debug\ExceptionHandler']->report($e);
-            $response = $this->app['Illuminate\Contracts\Debug\ExceptionHandler']->render($request, $e);
+        } catch (\Exception $e) {
+            $this->app[ExceptionHandler::class]->report($e);
+            $response = $this->app[ExceptionHandler::class]->render($request, $e);
         }
 
-        return $this->app['clockwork.support']->process($request, $response);
+        return $this->app['clockwork.support']->processRequest($request, $response);
+    }
+
+    /**
+     * Record the current request after a response is sent.
+     *
+     * @return void
+     */
+    public function terminate()
+    {
+        $this->app['clockwork.support']->recordRequest();
     }
 }
