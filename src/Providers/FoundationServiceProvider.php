@@ -30,10 +30,14 @@ use Cortex\Foundation\Console\Commands\RollbackCommand;
 use Illuminate\Support\Facades\Session as SessionFacade;
 use Cortex\Foundation\Console\Commands\DeactivateCommand;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
+use Cortex\Foundation\Console\Commands\CoreUnloadCommand;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
 use Cortex\Foundation\Console\Commands\CorePublishCommand;
 use Cortex\Foundation\Console\Commands\CoreRollbackCommand;
+use Cortex\Foundation\Console\Commands\CoreActivateCommand;
+use Cortex\Foundation\Console\Commands\CoreAutoloadCommand;
+use Cortex\Foundation\Console\Commands\CoreDeactivateCommand;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
@@ -64,6 +68,10 @@ class FoundationServiceProvider extends ServiceProvider
         CoreMigrateCommand::class => 'command.cortex.foundation.coremigrate',
         CorePublishCommand::class => 'command.cortex.foundation.corempublish',
         CoreRollbackCommand::class => 'command.cortex.foundation.corerollback',
+        CoreActivateCommand::class => 'command.cortex.foundation.coreactivate',
+        CoreAutoloadCommand::class => 'command.cortex.foundation.coreautoload',
+        CoreDeactivateCommand::class => 'command.cortex.foundation.coredeactivate',
+        CoreUnloadCommand::class => 'command.cortex.foundation.coreunload',
     ];
 
     /**

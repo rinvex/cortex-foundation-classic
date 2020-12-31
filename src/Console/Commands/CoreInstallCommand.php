@@ -35,6 +35,7 @@ class CoreInstallCommand extends Command
         $this->call('cortex:migrate', ['--force' => $this->option('force')]);
         $this->call('cortex:seed');
 
+        $this->call('cortex:autoload');
         $this->call('cortex:activate');
     }
 }

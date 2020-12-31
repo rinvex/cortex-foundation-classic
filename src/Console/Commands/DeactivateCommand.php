@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Console\ConfirmableTrait;
-use Rinvex\Composer\Services\ModuleManifest;
+use Cortex\Foundation\Console\Commands\AbstractModuleCommand;
 
-class DeactivateCommand extends ActivateCommand
+class DeactivateCommand extends AbstractModuleCommand
 {
     use ConfirmableTrait;
 
@@ -16,33 +16,34 @@ class DeactivateCommand extends ActivateCommand
      *
      * @var string
      */
-    protected $signature = 'cortex:deactivate {--f|force : Force the operation to run when in production.} {--m|module=* : Specify a module to activate.}';
+    protected $signature = 'cortex:deactivate:foundation {--f|force : Force the operation to run when in production.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Deactivate application modules';
+    protected $description = 'Deactivate Cortex Foundation Module';
+
+    /**
+     * The current module name.
+     *
+     * @var string
+     */
+    protected $module = 'cortex/foundation';
 
     /**
      * Execute the console command.
      *
-     * @throws \Exception
-     *
-     * @return int
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function handle(): int
+    public function handle()
     {
-        $this->call('clear-compiled');
+        $this->process($this->module);
+    }
 
-        $moduleManifest = new ModuleManifest($this->laravel->getCachedModulesPath());
-
-        collect($this->option('module'))->intersect($this->laravel['request.modules'])->map(function ($attributes, $module) use ($moduleManifest) {
-            $attributes['active'] = in_array($module, config('rinvex.composer.core')) ? true : false;
-            $moduleManifest->add($module, $attributes, true);
-        });
-
-        $moduleManifest->persist();
+    protected function setComposerModuleAttributes(): array
+    {
+        return $this->getComposerModuleAttributes($this->module, ['active' => false]);
     }
 }
