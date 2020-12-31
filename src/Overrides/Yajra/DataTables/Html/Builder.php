@@ -19,8 +19,9 @@ class Builder extends BaseBuilder
     /**
      * Get generated raw scripts.
      *
-     * @return \Illuminate\Support\HtmlString
      * @throws \Exception
+     *
+     * @return \Illuminate\Support\HtmlString
      */
     public function generateScripts()
     {
