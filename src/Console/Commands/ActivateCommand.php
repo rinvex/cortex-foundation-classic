@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Console\ConfirmableTrait;
-use Cortex\Foundation\Console\Commands\AbstractModuleCommand;
 
 class ActivateCommand extends AbstractModuleCommand
 {
