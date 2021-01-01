@@ -26,7 +26,7 @@ class NotificationMiddleware extends BaseNotificationMiddleware
             foreach ($containers as $name => $messages) {
                 /** @var \Krucas\Notification\Message $message */
                 foreach ($messages as $message) {
-                    $this->notification->container($name)->add($message->getType(), $message, false);
+                    $this->notification->container($name)->add($message->getType(), strip_tags($message), false);
                 }
             }
         }
@@ -41,7 +41,7 @@ class NotificationMiddleware extends BaseNotificationMiddleware
                     }
                 }
 
-                $this->notification->container(null)->add($type, $message, false);
+                $this->notification->container(null)->add($type, strip_tags($message), false);
             }
         }
 
