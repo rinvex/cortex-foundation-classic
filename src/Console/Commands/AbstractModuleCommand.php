@@ -71,7 +71,7 @@ abstract class AbstractModuleCommand extends Command
             }
         });
 
-        $this->alert('Module loading/activation processed!');
+        $this->info('Module manifest updated successfully!');
 
         $moduleManifest->persist();
     }
