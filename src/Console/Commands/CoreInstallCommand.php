@@ -31,7 +31,9 @@ class CoreInstallCommand extends Command
     {
         $this->alert($this->description);
 
-        $this->call('cortex:publish', ['--force' => $this->option('force'), '--resource' => $this->option('resource') ?: ['config']]);
+        // Publish assets only if explicitly required, otherwise skip for clean installation
+        ! $this->option('resource') || $this->call('cortex:publish', ['--force' => $this->option('force'), '--resource' => $this->option('resource')]);
+
         $this->call('cortex:migrate', ['--force' => $this->option('force')]);
         $this->call('cortex:seed');
 
