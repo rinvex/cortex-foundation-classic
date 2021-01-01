@@ -24,7 +24,7 @@ abstract class AbstractModuleCommand extends Command
      * Process the console command.
      *
      * @param \Illuminate\Support\Collection $modules
-     * @param array $attributes
+     * @param array                          $attributes
      *
      * @throws \Exception
      *
