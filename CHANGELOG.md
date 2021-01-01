@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.11] - 2021-01-02
+- Fix XSS security issue with redirect messages
+
 ## [v6.0.10] - 2021-01-02
 - Move cortex:autoload & cortex:activate commands to cortex/foundation module responsibility
 
@@ -385,6 +388,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.11]: https://github.com/rinvex/cortex-foundation/compare/v6.0.10...v6.0.11
 [v6.0.10]: https://github.com/rinvex/cortex-foundation/compare/v6.0.9...v6.0.10
 [v6.0.9]: https://github.com/rinvex/cortex-foundation/compare/v6.0.8...v6.0.9
 [v6.0.8]: https://github.com/rinvex/cortex-foundation/compare/v6.0.7...v6.0.8
