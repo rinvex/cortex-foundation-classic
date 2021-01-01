@@ -12,7 +12,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 - Override artisan StorageLinkCommand to change alert level from error to warn
 - Add 'force' option to core autoload & activate artisan command calls
 
-## [v6.0.5] - 2020-12-29
+## [v6.0.5] - 2020-12-31
 - Skip modules that are not installed via composer
 - Rename seeders directory
 - Fix debugbar config file path
