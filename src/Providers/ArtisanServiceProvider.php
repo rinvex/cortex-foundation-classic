@@ -23,6 +23,7 @@ use Cortex\Foundation\Console\Commands\ChannelMakeCommand;
 use Cortex\Foundation\Console\Commands\ConsoleMakeCommand;
 use Cortex\Foundation\Console\Commands\FactoryMakeCommand;
 use Cortex\Foundation\Console\Commands\RequestMakeCommand;
+use Cortex\Foundation\Console\Commands\StorageLinkCommand;
 use Cortex\Foundation\Console\Commands\ListenerMakeCommand;
 use Cortex\Foundation\Console\Commands\ProviderMakeCommand;
 use Cortex\Foundation\Console\Commands\ResourceMakeCommand;
@@ -454,6 +455,18 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->app->singleton('command.seeder.make', function ($app) {
             return new SeederMakeCommand($app['files'], $app['composer']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerStorageLinkCommand()
+    {
+        $this->app->singleton('command.storage.link', function () {
+            return new StorageLinkCommand;
         });
     }
 

@@ -62,15 +62,17 @@ abstract class AbstractModuleCommand extends Command
         if ($attributes = $moduleManifest->load()->get($module)) {
             $attributes['active'] = true;
             $moduleManifest->add($module, $attributes, true);
-        } else if ($this->isComposerModuleInstalled($module)) {
+        } elseif ($this->isComposerModuleInstalled($module)) {
             $moduleManifest->add($module, $this->setComposerModuleAttributes());
         } else {
             $this->error('Module activation failed!');
+
             return 1;
         }
 
         $this->alert('Module activation succeeded!');
         $moduleManifest->persist();
+
         return 0;
     }
 
@@ -98,7 +100,7 @@ abstract class AbstractModuleCommand extends Command
      * Get module attributes for the given module name.
      *
      * @param string $module
-     * @param array $attribute
+     * @param array  $attribute
      *
      * @return array
      */

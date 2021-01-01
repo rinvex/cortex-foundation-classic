@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.5] - 2021-01-01
+- Run self diagnosis before installation
+- Generate application key, and link storage directory before installation
+- Publish assets only if explicitly required, otherwise skip for clean installation
+- Override artisan StorageLinkCommand to change alert level from error to warn
+- Add 'force' option to core autoload & activate artisan command calls
+
 ## [v6.0.5] - 2020-12-29
 - Skip modules that are not installed via composer
 - Rename seeders directory
@@ -357,6 +364,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.6]: https://github.com/rinvex/cortex-foundation/compare/v6.0.5...v6.0.6
 [v6.0.5]: https://github.com/rinvex/cortex-foundation/compare/v6.0.4...v6.0.5
 [v6.0.4]: https://github.com/rinvex/cortex-foundation/compare/v6.0.3...v6.0.4
 [v6.0.3]: https://github.com/rinvex/cortex-foundation/compare/v6.0.2...v6.0.3
