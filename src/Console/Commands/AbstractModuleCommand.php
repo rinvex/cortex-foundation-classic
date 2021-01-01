@@ -7,6 +7,7 @@ namespace Cortex\Foundation\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Console\ConfirmableTrait;
+use Illuminate\Support\Arr;
 use Rinvex\Composer\Services\ModuleManifest;
 
 abstract class AbstractModuleCommand extends Command
@@ -47,33 +48,32 @@ abstract class AbstractModuleCommand extends Command
     /**
      * Process the console command.
      *
-     * @param string $module
+     * @param array $modules
+     * @param array $attributes
      *
+     * @throws \Exception
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
-     * @return int
+     * @return void
      */
-    protected function process(string $module): int
+    protected function process(array $modules, array $attributes)
     {
         $this->call('clear-compiled');
 
         $moduleManifest = new ModuleManifest($this->laravel->getCachedModulesPath());
 
-        if ($attributes = $moduleManifest->load()->get($module)) {
-            $attributes['active'] = true;
-            $moduleManifest->add($module, $attributes, true);
-        } elseif ($this->isComposerModuleInstalled($module)) {
-            $moduleManifest->add($module, $this->setComposerModuleAttributes());
-        } else {
-            $this->error('Module activation failed!');
+        collect($modules)->each(function ($module) use ($attributes, $moduleManifest) {
+            if ($manifestAttributes = $moduleManifest->load()->get($module)) {
+                $manifestAttributes['active'] = true;
+                $moduleManifest->add($module, $manifestAttributes, true);
+            } elseif ($this->isComposerModuleInstalled($module)) {
+                $moduleManifest->add($module, $this->getComposerModuleAttributes($module, $attributes));
+            }
+        });
 
-            return 1;
-        }
+        $this->alert('Module loading/activation processed!');
 
-        $this->alert('Module activation succeeded!');
         $moduleManifest->persist();
-
-        return 0;
     }
 
     /**
@@ -100,23 +100,16 @@ abstract class AbstractModuleCommand extends Command
      * Get module attributes for the given module name.
      *
      * @param string $module
-     * @param array  $attribute
+     * @param array  $attributes
      *
      * @return array
      */
-    protected function getComposerModuleAttributes(string $module, array $attribute): array
+    protected function getComposerModuleAttributes(string $module, array $attributes): array
     {
         return [
-            'active' => in_array($module, config('rinvex.composer.always_active')) ? true : (isset($attribute['active']) ? (bool) $attribute['active'] : false),
-            'autoload' => in_array($module, config('rinvex.composer.always_active')) ? true : (isset($attribute['autoload']) ? (bool) $attribute['autoload'] : false),
+            'active' => in_array($module, config('rinvex.composer.always_active')) ? true : Arr::get($attributes, 'active', false),
+            'autoload' => in_array($module, config('rinvex.composer.always_active')) ? true : Arr::get($attributes, 'autoload', false),
             'version' => $this->installedModule['version'],
         ];
     }
-
-    /**
-     * Set module attributes.
-     *
-     * @return array
-     */
-    abstract protected function setComposerModuleAttributes(): array;
 }
