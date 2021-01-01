@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Illuminate\Support\Arr;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Console\ConfirmableTrait;
-use Illuminate\Support\Arr;
 use Rinvex\Composer\Services\ModuleManifest;
 
 abstract class AbstractModuleCommand extends Command
