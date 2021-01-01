@@ -34,6 +34,8 @@ class CoreInstallCommand extends Command
         $this->call('key:generate', ['--ansi' => true]);
         $this->call('storage:link');
 
+        $this->call('self-diagnosis');
+
         // Publish assets only if explicitly required, otherwise skip for clean installation
         ! $this->option('resource') || $this->call('cortex:publish', ['--force' => $this->option('force'), '--resource' => $this->option('resource')]);
 
