@@ -31,6 +31,6 @@ class CoreActivateCommand extends AbstractModuleCommand
      */
     public function handle()
     {
-        $this->process($this->option('module'), ['active' => true]);
+        $this->process(collect($this->option('module')), ['active' => true]);
     }
 }

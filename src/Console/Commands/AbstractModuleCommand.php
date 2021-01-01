@@ -6,39 +6,14 @@ namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Support\Arr;
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Collection;
 use Illuminate\Console\ConfirmableTrait;
+use Illuminate\Foundation\PackageManifest;
 use Rinvex\Composer\Services\ModuleManifest;
 
 abstract class AbstractModuleCommand extends Command
 {
     use ConfirmableTrait;
-
-    /**
-     * $files.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
-     */
-    protected $files;
-
-    /**
-     * Composer installed module attributes.
-     *
-     * @var array
-     */
-    protected $installedModule;
-
-    /**
-     * __construct.
-     *
-     * @param \Illuminate\Filesystem\Filesystem $files
-     */
-    public function __construct(Filesystem $files)
-    {
-        parent::__construct();
-
-        $this->files = $files;
-    }
 
     /**
      * Execute the console command.
@@ -48,68 +23,40 @@ abstract class AbstractModuleCommand extends Command
     /**
      * Process the console command.
      *
-     * @param array $modules
+     * @param \Illuminate\Support\Collection $modules
      * @param array $attributes
      *
      * @throws \Exception
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
      * @return void
      */
-    protected function process(array $modules, array $attributes)
+    protected function process(Collection $modules, array $attributes)
     {
-        $this->call('clear-compiled');
+        $packageManifest = app(PackageManifest::class);
 
-        $moduleManifest = new ModuleManifest($this->laravel->getCachedModulesPath());
+        $packages = $packageManifest->getInstalledPackages();
 
-        collect($modules)->each(function ($module) use ($attributes, $moduleManifest) {
-            if ($manifestAttributes = $moduleManifest->load()->get($module)) {
-                $manifestAttributes['active'] = true;
-                $moduleManifest->add($module, $manifestAttributes, true);
-            } elseif ($this->isComposerModuleInstalled($module)) {
-                $moduleManifest->add($module, $this->getComposerModuleAttributes($module, $attributes));
+        $moduleManifest = (new ModuleManifest($this->laravel->getCachedModulesPath()))->load();
+
+        if ($modules->isEmpty()) {
+            // Activate all modules if none given
+            $modules = $packageManifest->getModules();
+        }
+
+        $modules->each(function ($module) use ($packages, $attributes, $moduleManifest) {
+            if ($manifestAttributes = $moduleManifest->get($module) ?? $packages->firstWhere('name', $module)) {
+                $moduleManifest->add($module, [
+                    'active' => in_array($module, config('rinvex.composer.always_active')) ? true : Arr::get($attributes, 'active', $manifestAttributes['active'] ?? false),
+                    'autoload' => in_array($module, config('rinvex.composer.always_active')) ? true : Arr::get($attributes, 'autoload', $manifestAttributes['autoload'] ?? false),
+                    'version' => $manifestAttributes['version'],
+                ], true);
             }
         });
 
-        $this->info('Module manifest updated successfully!');
+        $this->alert('Module loading/activation processed!');
 
         $moduleManifest->persist();
-    }
 
-    /**
-     * Check if given module is installed by composer.
-     *
-     * @param string $module
-     *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     *
-     * @return ?array
-     */
-    protected function isComposerModuleInstalled(string $module): ?array
-    {
-        if ($this->files->exists($path = $this->laravel->basePath('vendor/composer/installed.json'))) {
-            $installed = json_decode($this->files->get($path), true);
-
-            $this->installedModule = collect($installed['packages'] ?? $installed)->firstWhere('name', $module);
-        }
-
-        return $this->installedModule ?? null;
-    }
-
-    /**
-     * Get module attributes for the given module name.
-     *
-     * @param string $module
-     * @param array  $attributes
-     *
-     * @return array
-     */
-    protected function getComposerModuleAttributes(string $module, array $attributes): array
-    {
-        return [
-            'active' => in_array($module, config('rinvex.composer.always_active')) ? true : Arr::get($attributes, 'active', false),
-            'autoload' => in_array($module, config('rinvex.composer.always_active')) ? true : Arr::get($attributes, 'autoload', false),
-            'version' => $this->installedModule['version'],
-        ];
+        $this->call('clear-compiled');
     }
 }

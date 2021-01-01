@@ -31,6 +31,6 @@ class CoreUnloadCommand extends AbstractModuleCommand
      */
     public function handle()
     {
-        $this->process($this->option('module'), ['autoload' => false]);
+        $this->process(collect($this->option('module')), ['autoload' => false]);
     }
 }

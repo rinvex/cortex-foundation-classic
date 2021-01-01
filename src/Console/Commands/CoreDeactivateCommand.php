@@ -31,6 +31,6 @@ class CoreDeactivateCommand extends AbstractModuleCommand
      */
     public function handle()
     {
-        $this->process($this->option('module'), ['active' => false]);
+        $this->process(collect($this->option('module')), ['active' => false]);
     }
 }
