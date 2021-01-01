@@ -15,8 +15,9 @@ class StorageLinkCommand extends BaseStorageLinkCommand
      *
      * Write a string as error output.
      *
-     * @param  string  $string
-     * @param  int|string|null  $verbosity
+     * @param string          $string
+     * @param int|string|null $verbosity
+     *
      * @return void
      */
     public function error($string, $verbosity = null)

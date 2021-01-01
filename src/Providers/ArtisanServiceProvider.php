@@ -466,7 +466,7 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     protected function registerStorageLinkCommand()
     {
         $this->app->singleton('command.storage.link', function () {
-            return new StorageLinkCommand;
+            return new StorageLinkCommand();
         });
     }
 
