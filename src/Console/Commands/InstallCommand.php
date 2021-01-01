@@ -34,8 +34,5 @@ class InstallCommand extends Command
         $this->call('cortex:publish:foundation', ['--force' => $this->option('force'), '--resource' => $this->option('resource')]);
         $this->call('cortex:migrate:foundation', ['--force' => $this->option('force')]);
         $this->call('cortex:seed:foundation');
-
-        $this->call('cortex:autoload:foundation', ['--force' => $this->option('force')]);
-        $this->call('cortex:activate:foundation', ['--force' => $this->option('force')]);
     }
 }
