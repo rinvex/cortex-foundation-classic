@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Overrides\Illuminate\Foundation;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 use Illuminate\Filesystem\Filesystem;
 use Rinvex\Composer\Services\ModuleManifest;
 use Illuminate\Foundation\PackageManifest as BasePackageManifest;
@@ -28,7 +29,7 @@ class PackageManifest extends BasePackageManifest
     /**
      * The installed packages.
      *
-     * @var array
+     * @var \Illuminate\Support\Collection
      */
     public $installedPackages = [];
 
@@ -105,15 +106,11 @@ class PackageManifest extends BasePackageManifest
      */
     public function build()
     {
-        if ($this->files->exists($path = $this->vendorPath.'/composer/installed.json')) {
-            $installed = json_decode($this->files->get($path), true);
-
-            $this->installedPackages = $installed['packages'] ?? $installed;
-        }
+        $this->installedPackages = $this->getInstalledPackages();
 
         $ignoreAll = in_array('*', $ignore = $this->packagesToIgnore());
 
-        $list = collect($this->installedPackages)->mapWithKeys(function ($package) {
+        $list = $this->installedPackages->mapWithKeys(function ($package) {
             return [$this->format($package['name']) => $package['extra']['laravel'] ?? []];
         })->each(function ($configuration) use (&$ignore) {
             $ignore = array_merge($ignore, $configuration['dont-discover'] ?? []);
@@ -155,15 +152,15 @@ class PackageManifest extends BasePackageManifest
      */
     protected function writeModulesManifest(): void
     {
+        $paths = $this->getModulePaths();
         $modulePath = app()->path().DIRECTORY_SEPARATOR;
-        $installedPackages = collect($this->installedPackages);
-        $paths = $this->files->glob(app()->path('*/*'), GLOB_ONLYDIR);
+
         $moduleManifest = new ModuleManifest($this->modulesManifestPath);
 
-        collect($paths)->flatMap(function ($path) use ($modulePath, $moduleManifest, $installedPackages) {
+        collect($paths)->flatMap(function ($path) use ($modulePath, $moduleManifest) {
             $module = Str::after($path, $modulePath);
 
-            if ($installed = $installedPackages->firstWhere('name', $module)) {
+            if ($installed = $this->installedPackages->firstWhere('name', $module)) {
                 $moduleManifest->add($module, [
                     'active' => in_array($module, config('rinvex.composer.always_active')) ? true : false,
                     'autoload' => in_array($module, config('rinvex.composer.always_active')) ? true : false,
@@ -173,5 +170,45 @@ class PackageManifest extends BasePackageManifest
         });
 
         $moduleManifest->persist();
+    }
+
+    /**
+     * Get module paths.
+     *
+     * @return array
+     */
+    public function getModulePaths(): array
+    {
+        return $this->files->glob(app()->path('*/*'), GLOB_ONLYDIR);
+    }
+
+    /**
+     * Get modules.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getModules(): Collection
+    {
+        $modulePath = app()->path().DIRECTORY_SEPARATOR;
+
+        return collect($this->getModulePaths())->map(function ($path) use ($modulePath) {
+            return Str::after($path, $modulePath);
+        });
+    }
+
+    /**
+     * Get installed composer packages.
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getInstalledPackages(): Collection
+    {
+        if ($this->files->exists($path = $this->vendorPath.'/composer/installed.json')) {
+            $packages = json_decode($this->files->get($path), true);
+        }
+
+        return collect($packages['packages'] ?? $packages ?? []);
     }
 }

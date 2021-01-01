@@ -31,6 +31,6 @@ class CoreAutoloadCommand extends AbstractModuleCommand
      */
     public function handle()
     {
-        $this->process($this->option('module'), ['autoload' => true]);
+        $this->process(collect($this->option('module')), ['autoload' => true]);
     }
 }

@@ -5,10 +5,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.8] - 2021-01-02
+- Refactor Package and Module manifest classes and commands
+
 ## [v6.0.7] - 2021-01-01
 - Move cortex:autoload & cortex:activate commands to cortex/foundation module responsibility
-    - This is because :autoload & :activate commands are registered only if the module already autoloaded, so there is no way we can execute commands of unloaded modules
-    - cortex/foundation module is always autoloaded, so it's the logical and reasonable place to register these :autoload & :activate module commands and control other modules from outside
+  - This is because :autoload & :activate commands are registered only if the module already autoloaded, so there is no way we can execute commands of unloaded modules
+  - cortex/foundation module is always autoloaded, so it's the logical and reasonable place to register these :autoload & :activate module commands and control other modules from outside
 
 ## [v6.0.6] - 2021-01-01
 - Run self diagnosis before installation
@@ -376,6 +379,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.8]: https://github.com/rinvex/cortex-foundation/compare/v6.0.7...v6.0.8
 [v6.0.7]: https://github.com/rinvex/cortex-foundation/compare/v6.0.6...v6.0.7
 [v6.0.6]: https://github.com/rinvex/cortex-foundation/compare/v6.0.5...v6.0.6
 [v6.0.5]: https://github.com/rinvex/cortex-foundation/compare/v6.0.4...v6.0.5
