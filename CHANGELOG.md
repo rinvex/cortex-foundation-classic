@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.12] - 2021-01-15
+- Add model replication feature
+- Upgrade medialibrary db to v9
+
 ## [v6.0.11] - 2021-01-02
 - Fix XSS security issue with redirect messages
 
@@ -388,6 +392,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.12]: https://github.com/rinvex/cortex-foundation/compare/v6.0.11...v6.0.12
 [v6.0.11]: https://github.com/rinvex/cortex-foundation/compare/v6.0.10...v6.0.11
 [v6.0.10]: https://github.com/rinvex/cortex-foundation/compare/v6.0.9...v6.0.10
 [v6.0.9]: https://github.com/rinvex/cortex-foundation/compare/v6.0.8...v6.0.9
