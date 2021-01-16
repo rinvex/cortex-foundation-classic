@@ -212,7 +212,7 @@ class DiscoveryServiceProvider extends ServiceProvider
                         $this->publishesViews($module, true);
                         break;
                     case 'database/migrations':
-                        $this->autoloadMigrations($module) ?: $this->loadMigrationsFrom($dir);
+                        ! $this->autoloadMigrations($module) || $this->loadMigrationsFrom($dir);
                         $this->publishesMigrations($module, true);
                         break;
                 }
