@@ -9,9 +9,11 @@ use Throwable;
 use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Support\Facades\Route;
+use Rinvex\Country\CountryLoaderException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
+use Rinvex\University\UniversityLoaderException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
@@ -140,6 +142,11 @@ class Handler extends ExceptionHandler
             return intend([
                 'url' => Route::has("{$accessarea}.{$plural}.index") ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),
                 'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
+            ]);
+        } elseif ($e instanceof UniversityLoaderException || $e instanceof CountryLoaderException) {
+            return intend([
+                'url' => route("{$accessarea}.home"),
+                'with' => ['warning' => $e->getMessage()],
             ]);
         } elseif ($e instanceof ThrottleRequestsException) {
             return intend([
