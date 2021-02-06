@@ -56,7 +56,7 @@ class ConfigMakeCommand extends GeneratorCommand
      */
     protected function getPath($name): string
     {
-        $name = Str::replaceFirst($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'config', $name);
+        $name = Str::replaceFirst($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR, $name);
 
         if (! $this->files->exists($path = $this->laravel['path'].DIRECTORY_SEPARATOR.$this->moduleName())) {
             throw new \Exception("Invalid path: {$path}");
