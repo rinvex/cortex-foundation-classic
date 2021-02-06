@@ -63,7 +63,7 @@ class AuthorizedController extends AuthenticatedController
         if (property_exists(static::class, 'resource')) {
             if ($this->isClassName($this->resource)) {
                 $this->authorizeResource($this->resource);
-            } else if ($modelConfig = config($this->resource)) {
+            } elseif ($modelConfig = config($this->resource)) {
                 $this->authorizeResource($modelConfig);
             } else {
                 $this->authorizeGeneric($this->resource);
