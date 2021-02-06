@@ -7,32 +7,12 @@ namespace Cortex\Foundation\Console\Commands;
 use Illuminate\Support\Str;
 use Illuminate\Console\ConfirmableTrait;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
-use Illuminate\Foundation\Console\PolicyMakeCommand as BasePolicyMakeCommand;
+use Illuminate\Foundation\Console\ObserverMakeCommand as BaseObserverMakeCommand;
 
-class PolicyMakeCommand extends BasePolicyMakeCommand
+class ObserverMakeCommand extends BaseObserverMakeCommand
 {
     use ConfirmableTrait;
     use ConsoleMakeModuleCommand;
-
-    /**
-     * Replace the User model namespace.
-     *
-     * @param string $stub
-     *
-     * @return string
-     */
-    protected function replaceUserNamespace($stub): string
-    {
-        if (! $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model')) {
-            return $stub;
-        }
-
-        return str_replace(
-            $this->rootNamespace().'User',
-            $userModel,
-            $stub
-        );
-    }
 
     /**
      * Qualify the given model class base name.

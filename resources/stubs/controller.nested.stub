@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace DummyNamespace;
+namespace {{ namespace }};
 
-use DummyFullModelClass;
-use ParentDummyFullModelClass;
+use {{ namespacedModel }};
+use Parent{{ namespacedModel }};
 use Illuminate\Http\Request;
 use Cortex\Foundation\Importers\DefaultImporter;
 use Cortex\Foundation\DataTables\ImportLogsDataTable;
 use Cortex\Foundation\Http\Requests\ImportFormRequest;
 use Cortex\Foundation\Http\Controllers\AuthorizedController;
 
-class DummyClass extends AuthorizedController
+class {{ class }} extends AuthorizedController
 {
     /**
      * List all records.
      *
-     * @param  \ParentDummyFullModelClass  $ParentDummyModelVariable
+     * @param  \Parent{{ namespacedModel }}  ${{ parentModelVariable }}
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ParentDummyModelClass $ParentDummyModelVariable)
+    public function index({{ parentModel }} ${{ parentModelVariable }})
     {
         //
     }
@@ -76,11 +76,11 @@ class DummyClass extends AuthorizedController
     /**
      * Show the form for creating a new resource.
      *
-     * @param  \ParentDummyFullModelClass  $ParentDummyModelVariable
+     * @param  \Parent{{ namespacedModel }}  ${{ parentModelVariable }}
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(ParentDummyModelClass $ParentDummyModelVariable)
+    public function create({{ parentModel }} ${{ parentModelVariable }})
     {
         //
     }
@@ -89,11 +89,11 @@ class DummyClass extends AuthorizedController
      * Store new record.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \ParentDummyFullModelClass              $ParentDummyModelVariable
+     * @param  \Parent{{ namespacedModel }}              ${{ parentModelVariable }}
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, ParentDummyModelClass $ParentDummyModelVariable)
+    public function store(Request $request, {{ parentModel }} ${{ parentModelVariable }})
     {
         //
     }
@@ -101,12 +101,12 @@ class DummyClass extends AuthorizedController
     /**
      * Display the specified resource.
      *
-     * @param  \ParentDummyFullModelClass  $ParentDummyModelVariable
-     * @param  \DummyFullModelClass  $DummyModelVariable
+     * @param  \Parent{{ namespacedModel }}  ${{ parentModelVariable }}
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
+    public function show({{ parentModel }} ${{ parentModelVariable }}, {{ model }} ${{ modelVariable }})
     {
         //
     }
@@ -114,12 +114,12 @@ class DummyClass extends AuthorizedController
     /**
      * Edit given record.
      *
-     * @param  \ParentDummyFullModelClass  $ParentDummyModelVariable
-     * @param  \DummyFullModelClass  $DummyModelVariable
+     * @param  \Parent{{ namespacedModel }}  ${{ parentModelVariable }}
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
+    public function edit({{ parentModel }} ${{ parentModelVariable }}, {{ model }} ${{ modelVariable }})
     {
         //
     }
@@ -128,12 +128,12 @@ class DummyClass extends AuthorizedController
      * Update given record.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \ParentDummyFullModelClass              $ParentDummyModelVariable
-     * @param  \DummyFullModelClass                    $DummyModelVariable
+     * @param  \Parent{{ namespacedModel }}              ${{ parentModelVariable }}
+     * @param  \{{ namespacedModel }}                    ${{ modelVariable }}
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
+    public function update(Request $request, {{ parentModel }} ${{ parentModelVariable }}, {{ model }} ${{ modelVariable }})
     {
         //
     }
@@ -141,12 +141,12 @@ class DummyClass extends AuthorizedController
     /**
      * Destroy given record.
      *
-     * @param \ParentDummyFullModelClass $ParentDummyModelVariable
-     * @param \DummyFullModelClass $DummyModelVariable
+     * @param \Parent{{ namespacedModel }} ${{ parentModelVariable }}
+     * @param \{{ namespacedModel }} ${{ modelVariable }}
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function destroy(ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
+    public function destroy({{ parentModel }} ${{ parentModelVariable }}, {{ model }} ${{ modelVariable }})
     {
         //
     }

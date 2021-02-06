@@ -34,7 +34,7 @@ trait ConsoleMakeModuleCommand
      */
     protected function getPath($name): string
     {
-        $name = Str::replaceFirst($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'src', $name);
+        $name = Str::replaceFirst($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR, $name);
 
         if (! $this->files->exists($path = $this->laravel['path'].DIRECTORY_SEPARATOR.$this->moduleName())) {
             throw new \Exception("Invalid path: {$path}");
@@ -50,7 +50,7 @@ trait ConsoleMakeModuleCommand
      */
     protected function rootNamespace(): string
     {
-        return $this->rootNamespace ?? $this->rootNamespace = implode('\\', array_map('ucfirst', explode('/', trim($this->moduleName()))));
+        return $this->rootNamespace ?? $this->rootNamespace = implode('\\', array_map('ucfirst', explode('/', trim($this->moduleName())))).'\\';
     }
 
     /**

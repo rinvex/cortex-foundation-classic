@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DummyNamespace;
+namespace {{ namespace }};
 
 use Illuminate\Http\Request;
 use Cortex\Foundation\Importers\DefaultImporter;
@@ -10,7 +10,7 @@ use Cortex\Foundation\DataTables\ImportLogsDataTable;
 use Cortex\Foundation\Http\Requests\ImportFormRequest;
 use Cortex\Foundation\Http\Controllers\AuthorizedController;
 
-class DummyClass extends AuthorizedController
+class {{ class }} extends AuthorizedController
 {
     /**
      * List all records.

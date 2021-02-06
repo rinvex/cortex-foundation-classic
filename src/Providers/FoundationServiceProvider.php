@@ -27,6 +27,7 @@ use Cortex\Foundation\Console\Commands\RollbackCommand;
 use Illuminate\Support\Facades\Session as SessionFacade;
 use Cortex\Foundation\Console\Commands\CoreUnloadCommand;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
+use Cortex\Foundation\Console\Commands\ExecuteDumpCommand;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
 use Cortex\Foundation\Console\Commands\CorePublishCommand;
@@ -37,6 +38,7 @@ use Cortex\Foundation\Console\Commands\CoreDeactivateCommand;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
+use Cortex\Foundation\Overrides\Barryvdh\Debugbar\DebugbarServiceProvider;
 use Cortex\Foundation\Overrides\Mcamara\LaravelLocalization\LaravelLocalization;
 use Cortex\Foundation\Overrides\Mariuzzo\LaravelJsLocalization\Commands\LangJsCommand;
 
@@ -51,6 +53,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected $commands = [
         SeedCommand::class => 'command.cortex.foundation.seed',
+        ExecuteDumpCommand::class => 'command.cortex.execute.dump',
         InstallCommand::class => 'command.cortex.foundation.install',
         MigrateCommand::class => 'command.cortex.foundation.migrate',
         PublishCommand::class => 'command.cortex.foundation.publish',
@@ -87,14 +90,18 @@ class FoundationServiceProvider extends ServiceProvider
         $this->overrideLangJS();
 
         // Bind eloquent models to IoC container
-        $this->app->singleton('cortex.foundation.import_record', $importerModel = $this->app['config']['cortex.foundation.models.import_record']);
-        $importerModel === ImportRecord::class || $this->app->alias('cortex.foundation.import_record', ImportRecord::class);
+        $this->registerModels([
+            'cortex.foundation.import_record' => ImportRecord::class,
+        ]);
 
         // Override datatables html builder
         $this->app->bind(\Yajra\DataTables\Html\Builder::class, \Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder::class);
 
         // Register console commands
         $this->registerCommands($this->commands);
+
+        // Register dev service providers
+        $this->app->environment('production') || $this->app->register(DebugbarServiceProvider::class);
     }
 
     /**
