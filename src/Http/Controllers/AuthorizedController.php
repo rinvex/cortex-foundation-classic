@@ -53,8 +53,21 @@ class AuthorizedController extends AuthenticatedController
     {
         parent::__construct();
 
+        // This authorization check, covers the following use cases:
+        // 1. Check individual entity permission (entity_type & entity_id, ex: user ID #123)
+        // 2. Check entity permission (entity_type, ex: all entities of type user)
+        // 3. Check NULL entity_type ex. access-adminarea
+        // 4. Check owned entity permissions (owned_by)
+        // 5. Check entity based on model config value, instead of hardcoded model (supports override)
+
         if (property_exists(static::class, 'resource')) {
-            $this->isClassName($this->resource) ? $this->authorizeResource($this->resource) : $this->authorizeGeneric($this->resource);
+            if ($this->isClassName($this->resource)) {
+                $this->authorizeResource($this->resource);
+            } else if ($modelConfig = config($this->resource)) {
+                $this->authorizeResource($modelConfig);
+            } else {
+                $this->authorizeGeneric($this->resource);
+            }
         } else {
             // At this stage, sessions still not loaded yet, and `AuthorizationException`
             // depends on seesions to flash redirection error msg, so delegate to a middleware
