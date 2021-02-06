@@ -90,8 +90,9 @@ class FoundationServiceProvider extends ServiceProvider
         $this->overrideLangJS();
 
         // Bind eloquent models to IoC container
-        $this->app->singleton('cortex.foundation.import_record', $importerModel = $this->app['config']['cortex.foundation.models.import_record']);
-        $importerModel === ImportRecord::class || $this->app->alias('cortex.foundation.import_record', ImportRecord::class);
+        $this->registerModels([
+            'cortex.foundation.import_record' => ImportRecord::class,
+        ]);
 
         // Override datatables html builder
         $this->app->bind(\Yajra\DataTables\Html\Builder::class, \Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder::class);
