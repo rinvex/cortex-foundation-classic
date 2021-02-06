@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.14] - 2021-02-06
+- Simplify service provider model registration into IoC
+- handle CountryLoaderException and UniversityLoaderException (#206)
+- Refactor stubs for resource generation and make commands
+- Add missing ObserverMake command
+- Tweak authorization layer to support configurable model name (resource) to fix model override issues, and always bind to runtime model, instead of hardcoding
+- Add missing phpdoc
+- Add missing ObserverMake command
+- Move ide-helper generation to artisan command to conditionally run on dev environments only (when dev-package is installed)
+- Pass 'module' command option when calling sub-commands
+- Fix make command namespaces & paths for different entities
+- Conditionally register Debug bar service provider on dev environments
+- Skip publishing module resources unless explicitly specified, for simplicity
+
 ## [v6.0.13] - 2021-01-16
 - Fix module migration autoloader issue
 
@@ -395,6 +409,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.14]: https://github.com/rinvex/cortex-foundation/compare/v6.0.13...v6.0.14
 [v6.0.13]: https://github.com/rinvex/cortex-foundation/compare/v6.0.12...v6.0.13
 [v6.0.12]: https://github.com/rinvex/cortex-foundation/compare/v6.0.11...v6.0.12
 [v6.0.11]: https://github.com/rinvex/cortex-foundation/compare/v6.0.10...v6.0.11
