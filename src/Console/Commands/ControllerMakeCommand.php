@@ -75,7 +75,8 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
     /**
      * Build the model replacement values.
      *
-     * @param  array  $replace
+     * @param array $replace
+     *
      * @return array
      */
     protected function buildModelReplacements(array $replace)
@@ -104,7 +105,8 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
     /**
      * Qualify the given model class base name.
      *
-     * @param  string  $model
+     * @param string $model
+     *
      * @return string
      */
     protected function qualifyModel(string $model)
