@@ -108,8 +108,7 @@
                 "Cortex\\Foundation\\Providers\\FoundationServiceProvider",
                 "Cortex\\Foundation\\Providers\\ConsoleSupportServiceProvider",
                 "Cortex\\Foundation\\Overrides\\Lord\\Laroute\\LarouteServiceProvider",
-                "Cortex\\Foundation\\Overrides\\Appstract\\Opcache\\OpcacheServiceProvider",
-                "Cortex\\Foundation\\Overrides\\Barryvdh\\Debugbar\\DebugbarServiceProvider"
+                "Cortex\\Foundation\\Overrides\\Appstract\\Opcache\\OpcacheServiceProvider"
             ]
         }
     },

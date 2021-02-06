@@ -37,6 +37,7 @@ use Cortex\Foundation\Console\Commands\CoreDeactivateCommand;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
+use Cortex\Foundation\Overrides\Barryvdh\Debugbar\DebugbarServiceProvider;
 use Cortex\Foundation\Overrides\Mcamara\LaravelLocalization\LaravelLocalization;
 use Cortex\Foundation\Overrides\Mariuzzo\LaravelJsLocalization\Commands\LangJsCommand;
 
@@ -95,6 +96,9 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Register console commands
         $this->registerCommands($this->commands);
+
+        // Register dev service providers
+        $this->app->environment('production') || $this->app->register(DebugbarServiceProvider::class);
     }
 
     /**
