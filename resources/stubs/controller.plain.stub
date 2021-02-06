@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DummyNamespace;
+namespace {{ namespace }};
 
 use Cortex\Foundation\Http\Controllers\AuthorizedController;
 
-class DummyClass extends AuthorizedController
+class {{ class }} extends AuthorizedController
 {
     //
 }

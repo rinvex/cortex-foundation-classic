@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace DummyNamespace;
+namespace {{ namespace }};
 
-use NamespacedDummyModel;
+use {{ namespacedModel }};
 use Rinvex\Support\Traits\Escaper;
 use League\Fractal\TransformerAbstract;
 
-class DummyClass extends TransformerAbstract
+class {{ class }} extends TransformerAbstract
 {
     use Escaper;
 
     /**
      * Transform the given model.
      *
-     * @param \NamespacedDummyModel $dummyModel
+     * @param \{{ namespacedModel }} ${{ modelVariable }}
      *
      * @throws \Exception
      *
      * @return array
      */
-    public function transform(DummyModel $dummyModel): array
+    public function transform({{ modelVariable }} ${{ modelVariable }}): array
     {
         return $this->escape([
             //

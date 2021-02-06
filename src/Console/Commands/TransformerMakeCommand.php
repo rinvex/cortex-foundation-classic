@@ -68,9 +68,9 @@ class TransformerMakeCommand extends GeneratorCommand
         $namespaceModel = $this->rootNamespace().'\Models\\'.$model;
 
         if (Str::startsWith($model, '\\')) {
-            $stub = str_replace('NamespacedDummyModel', trim($model, '\\'), $stub);
+            $stub = str_replace('{{ namespacedModel }}', trim($model, '\\'), $stub);
         } else {
-            $stub = str_replace('NamespacedDummyModel', $namespaceModel, $stub);
+            $stub = str_replace('{{ namespacedModel }}', $namespaceModel, $stub);
         }
 
         $stub = str_replace(
@@ -81,9 +81,9 @@ class TransformerMakeCommand extends GeneratorCommand
 
         $model = class_basename(trim($model, '\\'));
 
-        $stub = str_replace('DummyModel', $model, $stub);
+        $stub = str_replace('{{ modelVariable }}', $model, $stub);
 
-        return str_replace('dummyModel', Str::camel($model), $stub);
+        return str_replace('{{ modelVariable }}', Str::camel($model), $stub);
     }
 
     /**

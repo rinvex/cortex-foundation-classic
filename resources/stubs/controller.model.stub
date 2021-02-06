@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace DummyNamespace;
+namespace {{ namespace }};
 
-use DummyFullModelClass;
+use {{ namespacedModel }};
 use Illuminate\Http\Request;
 use Cortex\Foundation\Importers\DefaultImporter;
 use Cortex\Foundation\DataTables\ImportLogsDataTable;
 use Cortex\Foundation\Http\Requests\ImportFormRequest;
 use Cortex\Foundation\Http\Controllers\AuthorizedController;
 
-class DummyClass extends AuthorizedController
+class {{ class }} extends AuthorizedController
 {
     /**
      * List all records.
@@ -95,10 +95,10 @@ class DummyClass extends AuthorizedController
     /**
      * Display the specified resource.
      *
-     * @param  \DummyFullModelClass  $DummyModelVariable
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
      * @return \Illuminate\Http\Response
      */
-    public function show(DummyModelClass $DummyModelVariable)
+    public function show({{ model }} ${{ modelVariable }})
     {
         //
     }
@@ -106,10 +106,10 @@ class DummyClass extends AuthorizedController
     /**
      * Edit given record.
      *
-     * @param  \DummyFullModelClass  $DummyModelVariable
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
      * @return \Illuminate\Http\Response
      */
-    public function edit(DummyModelClass $DummyModelVariable)
+    public function edit({{ model }} ${{ modelVariable }})
     {
         //
     }
@@ -118,11 +118,11 @@ class DummyClass extends AuthorizedController
      * Update given record.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \DummyFullModelClass                    $DummyModelVariable
+     * @param  \{{ namespacedModel }}                    ${{ modelVariable }}
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DummyModelClass $DummyModelVariable)
+    public function update(Request $request, {{ model }} ${{ modelVariable }})
     {
         //
     }
@@ -130,11 +130,11 @@ class DummyClass extends AuthorizedController
     /**
      * Destroy given record.
      *
-     * @param \DummyFullModelClass $DummyModelVariable
+     * @param \{{ namespacedModel }} ${{ modelVariable }}
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function destroy(DummyModelClass $DummyModelVariable)
+    public function destroy({{ model }} ${{ modelVariable }})
     {
         //
     }

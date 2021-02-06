@@ -21,15 +21,27 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
      */
     protected function getStub(): string
     {
+        $stub = null;
+
         if ($this->option('parent')) {
-            return __DIR__.'/../../../resources/stubs/controller.nested.stub';
+            $stub = __DIR__.'/../../../resources/stubs/controller.nested.stub';
         } elseif ($this->option('model')) {
-            return __DIR__.'/../../../resources/stubs/controller.model.stub';
+            $stub = __DIR__.'/../../../resources/stubs/controller.model.stub';
+        } elseif ($this->option('invokable')) {
+            $stub = __DIR__.'/../../../resources/stubs/controller.invokable.stub';
         } elseif ($this->option('resource')) {
-            return __DIR__.'/../../../resources/stubs/controller.stub';
+            $stub = __DIR__.'/../../../resources/stubs/controller.stub';
         }
 
-        return __DIR__.'/../../../resources/stubs/controller.plain.stub';
+        if ($this->option('api') && is_null($stub)) {
+            $stub = __DIR__.'/../../../resources/stubs/controller.api.stub';
+        } elseif ($this->option('api') && ! is_null($stub) && ! $this->option('invokable')) {
+            $stub = str_replace('.stub', '.api.stub', $stub);
+        }
+
+        $stub = $stub ?? __DIR__.'/../../../resources/stubs/controller.plain.stub';
+
+        return $stub;
     }
 
     /**

@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace DummyNamespace;
+namespace {{ namespace }};
 
-use NamespacedDummyModel;
+use {{ namespacedModel }};
 use NamespacedDummyTransformer;
 use Cortex\Foundation\DataTables\AbstractDataTable;
 
-class DummyClass extends AbstractDataTable
+class {{ class }} extends AbstractDataTable
 {
     /**
      * {@inheritdoc}
      */
-    protected $dummyModel = DummyModel::class;
+    protected ${{ modelVariable }} = {{ modelVariable }}::class;
 
     /**
      * {@inheritdoc}

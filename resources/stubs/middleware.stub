@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DummyNamespace;
+namespace {{ namespace }};
 
 use Closure;
 
-class DummyClass
+class {{ class }}
 {
     /**
      * Handle an incoming request.
