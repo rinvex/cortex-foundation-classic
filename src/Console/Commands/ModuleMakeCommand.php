@@ -112,6 +112,7 @@ class ModuleMakeCommand extends Command
 
         $this->call('make:config', ['name' => 'config', '--module' => $this->getNameInput()]);
         $this->call('make:model', ['name' => 'Example', '--module' => $this->getNameInput()]);
+        $this->call('make:observer', ['name' => 'ExampleObserver', '--module' => $this->getNameInput()]);
         $this->call('make:policy', ['name' => 'ExamplePolicy', '--module' => $this->getNameInput()]);
         $this->call('make:provider', ['name' => ucfirst($module).'ServiceProvider', '--module' => $this->getNameInput()]);
         $this->call('make:command', ['name' => 'ExampleCommand', '--module' => $this->getNameInput()]);
