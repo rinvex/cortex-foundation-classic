@@ -37,7 +37,8 @@ class FactoryMakeCommand extends BaseFactoryMakeCommand
     /**
      * Qualify the given model class base name.
      *
-     * @param  string  $model
+     * @param string $model
+     *
      * @return string
      */
     protected function qualifyModel(string $model)

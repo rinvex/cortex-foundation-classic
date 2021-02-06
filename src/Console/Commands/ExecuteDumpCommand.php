@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Console\ConfirmableTrait;
 
 class ExecuteDumpCommand extends Command
 {
