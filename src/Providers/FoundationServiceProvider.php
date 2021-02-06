@@ -27,6 +27,7 @@ use Cortex\Foundation\Console\Commands\RollbackCommand;
 use Illuminate\Support\Facades\Session as SessionFacade;
 use Cortex\Foundation\Console\Commands\CoreUnloadCommand;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
+use Cortex\Foundation\Console\Commands\ExecuteDumpCommand;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
 use Cortex\Foundation\Console\Commands\CorePublishCommand;
@@ -52,6 +53,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected $commands = [
         SeedCommand::class => 'command.cortex.foundation.seed',
+        ExecuteDumpCommand::class => 'command.cortex.execute.dump',
         InstallCommand::class => 'command.cortex.foundation.install',
         MigrateCommand::class => 'command.cortex.foundation.migrate',
         PublishCommand::class => 'command.cortex.foundation.publish',
