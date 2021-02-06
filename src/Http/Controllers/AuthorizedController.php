@@ -65,7 +65,16 @@ class AuthorizedController extends AuthenticatedController
     }
 
     /**
-     * {@inheritdoc}
+     * Authorize a resource action (with model) based on the incoming request.
+     *
+     * @param string                        $model
+     * @param string|null                   $parameter
+     * @param array                         $options
+     * @param \Illuminate\Http\Request|null $request
+     *
+     * @throws \ReflectionException
+     *
+     * @return void
      */
     public function authorizeResource($model, $parameter = null, array $options = [], $request = null): void
     {
@@ -84,7 +93,13 @@ class AuthorizedController extends AuthenticatedController
     }
 
     /**
-     * {@inheritdoc}
+     * Authorize a resource action (without model) based on the incoming request.
+     *
+     * @param string $resource
+     *
+     * @throws \ReflectionException
+     *
+     * @return void
      */
     public function authorizeGeneric($resource): void
     {
