@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.15] - 2021-02-07
+- Replace silber/bouncer package with custom modified tmp version
+
 ## [v6.0.14] - 2021-02-06
 - Simplify service provider model registration into IoC
 - handle CountryLoaderException and UniversityLoaderException (#206)
@@ -409,6 +412,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.15]: https://github.com/rinvex/cortex-foundation/compare/v6.0.14...v6.0.15
 [v6.0.14]: https://github.com/rinvex/cortex-foundation/compare/v6.0.13...v6.0.14
 [v6.0.13]: https://github.com/rinvex/cortex-foundation/compare/v6.0.12...v6.0.13
 [v6.0.12]: https://github.com/rinvex/cortex-foundation/compare/v6.0.11...v6.0.12
