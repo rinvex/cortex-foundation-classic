@@ -62,7 +62,7 @@
         "rinvex/tmp-felixkiss-uniquewith-validator": "^3.4.0",
         "rinvex/tmp-lord-laroute": "^2.4.0",
         "rinvex/tmp-watson-validating": "^6.0.0",
-        "silber/bouncer": "v1.0.0-rc.10",
+        "rinvex/tmp-josephsilber-bouncer": "^1.0.0",
         "spatie/laravel-activitylog": "^3.16.0",
         "spatie/laravel-collection-macros": "^7.1.0",
         "spatie/laravel-medialibrary": "^9.4.0",
