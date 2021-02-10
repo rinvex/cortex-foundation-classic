@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Listeners;
 
-use Illuminate\Support\Str;
 use Silber\Bouncer\Database\Models;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Events\RouteMatched;
 
 class SetupRequestOnMatchedRoute
 {
     /**
-     * The authentication guard name.
+     * The access area name.
      *
      * @var string
      */
-    protected $guard;
+    protected $accessarea;
 
     /**
      * Setup request params on RouteMatched event.
@@ -29,9 +27,9 @@ class SetupRequestOnMatchedRoute
     {
         // Assign global route parameters
         if ($route = request()->route()) {
-            $emailVerificationBroker = $this->getEmailVerificationBroker();
+            $this->accessarea = get_access_area();
             $passwordResetBroker = $this->getPasswordResetBroker();
-            $accessarea = $this->getAccessarea();
+            $emailVerificationBroker = $this->getEmailVerificationBroker();
             $guard = $this->getGuard();
             Models::setUsersModel(config("cortex.auth.models.{$guard}"));
         }
@@ -39,7 +37,7 @@ class SetupRequestOnMatchedRoute
         app()->singleton('request.emailVerificationBroker', fn () => $emailVerificationBroker ?? null);
         app()->singleton('request.passwordResetBroker', fn () => $passwordResetBroker ?? null);
         app()->singleton('request.user', fn () => auth()->guard($guard ?? null)->user());
-        app()->singleton('request.accessarea', fn () => $accessarea ?? null);
+        app()->singleton('request.accessarea', fn () => $this->accessarea ?? null);
         app()->singleton('request.guard', fn () => $guard ?? null);
     }
 
@@ -50,7 +48,7 @@ class SetupRequestOnMatchedRoute
      */
     protected function getGuard(): string
     {
-        $guard = mb_strstr($this->getAccessarea(), 'area', true);
+        $guard = mb_strstr($this->accessarea, 'area', true);
 
         return config('auth.guards.'.$guard) ? $guard : config('auth.defaults.guard');
     }
@@ -62,7 +60,7 @@ class SetupRequestOnMatchedRoute
      */
     protected function getPasswordResetBroker(): string
     {
-        $passwordResetBroker = mb_strstr($this->getAccessarea(), 'area', true);
+        $passwordResetBroker = mb_strstr($this->accessarea, 'area', true);
 
         return config('auth.passwords.'.$passwordResetBroker) ? $passwordResetBroker : config('auth.defaults.passwords');
     }
@@ -74,18 +72,8 @@ class SetupRequestOnMatchedRoute
      */
     protected function getEmailVerificationBroker(): string
     {
-        $emailVerificationBroker = mb_strstr($this->getAccessarea(), 'area', true);
+        $emailVerificationBroker = mb_strstr($this->accessarea, 'area', true);
 
         return config('auth.passwords.'.$emailVerificationBroker) ? $emailVerificationBroker : config('auth.defaults.passwords');
-    }
-
-    /**
-     * Get the accessarea.
-     *
-     * @return string
-     */
-    protected function getAccessarea(): string
-    {
-        return Str::before(Route::currentRouteName(), '.');
     }
 }
