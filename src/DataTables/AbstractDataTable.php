@@ -122,7 +122,7 @@ abstract class AbstractDataTable extends DataTable
             $results->each(function ($item) use ($action) {
                 // Check if current user can execute this action on that model
                 if ($this->request()->user(app('request.guard'))->can($action, $item)) {
-                    $item->{$action};
+                    $item->{$action}();
                 }
             });
 

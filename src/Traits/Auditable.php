@@ -68,9 +68,9 @@ trait Auditable
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function creator(): MorphTo
+    public function createdBy(): MorphTo
     {
-        return $this->morphTo('creator', 'creator_type', 'creator_id', 'id');
+        return $this->morphTo('creator', 'created_by_type', 'created_by_id', 'id');
     }
 
     /**
@@ -78,9 +78,9 @@ trait Auditable
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function updater(): MorphTo
+    public function updatedBy(): MorphTo
     {
-        return $this->morphTo('updater', 'updater_type', 'updater_id', 'id');
+        return $this->morphTo('updater', 'updated_by_type', 'updated_by_id', 'id');
     }
 
     /**
@@ -91,7 +91,7 @@ trait Auditable
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOfCreator(Builder $builder, Model $user): Builder
+    public function scopeCreatedBy(Builder $builder, Model $user): Builder
     {
         return $builder->where('created_by_type', $user->getMorphClass())->where('created_by_id', $user->getKey());
     }
@@ -104,7 +104,7 @@ trait Auditable
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOfUpdater(Builder $builder, Model $user): Builder
+    public function scopeUpdatedBy(Builder $builder, Model $user): Builder
     {
         return $builder->where('updated_by_type', $user->getMorphClass())->where('updated_by_id', $user->getKey());
     }

@@ -83,7 +83,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
-        $accessarea = Str::before(Route::currentRouteName(), '.');
+        $accessarea = get_access_area();
 
         if ($e instanceof TokenMismatchException) {
             return intend([
