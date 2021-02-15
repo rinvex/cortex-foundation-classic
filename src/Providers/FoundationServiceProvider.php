@@ -26,7 +26,6 @@ use Cortex\Foundation\Console\Commands\CoreSeedCommand;
 use Cortex\Foundation\Console\Commands\RollbackCommand;
 use Illuminate\Support\Facades\Session as SessionFacade;
 use Cortex\Foundation\Console\Commands\CoreUnloadCommand;
-use Cortex\Foundation\Console\Commands\GenerateIdeHelper;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
@@ -37,6 +36,7 @@ use Cortex\Foundation\Console\Commands\CoreRollbackCommand;
 use Cortex\Foundation\Console\Commands\CoreDeactivateCommand;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
+use Cortex\Foundation\Console\Commands\GenerateIdeHelperCommand;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
 use Cortex\Foundation\Overrides\Barryvdh\Debugbar\DebugbarServiceProvider;
 use Cortex\Foundation\Overrides\Mcamara\LaravelLocalization\LaravelLocalization;
@@ -58,13 +58,13 @@ class FoundationServiceProvider extends ServiceProvider
         PublishCommand::class => 'command.cortex.foundation.publish',
         RollbackCommand::class => 'command.cortex.foundation.rollback',
         CoreSeedCommand::class => 'command.cortex.foundation.coreseed',
-        GenerateIdeHelper::class => 'command.cortex.generate.idehelper',
         CoreInstallCommand::class => 'command.cortex.foundation.coreinstall',
         CoreMigrateCommand::class => 'command.cortex.foundation.coremigrate',
         CorePublishCommand::class => 'command.cortex.foundation.corempublish',
         CoreRollbackCommand::class => 'command.cortex.foundation.corerollback',
         CoreActivateCommand::class => 'command.cortex.foundation.coreactivate',
         CoreAutoloadCommand::class => 'command.cortex.foundation.coreautoload',
+        GenerateIdeHelperCommand::class => 'command.cortex.generate.idehelper',
         CoreDeactivateCommand::class => 'command.cortex.foundation.coredeactivate',
         CoreUnloadCommand::class => 'command.cortex.foundation.coreunload',
     ];
