@@ -6,7 +6,6 @@ namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Support\Arr;
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Foundation\PackageManifest;
 use Rinvex\Composer\Services\ModuleManifest;
@@ -23,15 +22,17 @@ abstract class AbstractModuleCommand extends Command
     /**
      * Process the console command.
      *
-     * @param \Illuminate\Support\Collection $modules
-     * @param array                          $attributes
+     * @param array $attributes
      *
      * @throws \Exception
      *
      * @return void
+     *
      */
-    protected function process(Collection $modules, array $attributes)
+    protected function process(array $attributes)
     {
+        $modules = collect($this->option('module'));
+
         $packageManifest = app(PackageManifest::class);
 
         $packages = $packageManifest->getInstalledPackages();

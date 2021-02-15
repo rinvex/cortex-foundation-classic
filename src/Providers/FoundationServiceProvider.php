@@ -26,11 +26,11 @@ use Cortex\Foundation\Console\Commands\CoreSeedCommand;
 use Cortex\Foundation\Console\Commands\RollbackCommand;
 use Illuminate\Support\Facades\Session as SessionFacade;
 use Cortex\Foundation\Console\Commands\CoreUnloadCommand;
+use Cortex\Foundation\Console\Commands\GenerateIdeHelper;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
 use Cortex\Foundation\Console\Commands\CoreInstallCommand;
 use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
 use Cortex\Foundation\Console\Commands\CorePublishCommand;
-use Cortex\Foundation\Console\Commands\ExecuteDumpCommand;
 use Cortex\Foundation\Console\Commands\CoreActivateCommand;
 use Cortex\Foundation\Console\Commands\CoreAutoloadCommand;
 use Cortex\Foundation\Console\Commands\CoreRollbackCommand;
@@ -53,12 +53,12 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected $commands = [
         SeedCommand::class => 'command.cortex.foundation.seed',
-        ExecuteDumpCommand::class => 'command.cortex.execute.dump',
         InstallCommand::class => 'command.cortex.foundation.install',
         MigrateCommand::class => 'command.cortex.foundation.migrate',
         PublishCommand::class => 'command.cortex.foundation.publish',
         RollbackCommand::class => 'command.cortex.foundation.rollback',
         CoreSeedCommand::class => 'command.cortex.foundation.coreseed',
+        GenerateIdeHelper::class => 'command.cortex.generate.idehelper',
         CoreInstallCommand::class => 'command.cortex.foundation.coreinstall',
         CoreMigrateCommand::class => 'command.cortex.foundation.coremigrate',
         CorePublishCommand::class => 'command.cortex.foundation.corempublish',

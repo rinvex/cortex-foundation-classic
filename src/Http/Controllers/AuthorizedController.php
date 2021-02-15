@@ -56,7 +56,7 @@ class AuthorizedController extends AuthenticatedController
         // This authorization check, covers the following use cases:
         // 1. Check individual entity permission (entity_type & entity_id, ex: user ID #123)
         // 2. Check entity permission (entity_type, ex: all entities of type user)
-        // 3. Check NULL entity_type ex. access-adminarea
+        // 3. Check NULL entity_type (ex. access-adminarea)
         // 4. Check owned entity permissions (owned_by)
         // 5. Check entity based on model config value, instead of hardcoded model (supports override)
 
