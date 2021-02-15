@@ -80,7 +80,7 @@ abstract class AbstractDataTable extends DataTable
     {
         $model = app($this->model);
         $query = $model->query();
-        $selectedIds = collect($this->request()->get('selected_ids'))->filter();
+        $selectedIds = collect($this->request()->input('selected_ids'))->filter();
 
         if ($selectedIds->isNotEmpty()) {
             $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
