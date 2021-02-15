@@ -15,7 +15,7 @@ class CoreActivateCommand extends AbstractModuleCommand
      *
      * @var string
      */
-    protected $signature = 'cortex:activate {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to activate.}';
+    protected $signature = 'cortex:activate {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to activate.} {--a|autoload : Autoload modules before activating.}';
 
     /**
      * The console command description.
@@ -31,6 +31,8 @@ class CoreActivateCommand extends AbstractModuleCommand
      */
     public function handle()
     {
-        $this->process(collect($this->option('module')), ['active' => true]);
+        ! $this->option('autoload') || $this->call('cortex:autoload');
+
+        $this->process(['active' => true]);
     }
 }

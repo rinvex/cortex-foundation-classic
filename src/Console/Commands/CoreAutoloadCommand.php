@@ -15,7 +15,7 @@ class CoreAutoloadCommand extends AbstractModuleCommand
      *
      * @var string
      */
-    protected $signature = 'cortex:autoload {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to autoload.}';
+    protected $signature = 'cortex:autoload {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to autoload.} {--a|activate : Activate modules after autoloading.}';
 
     /**
      * The console command description.
@@ -31,6 +31,8 @@ class CoreAutoloadCommand extends AbstractModuleCommand
      */
     public function handle()
     {
-        $this->process(collect($this->option('module')), ['autoload' => true]);
+        $this->process(['autoload' => true]);
+
+        ! $this->option('activate') || $this->call('cortex:activate');
     }
 }

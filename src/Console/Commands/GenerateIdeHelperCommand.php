@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Console\ConfirmableTrait;
 
-class ExecuteDumpCommand extends Command
+class GenerateIdeHelperCommand extends Command
 {
     use ConfirmableTrait;
 
@@ -17,14 +17,14 @@ class ExecuteDumpCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cortex:execute:dump {--f|force : Overwrite any existing files.}';
+    protected $signature = 'cortex:generate:idehelper {--f|force : Overwrite any existing files.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Publish Cortex Foundation Resources.';
+    protected $description = 'Generate Ide Helper files';
 
     /**
      * Execute the console command.

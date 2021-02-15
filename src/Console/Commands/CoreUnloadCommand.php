@@ -15,7 +15,7 @@ class CoreUnloadCommand extends AbstractModuleCommand
      *
      * @var string
      */
-    protected $signature = 'cortex:unload {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to unload.}';
+    protected $signature = 'cortex:unload {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to unload.} {--d|deactivate : Deactivate modules after unloading.}';
 
     /**
      * The console command description.
@@ -31,6 +31,8 @@ class CoreUnloadCommand extends AbstractModuleCommand
      */
     public function handle()
     {
-        $this->process(collect($this->option('module')), ['autoload' => false]);
+        $this->process(['autoload' => false]);
+
+        ! $this->option('deactivate') || $this->call('cortex:deactivate');
     }
 }
