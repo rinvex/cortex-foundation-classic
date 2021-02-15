@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.18] - 2021-02-15
+- Fix wrong artisan GenerateIdeHelperCommand name
+
 ## [v6.0.17] - 2021-02-15
 - Update core artisan commands - autoload - unload - activate - deactivate - generate ide helper
 - Use `request->input()` instead of `request->get()`
@@ -422,6 +425,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.18]: https://github.com/rinvex/cortex-foundation/compare/v6.0.17...v6.0.18
 [v6.0.17]: https://github.com/rinvex/cortex-foundation/compare/v6.0.16...v6.0.17
 [v6.0.16]: https://github.com/rinvex/cortex-foundation/compare/v6.0.15...v6.0.16
 [v6.0.15]: https://github.com/rinvex/cortex-foundation/compare/v6.0.14...v6.0.15
