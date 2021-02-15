@@ -27,7 +27,6 @@ abstract class AbstractModuleCommand extends Command
      * @throws \Exception
      *
      * @return void
-     *
      */
     protected function process(array $attributes)
     {
