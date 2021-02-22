@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cortex\Foundation\Overrides\Illuminate\Http;
+namespace Cortex\Foundation\Http;
 
 use Throwable;
 use Illuminate\Support\Str;
