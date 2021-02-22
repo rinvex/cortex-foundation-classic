@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Providers;
 
 use Illuminate\Routing\Router;
-use Illuminate\Support\Collection;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -147,10 +146,6 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Append middleware to the 'web' middlware group
         $this->app->environment('production') || $router->pushMiddlewareToGroup('web', Clockwork::class);
-
-        Collection::macro('similar', function (Collection $newCollection) {
-            return $newCollection->diff($this)->isEmpty() && $this->diff($newCollection)->isEmpty();
-        });
     }
 
     /**
