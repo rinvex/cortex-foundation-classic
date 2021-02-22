@@ -83,7 +83,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
-        $accessarea = get_access_area();
+        $accessarea = $request->getAccessArea();
 
         if ($e instanceof TokenMismatchException) {
             return intend([

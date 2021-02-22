@@ -27,7 +27,7 @@ class SetupRequestOnMatchedRoute
     {
         // Assign global route parameters
         if ($route = request()->route()) {
-            $this->accessarea = get_access_area();
+            $this->accessarea = request()->getAccessArea();
             $passwordResetBroker = $this->getPasswordResetBroker();
             $emailVerificationBroker = $this->getEmailVerificationBroker();
             $guard = $this->getGuard();
