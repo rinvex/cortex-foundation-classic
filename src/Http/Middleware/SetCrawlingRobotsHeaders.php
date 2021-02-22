@@ -57,6 +57,6 @@ class SetCrawlingRobotsHeaders
      */
     protected function shouldIndex(Request $request)
     {
-        return app()->bound('request.accessarea') ? app()->environment('production') && in_array(app('request.accessarea'), config('cortex.foundation.indexable')) : false;
+        return app()->environment('production') && in_array($request->accessarea(), config('cortex.foundation.indexable'));
     }
 }

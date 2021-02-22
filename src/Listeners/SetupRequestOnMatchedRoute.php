@@ -27,7 +27,7 @@ class SetupRequestOnMatchedRoute
     {
         // Assign global route parameters
         if ($route = request()->route()) {
-            $this->accessarea = request()->getAccessArea();
+            $this->accessarea = request()->accessarea();
             $passwordResetBroker = $this->getPasswordResetBroker();
             $emailVerificationBroker = $this->getEmailVerificationBroker();
             $guard = $this->getGuard();
@@ -37,7 +37,7 @@ class SetupRequestOnMatchedRoute
         app()->singleton('request.emailVerificationBroker', fn () => $emailVerificationBroker ?? null);
         app()->singleton('request.passwordResetBroker', fn () => $passwordResetBroker ?? null);
         app()->singleton('request.user', fn () => auth()->guard($guard ?? null)->user());
-        app()->singleton('request.accessarea', fn () => $this->accessarea ?? null);
+        //app()->singleton('request.accessarea', fn () => $this->accessarea ?? null);
         app()->singleton('request.guard', fn () => $guard ?? null);
     }
 

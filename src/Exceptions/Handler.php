@@ -83,7 +83,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
-        $accessarea = $request->getAccessArea();
+        $accessarea = $request->accessarea();
 
         if ($e instanceof TokenMismatchException) {
             return intend([
@@ -201,7 +201,7 @@ class Handler extends ExceptionHandler
         session()->put('url.intended', url()->current());
 
         return intend([
-            'url' => app()->bound('request.accessarea') ? route(app('request.accessarea').'.cortex.auth.account.login') : route('frontarea.cortex.auth.account.login'),
+            'url' => route($request->accessarea().'.cortex.auth.account.login'),
             'withErrors' => ['error' => trans('cortex/foundation::messages.session_required')],
         ]);
     }

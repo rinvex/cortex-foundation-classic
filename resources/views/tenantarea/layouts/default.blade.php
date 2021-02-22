@@ -21,7 +21,7 @@
     {{-- Scripts --}}
     <script>
         window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token()]); ?>;
-        window.Accessarea = "<?php echo app('request.accessarea'); ?>";
+        window.Accessarea = "<?php echo request()->accessarea(); ?>";
     </script>
     <script src="{{ mix('js/manifest.js') }}" defer></script>
     <script src="{{ mix('js/vendor.js') }}" defer></script>

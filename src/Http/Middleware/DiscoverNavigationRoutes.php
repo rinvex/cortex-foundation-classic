@@ -19,9 +19,7 @@ class DiscoverNavigationRoutes
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (app()->bound('request.accessarea')) {
-            $accessarea = app('request.accessarea');
-
+        if ($accessarea = $request->accessarea()) {
             $menuFiles = app('files')->glob(app()->path("*/*/routes/menus/{$accessarea}.php"));
             $breadcrumbFiles = app('files')->glob(app()->path("*/*/routes/breadcrumbs/{$accessarea}.php"));
 
