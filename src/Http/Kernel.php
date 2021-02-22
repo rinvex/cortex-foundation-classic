@@ -80,7 +80,7 @@ class Kernel extends HttpKernel
         \Cortex\Auth\Http\Middleware\AuthenticateSession::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Cortex\Auth\Http\Middleware\Reauthenticate::class,
-        \Illuminate\Auth\Middleware\Authorize::class,
+        \Cortex\Auth\Http\Middleware\Authorize::class,
     ];
 
     /**
