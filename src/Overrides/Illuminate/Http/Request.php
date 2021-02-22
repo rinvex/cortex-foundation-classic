@@ -7,22 +7,9 @@ namespace Cortex\Foundation\Overrides\Illuminate\Http;
 use Throwable;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request as BaseRequest;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 class Request extends BaseRequest
 {
-    /**
-     * Create a new Illuminate HTTP request from server variables.
-     *
-     * @return static
-     */
-    public static function capture()
-    {
-        static::enableHttpMethodParameterOverride();
-
-        return static::createFromBase(SymfonyRequest::createFromGlobals());
-    }
-
     /**
      * Get the URL (no query string) for the request.
      *
