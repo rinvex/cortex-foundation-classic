@@ -13,11 +13,10 @@ class DiscoverNavigationRoutes
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
-     * @param string|null              $guard
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
         if ($accessarea = $request->accessarea()) {
             $menuFiles = app('files')->glob(app()->path("*/*/routes/menus/{$accessarea}.php"));
