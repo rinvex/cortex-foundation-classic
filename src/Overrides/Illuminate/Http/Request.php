@@ -105,4 +105,40 @@ class Request extends BaseRequest
             return $this->accessarea = 'frontarea';
         }
     }
+
+    /**
+     * Get guard from accessarea.
+     *
+     * @return string
+     */
+    public function guard(): string
+    {
+        $guard = mb_strstr($this->accessarea(), 'area', true);
+
+        return config('auth.guards.'.$guard) ? $guard : config('auth.defaults.guard');
+    }
+
+    /**
+     * Get password reset broker from accessarea.
+     *
+     * @return string
+     */
+    public function passwordResetBroker(): string
+    {
+        $passwordResetBroker = mb_strstr($this->accessarea(), 'area', true);
+
+        return config('auth.passwords.'.$passwordResetBroker) ? $passwordResetBroker : config('auth.defaults.passwords');
+    }
+
+    /**
+     * Get email verification broker from accessarea.
+     *
+     * @return string
+     */
+    public function emailVerificationBroker(): string
+    {
+        $emailVerificationBroker = mb_strstr($this->accessarea(), 'area', true);
+
+        return config('auth.passwords.'.$emailVerificationBroker) ? $emailVerificationBroker : config('auth.defaults.passwords');
+    }
 }
