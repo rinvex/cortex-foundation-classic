@@ -47,19 +47,19 @@ trait Auditable
      */
     public static function bootAuditable()
     {
-        $guard = app()->bound('request.guard') ? app('request.guard') : null;
+        $user = request()->user();
 
-        static::creating(function (Model $model) use ($guard) {
-            $model->created_by_id || $model->created_by_id = optional(auth()->guard($guard)->user())->getKey();
-            $model->created_by_type || $model->created_by_type = optional(auth()->guard($guard)->user())->getMorphClass();
+        static::creating(function (Model $model) use ($user) {
+            $model->created_by_id || $model->created_by_id = optional($user)->getKey();
+            $model->created_by_type || $model->created_by_type = optional($user)->getMorphClass();
 
-            $model->updated_by_id || $model->updated_by_id = optional(auth()->guard($guard)->user())->getKey();
-            $model->updated_by_type || $model->updated_by_type = optional(auth()->guard($guard)->user())->getMorphClass();
+            $model->updated_by_id || $model->updated_by_id = optional($user)->getKey();
+            $model->updated_by_type || $model->updated_by_type = optional($user)->getMorphClass();
         });
 
-        static::updating(function (Model $model) use ($guard) {
-            $model->isDirty('updated_by_id') || $model->updated_by_id = optional(auth()->guard($guard)->user())->getKey();
-            $model->isDirty('updated_by_type') || $model->updated_by_type = optional(auth()->guard($guard)->user())->getMorphClass();
+        static::updating(function (Model $model) use ($user) {
+            $model->isDirty('updated_by_id') || $model->updated_by_id = optional($user)->getKey();
+            $model->isDirty('updated_by_type') || $model->updated_by_type = optional($user)->getMorphClass();
         });
     }
 
