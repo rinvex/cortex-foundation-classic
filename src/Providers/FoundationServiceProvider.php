@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Cortex\Foundation\Http\FormRequest;
 use Illuminate\Routing\Router;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
@@ -146,6 +147,13 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Append middleware to the 'web' middlware group
         $this->app->environment('production') || $router->pushMiddlewareToGroup('web', Clockwork::class);
+
+        // Override `FormRequest` container binding
+        $this->app->resolving(FormRequest::class, function ($request, $app) {
+            $request = FormRequest::createFrom($app['request'], $request);
+
+            $request->setContainer($app)->setRedirector($app->make(Redirector::class));
+        });
     }
 
     /**
