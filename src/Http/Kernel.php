@@ -74,13 +74,13 @@ class Kernel extends HttpKernel
      */
     protected $middlewarePriority = [
         \Illuminate\Session\Middleware\StartSession::class,
-        \Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \Cortex\Auth\Http\Middleware\Authenticate::class,
         \Cortex\Auth\Http\Middleware\AuthenticateSession::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Cortex\Auth\Http\Middleware\Reauthenticate::class,
         \Cortex\Auth\Http\Middleware\Authorize::class,
+        \Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes::class,
     ];
 
     /**
