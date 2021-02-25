@@ -74,6 +74,8 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
+     * @TODO: Review, improve readability, and possibly drop parent::render
+     *
      * @param \Illuminate\Http\Request $request
      * @param \Throwable               $e
      *
@@ -108,6 +110,19 @@ class Handler extends ExceptionHandler
                 'withInput' => $e->getInputs() ?? $request->all(),
                 'withErrors' => ['error' => $e->getMessage()],
             ], $e->getCode());
+        } elseif ($e instanceof AuthenticationException) {
+            // @TODO: improve
+            if (request()->isApi()) {
+                return response()->json([$e->getMessage()], 401);
+            }
+
+            // Remember current URL for later redirect
+            session()->put('url.intended', url()->current());
+
+            return intend([
+                'url' => route($request->accessarea().'.cortex.auth.account.login'),
+                'withErrors' => ['error' => trans('cortex/foundation::messages.session_required')],
+            ]);
         } elseif ($e instanceof AuthorizationException) {
             return intend([
                 'url' => in_array($accessarea, ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
@@ -185,24 +200,5 @@ class Handler extends ExceptionHandler
     protected function getHttpExceptionView(HttpExceptionInterface $e)
     {
         return "cortex/foundation::common.errors.{$e->getStatusCode()}";
-    }
-
-    /**
-     * Convert an authentication exception into an unauthenticated response.
-     *
-     * @param \Illuminate\Http\Request                 $request
-     * @param \Illuminate\Auth\AuthenticationException $e
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function unauthenticated($request, AuthenticationException $e)
-    {
-        // Remember current URL for later redirect
-        session()->put('url.intended', url()->current());
-
-        return intend([
-            'url' => route($request->accessarea().'.cortex.auth.account.login'),
-            'withErrors' => ['error' => trans('cortex/foundation::messages.session_required')],
-        ]);
     }
 }
