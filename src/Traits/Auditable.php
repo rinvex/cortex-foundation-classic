@@ -47,9 +47,8 @@ trait Auditable
      */
     public static function bootAuditable()
     {
-        $user = request()->user();
-
-        static::creating(function (Model $model) use ($user) {
+        static::creating(function (Model $model) {
+            $user = request()->user();
             $model->created_by_id || $model->created_by_id = optional($user)->getKey();
             $model->created_by_type || $model->created_by_type = optional($user)->getMorphClass();
 
@@ -57,7 +56,8 @@ trait Auditable
             $model->updated_by_type || $model->updated_by_type = optional($user)->getMorphClass();
         });
 
-        static::updating(function (Model $model) use ($user) {
+        static::updating(function (Model $model) {
+            $user = request()->user();
             $model->isDirty('updated_by_id') || $model->updated_by_id = optional($user)->getKey();
             $model->isDirty('updated_by_type') || $model->updated_by_type = optional($user)->getMorphClass();
         });
