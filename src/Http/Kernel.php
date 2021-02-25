@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \Cortex\Foundation\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
+            \Cortex\Foundation\Http\Middleware\SetAuthDefaults::class,
             \Cortex\Foundation\Http\Middleware\LocalizationRedirect::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,
@@ -74,6 +75,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewarePriority = [
         \Illuminate\Session\Middleware\StartSession::class,
+        \Cortex\Foundation\Http\Middleware\SetAuthDefaults::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \Illuminate\Auth\Middleware\Authenticate::class,
         \Cortex\Auth\Http\Middleware\AuthenticateSession::class,
