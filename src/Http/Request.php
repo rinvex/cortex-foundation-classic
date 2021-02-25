@@ -4,18 +4,31 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Http;
 
-use Throwable;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request as BaseRequest;
 
 class Request extends BaseRequest
 {
     /**
+     * The guard name.
+     *
+     * @var string
+     */
+    protected $guard;
+
+    /**
      * The access area name.
      *
      * @var string
      */
     protected $accessarea;
+
+    /**
+     * Determine if current request is an API.
+     *
+     * @var bool
+     */
+    protected $isApi = false;
 
     /**
      * Get the URL (no query string) for the request.
@@ -34,36 +47,13 @@ class Request extends BaseRequest
      */
     public function isApi(): bool
     {
-        try {
-            if ($route = $this->route()) {
-                // 1. Route matched through name or uri, and is an API request (ex. /api/users)
-                if ($segment = $route->getName()) {
-                    $match = Str::before($segment, '.');
-                } else {
-                    $segment = $route->uri();
-                    $match = Str::before($segment, '/');
-                }
+        $this->guard();
 
-                if ($match !== 'api') {
-                    // 2. Route matched through middleware, and is an API request (ex. /api/users)
-                    $match = collect($route->gatherMiddleware())->first(function ($middleware) {
-                        return Str::contains($middleware, 'api:');
-                    });
-                }
-            }
-
-            // 3. Catch other use cases:
-            // 3.1. Route NOT an API request
-            // 3.2. Route NOT matched / Wrong URL (ex. 404 error)
-            // 3.3. Route matched but NOT a valid api name (could happen if route is mistakenly named, make sure route names contain valid api prefix)
-            return isset($match) && $match === 'api';
-        } catch (Throwable $e) {
-            return false;
-        }
+        return $this->isApi;
     }
 
     /**
-     * Get access area for current request.
+     * Get access area of current request.
      *
      * @return string
      */
@@ -73,49 +63,66 @@ class Request extends BaseRequest
             return $this->accessarea;
         }
 
-        try {
-            if ($route = $this->route()) {
-                // 1. Route matched and is an accessarea request (ex. /adminarea/users)
-                if ($segment = $route->getName()) {
-                    $area = Str::before($segment, '.');
-                } else {
-                    $segment = $route->uri();
-                    $area = Str::before($segment, '/');
-                }
+        $area = $this->guard().'area';
 
-                if (! array_key_exists($area, config('cortex.foundation.route.prefix'))) {
-                    // 2. Route matched and is an API request (ex. /api/users)
-                    $middleware = collect($route->gatherMiddleware())->first(function ($middleware) {
-                        return Str::contains($middleware, 'api:');
-                    });
-
-                    if ($middlewareGuard = Str::after($middleware, 'api:')) {
-                        $area = $middlewareGuard.'area';
-                    }
-                }
-            }
-
-            // 3. Catch other use cases:
-            // 3.1. Route NOT matched / Wrong URL (ex. 404 error)
-            // 3.2. Route matched but NOT a valid accessarea (could happen if route is mistakenly named, make sure route names contain valid accessarea prefix)
-            return $this->accessarea = isset($area) && array_key_exists($area, config('cortex.foundation.route.prefix')) ? $area : 'frontarea';
-        } catch (Throwable $e) {
-            // We can't afford any kind of exceptions here, as this is used in the exception handler itself!
-            // Imagine if the exception handler, thrown an exception! How, who, and where else to catch?!
-            return $this->accessarea = 'frontarea';
-        }
+        return $this->isApi ? 'apiarea' : (array_key_exists($area, config('cortex.foundation.route.prefix')) ? $area : 'frontarea');
     }
 
     /**
-     * Get guard from accessarea.
+     * Get guard of current request.
      *
      * @return string
      */
     public function guard(): string
     {
-        $guard = mb_strstr($this->accessarea(), 'area', true);
+        if (! is_null($this->guard)) {
+            return $this->guard;
+        }
 
-        return config('auth.guards.'.$guard) ? $guard : config('auth.defaults.guard');
+        // A. Route matched
+        if ($route = $this->route()) {
+
+            // A.1. Guess guard from: route middleware
+            if (($segment = collect($route->middleware())->first(fn($middleware) => Str::contains($middleware, 'auth:'))) && $guard = Str::after($segment, ':')) {
+                ! Str::contains($guard, ['api']) || $this->isApi = true;
+
+                if (array_key_exists($guard, config('auth.guards'))) {
+                    return $guard;
+                }
+            }
+
+            // A.2. Guess guard from: named route
+            if (($segment = $route->getName()) && $guard = Str::before(Str::before($segment, '.'), 'area')) {
+                ! Str::contains($guard, ['api']) || $this->isApi = true;
+
+                if (array_key_exists($guard, config('auth.guards'))) {
+                    return $guard;
+                }
+            }
+
+            // A.3. Guess guard from: prefixed route
+            if (($segment = $route->uri()) && $guard = Str::before(Str::before($segment, '/'), 'area')) {
+                ! Str::contains($guard, ['api']) || $this->isApi = true;
+
+                if (array_key_exists($guard, config('auth.guards'))) {
+                    return $guard;
+                }
+            }
+
+            // A.4. Guess guard from: controller namespace
+            if (($this->route()->getAction('controller') && $segment = Str::lower(collect(explode('\\', $this->route()->getAction('controller')))->first(fn ($seg) => array_key_exists(Str::lower($seg), config('cortex.foundation.route.prefix'))))) && $guard = Str::before($segment, 'area')) {
+                ! Str::contains($guard, ['api']) || $this->isApi = true;
+
+                if (array_key_exists($guard, config('auth.guards'))) {
+                    return $guard;
+                }
+            }
+        }
+
+        // A.5. Catch other use cases:
+        // A.5.1. Route NOT matched / Wrong URL (ex. 404 error)
+        // A.5.2. Route matched but NOT a valid accessarea (could happen if route is mistakenly named, make sure route names contain valid accessarea prefix)
+        return $this->isApi ? config('auth.defaults.api') : config('auth.defaults.guard');
     }
 
     /**
