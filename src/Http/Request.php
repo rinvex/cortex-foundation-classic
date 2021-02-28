@@ -65,7 +65,7 @@ class Request extends BaseRequest
 
         $area = $this->guard().'area';
 
-        return $this->isApi ? 'apiarea' : (array_key_exists($area, config('cortex.foundation.route.prefix')) ? $area : 'frontarea');
+        return $this->isApi ? 'apiarea' : (array_key_exists($area, config('cortex.foundation.route.prefix')) ? $area : (app()->runningInConsole() ? 'consolearea' : 'frontarea'));
     }
 
     /**
