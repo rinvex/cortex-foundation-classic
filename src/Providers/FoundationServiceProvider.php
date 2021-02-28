@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
-use Cortex\Foundation\Http\FormRequest;
 use Illuminate\Routing\Router;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
+use Cortex\Foundation\Http\FormRequest;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
 use Illuminate\Database\Schema\Blueprint;
