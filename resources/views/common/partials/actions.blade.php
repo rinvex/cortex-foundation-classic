@@ -1,11 +1,11 @@
-@if(app('request.user')->can('delete', $model) || app('request.user')->can('create', $model))
+@if(request()->user()->can('delete', $model) || request()->user()->can('create', $model))
     <div class="pull-right">
 
-        @if (app('request.user')->can('create', $model))
+        @if (request()->user()->can('create', $model))
             <a href="{{ route("{$routePrefix}create", ['replicate' => $model->getRouteKey()]) }}" title="{{ trans('cortex/foundation::common.replicate') }}" class="btn btn-default" style="margin: 4px"><i class="fa fa-clone text-default"></i></a>
         @endif
 
-        @if (app('request.user')->can('delete', $model))
+        @if (request()->user()->can('delete', $model))
             <a href="#" data-toggle="modal" data-target="#delete-confirmation"
                data-modal-action="{{ route("{$routePrefix}destroy", [$name => $model]) }}"
                data-modal-title="{{ trans('cortex/foundation::messages.delete_confirmation_title') }}"

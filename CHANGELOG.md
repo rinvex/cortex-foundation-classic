@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.19] - 2021-02-28
+- Fix wrong createdBy attribute in form timestamps
+- Refactor Request::guard() and Request::accessarea() methods - Support API requests - Fix multiple issues
+- Add `SetAuthDefaults` middleware to set Auth defaults globally
+- Override `AuthenticationException` handler
+- Add `apiarea` to route prefixes and obscured areas
+- Improve `bootAuditable` trait method performance
+- Drop `Authenticate` middleware override
+- Add `UnauthenticatedController` base controller for guest controller actions
+- Override `FormRequest` container binding
+- Change `DiscoverNavigationRoutes` middleware priority order to change execution to the end of the stack, so session, request, and everything else are already loaded, bound, and ready to go!
+- Simplify and utilize request()->user() and request()->guard()
+- Simplify and utilize request()->accessarea() - Remove useless `RouteMatched` event listener, and use `request` methods directly instead
+- Remove useless middleware parameters
+- Use overridden `FormRequest` instead of native class
+- Simplify and utilize request()->accessarea()
+- Override `FormRequest` class
+- Change `Request` class namespace
+- Add `guard`, `emailVerifierBroker`, and `passwordResetBroker` methods to the Request class
+- Cache accessacrea value for current request
+- Remove useless method override
+- Override Authorize middleware
+- Tweak exception handler to always pass errors instead of warnings
+- Add support for accessarea and api detection to core request class
+- Move collection `similar` macro to rinvex/laravel-support package responsibility
+
 ## [v6.0.18] - 2021-02-15
 - Fix wrong artisan GenerateIdeHelperCommand name
 
@@ -56,8 +82,8 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 ## [v6.0.7] - 2021-01-01
 - Move cortex:autoload & cortex:activate commands to cortex/foundation module responsibility
-  - This is because :autoload & :activate commands are registered only if the module already autoloaded, so there is no way we can execute commands of unloaded modules
-  - cortex/foundation module is always autoloaded, so it's the logical and reasonable place to register these :autoload & :activate module commands and control other modules from outside
+    - This is because :autoload & :activate commands are registered only if the module already autoloaded, so there is no way we can execute commands of unloaded modules
+    - cortex/foundation module is always autoloaded, so it's the logical and reasonable place to register these :autoload & :activate module commands and control other modules from outside
 
 ## [v6.0.6] - 2021-01-01
 - Run self diagnosis before installation
@@ -199,7 +225,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 - Autoload config, views, language, menus, breadcrumbs, and migrations for all modules
 - Add intl-tel-input images to webpack processing
 - Drop using rinvex/laravel-cacheable from core packages for more flexibility
-  - Caching should be handled on the application layer, not enforced from the core packages
+    - Caching should be handled on the application layer, not enforced from the core packages
 - Drop PHP 7.2 & 7.3 support from travis
 - Tweak selected_ids collection filtration and check
 
@@ -293,8 +319,8 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## [v3.1.2] - 2019-12-18
 - Fix `migrate:reset` args as it doesn't accept --step
 - Fix Crawling Robots indexable access areas check (#97)
-  - fix should index checker by check if access area listed in cortex.foundation.route.prefix 
-  - Fix Crawling Robots indexable access areas check 
+    - fix should index checker by check if access area listed in cortex.foundation.route.prefix
+    - Fix Crawling Robots indexable access areas check
 - Auto discover events listeners and register events automatically
 
 ## [v3.1.1] - 2019-12-04
@@ -406,7 +432,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 - Simplify and flatten resources/public directories
 - Simplify $route->getAction() usage
 - Simplify controller actions
-  - Move area roles & abilities retrieval to global helper
+    - Move area roles & abilities retrieval to global helper
 - Fix favicon paths
 - Remove useless AuthenticateWithBasicAuth override (Laravel v5.7)
 
@@ -425,6 +451,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.19]: https://github.com/rinvex/cortex-foundation/compare/v6.0.18...v6.0.19
 [v6.0.18]: https://github.com/rinvex/cortex-foundation/compare/v6.0.17...v6.0.18
 [v6.0.17]: https://github.com/rinvex/cortex-foundation/compare/v6.0.16...v6.0.17
 [v6.0.16]: https://github.com/rinvex/cortex-foundation/compare/v6.0.15...v6.0.16

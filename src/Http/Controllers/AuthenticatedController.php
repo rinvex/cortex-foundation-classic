@@ -13,6 +13,6 @@ class AuthenticatedController extends AbstractController
     {
         parent::__construct();
 
-        ! app()->bound('request.guard') || $this->middleware(($guard = app('request.guard')) ? 'auth:'.$guard : 'auth')->except($this->middlewareWhitelist);
+        $this->middleware(($guard = request()->guard()) ? 'auth:'.$guard : 'auth')->except($this->middlewareWhitelist);
     }
 }

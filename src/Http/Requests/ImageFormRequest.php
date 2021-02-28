@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Cortex\Foundation\Http\FormRequest;
 
 class ImageFormRequest extends FormRequest
 {

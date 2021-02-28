@@ -11,6 +11,7 @@ return [
     'obscure' => [
         'rotate' => false,
         'areas' => [
+            'apiarea',
             'adminarea',
         ],
     ],
@@ -37,6 +38,7 @@ return [
         // Defines the URL prefixes for the different areas
         // Changing this option require re-caching routes if already cached
         'prefix' => [
+            'apiarea' => 'api',
             'frontarea' => '',
             'tenantarea' => '',
             'adminarea' => 'adminarea',

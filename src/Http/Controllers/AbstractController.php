@@ -29,7 +29,7 @@ abstract class AbstractController extends Controller
     public function __construct()
     {
         // Activate Guardians
-        if (app()->bound('request.accessarea') && in_array(app('request.accessarea'), config('cortex.auth.guardians'))) {
+        if (in_array(request()->accessarea(), config('cortex.auth.guardians'))) {
             $this->middleware('auth.basic:guardian,username');
         }
     }

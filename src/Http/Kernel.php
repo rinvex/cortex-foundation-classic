@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \Cortex\Foundation\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
+            \Cortex\Foundation\Http\Middleware\SetAuthDefaults::class,
             \Cortex\Foundation\Http\Middleware\LocalizationRedirect::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,
@@ -56,7 +57,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Cortex\Auth\Http\Middleware\Authenticate::class,
+        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
@@ -74,13 +75,14 @@ class Kernel extends HttpKernel
      */
     protected $middlewarePriority = [
         \Illuminate\Session\Middleware\StartSession::class,
-        \Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes::class,
+        \Cortex\Foundation\Http\Middleware\SetAuthDefaults::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \Cortex\Auth\Http\Middleware\Authenticate::class,
+        \Illuminate\Auth\Middleware\Authenticate::class,
         \Cortex\Auth\Http\Middleware\AuthenticateSession::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Cortex\Auth\Http\Middleware\Reauthenticate::class,
-        \Illuminate\Auth\Middleware\Authorize::class,
+        \Cortex\Auth\Http\Middleware\Authorize::class,
+        \Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes::class,
     ];
 
     /**

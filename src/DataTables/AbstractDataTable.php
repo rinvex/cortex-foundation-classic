@@ -85,7 +85,7 @@ abstract class AbstractDataTable extends DataTable
         if ($selectedIds->isNotEmpty()) {
             $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
 
-            if (in_array(app('request.accessarea'), $obscure['areas'])) {
+            if (in_array($this->request()->accessarea(), $obscure['areas'])) {
                 $selectedIds = $selectedIds->map(function ($value) {
                     return optional(Hashids::decode($value))[0];
                 });
@@ -121,7 +121,7 @@ abstract class AbstractDataTable extends DataTable
         if ($results = $this->query()->get()) {
             $results->each(function ($item) use ($action) {
                 // Check if current user can execute this action on that model
-                if ($this->request()->user(app('request.guard'))->can($action, $item)) {
+                if ($this->request()->user()->can($action, $item)) {
                     $item->{$action}();
                 }
             });
