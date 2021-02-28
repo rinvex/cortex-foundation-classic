@@ -43,7 +43,7 @@ class Request extends BaseRequest
     /**
      * Check if this is an API request.
      *
-     * @return boolean
+     * @return bool
      */
     public function isApi(): bool
     {
@@ -83,7 +83,7 @@ class Request extends BaseRequest
         if ($route = $this->route()) {
 
             // A.1. Guess guard from: route middleware
-            if (($segment = collect($route->middleware())->first(fn($middleware) => Str::contains($middleware, 'auth:'))) && $guard = Str::after($segment, ':')) {
+            if (($segment = collect($route->middleware())->first(fn ($middleware) => Str::contains($middleware, 'auth:'))) && $guard = Str::after($segment, ':')) {
                 ! Str::contains($guard, ['api']) || $this->isApi = true;
 
                 if (array_key_exists($guard, config('auth.guards'))) {
