@@ -19,7 +19,6 @@ class SetAuthDefaults
      */
     public function handle($request, Closure $next)
     {
-        //dd($request->guard());
         if ($guard = $request->guard()) {
             // It's better to set auth defaults config globally,
             // instead of using `auth()->shouldUse($guard);`

@@ -62,12 +62,11 @@ class DiscoveryServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->bootDiscoveredEvents();
-        $this->bootDiscoveredRoutes();
-
-        $this->discoverResources('resources/lang');
-        $this->discoverResources('resources/views');
-        $this->discoverResources('database/migrations');
+        $this->callAfterResolving('router', fn () => $this->bootDiscoveredRoutes());
+        $this->callAfterResolving('events', fn () => $this->bootDiscoveredEvents());
+        $this->callAfterResolving('view', fn () => $this->discoverResources('resources/views'));
+        $this->callAfterResolving('translator', fn () => $this->discoverResources('resources/lang'));
+        $this->callAfterResolving('migrator', fn () => $this->discoverResources('database/migrations'));
     }
 
     /**
