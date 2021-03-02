@@ -131,7 +131,7 @@ class Request extends BaseRequest
         // C. Catch other use cases:
         // C.1. Route NOT matched / Wrong URL (ex. 404 error)
         // C.2. Route matched but NOT a valid accessarea (could happen if route is mistakenly named, make sure route names contain valid accessarea prefix)
-        return $this->isApi ? config('auth.defaults.api') : config('auth.defaults.guard');
+        return $this->isApi ? config('auth.defaults.apiguard') : config('auth.defaults.guard');
     }
 
     /**
