@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.22] - 2021-03-02
+- Delete useless `BelongsToMorph` relation class
+- Reverse commit "Tweak middleware abilities authorized resource model name"
+
 ## [v6.0.21] - 2021-03-02
 - Tweak middleware abilities authorized resource model name
 - Rename `auth.defaults.apiguard` and set default value for config option
@@ -464,6 +468,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.22]: https://github.com/rinvex/cortex-foundation/compare/v6.0.21...v6.0.22
 [v6.0.21]: https://github.com/rinvex/cortex-foundation/compare/v6.0.20...v6.0.21
 [v6.0.20]: https://github.com/rinvex/cortex-foundation/compare/v6.0.19...v6.0.20
 [v6.0.19]: https://github.com/rinvex/cortex-foundation/compare/v6.0.18...v6.0.19
