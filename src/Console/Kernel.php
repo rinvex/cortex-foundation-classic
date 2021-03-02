@@ -11,8 +11,8 @@ use Illuminate\Console\Command;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Console\Application as Artisan;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Cortex\Foundation\Console\Commands\MigrateMakeCommand;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $ignoreCommads = [
-        MigrateMakeCommand::class
+        MigrateMakeCommand::class,
     ];
 
     /**
@@ -78,7 +78,7 @@ class Kernel extends ConsoleKernel
      */
     public function discoverCommands(): array
     {
-        $commandDirectories = $this->app['files']->glob($this->app->path("*/*/src/Console/Commands"));
+        $commandDirectories = $this->app['files']->glob($this->app->path('*/*/src/Console/Commands'));
 
         // @TODO: Improve regex, or better filter `glob` results itself!
         $enabledModules = collect(app('request.modules'))->filter(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
@@ -93,7 +93,8 @@ class Kernel extends ConsoleKernel
     /**
      * Register all of the commands in the given directory.
      *
-     * @param  array|string  $paths
+     * @param array|string $paths
+     *
      * @return void
      */
     protected function load($paths)
@@ -108,7 +109,7 @@ class Kernel extends ConsoleKernel
             return;
         }
 
-        foreach ((new Finder)->in($paths)->files() as $command) {
+        foreach ((new Finder())->in($paths)->files() as $command) {
             $command = ucwords(str_replace(
                 ['src/', '/', '.php'],
                 ['', '\\', ''],
