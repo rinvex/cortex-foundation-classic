@@ -73,6 +73,9 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     /**
      * Register the service provider.
      *
+     * @TODO: Move artisan command registration to `Cortex\Foundation\Console\Kernel`
+     *        to be autoloaded like other module commands!
+     *
      * @return void
      */
     public function register(): void
