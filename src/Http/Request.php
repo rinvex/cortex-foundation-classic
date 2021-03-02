@@ -119,10 +119,19 @@ class Request extends BaseRequest
             }
         }
 
-        // A.5. Catch other use cases:
-        // A.5.1. Route NOT matched / Wrong URL (ex. 404 error)
-        // A.5.2. Route matched but NOT a valid accessarea (could happen if route is mistakenly named, make sure route names contain valid accessarea prefix)
-        return $this->isApi ? config('auth.defaults.api') : config('auth.defaults.guard');
+        // B. Guess guard from: request segments (very early before routes are registered!)
+        if (($segment = $this->segment(1)) && $guard = Str::before(Str::before($segment, '/'), 'area')) {
+            ! Str::contains($guard, ['api']) || $this->isApi = true;
+
+            if (array_key_exists($guard, config('auth.guards'))) {
+                return $guard;
+            }
+        }
+
+        // C. Catch other use cases:
+        // C.1. Route NOT matched / Wrong URL (ex. 404 error)
+        // C.2. Route matched but NOT a valid accessarea (could happen if route is mistakenly named, make sure route names contain valid accessarea prefix)
+        return $this->isApi ? config('auth.defaults.apiguard') : config('auth.defaults.guard');
     }
 
     /**

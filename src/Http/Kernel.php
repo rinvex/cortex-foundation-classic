@@ -24,7 +24,6 @@ class Kernel extends HttpKernel
         \Cortex\Foundation\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Cortex\Foundation\Http\Middleware\EnforceTrailingSlash::class,
-        \Cortex\Foundation\Http\Middleware\SetTurbolinksLocationHeaders::class,
         \Cortex\Foundation\Http\Middleware\SetCrawlingRobotsHeaders::class,
     ];
 
@@ -46,6 +45,7 @@ class Kernel extends HttpKernel
             \Cortex\Foundation\Http\Middleware\NotificationMiddleware::class,
             \Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes::class,
             \Cortex\Foundation\Http\Middleware\UnbindRouteParameters::class,
+            \Cortex\Foundation\Http\Middleware\SetTurbolinksLocationHeaders::class,
         ],
     ];
 
@@ -63,7 +63,7 @@ class Kernel extends HttpKernel
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'nohttpcache' => \Cortex\Foundation\Http\Middleware\SetNoCacheHeaders::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Cortex\Foundation\Http\Middleware\ThrottleRequests::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
 
     /**

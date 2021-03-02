@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.21] - 2021-03-02
+- Tweak middleware abilities authorized resource model name
+- Rename `auth.defaults.apiguard` and set default value for config option
+- Fix setting `auth.defaults.provider` config option
+- Enhance `DiscoveryServiceProvider` performance
+- Guess guard from: request segments (very early before routes are registered!)
+- Move `SetTurbolinksLocationHeaders` from global middleware to `web` route middleware group
+- Drop `ThrottleRequests` middleware override
+
 ## [v6.0.20] - 2021-03-01
 - Override `Request` class for console
 - Add support for consolearea to accessarea
@@ -455,6 +464,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.21]: https://github.com/rinvex/cortex-foundation/compare/v6.0.20...v6.0.21
 [v6.0.20]: https://github.com/rinvex/cortex-foundation/compare/v6.0.19...v6.0.20
 [v6.0.19]: https://github.com/rinvex/cortex-foundation/compare/v6.0.18...v6.0.19
 [v6.0.18]: https://github.com/rinvex/cortex-foundation/compare/v6.0.17...v6.0.18

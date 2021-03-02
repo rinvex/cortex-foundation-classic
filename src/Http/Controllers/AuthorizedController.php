@@ -95,7 +95,7 @@ class AuthorizedController extends AuthenticatedController
         $parameter = $parameter ?: Str::snake(class_basename($model));
 
         foreach ($this->mapResourceAbilities() as $method => $ability) {
-            $modelName = in_array($method, $this->resourceMethodsWithoutModels()) ? $model : $parameter;
+            $modelName = in_array($method, $this->resourceMethodsWithoutModels()) ? app($model)->getMorphClass() : $parameter;
 
             $middleware["can:{$ability},{$modelName}"][] = $method;
         }
