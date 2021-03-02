@@ -17,26 +17,11 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Http\Middleware\Clockwork;
 use Cortex\Foundation\Generators\LangJsGenerator;
-use Cortex\Foundation\Console\Commands\SeedCommand;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Cortex\Foundation\Console\Commands\InstallCommand;
-use Cortex\Foundation\Console\Commands\MigrateCommand;
-use Cortex\Foundation\Console\Commands\PublishCommand;
-use Cortex\Foundation\Console\Commands\CoreSeedCommand;
-use Cortex\Foundation\Console\Commands\RollbackCommand;
 use Illuminate\Support\Facades\Session as SessionFacade;
-use Cortex\Foundation\Console\Commands\CoreUnloadCommand;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
-use Cortex\Foundation\Console\Commands\CoreInstallCommand;
-use Cortex\Foundation\Console\Commands\CoreMigrateCommand;
-use Cortex\Foundation\Console\Commands\CorePublishCommand;
-use Cortex\Foundation\Console\Commands\CoreActivateCommand;
-use Cortex\Foundation\Console\Commands\CoreAutoloadCommand;
-use Cortex\Foundation\Console\Commands\CoreRollbackCommand;
-use Cortex\Foundation\Console\Commands\CoreDeactivateCommand;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
-use Cortex\Foundation\Console\Commands\GenerateIdeHelperCommand;
 use Cortex\Foundation\Overrides\Illuminate\Routing\UrlGenerator;
 use Cortex\Foundation\Overrides\Barryvdh\Debugbar\DebugbarServiceProvider;
 use Cortex\Foundation\Overrides\Mcamara\LaravelLocalization\LaravelLocalization;
@@ -45,29 +30,6 @@ use Cortex\Foundation\Overrides\Mariuzzo\LaravelJsLocalization\Commands\LangJsCo
 class FoundationServiceProvider extends ServiceProvider
 {
     use ConsoleTools;
-
-    /**
-     * The commands to be registered.
-     *
-     * @var array
-     */
-    protected $commands = [
-        SeedCommand::class => 'command.cortex.foundation.seed',
-        InstallCommand::class => 'command.cortex.foundation.install',
-        MigrateCommand::class => 'command.cortex.foundation.migrate',
-        PublishCommand::class => 'command.cortex.foundation.publish',
-        RollbackCommand::class => 'command.cortex.foundation.rollback',
-        CoreSeedCommand::class => 'command.cortex.foundation.coreseed',
-        CoreInstallCommand::class => 'command.cortex.foundation.coreinstall',
-        CoreMigrateCommand::class => 'command.cortex.foundation.coremigrate',
-        CorePublishCommand::class => 'command.cortex.foundation.corempublish',
-        CoreRollbackCommand::class => 'command.cortex.foundation.corerollback',
-        CoreActivateCommand::class => 'command.cortex.foundation.coreactivate',
-        CoreAutoloadCommand::class => 'command.cortex.foundation.coreautoload',
-        GenerateIdeHelperCommand::class => 'command.cortex.generate.idehelper',
-        CoreDeactivateCommand::class => 'command.cortex.foundation.coredeactivate',
-        CoreUnloadCommand::class => 'command.cortex.foundation.coreunload',
-    ];
 
     /**
      * Register any application services.
@@ -96,9 +58,6 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Override datatables html builder
         $this->app->bind(\Yajra\DataTables\Html\Builder::class, \Cortex\Foundation\Overrides\Yajra\DataTables\Html\Builder::class);
-
-        // Register console commands
-        $this->registerCommands($this->commands);
 
         // Register dev service providers
         $this->app->environment('production') || $this->app->register(DebugbarServiceProvider::class);
