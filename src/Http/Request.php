@@ -63,7 +63,7 @@ class Request extends BaseRequest
             return $this->accessarea;
         }
 
-        $area = $this->guard().'area';
+        $area = (app('request.tenant') && $this->guard() === 'member' ? 'tenant' : $this->guard()).'area';
 
         return $this->isApi ? 'apiarea' : (array_key_exists($area, config('cortex.foundation.route.prefix')) ? $area : (app()->runningInConsole() ? 'consolearea' : 'frontarea'));
     }
