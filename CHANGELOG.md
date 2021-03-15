@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.25] - 2021-03-15
+- Fix accessarea for tenantarea
+
 ## [v6.0.24] - 2021-03-15
 - check if route exists before using it (#215)
 
@@ -477,6 +480,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.25]: https://github.com/rinvex/cortex-foundation/compare/v6.0.24...v6.0.25
 [v6.0.24]: https://github.com/rinvex/cortex-foundation/compare/v6.0.23...v6.0.24
 [v6.0.23]: https://github.com/rinvex/cortex-foundation/compare/v6.0.22...v6.0.23
 [v6.0.22]: https://github.com/rinvex/cortex-foundation/compare/v6.0.21...v6.0.22
