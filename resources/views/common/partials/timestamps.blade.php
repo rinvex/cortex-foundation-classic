@@ -30,9 +30,9 @@
                 @if($model->updatedBy && request()->user()->can('update', $model->updatedBy))
                     {{ trans('cortex/foundation::common.by') }} 
                     @if(Route::has(request()->accessarea().'.cortex.auth.'.Str::plural($model->updatedBy->getMorphClass()).'.edit' ))
-                        <a href="{{ route(request()->accessarea().'.cortex.auth.'.Str::plural($model->createdBy->getMorphClass()).'.edit', [$model->createdBy->getMorphClass() => $model->createdBy]) }}">{{ $model->createdBy->username }}</a> 
+                        <a href="{{ route(request()->accessarea().'.cortex.auth.'.Str::plural($model->updatedBy->getMorphClass()).'.edit', [$model->updatedBy->getMorphClass() => $model->updatedBy]) }}">{{ $model->updatedBy->username }}</a> 
                     @else
-                        {{ $model->createdBy->username }}
+                        {{ $model->updatedBy->username }}
                     @endif
                 @endif
             </small>
