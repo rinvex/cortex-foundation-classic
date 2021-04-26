@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.27] - 2021-04-27
+- Rollback to original felixkiss/uniquewith-validator package
+- ability to override one option only without need to override all options (#217)
+
 ## [v6.0.26] - 2021-04-07
 - fix updatedBy timestamps relation name (#216)
 
@@ -483,6 +487,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.27]: https://github.com/rinvex/cortex-foundation/compare/v6.0.26...v6.0.27
 [v6.0.26]: https://github.com/rinvex/cortex-foundation/compare/v6.0.25...v6.0.26
 [v6.0.25]: https://github.com/rinvex/cortex-foundation/compare/v6.0.24...v6.0.25
 [v6.0.24]: https://github.com/rinvex/cortex-foundation/compare/v6.0.23...v6.0.24
