@@ -59,7 +59,7 @@
         "rinvex/laravel-pages": "^5.0.0",
         "rinvex/laravel-support": "^5.0.0",
         "rinvex/tmp-edvinaskrucas-notification": "^5.2.0",
-        "rinvex/tmp-felixkiss-uniquewith-validator": "^3.4.0",
+        "felixkiss/uniquewith-validator": "^3.4.2",
         "rinvex/tmp-lord-laroute": "^2.4.0",
         "rinvex/tmp-watson-validating": "^6.0.0",
         "rinvex/tmp-josephsilber-bouncer": "^1.0.0",
