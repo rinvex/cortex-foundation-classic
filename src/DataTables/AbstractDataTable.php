@@ -67,8 +67,8 @@ abstract class AbstractDataTable extends DataTable
      */
     public function __construct()
     {
-        $this->options = $this->options ?? config('cortex.foundation.datatables.options');
-        $this->buttons = $this->buttons ?? config('cortex.foundation.datatables.buttons');
+        $this->options =  array_merge(config('cortex.foundation.datatables.options'), (array) $this->options);
+        $this->buttons =  array_merge(config('cortex.foundation.datatables.buttons'), (array) $this->buttons);
     }
 
     /**
