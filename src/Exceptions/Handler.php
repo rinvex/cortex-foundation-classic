@@ -112,7 +112,7 @@ class Handler extends ExceptionHandler
             ], $e->getCode());
         } elseif ($e instanceof AuthenticationException) {
             // @TODO: improve
-            if (request()->isApi()) {
+            if ($request->isApi()) {
                 return response()->json([$e->getMessage()], 401);
             }
 
@@ -138,7 +138,7 @@ class Handler extends ExceptionHandler
                     $localizedUrl = app('laravellocalization')->getLocalizedURL(null, $originalUrl);
 
                     // Will return `NotFoundHttpException` exception if no match found!
-                    app('router')->getRoutes()->match(request()->create($localizedUrl));
+                    app('router')->getRoutes()->match($request->create($localizedUrl));
 
                     return intend([
                         'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route("{$accessarea}.home"),
