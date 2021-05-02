@@ -12,10 +12,11 @@ class Redirector extends BaseRedirector
     /**
      * Create a new redirect response to a named route.
      *
-     * @param  string  $route
-     * @param  mixed  $parameters
-     * @param  int  $status
-     * @param  array  $headers
+     * @param string $route
+     * @param mixed  $parameters
+     * @param int    $status
+     * @param array  $headers
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function route($route, $parameters = [], $status = 302, $headers = [])
@@ -27,10 +28,11 @@ class Redirector extends BaseRedirector
     /**
      * Create a new redirect response to the previously intended location.
      *
-     * @param  string  $default
-     * @param  int  $status
-     * @param  array  $headers
-     * @param  bool|null  $secure
+     * @param string    $default
+     * @param int       $status
+     * @param array     $headers
+     * @param bool|null $secure
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Client\Response
      */
     public function intended($default = '/', $status = 302, $headers = [], $secure = null)

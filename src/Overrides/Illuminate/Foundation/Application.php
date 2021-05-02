@@ -10,8 +10,8 @@ use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application as BaseApplication;
 use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
-use Illuminate\Foundation\PackageManifest as BasePackageManifest;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Illuminate\Foundation\PackageManifest as BasePackageManifest;
 
 class Application extends BaseApplication
 {
