@@ -94,13 +94,13 @@ class Handler extends ExceptionHandler
             ], $e->getCode());
         } elseif ($e instanceof WatsonValidationException) {
             return intend([
-                'back' => true,
+                'intended' => url()->previous(),
                 'withInput' => $request->all(),
                 'withErrors' => $e->errors(),
             ], $e->getCode());
         } elseif ($e instanceof ValidationException) {
             return intend([
-                'back' => true,
+                'intended' => url()->previous(),
                 'withInput' => $request->all(),
                 'withErrors' => $e->errors(),
             ], $e->getCode());
@@ -116,8 +116,8 @@ class Handler extends ExceptionHandler
                 return response()->json([$e->getMessage()], 401);
             }
 
-            // Remember current URL for later redirect
-            session()->put('url.intended', url()->current());
+            // Save state, and redirect, or resubmit form after authentication
+            redirect()->afterAuthentication();
 
             return intend([
                 'url' => route($request->accessarea().'.cortex.auth.account.login'),
