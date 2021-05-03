@@ -66,7 +66,6 @@ class Redirector extends BaseRedirector
         $intended = Route::is('*.login') ? url()->previous() : url()->current();
 
         $this->session->put('url.intended', $intended);
-        $this->session->put('url.intended', $intended);
         $this->session->put('url.params', $request->all());
         $this->session->put('url.method', $request->method());
     }
