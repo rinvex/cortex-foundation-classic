@@ -11,9 +11,10 @@ class Manager extends BaseManager
     /**
      * Register a breadcrumb-generating callback for a page.
      *
-     * @param string $name The name of the page.
+     * @param string   $name     The name of the page.
      * @param callable $callback The callback, which should accept a Generator instance as the first parameter and may
-     *     accept additional parameters.
+     *                           accept additional parameters.
+     *
      * @return void
      */
     public function for(string $name, callable $callback): void
