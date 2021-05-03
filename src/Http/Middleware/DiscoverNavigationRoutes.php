@@ -23,7 +23,7 @@ class DiscoverNavigationRoutes
             $breadcrumbFiles = app('files')->glob(app()->path("*/*/routes/breadcrumbs/{$accessarea}.php"));
 
             // @TODO: Improve regex, or better filter `glob` results itself!
-            $enabledModules = collect(app('request.modules'))->filter(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
+            $enabledModules = collect(app('request.modules'))->filter(fn($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
             $menuFiles = $enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $enabledModules)).')/', $menuFiles) : $menuFiles;
             $breadcrumbFiles = $enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $enabledModules)).')/', $breadcrumbFiles) : $breadcrumbFiles;
 
