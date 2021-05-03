@@ -22,12 +22,13 @@ class BootServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Register collection loading prioritization macro
-        Collection::macro('prioritizeLoading', fn() =>
-            $this->partition(fn($item) => Str::contains($item, config('app.provider_loading.priority_5')))->flatMap(fn($values) => $values)
-                 ->partition(fn($item) => Str::contains($item, config('app.provider_loading.priority_4')))->flatMap(fn($values) => $values)
-                 ->partition(fn($item) => Str::contains($item, config('app.provider_loading.priority_3')))->flatMap(fn($values) => $values)
-                 ->partition(fn($item) => Str::contains($item, config('app.provider_loading.priority_2')))->flatMap(fn($values) => $values)
-                 ->partition(fn($item) => Str::contains($item, config('app.provider_loading.priority_1')))->flatMap(fn($values) => $values)
+        Collection::macro(
+            'prioritizeLoading',
+            fn () => $this->partition(fn ($item) => Str::contains($item, config('app.provider_loading.priority_5')))->flatMap(fn ($values) => $values)
+                 ->partition(fn ($item) => Str::contains($item, config('app.provider_loading.priority_4')))->flatMap(fn ($values) => $values)
+                 ->partition(fn ($item) => Str::contains($item, config('app.provider_loading.priority_3')))->flatMap(fn ($values) => $values)
+                 ->partition(fn ($item) => Str::contains($item, config('app.provider_loading.priority_2')))->flatMap(fn ($values) => $values)
+                 ->partition(fn ($item) => Str::contains($item, config('app.provider_loading.priority_1')))->flatMap(fn ($values) => $values)
         );
     }
 
@@ -55,7 +56,7 @@ class BootServiceProvider extends ServiceProvider
         $bootstrapFiles = $enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $enabledModules)).')/', $bootstrapFiles) : $bootstrapFiles;
 
         collect($bootstrapFiles)
-            ->reject(fn($file) => ! is_file($file))->filter()->prioritizeLoading()
-            ->each(fn($file) => (require $file)());
+            ->reject(fn ($file) => ! is_file($file))->filter()->prioritizeLoading()
+            ->each(fn ($file) => (require $file)());
     }
 }
