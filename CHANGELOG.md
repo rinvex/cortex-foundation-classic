@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.28] - 2021-05-04
+- Fix container service check issue 
+  - Use container check instead of make app()->has('request.tenant')	c73daa0	Abdelrahman Omran <me@omranic.com>	May 2, 2021 at 2:30 PM
+- Fix app('request.tenant') check
+- Save state, and redirect, or resubmit form after authentication
+- Override Diglactic\Breadcrumbs\Manager
+- Improve readability and simplify the code using PHP v7.4 arrow functions
+- Prioritize loading all module resources, not only service providers
+
 ## [v6.0.27] - 2021-04-27
 - Rollback to original felixkiss/uniquewith-validator package
 - ability to override one option only without need to override all options (#217)
@@ -487,6 +496,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.28]: https://github.com/rinvex/cortex-foundation/compare/v6.0.27...v6.0.28
 [v6.0.27]: https://github.com/rinvex/cortex-foundation/compare/v6.0.26...v6.0.27
 [v6.0.26]: https://github.com/rinvex/cortex-foundation/compare/v6.0.25...v6.0.26
 [v6.0.25]: https://github.com/rinvex/cortex-foundation/compare/v6.0.24...v6.0.25
