@@ -27,13 +27,9 @@ class DiscoverNavigationRoutes
             $menuFiles = $enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $enabledModules)).')/', $menuFiles) : $menuFiles;
             $breadcrumbFiles = $enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $enabledModules)).')/', $breadcrumbFiles) : $breadcrumbFiles;
 
-            collect($menuFiles)->merge($breadcrumbFiles)
-                               ->reject(function ($file) {
-                                   return ! is_file($file);
-                               })
-                               ->each(function ($file) {
-                                   require $file;
-                               }, []);
+            collect($menuFiles)
+                ->merge($breadcrumbFiles)->reject(fn ($file) => ! is_file($file))->filter()->prioritizeLoading()
+                ->each(fn ($file) => require $file);
         }
 
         return $next($request);

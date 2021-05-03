@@ -111,15 +111,8 @@ class DiscoveryServiceProvider extends ServiceProvider
         $eventFiles = $this->enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->enabledModules)).')/', $eventFiles) : $eventFiles;
 
         return collect($eventFiles)
-            ->reject(function ($directory) {
-                return ! is_dir($directory);
-            })
-            ->reduce(function ($discovered, $directory) {
-                return array_merge_recursive(
-                    $discovered,
-                    DiscoverEvents::within($directory, base_path())
-                );
-            }, []);
+            ->reject(fn ($directory) => ! is_dir($directory))->filter()->prioritizeLoading()
+            ->reduce(fn ($discovered, $directory) => array_merge_recursive($discovered, DiscoverEvents::within($directory, base_path())), []);
     }
 
     /**
@@ -172,12 +165,8 @@ class DiscoveryServiceProvider extends ServiceProvider
         $routeFiles = $this->enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->enabledModules)).')/', $routeFiles) : $routeFiles;
 
         collect($routeFiles)
-            ->reject(function ($file) {
-                return ! is_file($file);
-            })
-            ->each(function ($file) {
-                require $file;
-            }, []);
+            ->reject(fn ($file) => ! is_file($file))->filter()->prioritizeLoading()
+            ->each(fn ($file) => require $file);
     }
 
     /**
@@ -195,9 +184,7 @@ class DiscoveryServiceProvider extends ServiceProvider
         $resourceDirs = $this->enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->enabledModules)).')/', $resourceDirs) : $resourceDirs;
 
         collect($resourceDirs)
-            ->reject(function ($dir) {
-                return ! is_dir($dir);
-            })
+            ->reject(fn ($directory) => ! is_dir($directory))->filter()->prioritizeLoading()
             ->each(function ($dir) use ($type) {
                 $module = str_replace([$this->app->basePath('app/'), "/{$type}"], '', $dir);
 
@@ -215,7 +202,7 @@ class DiscoveryServiceProvider extends ServiceProvider
                         $this->publishesMigrations($module, true);
                         break;
                 }
-            }, []);
+            });
     }
 
     /**
@@ -231,15 +218,13 @@ class DiscoveryServiceProvider extends ServiceProvider
         $configFiles = $this->enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->enabledModules)).')/', $configFiles) : $configFiles;
 
         collect($configFiles)
-            ->reject(function ($file) {
-                return ! is_file($file);
-            })
+            ->reject(fn ($file) => ! is_file($file))->filter()->prioritizeLoading()
             ->each(function ($file) {
                 $module = str_replace([$this->app->basePath('app/'), '/config/config.php'], '', $file);
 
                 $this->mergeConfigFrom($file, str_replace('/', '.', $module));
 
                 $this->publishesConfig($module, true);
-            }, []);
+            });
     }
 }

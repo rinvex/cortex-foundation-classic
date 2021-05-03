@@ -14,7 +14,7 @@ class DatabaseSessionHandler extends BaseDatabaseSessionHandler
      */
     protected function addUserInformation(&$payload)
     {
-        if ($this->container->bound(Guard::class)) {
+        if ($this->container->has(Guard::class)) {
             $payload['user_id'] = $this->userId();
             $payload['user_type'] = ($user = $this->container->make(Guard::class)->user()) ? $user->getMorphClass() : null;
         }

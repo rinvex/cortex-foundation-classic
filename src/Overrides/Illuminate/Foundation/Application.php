@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Overrides\Illuminate\Foundation;
 
 use Illuminate\Foundation\Mix;
+use Cortex\Foundation\Http\Request;
 use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application as BaseApplication;
+use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Illuminate\Foundation\PackageManifest as BasePackageManifest;
 
 class Application extends BaseApplication
@@ -43,5 +46,13 @@ class Application extends BaseApplication
                 $this->getCachedPackagesPath()
             );
         });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(SymfonyRequest $request, int $type = self::MASTER_REQUEST, bool $catch = true)
+    {
+        return $this[HttpKernelContract::class]->handle(Request::createFromBase($request));
     }
 }
