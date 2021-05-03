@@ -115,11 +115,11 @@ class PackageManifest extends BasePackageManifest
         })->reject(function ($configuration, $package) use ($ignore, $ignoreAll) {
             return $ignoreAll || in_array($package, $ignore);
         })->filter()
-          ->partition(fn($item, $key) => Str::startsWith($key, config('app.provider_loading.priority_5')))->flatMap(fn($values) => $values)
-          ->partition(fn($item, $key) => Str::startsWith($key, config('app.provider_loading.priority_4')))->flatMap(fn($values) => $values)
-          ->partition(fn($item, $key) => Str::startsWith($key, config('app.provider_loading.priority_3')))->flatMap(fn($values) => $values)
-          ->partition(fn($item, $key) => Str::startsWith($key, config('app.provider_loading.priority_2')))->flatMap(fn($values) => $values)
-          ->partition(fn($item, $key) => Str::startsWith($key, config('app.provider_loading.priority_1')))->flatMap(fn($values) => $values);
+          ->partition(fn ($item, $key) => Str::startsWith($key, config('app.provider_loading.priority_5')))->flatMap(fn ($values) => $values)
+          ->partition(fn ($item, $key) => Str::startsWith($key, config('app.provider_loading.priority_4')))->flatMap(fn ($values) => $values)
+          ->partition(fn ($item, $key) => Str::startsWith($key, config('app.provider_loading.priority_3')))->flatMap(fn ($values) => $values)
+          ->partition(fn ($item, $key) => Str::startsWith($key, config('app.provider_loading.priority_2')))->flatMap(fn ($values) => $values)
+          ->partition(fn ($item, $key) => Str::startsWith($key, config('app.provider_loading.priority_1')))->flatMap(fn ($values) => $values);
 
         $disabledModules = collect($this->getModulesManifest())->reject(fn ($attributes, $module) => $attributes['autoload'])->keys();
 

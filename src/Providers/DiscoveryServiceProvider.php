@@ -111,7 +111,7 @@ class DiscoveryServiceProvider extends ServiceProvider
         $eventFiles = $this->enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->enabledModules)).')/', $eventFiles) : $eventFiles;
 
         return collect($eventFiles)
-            ->reject(fn($directory) => ! is_dir($directory))->filter()->prioritizeLoading()
+            ->reject(fn ($directory) => ! is_dir($directory))->filter()->prioritizeLoading()
             ->reduce(fn ($discovered, $directory) => array_merge_recursive($discovered, DiscoverEvents::within($directory, base_path())), []);
     }
 
@@ -165,7 +165,7 @@ class DiscoveryServiceProvider extends ServiceProvider
         $routeFiles = $this->enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->enabledModules)).')/', $routeFiles) : $routeFiles;
 
         collect($routeFiles)
-            ->reject(fn($file) => ! is_file($file))->filter()->prioritizeLoading()
+            ->reject(fn ($file) => ! is_file($file))->filter()->prioritizeLoading()
             ->each(fn ($file) => require $file);
     }
 
@@ -184,7 +184,7 @@ class DiscoveryServiceProvider extends ServiceProvider
         $resourceDirs = $this->enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->enabledModules)).')/', $resourceDirs) : $resourceDirs;
 
         collect($resourceDirs)
-            ->reject(fn($directory) => ! is_dir($directory))->filter()->prioritizeLoading()
+            ->reject(fn ($directory) => ! is_dir($directory))->filter()->prioritizeLoading()
             ->each(function ($dir) use ($type) {
                 $module = str_replace([$this->app->basePath('app/'), "/{$type}"], '', $dir);
 
@@ -218,7 +218,7 @@ class DiscoveryServiceProvider extends ServiceProvider
         $configFiles = $this->enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->enabledModules)).')/', $configFiles) : $configFiles;
 
         collect($configFiles)
-            ->reject(fn($file) => ! is_file($file))->filter()->prioritizeLoading()
+            ->reject(fn ($file) => ! is_file($file))->filter()->prioritizeLoading()
             ->each(function ($file) {
                 $module = str_replace([$this->app->basePath('app/'), '/config/config.php'], '', $file);
 
