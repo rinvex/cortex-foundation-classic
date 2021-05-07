@@ -28,22 +28,6 @@ class MediaDataTable extends AbstractDataTable
     protected $buttons = [
         'create' => false,
         'import' => false,
-        'create_popup' => false,
-
-        'reset' => true,
-        'reload' => true,
-        'showSelected' => true,
-
-        'print' => true,
-        'export' => true,
-
-        'bulkDelete' => true,
-        'bulkActivate' => false,
-        'bulkDeactivate' => false,
-        'bulkRevoke' => false,
-
-        'colvis' => true,
-        'pageLength' => true,
     ];
 
     /**
