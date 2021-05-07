@@ -18,7 +18,7 @@ class CreateImportRecordsTable extends Migration
         Schema::create(config('cortex.foundation.tables.import_records'), function (Blueprint $table) {
             $table->increments('id');
             $table->string('resource');
-            $table->{$this->jsonable()}('data')->nullable();
+            $table->json('data')->nullable();
             $table->string('status')->default('init');
             $table->text('notes')->nullable();
             $table->timestamps();
@@ -33,19 +33,5 @@ class CreateImportRecordsTable extends Migration
     public function down()
     {
         Schema::dropIfExists(config('cortex.foundation.tables.import_records'));
-    }
-
-    /**
-     * Get jsonable column data type.
-     *
-     * @return string
-     */
-    protected function jsonable(): string
-    {
-        $driverName = DB::connection()->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME);
-        $dbVersion = DB::connection()->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
-        $isOldVersion = version_compare($dbVersion, '5.7.8', 'lt');
-
-        return $driverName === 'mysql' && $isOldVersion ? 'text' : 'json';
     }
 }
