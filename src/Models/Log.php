@@ -84,14 +84,7 @@ class Log extends Activity
      *
      * @var array
      */
-    protected $rules = [
-        'log_name' => 'required|string|strip_tags|max:150',
-        'description' => 'nullable|string|max:32768',
-        'subject_id' => 'nullable|integer',
-        'subject_type' => 'nullable|string|strip_tags|max:150',
-        'causer_id' => 'nullable|integer',
-        'causer_type' => 'nullable|string|strip_tags|max:150',
-    ];
+    protected $rules = [];
 
     /**
      * Whether the model should throw a
@@ -111,5 +104,13 @@ class Log extends Activity
         parent::__construct($attributes);
 
         $this->setTable(config('cortex.foundation.tables.activity_log'));
+        $this->setRules([
+            'log_name' => 'required|string|strip_tags|max:150',
+            'description' => 'nullable|string|max:32768',
+            'subject_id' => 'nullable|integer',
+            'subject_type' => 'nullable|string|strip_tags|max:150',
+            'causer_id' => 'nullable|integer',
+            'causer_type' => 'nullable|string|strip_tags|max:150',
+        ]);
     }
 }
