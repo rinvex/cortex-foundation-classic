@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.30] - 2021-05-08
+- Install spatie/laravel-settings composer packaage
+- Set validation rules in constructor for consistency & flexibility
+- Remove duplicate button options, it's already merged from default config
+
 ## [v6.0.29] - 2021-05-07
 - Upgrade to GitHub-native Dependabot (#221)
 - Rename migrations to always run after rinvex core packages
@@ -500,6 +505,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.30]: https://github.com/rinvex/cortex-foundation/compare/v6.0.29...v6.0.30
 [v6.0.29]: https://github.com/rinvex/cortex-foundation/compare/v6.0.28...v6.0.29
 [v6.0.28]: https://github.com/rinvex/cortex-foundation/compare/v6.0.27...v6.0.28
 [v6.0.27]: https://github.com/rinvex/cortex-foundation/compare/v6.0.26...v6.0.27
