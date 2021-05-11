@@ -101,8 +101,6 @@ class Log extends Activity
      */
     public function __construct(array $attributes = [])
     {
-        parent::__construct($attributes);
-
         $this->setTable(config('cortex.foundation.tables.activity_log'));
         $this->setRules([
             'log_name' => 'required|string|strip_tags|max:150',
@@ -112,5 +110,7 @@ class Log extends Activity
             'causer_id' => 'nullable|integer',
             'causer_type' => 'nullable|string|strip_tags|max:150',
         ]);
+
+        parent::__construct($attributes);
     }
 }
