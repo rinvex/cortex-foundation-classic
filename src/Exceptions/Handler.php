@@ -27,6 +27,13 @@ use Watson\Validating\ValidationException as WatsonValidationException;
 class Handler extends ExceptionHandler
 {
     /**
+     * The access area name.
+     *
+     * @var string
+     */
+    protected $accessarea;
+
+    /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
      * @var array
@@ -76,7 +83,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
-        $accessarea = $request->accessarea();
+        $this->accessarea = $request->accessarea();
 
         if ($e instanceof TokenMismatchException) {
             return intend([
@@ -97,7 +104,7 @@ class Handler extends ExceptionHandler
             ], $e->status); // 422
         } elseif ($e instanceof AccountException) {
             return intend([
-                'url' => $e->getRedirection() ?? route("{$accessarea}.home"),
+                'url' => $e->getRedirection() ?? route("{$this->accessarea}.home"),
                 'withInput' => $e->getInputs() ?? $request->all(),
                 'withErrors' => ['error' => $e->getMessage()],
             ], $e->getStatusCode()); // 401, 403, 302
@@ -111,7 +118,7 @@ class Handler extends ExceptionHandler
             ], 401);
         } elseif ($e instanceof AuthorizationException) {
             return intend([
-                'url' => in_array($accessarea, ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
+                'url' => in_array($this->accessarea, ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
                 'withErrors' => ['error' => $e->getMessage()],
             ], 403);
         } elseif ($e instanceof NotFoundHttpException) {
@@ -127,7 +134,7 @@ class Handler extends ExceptionHandler
                     app('router')->getRoutes()->match($request->create($localizedUrl));
 
                     return intend([
-                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route("{$accessarea}.home"),
+                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route("{$this->accessarea}.home"),
                         'withErrors' => ['error' => $e->getMessage()],
                     ], $e->getStatusCode()); // 404
                 } catch (Exception $e) {
@@ -141,12 +148,12 @@ class Handler extends ExceptionHandler
             $plural = Str::plural($single);
 
             return intend([
-                'url' => Route::has("{$accessarea}.{$plural}.index") ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),
+                'url' => Route::has("{$this->accessarea}.{$plural}.index") ? route("{$this->accessarea}.{$plural}.index") : route("{$this->accessarea}.home"),
                 'withErrors' => ['error' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
             ], 404);
         } elseif ($e instanceof UniversityLoaderException || $e instanceof CountryLoaderException || $e instanceof LanguageLoaderException) {
             return intend([
-                'url' => route("{$accessarea}.home"),
+                'url' => route("{$this->accessarea}.home"),
                 'withErrors' => ['error' => $e->getMessage()],
             ], 404);
         } elseif ($e instanceof ThrottleRequestsException) {
@@ -185,6 +192,6 @@ class Handler extends ExceptionHandler
      */
     protected function getHttpExceptionView(HttpExceptionInterface $e)
     {
-        return "cortex/foundation::common.errors.{$e->getStatusCode()}";
+        return "cortex/foundation::{$this->accessarea}.errors.{$e->getStatusCode()}";
     }
 }

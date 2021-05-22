@@ -1,4 +1,4 @@
-@extends('cortex/foundation::common.errors.layout')
+@extends('cortex/foundation::tenantarea.layouts.error')
 
 @section('title', __('Server Error'))
 @section('code', '500')

@@ -1,4 +1,4 @@
-@extends('cortex/foundation::common.errors.layout')
+@extends('cortex/foundation::frontarea.layouts.error')
 
 @section('title', __('Too Many Requests'))
 @section('code', '429')

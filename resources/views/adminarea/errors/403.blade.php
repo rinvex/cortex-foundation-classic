@@ -1,4 +1,4 @@
-@extends('cortex/foundation::common.errors.layout')
+@extends('cortex/foundation::adminarea.layouts.error')
 
 @section('title', __('Forbidden'))
 @section('code', '403')

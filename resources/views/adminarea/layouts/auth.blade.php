@@ -5,7 +5,7 @@
     <title>@yield('title', config('app.name'))</title>
 
     {{-- Meta Data --}}
-    @include('cortex/foundation::common.partials.meta')
+    @include('cortex/foundation::adminarea.partials.meta')
     @stack('head-elements')
 
     {{-- Styles --}}
