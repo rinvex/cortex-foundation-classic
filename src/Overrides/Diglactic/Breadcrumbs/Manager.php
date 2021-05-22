@@ -32,12 +32,14 @@ class Manager extends BaseManager
     /**
      * Render breadcrumbs for a page with the default view.
      *
-     * @param string|null $name The name of the current page.
-     * @param mixed ...$params The parameters to pass to the closure for the current page.
-     * @return \Illuminate\Support\HtmlString The generated HTML.
+     * @param string|null $name      The name of the current page.
+     * @param mixed       ...$params The parameters to pass to the closure for the current page.
+     *
      * @throws \Diglactic\Breadcrumbs\Exceptions\InvalidBreadcrumbException if the name is (or any ancestor names are) not registered.
-     * @throws \Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException if no name is given and the current route doesn't have an associated name.
-     * @throws \Diglactic\Breadcrumbs\Exceptions\ViewNotSetException if no view has been set.
+     * @throws \Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException      if no name is given and the current route doesn't have an associated name.
+     * @throws \Diglactic\Breadcrumbs\Exceptions\ViewNotSetException        if no view has been set.
+     *
+     * @return \Illuminate\Support\HtmlString The generated HTML.
      */
     public function render(string $name = null, ...$params): HtmlString
     {
