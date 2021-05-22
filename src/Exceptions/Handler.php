@@ -67,8 +67,6 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @TODO: Review, improve readability, and possibly drop parent::render
-     *
      * @param \Illuminate\Http\Request $request
      * @param \Throwable               $e
      *
@@ -84,43 +82,38 @@ class Handler extends ExceptionHandler
             return intend([
                 'back' => true,
                 'withErrors' => ['error' => trans('cortex/foundation::messages.token_mismatch')],
-            ], $e->getCode());
+            ], 403);
         } elseif ($e instanceof WatsonValidationException) {
             return intend([
                 'intended' => url()->previous(),
                 'withInput' => $request->all(),
                 'withErrors' => $e->errors(),
-            ], $e->getCode());
+            ], $e->status); // 422
         } elseif ($e instanceof ValidationException) {
             return intend([
                 'intended' => url()->previous(),
                 'withInput' => $request->all(),
                 'withErrors' => $e->errors(),
-            ], $e->getCode());
+            ], $e->status); // 422
         } elseif ($e instanceof AccountException) {
             return intend([
                 'url' => $e->getRedirection() ?? route("{$accessarea}.home"),
                 'withInput' => $e->getInputs() ?? $request->all(),
                 'withErrors' => ['error' => $e->getMessage()],
-            ], $e->getCode());
+            ], $e->getStatusCode()); // 401, 403, 302
         } elseif ($e instanceof AuthenticationException) {
-            // @TODO: improve
-            if ($request->isApi()) {
-                return response()->json([$e->getMessage()], 401);
-            }
-
             // Save state, and redirect, or resubmit form after authentication
-            redirect()->afterAuthentication();
+            ! request()->expectsJson() || redirect()->afterAuthentication();
 
             return intend([
                 'url' => route($request->accessarea().'.cortex.auth.account.login'),
-                'withErrors' => ['error' => trans('cortex/foundation::messages.session_required')],
-            ]);
+                'withErrors' => ['error' => trans('cortex/auth::messages.unauthenticated')],
+            ], 401);
         } elseif ($e instanceof AuthorizationException) {
             return intend([
                 'url' => in_array($accessarea, ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
                 'withErrors' => ['error' => $e->getMessage()],
-            ], $e->getCode());
+            ], 403);
         } elseif ($e instanceof NotFoundHttpException) {
             // Catch localized routes with missing {locale}
             // and redirect them to the correct localized version
@@ -136,7 +129,7 @@ class Handler extends ExceptionHandler
                     return intend([
                         'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route("{$accessarea}.home"),
                         'withErrors' => ['error' => $e->getMessage()],
-                    ], $e->getCode());
+                    ], $e->getStatusCode()); // 404
                 } catch (Exception $e) {
                 }
             }
@@ -150,18 +143,18 @@ class Handler extends ExceptionHandler
             return intend([
                 'url' => Route::has("{$accessarea}.{$plural}.index") ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),
                 'withErrors' => ['error' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
-            ], $e->getCode());
+            ], 404);
         } elseif ($e instanceof UniversityLoaderException || $e instanceof CountryLoaderException || $e instanceof LanguageLoaderException) {
             return intend([
                 'url' => route("{$accessarea}.home"),
                 'withErrors' => ['error' => $e->getMessage()],
-            ], $e->getCode());
+            ], 404);
         } elseif ($e instanceof ThrottleRequestsException) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
                 'withErrors' => ['error' => $e->getMessage()],
-            ], $e->getCode());
+            ], $e->getStatusCode()); // 429
         }
 
         return parent::render($request, $e);
