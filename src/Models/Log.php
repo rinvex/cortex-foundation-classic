@@ -102,7 +102,7 @@ class Log extends Activity
     public function __construct(array $attributes = [])
     {
         $this->setTable(config('cortex.foundation.tables.activity_log'));
-        $this->setRules([
+        $this->mergeRules([
             'log_name' => 'required|string|strip_tags|max:150',
             'description' => 'nullable|string|max:32768',
             'subject_id' => 'nullable|integer',
