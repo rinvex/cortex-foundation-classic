@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Support\Facades\Route;
 use Rinvex\Country\CountryLoaderException;
+use Cortex\Auth\Exceptions\AccountException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
@@ -30,7 +31,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        GenericException::class,
+        AccountException::class,
     ];
 
     /**
@@ -104,7 +105,7 @@ class Handler extends ExceptionHandler
                 'withInput' => $request->all(),
                 'withErrors' => $e->errors(),
             ], $e->getCode());
-        } elseif ($e instanceof GenericException) {
+        } elseif ($e instanceof AccountException) {
             return intend([
                 'url' => $e->getRedirection() ?? route("{$accessarea}.home"),
                 'withInput' => $e->getInputs() ?? $request->all(),
