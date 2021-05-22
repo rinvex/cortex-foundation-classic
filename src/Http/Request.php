@@ -41,6 +41,16 @@ class Request extends BaseRequest
     }
 
     /**
+     * Determine if the current request probably expects a JSON response.
+     *
+     * @return bool
+     */
+    public function expectsJson()
+    {
+        return ($this->ajax() && ! $this->pjax() && $this->acceptsAnyContentType()) || $this->wantsJson() || $this->isApi();
+    }
+
+    /**
      * Check if this is an API request.
      *
      * @return bool
