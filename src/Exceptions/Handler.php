@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use Rinvex\Country\CountryLoaderException;
 use Cortex\Auth\Exceptions\AccountException;
 use Illuminate\Auth\AuthenticationException;
+use Rinvex\Language\LanguageLoaderException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Rinvex\University\UniversityLoaderException;
@@ -150,7 +151,7 @@ class Handler extends ExceptionHandler
                 'url' => Route::has("{$accessarea}.{$plural}.index") ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),
                 'withErrors' => ['error' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
             ], $e->getCode());
-        } elseif ($e instanceof UniversityLoaderException || $e instanceof CountryLoaderException) {
+        } elseif ($e instanceof UniversityLoaderException || $e instanceof CountryLoaderException || $e instanceof LanguageLoaderException) {
             return intend([
                 'url' => route("{$accessarea}.home"),
                 'withErrors' => ['error' => $e->getMessage()],
