@@ -1,4 +1,4 @@
-@extends('cortex/foundation::common.errors.layout')
+@extends('cortex/foundation::tenantarea.layouts.error')
 
 @section('title', __('Service Unavailable'))
 @section('code', '503')

@@ -10,7 +10,9 @@ use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Support\Facades\Route;
 use Rinvex\Country\CountryLoaderException;
+use Cortex\Auth\Exceptions\AccountException;
 use Illuminate\Auth\AuthenticationException;
+use Rinvex\Language\LanguageLoaderException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Rinvex\University\UniversityLoaderException;
@@ -25,13 +27,11 @@ use Watson\Validating\ValidationException as WatsonValidationException;
 class Handler extends ExceptionHandler
 {
     /**
-     * A list of the exception types that are not reported.
+     * The access area name.
      *
-     * @var array
+     * @var string
      */
-    protected $dontReport = [
-        GenericException::class,
-    ];
+    protected $accessarea;
 
     /**
      * A list of the inputs that are never flashed for validation exceptions.
@@ -74,8 +74,6 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @TODO: Review, improve readability, and possibly drop parent::render
-     *
      * @param \Illuminate\Http\Request $request
      * @param \Throwable               $e
      *
@@ -85,49 +83,44 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
-        $accessarea = $request->accessarea();
+        $this->accessarea = $request->accessarea();
 
         if ($e instanceof TokenMismatchException) {
             return intend([
                 'back' => true,
                 'withErrors' => ['error' => trans('cortex/foundation::messages.token_mismatch')],
-            ], $e->getCode());
+            ], 403);
         } elseif ($e instanceof WatsonValidationException) {
             return intend([
                 'intended' => url()->previous(),
                 'withInput' => $request->all(),
                 'withErrors' => $e->errors(),
-            ], $e->getCode());
+            ], $e->status); // 422
         } elseif ($e instanceof ValidationException) {
             return intend([
                 'intended' => url()->previous(),
                 'withInput' => $request->all(),
                 'withErrors' => $e->errors(),
-            ], $e->getCode());
-        } elseif ($e instanceof GenericException) {
+            ], $e->status); // 422
+        } elseif ($e instanceof AccountException) {
             return intend([
-                'url' => $e->getRedirection() ?? route("{$accessarea}.home"),
+                'url' => $e->getRedirection() ?? route("{$this->accessarea}.home"),
                 'withInput' => $e->getInputs() ?? $request->all(),
                 'withErrors' => ['error' => $e->getMessage()],
-            ], $e->getCode());
+            ], $e->getStatusCode()); // 401, 403, 302
         } elseif ($e instanceof AuthenticationException) {
-            // @TODO: improve
-            if ($request->isApi()) {
-                return response()->json([$e->getMessage()], 401);
-            }
-
             // Save state, and redirect, or resubmit form after authentication
-            redirect()->afterAuthentication();
+            ! request()->expectsJson() || redirect()->afterAuthentication();
 
             return intend([
                 'url' => route($request->accessarea().'.cortex.auth.account.login'),
-                'withErrors' => ['error' => trans('cortex/foundation::messages.session_required')],
-            ]);
+                'withErrors' => ['error' => trans('cortex/auth::messages.unauthenticated')],
+            ], 401);
         } elseif ($e instanceof AuthorizationException) {
             return intend([
-                'url' => in_array($accessarea, ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
+                'url' => in_array($this->accessarea, ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
                 'withErrors' => ['error' => $e->getMessage()],
-            ], $e->getCode());
+            ], 403);
         } elseif ($e instanceof NotFoundHttpException) {
             // Catch localized routes with missing {locale}
             // and redirect them to the correct localized version
@@ -141,9 +134,9 @@ class Handler extends ExceptionHandler
                     app('router')->getRoutes()->match($request->create($localizedUrl));
 
                     return intend([
-                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route("{$accessarea}.home"),
+                        'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route("{$this->accessarea}.home"),
                         'withErrors' => ['error' => $e->getMessage()],
-                    ], $e->getCode());
+                    ], $e->getStatusCode()); // 404
                 } catch (Exception $e) {
                 }
             }
@@ -155,20 +148,20 @@ class Handler extends ExceptionHandler
             $plural = Str::plural($single);
 
             return intend([
-                'url' => Route::has("{$accessarea}.{$plural}.index") ? route("{$accessarea}.{$plural}.index") : route("{$accessarea}.home"),
+                'url' => Route::has("{$this->accessarea}.{$plural}.index") ? route("{$this->accessarea}.{$plural}.index") : route("{$this->accessarea}.home"),
                 'withErrors' => ['error' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
-            ], $e->getCode());
-        } elseif ($e instanceof UniversityLoaderException || $e instanceof CountryLoaderException) {
+            ], 404);
+        } elseif ($e instanceof UniversityLoaderException || $e instanceof CountryLoaderException || $e instanceof LanguageLoaderException) {
             return intend([
-                'url' => route("{$accessarea}.home"),
+                'url' => route("{$this->accessarea}.home"),
                 'withErrors' => ['error' => $e->getMessage()],
-            ], $e->getCode());
+            ], 404);
         } elseif ($e instanceof ThrottleRequestsException) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
                 'withErrors' => ['error' => $e->getMessage()],
-            ], $e->getCode());
+            ], $e->getStatusCode()); // 429
         }
 
         return parent::render($request, $e);
@@ -199,6 +192,6 @@ class Handler extends ExceptionHandler
      */
     protected function getHttpExceptionView(HttpExceptionInterface $e)
     {
-        return "cortex/foundation::common.errors.{$e->getStatusCode()}";
+        return "cortex/foundation::{$this->accessarea}.errors.{$e->getStatusCode()}";
     }
 }

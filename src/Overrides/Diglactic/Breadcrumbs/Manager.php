@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Diglactic\Breadcrumbs;
 
+use Illuminate\Support\HtmlString;
 use Diglactic\Breadcrumbs\Manager as BaseManager;
+use Diglactic\Breadcrumbs\Exceptions\ViewNotSetException;
 
 class Manager extends BaseManager
 {
@@ -25,5 +27,28 @@ class Manager extends BaseManager
         }
 
         $this->callbacks[$name] = $callback;
+    }
+
+    /**
+     * Render breadcrumbs for a page with the default view.
+     *
+     * @param string|null $name      The name of the current page.
+     * @param mixed       ...$params The parameters to pass to the closure for the current page.
+     *
+     * @throws \Diglactic\Breadcrumbs\Exceptions\InvalidBreadcrumbException if the name is (or any ancestor names are) not registered.
+     * @throws \Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException      if no name is given and the current route doesn't have an associated name.
+     * @throws \Diglactic\Breadcrumbs\Exceptions\ViewNotSetException        if no view has been set.
+     *
+     * @return \Illuminate\Support\HtmlString The generated HTML.
+     */
+    public function render(string $name = null, ...$params): HtmlString
+    {
+        $accessarea = request()->accessarea();
+
+        if (! view()->exists($view = "cortex/foundation::{$accessarea}.partials.breadcrumbs")) {
+            throw new ViewNotSetException('Breadcrumbs view not found!');
+        }
+
+        return $this->view($view, $name, ...$params);
     }
 }

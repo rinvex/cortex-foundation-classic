@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.33] - 2021-05-24
+- Merge rules instead of resetting, to allow adequate model override
+- Drop common blade views in favor for accessarea specific views
+- Check if request is an API, which expectsJson
+- Refactor returned HTTP status codes on the Exception Handler
+- Catch LanguageLoaderException
+- Report AccountException like others, no reason to ignore
+- Refactor GenericException to AccountException and move to cortex/auth and return more accurate HTTP status code
+
 ## [v6.0.32] - 2021-05-11
 - Fix constructor initialization order (fill attributes should come next after merging fillables & rules)
 
@@ -511,6 +520,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.33]: https://github.com/rinvex/cortex-foundation/compare/v6.0.32...v6.0.33
 [v6.0.32]: https://github.com/rinvex/cortex-foundation/compare/v6.0.31...v6.0.32
 [v6.0.31]: https://github.com/rinvex/cortex-foundation/compare/v6.0.30...v6.0.31
 [v6.0.30]: https://github.com/rinvex/cortex-foundation/compare/v6.0.29...v6.0.30
