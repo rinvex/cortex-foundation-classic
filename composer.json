@@ -42,7 +42,7 @@
     "require": {
         "php": "^7.4.0 || ^8.0.0",
         "barryvdh/laravel-snappy": "^0.4.0",
-        "diglactic/laravel-breadcrumbs": "^6.0.0",
+        "diglactic/laravel-breadcrumbs": "^7.0.0",
         "fideloper/proxy": "^4.4.0",
         "fruitcake/laravel-cors": "^2.0.0",
         "geoip2/geoip2": "^2.11.0",
