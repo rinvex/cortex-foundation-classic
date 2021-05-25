@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Models;
 
-use Watson\Validating\ValidatingTrait;
 use Rinvex\Support\Traits\HasTimezones;
 use Spatie\Activitylog\Models\Activity;
+use Rinvex\Support\Traits\ValidatingTrait;
 
 /**
  * Cortex\Foundation\Models\Log.
