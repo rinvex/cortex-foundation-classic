@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.35] - 2021-05-25
+- Update composer dependencies diglactic/laravel-breadcrumbs to v7
+
 ## [v6.0.34] - 2021-05-25
 - Fix wrong overriden trait
 - Replace deprecated `Breadcrumbs::register` with `Breadcrumbs::for`
@@ -524,6 +527,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.35]: https://github.com/rinvex/cortex-foundation/compare/v6.0.34...v6.0.35
 [v6.0.34]: https://github.com/rinvex/cortex-foundation/compare/v6.0.33...v6.0.34
 [v6.0.33]: https://github.com/rinvex/cortex-foundation/compare/v6.0.32...v6.0.33
 [v6.0.32]: https://github.com/rinvex/cortex-foundation/compare/v6.0.31...v6.0.32
