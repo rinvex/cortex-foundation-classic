@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Diglactic\Breadcrumbs;
 
-use Illuminate\Support\HtmlString;
+use Illuminate\Contracts\View\View;
 use Diglactic\Breadcrumbs\Manager as BaseManager;
 use Diglactic\Breadcrumbs\Exceptions\ViewNotSetException;
 
@@ -17,14 +17,15 @@ class Manager extends BaseManager
      * @param callable $callback The callback, which should accept a Generator instance as the first parameter and may
      *                           accept additional parameters.
      *
+     * @throws \Diglactic\Breadcrumbs\Exceptions\DuplicateBreadcrumbException If the given name has already been used.
+     *
      * @return void
      */
     public function for(string $name, callable $callback): void
     {
-        if (isset($this->callbacks[$name])) {
-            // throw new DuplicateBreadcrumbException($name);
-            return;
-        }
+        //if (isset($this->callbacks[$name])) {
+        //    throw new DuplicateBreadcrumbException($name);
+        //}
 
         $this->callbacks[$name] = $callback;
     }
@@ -35,13 +36,14 @@ class Manager extends BaseManager
      * @param string|null $name      The name of the current page.
      * @param mixed       ...$params The parameters to pass to the closure for the current page.
      *
-     * @throws \Diglactic\Breadcrumbs\Exceptions\InvalidBreadcrumbException if the name is (or any ancestor names are) not registered.
-     * @throws \Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException      if no name is given and the current route doesn't have an associated name.
-     * @throws \Diglactic\Breadcrumbs\Exceptions\ViewNotSetException        if no view has been set.
-     *
-     * @return \Illuminate\Support\HtmlString The generated HTML.
+     * @return \Illuminate\Contracts\View\View The generated view.
+     * @throws \Diglactic\Breadcrumbs\Exceptions\InvalidBreadcrumbException if the name is (or any ancestor names are)
+     *                                                                      not registered.
+     * @throws \Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException if no name is given and the current route doesn't
+     *                                                                 have an associated name.
+     * @throws \Diglactic\Breadcrumbs\Exceptions\ViewNotSetException if no view has been set.
      */
-    public function render(string $name = null, ...$params): HtmlString
+    public function render(?string $name = null, ...$params): View
     {
         $accessarea = request()->accessarea();
 
