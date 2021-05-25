@@ -36,12 +36,13 @@ class Manager extends BaseManager
      * @param string|null $name      The name of the current page.
      * @param mixed       ...$params The parameters to pass to the closure for the current page.
      *
-     * @return \Illuminate\Contracts\View\View The generated view.
      * @throws \Diglactic\Breadcrumbs\Exceptions\InvalidBreadcrumbException if the name is (or any ancestor names are)
      *                                                                      not registered.
-     * @throws \Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException if no name is given and the current route doesn't
-     *                                                                 have an associated name.
-     * @throws \Diglactic\Breadcrumbs\Exceptions\ViewNotSetException if no view has been set.
+     * @throws \Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException      if no name is given and the current route doesn't
+     *                                                                      have an associated name.
+     * @throws \Diglactic\Breadcrumbs\Exceptions\ViewNotSetException        if no view has been set.
+     *
+     * @return \Illuminate\Contracts\View\View The generated view.
      */
     public function render(?string $name = null, ...$params): View
     {
