@@ -16,7 +16,7 @@ use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationMiddlewareBase;
  * It simply fix any wrong localized routes, and has no effect on non-localized.
  *
  * Localized routes with missing {locale} are handled through the exception handler:
- * \Cortex\Foundation\Exceptions\Handler::render => instanceof NotFoundHttpException
+ * \Cortex\Foundation\Exceptions\ExceptionHandler::render => instanceof NotFoundHttpException
  */
 class LocalizationRedirect extends LaravelLocalizationMiddlewareBase
 {

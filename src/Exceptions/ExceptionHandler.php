@@ -18,12 +18,12 @@ use Rinvex\University\UniversityLoaderException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Illuminate\Foundation\Exceptions\Handler as BaseExceptionHandler;
 use Watson\Validating\ValidationException as WatsonValidationException;
 
-class Handler extends ExceptionHandler
+class ExceptionHandler extends BaseExceptionHandler
 {
     /**
      * The access area name.
@@ -31,6 +31,18 @@ class Handler extends ExceptionHandler
      * @var string
      */
     protected $accessarea;
+
+    /**
+     * A list of the exception types that are not reported.
+     *
+     * @var string[]
+     */
+    protected $dontReport = [
+        GenericException::class,
+        CountryLoaderException::class,
+        LanguageLoaderException::class,
+        UniversityLoaderException::class,
+    ];
 
     /**
      * A list of the inputs that are never flashed for validation exceptions.
