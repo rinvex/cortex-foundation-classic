@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.37] - 2021-05-27
+- Rollback AccountException to GenericException and move to cortex/foundation
+
 ## [v6.0.36] - 2021-05-25
 - Fix compatibility issue with v7 of diglactic/laravel-breadcrumbs
 
@@ -530,6 +533,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.37]: https://github.com/rinvex/cortex-foundation/compare/v6.0.36...v6.0.37
 [v6.0.36]: https://github.com/rinvex/cortex-foundation/compare/v6.0.35...v6.0.36
 [v6.0.35]: https://github.com/rinvex/cortex-foundation/compare/v6.0.34...v6.0.35
 [v6.0.34]: https://github.com/rinvex/cortex-foundation/compare/v6.0.33...v6.0.34
