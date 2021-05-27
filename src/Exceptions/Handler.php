@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Support\Facades\Route;
 use Rinvex\Country\CountryLoaderException;
-use Cortex\Auth\Exceptions\AccountException;
 use Illuminate\Auth\AuthenticationException;
 use Rinvex\Language\LanguageLoaderException;
 use Illuminate\Session\TokenMismatchException;
@@ -102,7 +101,7 @@ class Handler extends ExceptionHandler
                 'withInput' => $request->all(),
                 'withErrors' => $e->errors(),
             ], $e->status); // 422
-        } elseif ($e instanceof AccountException) {
+        } elseif ($e instanceof GenericException) {
             return intend([
                 'url' => $e->getRedirection() ?? route("{$this->accessarea}.home"),
                 'withInput' => $e->getInputs() ?? $request->all(),
