@@ -85,7 +85,7 @@ abstract class AbstractDataTable extends DataTable
         if ($selectedIds->isNotEmpty()) {
             $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
 
-            if (in_array($this->request()->accessarea(), $obscure['areas'])) {
+            if (in_array($this->request()->accessarea(), $obscure['accessareas'])) {
                 $selectedIds = $selectedIds->map(function ($value) {
                     return optional(Hashids::decode($value))[0];
                 });

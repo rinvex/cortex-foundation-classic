@@ -10,13 +10,13 @@ return [
     // Obscure IDs in certain access areas
     'obscure' => [
         'rotate' => false,
-        'areas' => [
+        'accessareas' => [
             'apiarea',
             'adminarea',
         ],
     ],
 
-    // Allow search engines to index access areas
+    // Allow search engines to index accessareas
     'indexable' => [
         'frontarea',
     ],
@@ -35,7 +35,7 @@ return [
         // Automatically add a trailing slash to the end of all routes
         'trailing_slash' => false,
 
-        // Defines the URL prefixes for the different areas
+        // Defines the URL prefixes for the different accessareas
         // Changing this option require re-caching routes if already cached
         'prefix' => [
             'apiarea' => 'api',
