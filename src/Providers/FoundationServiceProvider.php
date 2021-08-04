@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Schema;
 use Cortex\Foundation\Http\FormRequest;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
+use Cortex\Foundation\Models\Accessarea;
 use Illuminate\Database\Schema\Blueprint;
 use Cortex\Foundation\Models\ImportRecord;
 use Cortex\Foundation\Models\AbstractModel;
@@ -54,6 +55,7 @@ class FoundationServiceProvider extends ServiceProvider
         // Bind eloquent models to IoC container
         $this->registerModels([
             'cortex.foundation.import_record' => ImportRecord::class,
+            'cortex.foundation.accessarea' => Accessarea::class,
         ]);
 
         // Override datatables html builder
@@ -79,15 +81,19 @@ class FoundationServiceProvider extends ServiceProvider
         // Override presence verifier
         $this->app['validator']->setPresenceVerifier($this->app['cortex.foundation.presence.verifier']);
 
-        // Early set application locale globaly
+        // Bind route models and constrains
         $router->pattern('locale', '[a-z]{2}');
-        $this->app['laravellocalization']->setLocale();
-
+        $router->pattern('accessarea', '[a-zA-Z0-9-_]+');
         $router->model('media', config('medialibrary.media_model'));
+        $router->model('accessarea', config('cortex.foundation.models.accessarea'));
+
+        // Early set application locale globaly
+        $this->app['laravellocalization']->setLocale();
 
         // Map relations
         Relation::morphMap([
             'media' => config('medialibrary.media_model'),
+            'accessarea' => config('cortex.foundation.models.accessarea'),
         ]);
 
         SessionFacade::extend('database', function ($app) {
@@ -104,7 +110,7 @@ class FoundationServiceProvider extends ServiceProvider
             );
         });
 
-        // Append middleware to the 'web' middlware group
+        // Append middleware to the 'web' middleware group
         $this->app->environment('production') || $router->pushMiddlewareToGroup('web', Clockwork::class);
 
         // Override `FormRequest` container binding

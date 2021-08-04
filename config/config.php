@@ -45,6 +45,7 @@ return [
 
     'models' => [
         'import_record' => \Cortex\Foundation\Models\ImportRecord::class,
+        'accessarea' => \Cortex\Foundation\Models\Accessarea::class,
     ],
 
     'tables' => [
@@ -53,6 +54,8 @@ return [
         'notifications' => 'notifications',
         'import_records' => 'import_records',
         'temporary_uploads' => 'temporary_uploads',
+        'accessareas' => 'accessareas',
+        'accessibles' => 'accessibles',
     ],
 
     // Media storage config

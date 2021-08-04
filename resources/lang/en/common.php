@@ -76,5 +76,16 @@ return [
     'created_at_from' => 'Created From',
     'created_at_to' => 'Created To',
     'by' => 'by',
+    'accessareas' => 'Access Areas',
+    'is_active' => 'Is Active',
+    'is_obscured' => 'Is Obscured',
+    'is_protected' => 'Is Protected',
+    'is_indexable' => 'Is Indexable',
+    'is_scoped' => 'Is Scoped',
+    'prefix' => 'Prefix',
+    'no' => 'No',
+    'submit' => 'Submit',
+    'yes' => 'Yes',
+    'slug' => 'Slug',
 
 ];
