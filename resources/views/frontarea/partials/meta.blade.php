@@ -22,9 +22,9 @@
 <meta name="language" content="English" />
 <meta name="robots" content="index, follow" />
 <meta name="revisit-after" CONTENT="0 days" />
-<meta name="identifier" content="https://rinvex.com" />
-<meta name="identifier-URL" content="https://rinvex.com" />
-<link rel="canonical" href="https://rinvex.com" />
+<meta name="identifier" content="{{ request()->url() }}" />
+<meta name="identifier-URL" content="{{ request()->url() }}" />
+<link rel="canonical" href="{{ request()->url() }}" />
 
 
 {{-- Vendor Meta --}}
