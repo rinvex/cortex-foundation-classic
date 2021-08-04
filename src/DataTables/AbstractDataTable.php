@@ -83,9 +83,9 @@ abstract class AbstractDataTable extends DataTable
         $selectedIds = collect($this->request()->input('selected_ids'))->filter();
 
         if ($selectedIds->isNotEmpty()) {
-            $obscure = property_exists($model, 'obscure') && is_array($model->obscure) ? $model->obscure : config('cortex.foundation.obscure');
+            $accessareas = (array) $model->obscure + app('accessareas')->where('is_obscured', true)->pluck('slug')->toArray();
 
-            if (in_array($this->request()->accessarea(), $obscure['accessareas'])) {
+            if (in_array($this->request()->accessarea(), $accessareas)) {
                 $selectedIds = $selectedIds->map(function ($value) {
                     return optional(Hashids::decode($value))[0];
                 });
@@ -95,7 +95,7 @@ abstract class AbstractDataTable extends DataTable
                 $query->whereIn($model->getRouteKeyName(), $selectedIds);
             }
         }
-
+        
         return $this->scope()->applyScopes($query);
     }
 

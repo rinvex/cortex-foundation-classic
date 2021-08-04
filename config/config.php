@@ -7,19 +7,9 @@ return [
     // Manage autoload migrations
     'autoload_migrations' => true,
 
-    // Obscure IDs in certain access areas
-    'obscure' => [
-        'rotate' => false,
-        'accessareas' => [
-            'apiarea',
-            'adminarea',
-        ],
-    ],
-
-    // Allow search engines to index accessareas
-    'indexable' => [
-        'frontarea',
-    ],
+    // IDs obscuration rotations, higher number means more secure, and less efficient
+    // For random IDs every request you can use `random_int(1, 999)` (not recommended)
+    'obscure' => 1,
 
     // Global Route Override
     'route' => [
