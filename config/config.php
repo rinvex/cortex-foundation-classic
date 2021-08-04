@@ -25,16 +25,6 @@ return [
         // Automatically add a trailing slash to the end of all routes
         'trailing_slash' => false,
 
-        // Defines the URL prefixes for the different accessareas
-        // Changing this option require re-caching routes if already cached
-        'prefix' => [
-            'apiarea' => 'api',
-            'frontarea' => '',
-            'tenantarea' => '',
-            'adminarea' => 'adminarea',
-            'managerarea' => 'managerarea',
-        ],
-
     ],
 
     // Adminarea Configuration
