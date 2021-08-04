@@ -30,6 +30,20 @@ if (! function_exists('domain')) {
     }
 }
 
+if (! function_exists('route_prefix')) {
+    /**
+     * Return route prefix.
+     *
+     * @return string
+     */
+    function route_prefix($accessarea)
+    {
+        $prefix = optional(app('accessareas')->firstWhere('slug', $accessarea))->prefix;
+
+        return config('cortex.foundation.route.locale_prefix') ? "{locale}/{$prefix}" : $prefix;
+    }
+}
+
 if (! function_exists('intend')) {
     /**
      * Return redirect response.
