@@ -42,7 +42,7 @@ class BootServiceProvider extends ServiceProvider
         // Register filesystem module resources macro
         Filesystem::macro('moduleResources', function ($resource, $type = 'files', $depth = 1) use ($enabledModulesPaths) {
             return iterator_to_array(
-                Finder::create()->$type()->in($enabledModulesPaths)->path($resource)->depth($depth)->sortByName(),
+                Finder::create()->{$type}()->in($enabledModulesPaths)->path($resource)->depth($depth)->sortByName(),
                 false
             );
         });
