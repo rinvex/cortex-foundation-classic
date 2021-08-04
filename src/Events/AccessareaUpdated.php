@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Events;
 
-use Cortex\Foundation\Models\Accessarea;
 use Illuminate\Queue\SerializesModels;
+use Cortex\Foundation\Models\Accessarea;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
