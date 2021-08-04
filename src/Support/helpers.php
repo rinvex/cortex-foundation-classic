@@ -34,6 +34,8 @@ if (! function_exists('route_prefix')) {
     /**
      * Return route prefix.
      *
+     * @param mixed $accessarea
+     *
      * @return string
      */
     function route_prefix($accessarea)

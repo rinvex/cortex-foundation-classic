@@ -95,7 +95,7 @@ abstract class AbstractDataTable extends DataTable
                 $query->whereIn($model->getRouteKeyName(), $selectedIds);
             }
         }
-        
+
         return $this->scope()->applyScopes($query);
     }
 
