@@ -78,16 +78,9 @@ class Kernel extends ConsoleKernel
      */
     public function discoverCommands(): array
     {
-        $commandDirectories = $this->app['files']->glob($this->app->path('*/*/src/Console/Commands'));
+        $moduleResources = $this->app['files']->moduleResources('src/Console/Commands', 'directories', 2);
 
-        // @TODO: Improve regex, or better filter `glob` results itself!
-        $enabledModules = collect(app('request.modules'))->filter(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
-        $commandDirectories = $enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $enabledModules)).')/', $commandDirectories) : $commandDirectories;
-
-        return collect($commandDirectories)
-            ->reject(function ($file) {
-                return ! is_dir($file);
-            })->toArray();
+        return collect($moduleResources)->map->getPathname()->toArray();
     }
 
     /**
