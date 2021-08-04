@@ -82,6 +82,9 @@
         "phpunit/phpunit": "^9.5.0"
     },
     "autoload": {
+        "files": [
+            "src/Support/helpers.php"
+        ],
         "psr-4": {
             "Cortex\\Foundation\\": "src/",
             "Cortex\\Foundation\\Database\\Seeders\\": "database/seeders/"
