@@ -220,7 +220,7 @@ class Accessarea extends Model
     /**
      * Scope a query to only include active accessareas.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -232,7 +232,7 @@ class Accessarea extends Model
     /**
      * Scope a query to only include scoped accessareas.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -244,7 +244,7 @@ class Accessarea extends Model
     /**
      * Scope a query to only include obscured accessareas.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -256,7 +256,7 @@ class Accessarea extends Model
     /**
      * Scope a query to only include indexable accessareas.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -268,7 +268,7 @@ class Accessarea extends Model
     /**
      * Scope a query to only include protected accessareas.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -400,9 +400,9 @@ class Accessarea extends Model
     /**
      * Delete the model from the database.
      *
-     * @return bool|null
-     *
      * @throws \Cortex\Foundation\Exceptions\ProtectedResourceException
+     *
+     * @return bool|null
      */
     public function delete()
     {

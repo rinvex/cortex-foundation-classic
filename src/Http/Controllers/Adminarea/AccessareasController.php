@@ -42,7 +42,7 @@ class AccessareasController extends AuthorizedController
     /**
      * List accessarea logs.
      *
-     * @param \Cortex\Foundation\Models\Accessarea               $accessarea
+     * @param \Cortex\Foundation\Models\Accessarea        $accessarea
      * @param \Cortex\Foundation\DataTables\LogsDataTable $logsDataTable
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
@@ -59,7 +59,7 @@ class AccessareasController extends AuthorizedController
     /**
      * Import accessareas.
      *
-     * @param \Cortex\Foundation\Models\Accessarea                        $accessarea
+     * @param \Cortex\Foundation\Models\Accessarea                 $accessarea
      * @param \Cortex\Foundation\DataTables\ImportRecordsDataTable $importRecordsDataTable
      *
      * @return \Illuminate\View\View
@@ -139,7 +139,7 @@ class AccessareasController extends AuthorizedController
     /**
      * Create new accessarea.
      *
-     * @param \Illuminate\Http\Request      $request
+     * @param \Illuminate\Http\Request             $request
      * @param \Cortex\Foundation\Models\Accessarea $accessarea
      *
      * @return \Illuminate\View\View
@@ -152,7 +152,7 @@ class AccessareasController extends AuthorizedController
     /**
      * Edit given accessarea.
      *
-     * @param \Illuminate\Http\Request      $request
+     * @param \Illuminate\Http\Request             $request
      * @param \Cortex\Foundation\Models\Accessarea $accessarea
      *
      * @return \Illuminate\View\View
@@ -165,7 +165,7 @@ class AccessareasController extends AuthorizedController
     /**
      * Show accessarea create/edit form.
      *
-     * @param \Illuminate\Http\Request      $request
+     * @param \Illuminate\Http\Request             $request
      * @param \Cortex\Foundation\Models\Accessarea $accessarea
      *
      * @return \Illuminate\View\View
@@ -208,8 +208,8 @@ class AccessareasController extends AuthorizedController
     /**
      * Process stored/updated accessarea.
      *
-     * @param \Cortex\Foundation\Http\FormRequest $request
-     * @param \Cortex\Foundation\Models\Accessarea       $accessarea
+     * @param \Cortex\Foundation\Http\FormRequest  $request
+     * @param \Cortex\Foundation\Models\Accessarea $accessarea
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
