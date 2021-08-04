@@ -39,6 +39,9 @@ class BootServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Register accessareas into service container, early before booting any module service providers!
+        $this->app->singleton('accessareas', fn () => app('cortex.foundation.accessarea')->where('is_active', true)->get());
+
         $this->bootstrapModules();
     }
 
