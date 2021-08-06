@@ -7,6 +7,7 @@ namespace Cortex\Foundation\Models;
 use Rinvex\Tags\Traits\Taggable;
 use Spatie\Sluggable\SlugOptions;
 use Rinvex\Support\Traits\HasSlug;
+use Spatie\Activitylog\LogOptions;
 use Rinvex\Support\Traits\Macroable;
 use Cortex\Foundation\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,7 @@ use Rinvex\Support\Traits\HashidsTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Rinvex\Support\Traits\HasTranslations;
 use Rinvex\Support\Traits\ValidatingTrait;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cortex\Foundation\Events\AccessareaCreated;
 use Cortex\Foundation\Events\AccessareaDeleted;
@@ -66,6 +68,7 @@ class Accessarea extends Model
     use Auditable;
     use Macroable;
     use SoftDeletes;
+    use LogsActivity;
     use HashidsTrait;
     use HasTranslations;
     use ValidatingTrait;
@@ -145,31 +148,6 @@ class Accessarea extends Model
     ];
 
     /**
-     * Indicates whether to log only dirty attributes or all.
-     *
-     * @var bool
-     */
-    protected static $logOnlyDirty = true;
-
-    /**
-     * The attributes that are logged on change.
-     *
-     * @var array
-     */
-    protected static $logFillable = true;
-
-    /**
-     * The attributes that are ignored on change.
-     *
-     * @var array
-     */
-    protected static $ignoreChangedAttributes = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
-    /**
      * Create a new Eloquent model instance.
      *
      * @param array $attributes
@@ -202,6 +180,19 @@ class Accessarea extends Model
     public function entries(string $class): MorphToMany
     {
         return $this->morphedByMany($class, 'accessible', config('cortex.accessareas.tables.accessibles'), 'accessarea_id', 'accessible_id', 'id', 'id');
+    }
+
+    /**
+     * Set sensible Activity Log Options.
+     *
+     * @return \Spatie\Activitylog\LogOptions
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+                         ->logFillable()
+                         ->logOnlyDirty()
+                         ->dontSubmitEmptyLogs();
     }
 
     /**
