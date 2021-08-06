@@ -7,6 +7,7 @@ namespace Cortex\Foundation\Providers;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
+use Symfony\Component\Finder\SplFileInfo;
 use Illuminate\Contracts\Foundation\CachesRoutes;
 use Cortex\Foundation\Overrides\Illuminate\Foundation\Events\DiscoverEvents;
 
@@ -29,13 +30,6 @@ class DiscoveryServiceProvider extends ServiceProvider
     protected $subscribe = [];
 
     /**
-     * List of enabled modules.
-     *
-     * @var array
-     */
-    protected $enabledModules = [];
-
-    /**
      * Register any application services.
      *
      * This service provider is a great spot to register your various container
@@ -46,12 +40,6 @@ class DiscoveryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Register modules list
-        $modulesManifestPath = $this->app->getCachedModulesPath();
-        $modulesManifest = is_file($modulesManifestPath) ? $this->app['files']->getRequire($modulesManifestPath) : [];
-        $this->enabledModules = collect($modulesManifest)->filter(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
-        $this->app->singleton('request.modules', fn () => $modulesManifest);
-
         $this->discoverConfig();
     }
 
@@ -62,11 +50,11 @@ class DiscoveryServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->callAfterResolving('router', fn () => $this->bootDiscoveredRoutes());
-        $this->callAfterResolving('events', fn () => $this->bootDiscoveredEvents());
-        $this->callAfterResolving('view', fn () => $this->discoverResources('resources/views'));
-        $this->callAfterResolving('translator', fn () => $this->discoverResources('resources/lang'));
         $this->callAfterResolving('migrator', fn () => $this->discoverResources('database/migrations'));
+        $this->callAfterResolving('translator', fn () => $this->discoverResources('resources/lang'));
+        $this->callAfterResolving('view', fn () => $this->discoverResources('resources/views'));
+        $this->callAfterResolving('events', fn () => $this->bootDiscoveredEvents());
+        $this->callAfterResolving('router', fn () => $this->bootDiscoveredRoutes());
     }
 
     /**
@@ -74,7 +62,7 @@ class DiscoveryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function bootDiscoveredEvents()
+    protected function bootDiscoveredEvents()
     {
         if ($this->app->eventsAreCached()) {
             $cache = require $this->app->getCachedEventsPath();
@@ -103,16 +91,13 @@ class DiscoveryServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function discoverEvents()
+    protected function discoverEvents()
     {
-        $eventFiles = $this->app['files']->glob($this->app->path('*/*/src/Listeners'));
+        $moduleResources = $this->app['files']->moduleResources('src/Listeners', 'directories');
 
-        // @TODO: Improve regex, or better filter `glob` results itself!
-        $eventFiles = $this->enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->enabledModules)).')/', $eventFiles) : $eventFiles;
-
-        return collect($eventFiles)
-            ->reject(fn ($directory) => ! is_dir($directory))->filter()->prioritizeLoading()
-            ->reduce(fn ($discovered, $directory) => array_merge_recursive($discovered, DiscoverEvents::within($directory, base_path())), []);
+        return collect($moduleResources)
+            ->prioritizeLoading()
+            ->reduce(fn ($discovered, SplFileInfo $dir) => array_merge_recursive($discovered, DiscoverEvents::within($dir->getPathname(), base_path())), []);
     }
 
     /**
@@ -120,7 +105,7 @@ class DiscoveryServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function listens()
+    protected function listens()
     {
         return $this->listen;
     }
@@ -130,7 +115,7 @@ class DiscoveryServiceProvider extends ServiceProvider
      *
      * @return void$module
      */
-    public function bootDiscoveredRoutes(): void
+    protected function bootDiscoveredRoutes(): void
     {
         // Discover web routes
         if (! ($this->app instanceof CachesRoutes && $this->app->routesAreCached())) {
@@ -157,16 +142,14 @@ class DiscoveryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function discoverRoutes(string $type): void
+    protected function discoverRoutes(string $type): void
     {
-        $routeFiles = $this->app['files']->glob($this->app->path("*/*/routes/{$type}/*"));
+        $accessareaResources = app('accessareas')->map(fn ($accessarea) => "routes/{$type}/{$accessarea->slug}")->toArray();
+        $moduleResources = $accessareaResources ? $this->app['files']->moduleResources($accessareaResources, 'files', 2) : [];
 
-        // @TODO: Improve regex, or better filter `glob` results itself!
-        $routeFiles = $this->enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->enabledModules)).')/', $routeFiles) : $routeFiles;
-
-        collect($routeFiles)
-            ->reject(fn ($file) => ! is_file($file))->filter()->prioritizeLoading()
-            ->each(fn ($file) => require $file);
+        collect($moduleResources)
+            ->prioritizeLoading()
+            ->each(fn (SplFileInfo $file) => require $file->getPathname());
     }
 
     /**
@@ -176,29 +159,26 @@ class DiscoveryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function discoverResources(string $type): void
+    protected function discoverResources(string $type): void
     {
-        $resourceDirs = $this->app['files']->glob($this->app->path("*/*/{$type}"));
+        $moduleResources = $this->app['files']->moduleResources($type, 'directories');
 
-        // @TODO: Improve regex, or better filter `glob` results itself!
-        $resourceDirs = $this->enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->enabledModules)).')/', $resourceDirs) : $resourceDirs;
-
-        collect($resourceDirs)
-            ->reject(fn ($directory) => ! is_dir($directory))->filter()->prioritizeLoading()
-            ->each(function ($dir) use ($type) {
-                $module = str_replace([$this->app->basePath('app/'), "/{$type}"], '', $dir);
+        collect($moduleResources)
+            ->prioritizeLoading()
+            ->each(function (SplFileInfo $dir) use ($type) {
+                $module = str_replace([$this->app->path().DIRECTORY_SEPARATOR, "/{$type}"], '', $dir->getPathname());
 
                 switch ($type) {
                     case 'resources/lang':
-                        $this->loadTranslationsFrom($dir, $module);
+                        $this->loadTranslationsFrom($dir->getPathname(), $module);
                         $this->publishesLang($module, true);
                         break;
                     case 'resources/views':
-                        $this->loadViewsFrom($dir, $module);
+                        $this->loadViewsFrom($dir->getPathname(), $module);
                         $this->publishesViews($module, true);
                         break;
                     case 'database/migrations':
-                        ! $this->autoloadMigrations($module) || $this->loadMigrationsFrom($dir);
+                        ! $this->autoloadMigrations($module) || $this->loadMigrationsFrom($dir->getPathname());
                         $this->publishesMigrations($module, true);
                         break;
                 }
@@ -210,19 +190,16 @@ class DiscoveryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function discoverConfig(): void
+    protected function discoverConfig(): void
     {
-        $configFiles = $this->app['files']->glob($this->app->path('*/*/config/config.php'));
+        $moduleResources = $this->app['files']->moduleResources('config/config.php');
 
-        // @TODO: Improve regex, or better filter `glob` results itself!
-        $configFiles = $this->enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $this->enabledModules)).')/', $configFiles) : $configFiles;
+        collect($moduleResources)
+            ->prioritizeLoading()
+            ->each(function (SplFileInfo $file) {
+                $module = str_replace([$this->app->path().DIRECTORY_SEPARATOR, '/config/config.php'], '', $file->getPathname());
 
-        collect($configFiles)
-            ->reject(fn ($file) => ! is_file($file))->filter()->prioritizeLoading()
-            ->each(function ($file) {
-                $module = str_replace([$this->app->basePath('app/'), '/config/config.php'], '', $file);
-
-                $this->mergeConfigFrom($file, str_replace('/', '.', $module));
+                $this->mergeConfigFrom($file->getPathname(), str_replace('/', '.', $module));
 
                 $this->publishesConfig($module, true);
             });

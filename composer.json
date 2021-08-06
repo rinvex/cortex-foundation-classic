@@ -63,7 +63,7 @@
         "rinvex/tmp-lord-laroute": "^2.4.0",
         "rinvex/tmp-watson-validating": "^6.0.0",
         "rinvex/tmp-josephsilber-bouncer": "^1.0.0",
-        "spatie/laravel-activitylog": "^3.16.0",
+        "spatie/laravel-activitylog": "^4.0.0",
         "spatie/laravel-collection-macros": "^7.1.0",
         "spatie/laravel-medialibrary": "^9.4.0",
         "spatie/laravel-sitemap": "^5.9.0",
@@ -78,10 +78,13 @@
         "yajra/laravel-datatables-oracle": "^9.15.0"
     },
     "require-dev": {
-        "codedungeon/phpunit-result-printer": "^0.30.0",
+        "codedungeon/phpunit-result-printer": "^0.31.0",
         "phpunit/phpunit": "^9.5.0"
     },
     "autoload": {
+        "files": [
+            "src/Support/helpers.php"
+        ],
         "psr-4": {
             "Cortex\\Foundation\\": "src/",
             "Cortex\\Foundation\\Database\\Seeders\\": "database/seeders/"

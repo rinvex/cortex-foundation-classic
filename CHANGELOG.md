@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.39] - 2021-08-06
+- ace05e8: Refactor accessareas and make it dynamically controlled through adminarea
+- e405c15: Move route prefixes to accessareas db table responsibility
+- 827c48c: Simplify route prefixes
+- f412465: Add route_prefix module helper
+- d8bc995: Move application layer helpers to from rinvex/laravel-support
+- 856f035: Refactor accessarea obscure and indexable config options
+- 53fe500: Refactor module resources loading, base on active modules and accessareas
+- 9d79665: Register accessareas into service container, early before booting any module service providers!
+- 84ba236: Fix canonical URLs and meta tag SEO issues
+- 8568966: Rename areas to accessareas
+- 79262e2: Update composer dependencies
+- 0d912dd: Fix redirect->afterAuthentication() execution condition (#231)
+
 ## [v6.0.38] - 2021-05-28
 - Rename ExceptionHandler and stop reporting generic exceptions
 
@@ -536,6 +550,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.39]: https://github.com/rinvex/cortex-foundation/compare/v6.0.38...v6.0.39
 [v6.0.38]: https://github.com/rinvex/cortex-foundation/compare/v6.0.37...v6.0.38
 [v6.0.37]: https://github.com/rinvex/cortex-foundation/compare/v6.0.36...v6.0.37
 [v6.0.36]: https://github.com/rinvex/cortex-foundation/compare/v6.0.35...v6.0.36

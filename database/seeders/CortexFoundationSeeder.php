@@ -25,6 +25,18 @@ class CortexFoundationSeeder extends Seeder
             ['name' => 'create', 'title' => 'Create media', 'entity_type' => 'media'],
             ['name' => 'update', 'title' => 'Update media', 'entity_type' => 'media'],
             ['name' => 'delete', 'title' => 'Delete media', 'entity_type' => 'media'],
+
+            ['name' => 'list', 'title' => 'List Accessareas', 'entity_type' => 'accessarea'],
+            ['name' => 'create', 'title' => 'Create Accessareas', 'entity_type' => 'accessarea'],
+            ['name' => 'update', 'title' => 'Update Accessareas', 'entity_type' => 'accessarea'],
+            ['name' => 'delete', 'title' => 'Delete Accessareas', 'entity_type' => 'accessarea'],
+        ];
+
+        $accessareas = [
+            ['name' => 'frontarea', 'slug' => 'frontarea', 'is_protected' => true],
+            ['name' => 'adminarea', 'slug' => 'adminarea', 'is_protected' => true, 'indexable' => false, 'prefix' => 'adminarea'],
+            ['name' => 'managerarea', 'slug' => 'managerarea', 'is_protected' => true, 'indexable' => false, 'prefix' => 'managerarea'],
+            ['name' => 'tenantarea', 'slug' => 'tenantarea', 'is_protected' => true],
         ];
 
         collect($accessAbilities)->each(function (array $ability) {
@@ -38,6 +50,12 @@ class CortexFoundationSeeder extends Seeder
                 'name' => $ability['name'],
                 'entity_type' => $ability['entity_type'],
             ], $ability);
+        });
+
+        collect($accessareas)->each(function (array $accessarea) {
+            app('cortex.foundation.accessarea')->firstOrCreate([
+                'name' => $accessarea['name'],
+            ], $accessarea);
         });
     }
 }

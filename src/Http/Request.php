@@ -65,6 +65,8 @@ class Request extends BaseRequest
     /**
      * Get access area of current request.
      *
+     * @TODO: refactor this method!
+     *
      * @return string
      */
     public function accessarea(): string
@@ -73,13 +75,15 @@ class Request extends BaseRequest
             return $this->accessarea;
         }
 
-        $area = (app()->has('request.tenant') && app('request.tenant') && $this->guard() === 'member' ? 'tenant' : $this->guard()).'area';
+        $accessarea = (app()->has('request.tenant') && app('request.tenant') && $this->guard() === 'member' ? 'tenant' : $this->guard()).'area';
 
-        return $this->isApi ? 'apiarea' : (array_key_exists($area, config('cortex.foundation.route.prefix')) ? $area : (app()->runningInConsole() ? 'consolearea' : 'frontarea'));
+        return $this->isApi ? 'apiarea' : (app('accessareas')->contains('slug', $accessarea) ? $accessarea : (app()->runningInConsole() ? 'consolearea' : 'frontarea'));
     }
 
     /**
      * Get guard of current request.
+     *
+     * @TODO: refactor this method!
      *
      * @return string
      */
@@ -120,7 +124,7 @@ class Request extends BaseRequest
             }
 
             // A.4. Guess guard from: controller namespace
-            if (($this->route()->getAction('controller') && $segment = Str::lower(collect(explode('\\', $this->route()->getAction('controller')))->first(fn ($seg) => array_key_exists(Str::lower($seg), config('cortex.foundation.route.prefix'))))) && $guard = Str::before($segment, 'area')) {
+            if (($this->route()->getAction('controller') && $segment = Str::lower(collect(explode('\\', $this->route()->getAction('controller')))->first(fn ($seg) => app('accessareas')->contains('slug', Str::lower($seg))))) && $guard = Str::before($segment, 'area')) {
                 ! Str::contains($guard, ['api']) || $this->isApi = true;
 
                 if (array_key_exists($guard, config('auth.guards'))) {

@@ -6,6 +6,8 @@ namespace Cortex\Foundation\Providers;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Symfony\Component\Finder\Finder;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 
 class BootServiceProvider extends ServiceProvider
@@ -30,6 +32,20 @@ class BootServiceProvider extends ServiceProvider
                  ->partition(fn ($item) => Str::contains($item, config('app.provider_loading.priority_2')))->flatMap(fn ($values) => $values)
                  ->partition(fn ($item) => Str::contains($item, config('app.provider_loading.priority_1')))->flatMap(fn ($values) => $values)
         );
+
+        // Register modules list
+        $modulesManifestPath = $this->app->getCachedModulesPath();
+        $modulesManifest = is_file($modulesManifestPath) ? $this->app['files']->getRequire($modulesManifestPath) : [];
+        $enabledModules = collect($modulesManifest)->filter(fn ($attributes) => $attributes['active'] && $attributes['autoload']);
+        $enabledModulesPaths = $enabledModules->map(fn ($val, $key) => app()->path($key))->toArray();
+
+        // Register filesystem module resources macro
+        Filesystem::macro('moduleResources', function ($resource, $type = 'files', $depth = 1) use ($enabledModulesPaths) {
+            return iterator_to_array(
+                Finder::create()->{$type}()->in($enabledModulesPaths)->path($resource)->depth($depth)->sortByName(),
+                false
+            );
+        });
     }
 
     /**
@@ -39,6 +55,9 @@ class BootServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Register accessareas into service container, early before booting any module service providers!
+        $this->app->singleton('accessareas', fn () => app('cortex.foundation.accessarea')->where('is_active', true)->get());
+
         $this->bootstrapModules();
     }
 
@@ -49,14 +68,10 @@ class BootServiceProvider extends ServiceProvider
      */
     public function bootstrapModules(): void
     {
-        $bootstrapFiles = $this->app['files']->glob($this->app->path('*/*/bootstrap/module.php'));
-        $enabledModules = collect($this->app['request.modules'])->filter(fn ($attributes) => $attributes['active'] && $attributes['autoload'])->keys()->toArray();
+        $moduleResources = $this->app['files']->moduleResources('bootstrap/module.php');
 
-        // @TODO: Improve regex, or better filter `glob` results itself!
-        $bootstrapFiles = $enabledModules ? preg_grep('/('.str_replace('/', '\/', implode('|', $enabledModules)).')/', $bootstrapFiles) : $bootstrapFiles;
-
-        collect($bootstrapFiles)
-            ->reject(fn ($file) => ! is_file($file))->filter()->prioritizeLoading()
+        collect($moduleResources)
+            ->prioritizeLoading()
             ->each(fn ($file) => (require $file)());
     }
 }

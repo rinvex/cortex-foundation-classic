@@ -7,19 +7,9 @@ return [
     // Manage autoload migrations
     'autoload_migrations' => true,
 
-    // Obscure IDs in certain access areas
-    'obscure' => [
-        'rotate' => false,
-        'areas' => [
-            'apiarea',
-            'adminarea',
-        ],
-    ],
-
-    // Allow search engines to index access areas
-    'indexable' => [
-        'frontarea',
-    ],
+    // IDs obscuration rotations, higher number means more secure, and less efficient
+    // For random IDs every request you can use `random_int(1, 999)` (not recommended)
+    'obscure' => 1,
 
     // Global Route Override
     'route' => [
@@ -34,16 +24,6 @@ return [
 
         // Automatically add a trailing slash to the end of all routes
         'trailing_slash' => false,
-
-        // Defines the URL prefixes for the different areas
-        // Changing this option require re-caching routes if already cached
-        'prefix' => [
-            'apiarea' => 'api',
-            'frontarea' => '',
-            'tenantarea' => '',
-            'adminarea' => 'adminarea',
-            'managerarea' => 'managerarea',
-        ],
 
     ],
 
@@ -65,6 +45,7 @@ return [
 
     'models' => [
         'import_record' => \Cortex\Foundation\Models\ImportRecord::class,
+        'accessarea' => \Cortex\Foundation\Models\Accessarea::class,
     ],
 
     'tables' => [
@@ -73,6 +54,8 @@ return [
         'notifications' => 'notifications',
         'import_records' => 'import_records',
         'temporary_uploads' => 'temporary_uploads',
+        'accessareas' => 'accessareas',
+        'accessibles' => 'accessibles',
     ],
 
     // Media storage config
