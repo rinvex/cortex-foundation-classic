@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.41] - 2021-08-07
+- Check database connection before accessing accessareas
+
 ## [v6.0.40] - 2021-08-07
 - Upgrade spatie/laravel-activitylog to v4
 
@@ -553,6 +556,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.41]: https://github.com/rinvex/cortex-foundation/compare/v6.0.40...v6.0.41
 [v6.0.40]: https://github.com/rinvex/cortex-foundation/compare/v6.0.39...v6.0.40
 [v6.0.39]: https://github.com/rinvex/cortex-foundation/compare/v6.0.38...v6.0.39
 [v6.0.38]: https://github.com/rinvex/cortex-foundation/compare/v6.0.37...v6.0.38
