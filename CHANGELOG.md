@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.43] - 2021-08-08
+- Remove useless methods for now
+
 ## [v6.0.42] - 2021-08-08
 - fix accessareas migration (#238)
 
@@ -559,6 +562,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v6.0.43]: https://github.com/rinvex/cortex-foundation/compare/v6.0.42...v6.0.43
 [v6.0.42]: https://github.com/rinvex/cortex-foundation/compare/v6.0.41...v6.0.42
 [v6.0.41]: https://github.com/rinvex/cortex-foundation/compare/v6.0.40...v6.0.41
 [v6.0.40]: https://github.com/rinvex/cortex-foundation/compare/v6.0.39...v6.0.40
