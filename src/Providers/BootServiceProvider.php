@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class BootServiceProvider extends ServiceProvider
@@ -55,8 +58,18 @@ class BootServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Register accessareas into service container, early before booting any module service providers!
-        $this->app->singleton('accessareas', fn () => app('cortex.foundation.accessarea')->where('is_active', true)->get());
+        try {
+            // Just check if we have DB connection! This is to avoid
+            // exceptions on new projects before configuring database options
+            DB::connection()->getPdo();
+
+            if (Schema::hasTable(config('cortex.foundation.tables.accessareas'))) {
+                // Register accessareas into service container, early before booting any module service providers!
+                $this->app->singleton('accessareas', fn () => app('cortex.foundation.accessarea')->where('is_active', true)->get());
+            }
+        } catch (Exception $e) {
+            // Be quite! Do not do or say anything!!
+        }
 
         $this->bootstrapModules();
     }

@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
 use Symfony\Component\Finder\SplFileInfo;
@@ -54,7 +57,18 @@ class DiscoveryServiceProvider extends ServiceProvider
         $this->callAfterResolving('translator', fn () => $this->discoverResources('resources/lang'));
         $this->callAfterResolving('view', fn () => $this->discoverResources('resources/views'));
         $this->callAfterResolving('events', fn () => $this->bootDiscoveredEvents());
-        $this->callAfterResolving('router', fn () => $this->bootDiscoveredRoutes());
+
+        try {
+            // Just check if we have DB connection! This is to avoid
+            // exceptions on new projects before configuring database options
+            DB::connection()->getPdo();
+
+            if (Schema::hasTable(config('cortex.foundation.tables.accessareas'))) {
+                $this->callAfterResolving('router', fn () => $this->bootDiscoveredRoutes());
+            }
+        } catch (Exception $e) {
+            // Be quite! Do not do or say anything!!
+        }
     }
 
     /**
