@@ -59,6 +59,7 @@ trait Accessible
     );
 
     /**
+     * @TODO: refactor to drop accessareas db table.
      * Get all attached accessareas to the model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
@@ -118,112 +119,6 @@ trait Accessible
     }
 
     /**
-     * Override the default findOrFail method so that we can re-throw
-     * a more useful exception. Otherwise it can be very confusing
-     * why queries don't work because of accessarea scoping issues.
-     *
-     * @param mixed $id
-     * @param array $columns
-     *
-     * @throws \Cortex\Foundation\Exceptions\ModelNotFoundForAccessareaException
-     *
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection
-     */
-    public static function findOrFail($id, $columns = ['*'])
-    {
-        try {
-            return static::query()->findOrFail($id, $columns);
-        } catch (ModelNotFoundException $exception) {
-            // If it DOES exist, just not for this accessarea, throw a nicer exception
-            if (! is_null(static::forAllAccessareas()->find($id, $columns))) {
-                throw (new ModelNotFoundForAccessareaException())->setModel(static::class, [$id]);
-            }
-
-            throw $exception;
-        }
-    }
-
-    /**
-     * Scope query with all the given accessareas.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param mixed                                 $accessareas
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeWithAllAccessareas(Builder $builder, $accessareas): Builder
-    {
-        $accessareas = $this->prepareAccessareaIds($accessareas);
-
-        collect($accessareas)->each(function ($accessarea) use ($builder) {
-            $builder->whereHas('accessareas', function (Builder $builder) use ($accessarea) {
-                return $builder->where('id', $accessarea);
-            });
-        });
-
-        return $builder;
-    }
-
-    /**
-     * Scope query with any of the given accessareas.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param mixed                                 $accessareas
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeWithAnyAccessareas(Builder $builder, $accessareas): Builder
-    {
-        $accessareas = $this->prepareAccessareaIds($accessareas);
-
-        return $builder->whereHas('accessareas', function (Builder $builder) use ($accessareas) {
-            $builder->whereIn('id', $accessareas);
-        });
-    }
-
-    /**
-     * Scope query with any of the given accessareas.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param mixed                                 $accessareas
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeWithAccessareas(Builder $builder, $accessareas): Builder
-    {
-        return static::scopeWithAnyAccessareas($builder, $accessareas);
-    }
-
-    /**
-     * Scope query without any of the given accessareas.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param mixed                                 $accessareas
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeWithoutAccessareas(Builder $builder, $accessareas): Builder
-    {
-        $accessareas = $this->prepareAccessareaIds($accessareas);
-
-        return $builder->whereDoesntHave('accessareas', function (Builder $builder) use ($accessareas) {
-            $builder->whereIn('id', $accessareas);
-        });
-    }
-
-    /**
-     * Scope query without any accessareas.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeWithoutAnyAccessareas(Builder $builder): Builder
-    {
-        return $builder->doesntHave('accessareas');
-    }
-
-    /**
      * Determine if the model has any of the given accessareas.
      *
      * @param mixed $accessareas
@@ -235,18 +130,6 @@ trait Accessible
         $accessareas = $this->prepareAccessareaIds($accessareas);
 
         return ! $this->accessareas->pluck('id')->intersect($accessareas)->isEmpty();
-    }
-
-    /**
-     * Determine if the model has any the given accessareas.
-     *
-     * @param mixed $accessareas
-     *
-     * @return bool
-     */
-    public function hasAnyAccessareas($accessareas): bool
-    {
-        return static::hasAccessareas($accessareas);
     }
 
     /**
