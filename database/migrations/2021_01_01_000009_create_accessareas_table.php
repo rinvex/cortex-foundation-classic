@@ -27,7 +27,7 @@ class CreateAccessareasTable extends Migration
             $table->boolean('is_indexable')->default(true);
             $table->boolean('is_protected')->default(false);
             $table->string('prefix')->nullable();
-            $table->timestamps();
+            $table->auditableAndTimestamps();
             $table->softDeletes();
 
             // Indexes
