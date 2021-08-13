@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
-use Illuminate\Routing\Router;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Cortex\Foundation\Http\FormRequest;
@@ -14,9 +13,7 @@ use Cortex\Foundation\Models\Accessarea;
 use Illuminate\Database\Schema\Blueprint;
 use Cortex\Foundation\Models\ImportRecord;
 use Cortex\Foundation\Models\AbstractModel;
-use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\View\Compilers\BladeCompiler;
-use Cortex\Foundation\Http\Middleware\Clockwork;
 use Cortex\Foundation\Generators\LangJsGenerator;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Session as SessionFacade;
@@ -70,7 +67,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Router $router, Dispatcher $dispatcher): void
+    public function boot(): void
     {
         // Fix the specified key was too long error
         Schema::defaultStringLength(191);
@@ -80,12 +77,6 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Override presence verifier
         $this->app['validator']->setPresenceVerifier($this->app['cortex.foundation.presence.verifier']);
-
-        // Bind route models and constrains
-        $router->pattern('locale', '[a-z]{2}');
-        $router->pattern('accessarea', '[a-zA-Z0-9-_]+');
-        $router->model('media', config('medialibrary.media_model'));
-        $router->model('accessarea', config('cortex.foundation.models.accessarea'));
 
         // Early set application locale globaly
         $this->app['laravellocalization']->setLocale();
@@ -109,9 +100,6 @@ class FoundationServiceProvider extends ServiceProvider
                 $app
             );
         });
-
-        // Append middleware to the 'web' middleware group
-        $this->app->environment('production') || $router->pushMiddlewareToGroup('web', Clockwork::class);
 
         // Override `FormRequest` container binding
         $this->app->resolving(FormRequest::class, function ($request, $app) {
