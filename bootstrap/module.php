@@ -11,8 +11,8 @@ return function () {
     Route::model('media', config('medialibrary.media_model'));
     Route::model('accessarea', config('cortex.foundation.models.accessarea'));
 
-    Route::pattern('central_domain', central_domains());
-    Route::pattern('tenant_domain', tenant_domains());
+    Route::pattern('central_domain', central_pattern());
+    Route::pattern('tenant_domain', tenant_pattern());
 
     // Append middleware to the 'web' middleware group
     $this->app->environment('production') || Route::pushMiddlewareToGroup('web', Clockwork::class);
