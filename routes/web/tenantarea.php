@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 Route::domain('{tenant_domain}')->group(function () {
     Route::name('tenantarea.')
-         ->middleware(['web', 'nohttpcache'])
+         ->middleware(['web'])
          ->namespace('Cortex\Foundation\Http\Controllers\Tenantarea')
          ->prefix(route_prefix('tenantarea'))->group(function () {
 
