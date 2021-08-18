@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.0.0] - 2021-08-18
+- Breaking Changes and updates
+- Update composer dependency cortex/foundation to v7
+- Refactor webpack module config
+- Drop using nohttpcache middleware for tenantarea routes
+- Remove no longer used domain() global helper - This is now the responsibility of rinvex/laravel-tenants
+- Handle AbstractTenantException
+- Use relative css paths for node modules
+- Remove useless css and image assets
+- Bind and unbind central & tenant domain route params
+- Fix minor typo
+- Fix wrong accessarea
+- Disable is_scope for adminarea & managerarea
+- Register central and tenant domain route patterns
+- Register routes to either central or tenant domains
+- Move route binding, patterns, and middleware to module bootstrap
+
 ## [v6.0.43] - 2021-08-08
 - Remove useless methods for now
 
@@ -562,6 +579,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.0.0]: https://github.com/rinvex/cortex-foundation/compare/v6.0.43...v7.0.0
 [v6.0.43]: https://github.com/rinvex/cortex-foundation/compare/v6.0.42...v6.0.43
 [v6.0.42]: https://github.com/rinvex/cortex-foundation/compare/v6.0.41...v6.0.42
 [v6.0.41]: https://github.com/rinvex/cortex-foundation/compare/v6.0.40...v6.0.41
