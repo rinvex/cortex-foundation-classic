@@ -176,7 +176,7 @@ class ExceptionHandler extends BaseExceptionHandler
             ], $e->getStatusCode()); // 429
         } elseif ($e instanceof AbstractTenantException) {
             return intend([
-                'url' => route("frontarea.home"),
+                'url' => route('frontarea.home'),
                 'withErrors' => ['error' => $e->getMessage()],
             ], 404); // 429
         }
