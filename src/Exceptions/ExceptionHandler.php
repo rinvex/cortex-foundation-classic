@@ -16,6 +16,7 @@ use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Rinvex\University\UniversityLoaderException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Rinvex\Tenants\Exceptions\AbstractTenantException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -173,6 +174,11 @@ class ExceptionHandler extends BaseExceptionHandler
                 'withInput' => $request->all(),
                 'withErrors' => ['error' => $e->getMessage()],
             ], $e->getStatusCode()); // 429
+        } elseif ($e instanceof AbstractTenantException) {
+            return intend([
+                'url' => route("frontarea.home"),
+                'withErrors' => ['error' => $e->getMessage()],
+            ], 404); // 429
         }
 
         return parent::render($request, $e);

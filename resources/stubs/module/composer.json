@@ -45,7 +45,7 @@
     ],
     "require": {
         "php": "^7.4.0 || ^8.0.0",
-        "cortex/foundation": "^6.0.0",
+        "cortex/foundation": "^7.0.0",
         "diglactic/laravel-breadcrumbs": "^7.0.0",
         "illuminate/auth": "^8.0.0 || ^9.0.0",
         "illuminate/console": "^8.0.0 || ^9.0.0",

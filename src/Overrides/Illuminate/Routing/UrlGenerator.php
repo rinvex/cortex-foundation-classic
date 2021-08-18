@@ -84,9 +84,14 @@ class UrlGenerator extends BaseUrlGenerator
                 : (app('laravellocalization')->checkLocaleInSupportedLocales($sessionLocale) ? $sessionLocale : $defaultLocale);
         }
 
-        // Bind {subdomain} route parameter
-        if (in_array('subdomain', $route->parameterNames()) && ! isset($parameters['subdomain']) && $subdomain = app('request.subdomain')) {
-            $parameters['subdomain'] = $route->hasParameter('subdomain') ? $route->parameter('subdomain') : $subdomain;
+        // Bind {central_domain} route parameter
+        if (in_array('central_domain', $route->parameterNames()) && ! isset($parameters['central_domain']) && in_array($centralDomain = $this->request->getHost(), central_domains())) {
+            $parameters['central_domain'] = $route->hasParameter('central_domain') ? $route->parameter('central_domain') : $centralDomain;
+        }
+
+        // Bind {tenant_domain} route parameter
+        if (in_array('tenant_domain', $route->parameterNames()) && ! isset($parameters['tenant_domain']) && in_array($tenantDomain = $this->request->getHost(), tenant_domains())) {
+            $parameters['tenant_domain'] = $route->hasParameter('tenant_domain') ? $route->parameter('tenant_domain') : $tenantDomain;
         }
 
         return $this->routeUrl()->to(

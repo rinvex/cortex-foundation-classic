@@ -18,18 +18,6 @@ if (! function_exists('extract_title')) {
     }
 }
 
-if (! function_exists('domain')) {
-    /**
-     * Return domain host.
-     *
-     * @return string
-     */
-    function domain()
-    {
-        return parse_url(config('app.url'))['host'];
-    }
-}
-
 if (! function_exists('route_prefix')) {
     /**
      * Return route prefix.

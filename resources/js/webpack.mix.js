@@ -1,16 +1,12 @@
 module.exports = {
     scanForCssSelectors: [],
-    whitelistPatterns: [],
     webpackPlugins: [],
+    safelist: [],
     install: [],
     copy: [
         {from: 'app/cortex/foundation/resources/images/', to: 'public/images/'},
-        {from: 'node_modules/font-awesome/fonts/', to: 'public/fonts/fontawesome/'},
-        {from: 'node_modules/intl-tel-input/build/img/flags.png', to: 'public/images/'},
-        {from: 'node_modules/intl-tel-input/build/img/flags@2x.png', to: 'public/images/'},
-        {from: 'node_modules/bootstrap-sass/assets/fonts/bootstrap/', to: 'public/fonts/bootstrap/'},
-        {from: 'node_modules/tinymce/plugins', to: 'public/js/plugins'},
-        {from: 'node_modules/tinymce/skins/', to: 'public/tinymce/'},
+        {from: 'node_modules/tinymce/plugins', to: 'public/tinymce/plugins/'},
+        {from: 'node_modules/tinymce/skins/', to: 'public/tinymce/skins/'},
     ],
     mix: {
         css: [

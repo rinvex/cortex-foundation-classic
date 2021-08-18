@@ -70,7 +70,7 @@ class AuthorizedController extends AuthenticatedController
             }
         } else {
             // At this stage, sessions still not loaded yet, and `AuthorizationException`
-            // depends on seesions to flash redirection error msg, so delegate to a middleware
+            // depends on sessions to flash redirection error msg, so delegate to a middleware
             // Since Laravel 5.3 controller constructors executed before middleware to be able to append
             // new middleware to the pipeline then all middleware executed together, and sessions started in `StartSession` middleware
             $this->middleware('can:null');
