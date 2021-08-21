@@ -28,7 +28,7 @@ class SessionServiceProvider extends BaseSessionServiceProvider
             });
         });
 
-        // Needed to override `Illuminate\Foundation\Application::registerCoreContainerAliases`, otherwise sessions are screwed!
+        // Override `Illuminate\Foundation\Application::registerCoreContainerAliases`, otherwise sessions are screwed!
         $this->app->alias('session', \Cortex\Foundation\Overrides\Illuminate\Session\SessionManager::class);
     }
 
