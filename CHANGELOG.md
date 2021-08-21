@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.1.0] - 2021-08-21
+- Major changes breaking changes (session isolation per guard), supposed to come in v7.0.0 but got delayed
+- Override core RoutingServiceProvider instead of extending Redirector & UrlGenerator instances
+- Override SessionServiceProvider to use custom SessionGuard (requires config/app.php change)
+- Override SessionManager to use custom Session Store & Encrypted Store that supports session isolation per guard
+- Add EncryptCookies middleware on top of priority list
+- Fix exception handler issues with accessarea when it's not available (very early exception)
+
 ## [v7.0.0] - 2021-08-18
 - Breaking Changes and updates
 - Update composer dependency cortex/foundation to v7
@@ -579,6 +587,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.1.0]: https://github.com/rinvex/cortex-foundation/compare/v7.0.0...v7.1.0
 [v7.0.0]: https://github.com/rinvex/cortex-foundation/compare/v6.0.43...v7.0.0
 [v6.0.43]: https://github.com/rinvex/cortex-foundation/compare/v6.0.42...v6.0.43
 [v6.0.42]: https://github.com/rinvex/cortex-foundation/compare/v6.0.41...v6.0.42
