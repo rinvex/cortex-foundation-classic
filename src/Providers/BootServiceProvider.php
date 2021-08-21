@@ -61,6 +61,7 @@ class BootServiceProvider extends ServiceProvider
         try {
             // Just check if we have DB connection! This is to avoid
             // exceptions on new projects before configuring database options
+            // @TODO: refcator the whole accessareas retrieval to be file-based, instead of db based
             DB::connection()->getPdo();
 
             if (Schema::hasTable(config('cortex.foundation.tables.accessareas'))) {
