@@ -43,8 +43,9 @@ class Store extends BaseStore
     /**
      * Flash a key / value pair to the session.
      *
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed  $value
+     *
      * @return void
      */
     public function flash(string $key, $value = true)
@@ -59,8 +60,9 @@ class Store extends BaseStore
     /**
      * Flash a key / value pair to the session for immediate use.
      *
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed  $value
+     *
      * @return void
      */
     public function now($key, $value)
@@ -85,7 +87,8 @@ class Store extends BaseStore
     /**
      * Merge new flash keys into the new flash array.
      *
-     * @param  array  $keys
+     * @param array $keys
+     *
      * @return void
      */
     protected function mergeNewFlashes(array $keys)
@@ -98,7 +101,8 @@ class Store extends BaseStore
     /**
      * Remove the given keys from the old flash data.
      *
-     * @param  array  $keys
+     * @param array $keys
+     *
      * @return void
      */
     protected function removeFromOldFlashData(array $keys)
@@ -109,7 +113,8 @@ class Store extends BaseStore
     /**
      * Flash an input array to the session.
      *
-     * @param  array  $value
+     * @param array $value
+     *
      * @return void
      */
     public function flashInput(array $value)
@@ -150,7 +155,8 @@ class Store extends BaseStore
     /**
      * Set the "previous" URL in the session.
      *
-     * @param  string  $url
+     * @param string $url
+     *
      * @return void
      */
     public function setPreviousUrl($url)
@@ -255,6 +261,8 @@ class Store extends BaseStore
     /**
      * Get prefixed keys.
      *
+     * @param mixed $keys
+     *
      * @return array
      */
     public function getPrefixedKeys($keys)
@@ -264,6 +272,8 @@ class Store extends BaseStore
 
     /**
      * Get prefixed key.
+     *
+     * @param mixed $key
      *
      * @return string
      */
