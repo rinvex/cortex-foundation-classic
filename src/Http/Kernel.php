@@ -74,6 +74,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewarePriority = [
+        \Illuminate\Cookie\Middleware\EncryptCookies::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Cortex\Foundation\Http\Middleware\SetAuthDefaults::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
