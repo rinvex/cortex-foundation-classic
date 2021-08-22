@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.2.0] - 2021-08-22
+- Drop PHP v7 support, and upgrade rinvex package dependencies to next major version
+
 ## [v7.1.0] - 2021-08-21
 - Major changes breaking changes (session isolation per guard), supposed to come in v7.0.0 but got delayed
 - Override core RoutingServiceProvider instead of extending Redirector & UrlGenerator instances
@@ -587,6 +590,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.2.0]: https://github.com/rinvex/cortex-foundation/compare/v7.1.0...v7.2.0
 [v7.1.0]: https://github.com/rinvex/cortex-foundation/compare/v7.0.0...v7.1.0
 [v7.0.0]: https://github.com/rinvex/cortex-foundation/compare/v6.0.43...v7.0.0
 [v6.0.43]: https://github.com/rinvex/cortex-foundation/compare/v6.0.42...v6.0.43

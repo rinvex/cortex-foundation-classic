@@ -40,7 +40,7 @@
         }
     ],
     "require": {
-        "php": "^7.4.0 || ^8.0.0",
+        "php": "^8.0.0",
         "barryvdh/laravel-snappy": "^0.4.0",
         "diglactic/laravel-breadcrumbs": "^7.0.0",
         "fideloper/proxy": "^4.4.0",
@@ -54,10 +54,10 @@
         "mcamara/laravel-localization": "^1.6.0",
         "mariuzzo/laravel-js-localization": "^1.7.0",
         "proengsoft/laravel-jsvalidation": "^4.4.0",
-        "rinvex/laravel-composer": "^5.0.0",
-        "rinvex/laravel-menus": "^5.0.0",
-        "rinvex/laravel-pages": "^5.0.0",
-        "rinvex/laravel-support": "^5.0.0",
+        "rinvex/laravel-composer": "^6.0.0",
+        "rinvex/laravel-menus": "^6.0.0",
+        "rinvex/laravel-pages": "^6.0.0",
+        "rinvex/laravel-support": "^6.0.0",
         "rinvex/tmp-edvinaskrucas-notification": "^5.2.0",
         "felixkiss/uniquewith-validator": "^3.4.2",
         "rinvex/tmp-lord-laroute": "^2.4.0",
