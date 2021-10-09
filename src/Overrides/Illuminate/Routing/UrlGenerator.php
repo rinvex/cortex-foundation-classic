@@ -76,6 +76,7 @@ class UrlGenerator extends BaseUrlGenerator
      */
     public function toRoute($route, $parameters, $absolute)
     {
+        // @TODO
         // Bind {locale} route parameter
         if (config('cortex.foundation.route.locale_prefix') && in_array('locale', $route->parameterNames()) && ! isset($parameters['locale'])) {
             $urlLocale = $this->request->segment(1);
@@ -84,14 +85,9 @@ class UrlGenerator extends BaseUrlGenerator
                 : (app('laravellocalization')->checkLocaleInSupportedLocales($sessionLocale) ? $sessionLocale : $defaultLocale);
         }
 
-        // Bind {central_domain} route parameter
-        if (in_array('central_domain', $route->parameterNames()) && ! isset($parameters['central_domain']) && in_array($centralDomain = $this->request->getHost(), central_domains())) {
-            $parameters['central_domain'] = $route->hasParameter('central_domain') ? $route->parameter('central_domain') : $centralDomain;
-        }
-
-        // Bind {tenant_domain} route parameter
-        if (in_array('tenant_domain', $route->parameterNames()) && ! isset($parameters['tenant_domain']) && in_array($tenantDomain = $this->request->getHost(), tenant_domains())) {
-            $parameters['tenant_domain'] = $route->hasParameter('tenant_domain') ? $route->parameter('tenant_domain') : $tenantDomain;
+        // Bind {routeDomain} route parameter
+        if (in_array('routeDomain', $route->parameterNames()) && ! isset($parameters['routeDomain']) && in_array($centralDomain = $this->request->getHost(), route_domains())) {
+            $parameters['routeDomain'] = $route->hasParameter('routeDomain') ? $route->parameter('routeDomain') : $centralDomain;
         }
 
         return $this->routeUrl()->to(

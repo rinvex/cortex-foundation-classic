@@ -21,11 +21,8 @@ class UnbindRouteParameters
         // unBind {locale} route parameter
         $request->route()->forgetParameter('locale');
 
-        // unBind {central_domain} route parameter
-        $request->route()->forgetParameter('central_domain');
-
-        // unBind {tenant_domain} route parameter
-        $request->route()->forgetParameter('tenant_domain');
+        // unBind {routeDomain} route parameter
+        $request->route()->forgetParameter('routeDomain');
 
         return $next($request);
     }
