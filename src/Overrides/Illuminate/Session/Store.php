@@ -200,7 +200,7 @@ class Store extends BaseStore
      */
     public function getOldInput($key = null, $default = null)
     {
-        return Arr::get($this->get('old_input', []), $this->getPrefixedKey($key), $default);
+        return Arr::get($this->get('old_input', []), $key, $default);
     }
 
     /**

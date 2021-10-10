@@ -102,7 +102,8 @@ trait Accessible
         }
 
         static::deleted(function (self $model) {
-            $model->accessareas()->detach();
+            // Check if this is a soft delete or not by checking if `SoftDeletes::isForceDeleting` method exists
+            (method_exists($model, 'isForceDeleting') && ! $model->isForceDeleting()) || $model->accessareas()->detach();
         });
     }
 
