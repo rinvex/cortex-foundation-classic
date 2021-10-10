@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.2.1] - 2021-10-11
+- Rename route parameter 'central_domain' to 'routeDomain'
+- Rename central_domain to routeDomain and remove tenant_domain route parameters
+- Rename route pattern central_domain to routeDomain and move to cortex/tenants module
+- Fix session input old data issues
+- Check before detaching accessareas if deleted entity was soft deleted
+
 ## [v7.2.0] - 2021-08-22
 - Drop PHP v7 support, and upgrade rinvex package dependencies to next major version
 
@@ -590,6 +597,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.2.1]: https://github.com/rinvex/cortex-foundation/compare/v7.2.0...v7.2.1
 [v7.2.0]: https://github.com/rinvex/cortex-foundation/compare/v7.1.0...v7.2.0
 [v7.1.0]: https://github.com/rinvex/cortex-foundation/compare/v7.0.0...v7.1.0
 [v7.0.0]: https://github.com/rinvex/cortex-foundation/compare/v6.0.43...v7.0.0
