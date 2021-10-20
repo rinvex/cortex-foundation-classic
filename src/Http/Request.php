@@ -93,10 +93,18 @@ class Request extends BaseRequest
             return $this->guard;
         }
 
-        // A. Route matched
-        if ($route = $this->route()) {
+        // A. Guess guard from: request segments (very early before routes are registered!)
+        if (($segment = $this->segment(1)) && $guard = Str::before(Str::before($segment, '/'), 'area')) {
+            ! Str::contains($guard, ['api']) || $this->isApi = true;
 
-            // A.1. Guess guard from: route middleware
+            if (array_key_exists($guard, config('auth.guards'))) {
+                return $this->guard = $guard;
+            }
+        }
+
+        // B. Route matched
+        if ($route = $this->route()) {
+            // B.1. Guess guard from: route middleware
             if (($segment = collect($route->middleware())->first(fn ($middleware) => Str::contains($middleware, 'auth:'))) && $guard = Str::after($segment, ':')) {
                 ! Str::contains($guard, ['api']) || $this->isApi = true;
 
@@ -105,7 +113,7 @@ class Request extends BaseRequest
                 }
             }
 
-            // A.2. Guess guard from: named route
+            // B.2. Guess guard from: named route
             if (($segment = $route->getName()) && $guard = Str::before(Str::before($segment, '.'), 'area')) {
                 ! Str::contains($guard, ['api']) || $this->isApi = true;
 
@@ -114,7 +122,7 @@ class Request extends BaseRequest
                 }
             }
 
-            // A.3. Guess guard from: prefixed route
+            // B.3. Guess guard from: prefixed route
             if (($segment = $route->uri()) && $guard = Str::before(Str::before($segment, '/'), 'area')) {
                 ! Str::contains($guard, ['api']) || $this->isApi = true;
 
@@ -123,22 +131,13 @@ class Request extends BaseRequest
                 }
             }
 
-            // A.4. Guess guard from: controller namespace
+            // B.4. Guess guard from: controller namespace
             if (($this->route()->getAction('controller') && $segment = Str::lower(collect(explode('\\', $this->route()->getAction('controller')))->first(fn ($seg) => app('accessareas')->contains('slug', Str::lower($seg))))) && $guard = Str::before($segment, 'area')) {
                 ! Str::contains($guard, ['api']) || $this->isApi = true;
 
                 if (array_key_exists($guard, config('auth.guards'))) {
                     return $this->guard = $guard;
                 }
-            }
-        }
-
-        // B. Guess guard from: request segments (very early before routes are registered!)
-        if (($segment = $this->segment(1)) && $guard = Str::before(Str::before($segment, '/'), 'area')) {
-            ! Str::contains($guard, ['api']) || $this->isApi = true;
-
-            if (array_key_exists($guard, config('auth.guards'))) {
-                return $this->guard = $guard;
             }
         }
 
