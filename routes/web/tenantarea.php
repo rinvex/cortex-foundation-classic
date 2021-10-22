@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-Route::domain('{routeDomain}')->group(function () {
+Route::domain('{tenantarea}')->group(function () {
     Route::name('tenantarea.')
          ->middleware(['web'])
          ->namespace('Cortex\Foundation\Http\Controllers\Tenantarea')

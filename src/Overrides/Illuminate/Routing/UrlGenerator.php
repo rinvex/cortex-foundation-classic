@@ -85,10 +85,12 @@ class UrlGenerator extends BaseUrlGenerator
                 : (app('laravellocalization')->checkLocaleInSupportedLocales($sessionLocale) ? $sessionLocale : $defaultLocale);
         }
 
-        // Bind {routeDomain} route parameter
-        if (in_array('routeDomain', $route->parameterNames()) && ! isset($parameters['routeDomain']) && in_array($centralDomain = $this->request->getHost(), route_domains())) {
-            $parameters['routeDomain'] = $route->hasParameter('routeDomain') ? $route->parameter('routeDomain') : $centralDomain;
-        }
+        // Bind route domain parameters. Ex: {frontarea}, {adminarea} ..etc
+        app('accessareas')->each(function ($accessarea) use ($route, &$parameters) {
+            if (in_array($accessarea->slug, $route->parameterNames()) && ! isset($parameters[$accessarea->slug]) && in_array($centralDomain = $this->request->getHost(), route_domains($accessarea->slug))) {
+                $parameters[$accessarea->slug] = $route->hasParameter($accessarea->slug) ? $route->parameter($accessarea->slug) : $centralDomain;
+            }
+        });
 
         return $this->routeUrl()->to(
             $route,

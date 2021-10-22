@@ -34,10 +34,10 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
+            \Cortex\Foundation\Http\Middleware\SetAuthDefaults::class,
             \Cortex\Foundation\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
-            \Cortex\Foundation\Http\Middleware\SetAuthDefaults::class,
             \Cortex\Foundation\Http\Middleware\LocalizationRedirect::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Cortex\Foundation\Http\Middleware\VerifyCsrfToken::class,
@@ -74,9 +74,10 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewarePriority = [
+        \Cortex\Tenants\Http\Middleware\SetSessionConfigRuntime::class,
+        \Cortex\Foundation\Http\Middleware\SetAuthDefaults::class,
         \Illuminate\Cookie\Middleware\EncryptCookies::class,
         \Illuminate\Session\Middleware\StartSession::class,
-        \Cortex\Foundation\Http\Middleware\SetAuthDefaults::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \Illuminate\Auth\Middleware\Authenticate::class,
         \Cortex\Auth\Http\Middleware\AuthenticateSession::class,
