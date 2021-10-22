@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.2.2] - 2021-10-22
+- Update .styleci.yml fixers
+- Rearrange middleware priorities
+- Cache guard locally for future usage
+- Refactor request()->guard() and request()->accessarea()
+- Refactor route domain variables to be accessarea specific
+- Swap first and second use cases to retrieve guard earlier if possible
+
 ## [v7.2.1] - 2021-10-11
 - Rename route parameter 'central_domain' to 'routeDomain'
 - Rename central_domain to routeDomain and remove tenant_domain route parameters
@@ -597,6 +605,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.2.2]: https://github.com/rinvex/cortex-foundation/compare/v7.2.1...v7.2.2
 [v7.2.1]: https://github.com/rinvex/cortex-foundation/compare/v7.2.0...v7.2.1
 [v7.2.0]: https://github.com/rinvex/cortex-foundation/compare/v7.1.0...v7.2.0
 [v7.1.0]: https://github.com/rinvex/cortex-foundation/compare/v7.0.0...v7.1.0
