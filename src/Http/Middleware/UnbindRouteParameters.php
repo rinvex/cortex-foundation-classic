@@ -21,8 +21,10 @@ class UnbindRouteParameters
         // unBind {locale} route parameter
         $request->route()->forgetParameter('locale');
 
-        // unBind {routeDomain} route parameter
-        $request->route()->forgetParameter('routeDomain');
+        // unBind route domain parameters. Ex: {frontarea}, {adminarea} ..etc
+        app('accessareas')->each(function ($accessarea) use ($request) {
+            $request->route()->forgetParameter($accessarea->slug);
+        });
 
         return $next($request);
     }
