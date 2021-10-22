@@ -65,8 +65,6 @@ class Request extends BaseRequest
     /**
      * Get access area of current request.
      *
-     * @TODO: refactor this method!
-     *
      * @return string
      */
     public function accessarea(): string
@@ -77,13 +75,37 @@ class Request extends BaseRequest
 
         $accessarea = (app()->has('request.tenant') && app('request.tenant') && $this->guard() === 'member' ? 'tenant' : $this->guard()).'area';
 
-        return $this->isApi ? 'apiarea' : (app('accessareas')->contains('slug', $accessarea) ? $accessarea : (app()->runningInConsole() ? 'consolearea' : 'frontarea'));
+        return $this->accessarea = $this->isApi ? 'apiarea' : (app('accessareas')->contains('slug', $accessarea) ? $accessarea : (app()->runningInConsole() ? 'consolearea' : 'frontarea'));
     }
 
     /**
-     * Get guard of current request.
+     * Get the guard of current the request.
      *
-     * @TODO: refactor this method!
+     * REQUEST PIPELINE
+     * ------------------
+     *  - Register all Service Providers
+     *      - Packages: Boot service providers
+     *      - Modules: BootServiceProvider
+     *          - Boostrap modules
+     *      - DiscoveryServiceProvider
+     *          - Register Routes
+     *      - Module Boot all other service providers
+     *  - Execute Global Middleware
+     * --------------------------------------------------------------------------- >> CAN BE CALLED AFTER THIS POINT!
+     *  - Execute controller constructors / request()->route() first availability
+     *  - Execute Route Middleware
+     *      - Execute tenantable middleware!
+     *      - Execute menus & breadcrumbs middleware
+     *
+     * NOTES
+     * ------
+     * - Route names, and controller namespaces must match guards.
+     *   Ex: 'adminarea.cortex.auth.abilities.index' => means guard is 'Admin' for that named route!
+     *       'Cortex\Auth\Http\Controllers\Adminarea\AbilitiesController' => means guard is 'Admin' for that controller!
+     *
+     * - URL prefixes does NOT necessarily match guards. Ex: adminarea could have URL prefix of '/blahblah' or '/secret'
+     * - Middleware list is not complete, since controller constructors can still append it, just be aware.
+     * - Accessarea must match guards. Ex: 'adminarea' always use 'admin' guard, and so on.
      *
      * @return string
      */
@@ -93,47 +115,31 @@ class Request extends BaseRequest
             return $this->guard;
         }
 
-        // A. Guess guard from: request segments (very early before routes are registered!)
-        if (($segment = $this->segment(1)) && $guard = Str::before(Str::before($segment, '/'), 'area')) {
-            ! Str::contains($guard, ['api']) || $this->isApi = true;
-
-            if (array_key_exists($guard, config('auth.guards'))) {
-                return $this->guard = $guard;
-            }
-        }
-
-        // B. Route matched
+        // A. Route matched
         if ($route = $this->route()) {
-            // B.1. Guess guard from: route middleware
+            // A.1. Guess guard from: named route
+            if (($segment = $route->getName()) && $guard = Str::before($accessarea = Str::lower(Str::before($segment, '.')), 'area')) {
+                ! Str::startsWith($guard, 'api') || $this->isApi = true;
+
+                if (array_key_exists($guard, config('auth.guards'))) {
+                    $this->accessarea = $accessarea;
+                    return $this->guard = $guard;
+                }
+            }
+
+            // A.2. Guess guard from: controller namespace
+            if (($this->route()->getAction('controller') && $accessarea = Str::lower(collect(explode('\\', $this->route()->getAction('controller')))->first(fn ($seg) => app('accessareas')->contains('slug', Str::lower($seg))))) && $guard = Str::before($accessarea, 'area')) {
+                ! Str::startsWith($guard, 'api') || $this->isApi = true;
+
+                if (array_key_exists($guard, config('auth.guards'))) {
+                    $this->accessarea = $accessarea;
+                    return $this->guard = $guard;
+                }
+            }
+
+            // A.3. Guess guard from: route middleware
             if (($segment = collect($route->middleware())->first(fn ($middleware) => Str::contains($middleware, 'auth:'))) && $guard = Str::after($segment, ':')) {
-                ! Str::contains($guard, ['api']) || $this->isApi = true;
-
-                if (array_key_exists($guard, config('auth.guards'))) {
-                    return $this->guard = $guard;
-                }
-            }
-
-            // B.2. Guess guard from: named route
-            if (($segment = $route->getName()) && $guard = Str::before(Str::before($segment, '.'), 'area')) {
-                ! Str::contains($guard, ['api']) || $this->isApi = true;
-
-                if (array_key_exists($guard, config('auth.guards'))) {
-                    return $this->guard = $guard;
-                }
-            }
-
-            // B.3. Guess guard from: prefixed route
-            if (($segment = $route->uri()) && $guard = Str::before(Str::before($segment, '/'), 'area')) {
-                ! Str::contains($guard, ['api']) || $this->isApi = true;
-
-                if (array_key_exists($guard, config('auth.guards'))) {
-                    return $this->guard = $guard;
-                }
-            }
-
-            // B.4. Guess guard from: controller namespace
-            if (($this->route()->getAction('controller') && $segment = Str::lower(collect(explode('\\', $this->route()->getAction('controller')))->first(fn ($seg) => app('accessareas')->contains('slug', Str::lower($seg))))) && $guard = Str::before($segment, 'area')) {
-                ! Str::contains($guard, ['api']) || $this->isApi = true;
+                ! Str::startsWith($guard, 'api') || $this->isApi = true;
 
                 if (array_key_exists($guard, config('auth.guards'))) {
                     return $this->guard = $guard;
@@ -141,9 +147,11 @@ class Request extends BaseRequest
             }
         }
 
-        // C. Catch other use cases:
-        // C.1. Route NOT matched / Wrong URL (ex. 404 error)
-        // C.2. Route matched but NOT a valid accessarea (could happen if route is mistakenly named, make sure route names contain valid accessarea prefix)
+        // B. Catch other use cases:
+        // B.1. Route NOT matched / Wrong URL (ex. 404 error)
+        // B.2. Route matched but NOT a valid accessarea. This could happen if route is mistakenly named,
+        //      or controller namespace is not correct, make sure route names contain valid accessarea prefix.
+        // B.3. Route matched, but guessed guard is not found. Ex: 'tenant', so the guard is defaulted to 'member'.
         return $this->guard = $this->isApi ? config('auth.defaults.apiguard') : config('auth.defaults.guard');
     }
 

@@ -83,6 +83,9 @@ trait Accessible
     }
 
     /**
+     * @TODO: refactor to drop accessareas db table.
+     *        and remove the need for request()->accessarea() at that early stage!
+     *
      * Boot the accessible trait for the model.
      *
      * @return void
