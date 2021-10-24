@@ -15,8 +15,13 @@ class TrustHosts extends BaseTrustHosts
      */
     public function hosts()
     {
-        return [
-            $this->allSubdomainsOfApplicationUrl(),
-        ];
+        $hosts = [];
+        $domains = array_keys($this->app['config']->get('app.domains'));
+
+        foreach ($domains as $domain) {
+            $hosts[] = '^(.+\.)?'.preg_quote($domain).'$';
+        }
+
+        return $hosts;
     }
 }
