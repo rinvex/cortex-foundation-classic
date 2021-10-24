@@ -123,6 +123,7 @@ class Request extends BaseRequest
 
                 if (array_key_exists($guard, config('auth.guards'))) {
                     $this->accessarea = $accessarea;
+
                     return $this->guard = $guard;
                 }
             }
@@ -133,6 +134,7 @@ class Request extends BaseRequest
 
                 if (array_key_exists($guard, config('auth.guards'))) {
                     $this->accessarea = $accessarea;
+
                     return $this->guard = $guard;
                 }
             }

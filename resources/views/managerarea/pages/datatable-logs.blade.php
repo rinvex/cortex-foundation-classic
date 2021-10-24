@@ -18,7 +18,7 @@
         <section class="content">
 
             <div class="nav-tabs-custom">
-                {!! Menu::render("{$tabs}", 'nav-tab') !!}
+                {!! Menu::render($tabs, 'nav-tab') !!}
 
                 <div class="tab-content">
 
