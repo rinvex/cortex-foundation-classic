@@ -52,7 +52,8 @@ class KeyGenerateCommand extends BaseKeyGenerateCommand
     /**
      * Parse the encryption key.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return string
      */
     protected function parseKey(string $key)
