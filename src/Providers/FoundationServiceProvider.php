@@ -137,7 +137,7 @@ class FoundationServiceProvider extends ServiceProvider
                     $container = null;
                 }
 
-                return "<?php echo app('notification')->container({$container})->show(); ?>";
+                return "<?php echo app('notification')->container($container)->show(); ?>";
             });
         });
     }
