@@ -158,7 +158,7 @@ class DiscoveryServiceProvider extends ServiceProvider
      */
     protected function discoverRoutes(string $type): void
     {
-        $accessareaResources = app('accessareas')->map(fn ($accessarea) => "routes/{$type}/{$accessarea->slug}")->toArray();
+        $accessareaResources = app('accessareas')->map(fn ($accessarea) => "routes/$type/$accessarea->slug")->toArray();
         $moduleResources = $accessareaResources ? $this->app['files']->moduleResources($accessareaResources, 'files', 2) : [];
 
         collect($moduleResources)
@@ -180,7 +180,7 @@ class DiscoveryServiceProvider extends ServiceProvider
         collect($moduleResources)
             ->prioritizeLoading()
             ->each(function (SplFileInfo $dir) use ($type) {
-                $module = str_replace([$this->app->path().DIRECTORY_SEPARATOR, "/{$type}"], '', $dir->getPathname());
+                $module = str_replace([$this->app->path().DIRECTORY_SEPARATOR, "/$type"], '', $dir->getPathname());
 
                 switch ($type) {
                     case 'resources/lang':

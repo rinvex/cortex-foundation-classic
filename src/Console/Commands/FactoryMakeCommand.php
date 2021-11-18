@@ -28,7 +28,7 @@ class FactoryMakeCommand extends BaseFactoryMakeCommand
         $name = Str::replaceFirst($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'factories'.DIRECTORY_SEPARATOR, $name);
 
         if (! $this->files->exists($path = $this->laravel['path'].DIRECTORY_SEPARATOR.$this->moduleName().DIRECTORY_SEPARATOR)) {
-            throw new \Exception("Invalid path: {$path}");
+            throw new \Exception("Invalid path: $path");
         }
 
         return $this->laravel['path'].DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $name).'.php';

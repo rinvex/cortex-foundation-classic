@@ -45,7 +45,7 @@ class CoreRollbackCommand extends Command
         $progressBar->setBarCharacter('<fg=green>▒</>');
         $progressBar->setEmptyBarCharacter('<fg=white>▒</>');
         $progressBar->setProgressCharacter('<fg=green>➤</>');
-        $progressBar->setFormat("<fg=yellow>{$this->description}. (Step %current% / %max%)</>\n[%bar%] %percent%%\nElapsed Time: %elapsed%");
+        $progressBar->setFormat("<fg=yellow>$this->description. (Step %current% / %max%)</>\n[%bar%] %percent%%\nElapsed Time: %elapsed%");
         $progressBar->start();
 
         $output = new BufferedOutput();

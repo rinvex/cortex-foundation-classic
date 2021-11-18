@@ -54,7 +54,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
         $parentModelClass = $this->parseModel($this->option('parent'));
 
         if (! class_exists($parentModelClass)) {
-            if ($this->confirm("A {$parentModelClass} model does not exist. Do you want to generate it?", true)) {
+            if ($this->confirm("A $parentModelClass model does not exist. Do you want to generate it?", true)) {
                 $this->call('make:model', ['name' => $parentModelClass, '--module' => $this->option('module')]);
             }
         }
@@ -84,7 +84,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
         $modelClass = $this->parseModel($this->option('model'));
 
         if (! class_exists($modelClass)) {
-            if ($this->confirm("A {$modelClass} model does not exist. Do you want to generate it?", true)) {
+            if ($this->confirm("A $modelClass model does not exist. Do you want to generate it?", true)) {
                 $this->call('make:model', ['name' => $modelClass, '--module' => $this->option('module')]);
             }
         }

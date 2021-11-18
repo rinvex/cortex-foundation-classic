@@ -65,7 +65,7 @@ class LogsDataTable extends AbstractDataTable
             'drawCallback' => "function (settings) {
                 var api = this.api();
 
-                $('#{$this->id} tbody td.dt-details-control').on('click', function () {
+                $('#$this->id tbody td.dt-details-control').on('click', function () {
                     var tr = $(this).closest('tr');
                     var row = api.row(tr);
 
