@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Illuminate\Support\Str;
+use Illuminate\Encryption\Encrypter;
 use Illuminate\Foundation\Console\KeyGenerateCommand as BaseKeyGenerateCommand;
 
 class KeyGenerateCommand extends BaseKeyGenerateCommand
@@ -31,8 +33,8 @@ class KeyGenerateCommand extends BaseKeyGenerateCommand
             return $this->line('<comment>'.$key.'</comment>');
         }
 
-        if ($this->option('ifnot')) {
-            return $this->line("There is a key already exists, no changes has been made! \nExisting Key: <comment>".env('APP_KEY').'</comment>');
+        if ($this->option('ifnot') && Encrypter::supported($this->parseKey(config('app.key')), config('app.cipher'))) {
+            return $this->line('<comment>There is a key already exists, no changes has been made!</comment>');
         }
 
         // Next, we will replace the application key in the environment file so it is
@@ -45,5 +47,20 @@ class KeyGenerateCommand extends BaseKeyGenerateCommand
         $this->laravel['config']['app.key'] = $key;
 
         $this->info('Application key set successfully.');
+    }
+
+    /**
+     * Parse the encryption key.
+     *
+     * @param  string  $key
+     * @return string
+     */
+    protected function parseKey(string $key)
+    {
+        if (Str::startsWith($key, $prefix = 'base64:')) {
+            $key = base64_decode(Str::after($key, $prefix));
+        }
+
+        return $key;
     }
 }
