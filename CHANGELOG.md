@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.2.4] - 2021-11-18
+- Override KeyGenerateCommand to add ifnot option that checks if key exists before making any changes
+
 ## [v7.2.3] - 2021-10-25
 - Update TrustHosts middleware to support multiple domains and fix untrusted host issues on production
 - Simplify code formate and remove unnecessary quotes and braces!
@@ -609,6 +612,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.2.4]: https://github.com/rinvex/cortex-foundation/compare/v7.2.3...v7.2.4
 [v7.2.3]: https://github.com/rinvex/cortex-foundation/compare/v7.2.2...v7.2.3
 [v7.2.2]: https://github.com/rinvex/cortex-foundation/compare/v7.2.1...v7.2.2
 [v7.2.1]: https://github.com/rinvex/cortex-foundation/compare/v7.2.0...v7.2.1
