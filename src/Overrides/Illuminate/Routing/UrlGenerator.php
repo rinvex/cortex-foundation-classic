@@ -87,7 +87,7 @@ class UrlGenerator extends BaseUrlGenerator
 
         // Bind route domain parameters. Ex: {frontarea}, {adminarea} ..etc
         app('accessareas')->each(function ($accessarea) use ($route, &$parameters) {
-            if (in_array($accessarea->slug, $route->parameterNames()) && ! isset($parameters[$accessarea->slug]) && in_array($centralDomain = $this->request->getHost(), route_domains($accessarea->slug))) {
+            if (in_array($accessarea->slug, $route->parameterNames()) && ! isset($parameters[$accessarea->slug]) && $centralDomain = get_str_contains(request()->getHost(), route_domains($accessarea->slug))) {
                 $parameters[$accessarea->slug] = $route->hasParameter($accessarea->slug) ? $route->parameter($accessarea->slug) : $centralDomain;
             }
         });
