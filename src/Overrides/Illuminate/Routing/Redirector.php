@@ -28,6 +28,8 @@ class Redirector extends BaseRedirector
     /**
      * Create a new redirect response to the previously intended location.
      *
+     * @related Save state, and redirect, or resubmit form after authentication.
+     *
      * @param string    $default
      * @param int       $status
      * @param array     $headers
@@ -38,9 +40,9 @@ class Redirector extends BaseRedirector
     public function intended($default = '/', $status = 302, $headers = [], $secure = null)
     {
         $request = $this->generator->getRequest();
-        $intended = $this->session->pull('url.intended', $default);
-        $method = $this->session->pull('url.method', 'GET');
-        $params = $this->session->pull('url.params', []);
+        $params = $this->session->get('url.params', []);
+        $method = $this->session->get('url.method', 'GET');
+        $intended = $this->session->get('url.intended', $default);
 
         if ($request->isMethod($method)) {
             $params['_token'] = csrf_token();
@@ -69,10 +71,9 @@ class Redirector extends BaseRedirector
     public function saveStateUntilAuthentication()
     {
         $request = $this->generator->getRequest();
-        $intended = Route::is('*.login') ? url()->previous() : url()->current();
 
-        $this->session->put('url.intended', $intended);
         $this->session->put('url.params', $request->all());
         $this->session->put('url.method', $request->method());
+        $this->session->put('url.intended', Route::is('*.login') ? url()->previous() : url()->current());
     }
 }
