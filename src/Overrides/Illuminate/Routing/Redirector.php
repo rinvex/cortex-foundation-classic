@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Illuminate\Routing;
 
+use Exception;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Redirector as BaseRedirector;
 
@@ -45,6 +46,11 @@ class Redirector extends BaseRedirector
         $params = $this->session->get('url.params', []);
         $method = $this->session->get('url.method', 'GET');
         $intended = $this->session->get('url.intended', $default);
+
+        // Throw an exception in case of potentially infinite redirects!
+        if ($intended === url()->current() && $request->isMethod('GET')) {
+            throw new Exception(trans('cortex/foundation::messages.infinite_redirects'));
+        }
 
         // Handle POST & non-GET requests
         if ($method !== 'GET') {
