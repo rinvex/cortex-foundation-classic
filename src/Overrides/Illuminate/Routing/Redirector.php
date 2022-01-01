@@ -60,7 +60,7 @@ class Redirector extends BaseRedirector
      *
      * @return void
      */
-    public function afterAuthentication()
+    public function saveStateUntilAuthentication()
     {
         $request = $this->generator->getRequest();
         $intended = Route::is('*.login') ? url()->previous() : url()->current();

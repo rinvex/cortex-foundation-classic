@@ -85,7 +85,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 - Fix canonical URLs and meta tag SEO issues
 - Rename areas to accessareas
 - Update composer dependencies
-- Fix redirect->afterAuthentication() execution condition (#231)
+- Fix redirect->saveStateUntilAuthentication() execution condition (#231)
 
 ## [v6.0.38] - 2021-05-28
 - Rename ExceptionHandler and stop reporting generic exceptions
