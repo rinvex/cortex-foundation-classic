@@ -35,7 +35,9 @@ class Redirector extends BaseRedirector
      * @param array     $headers
      * @param bool|null $secure
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Client\Response
+     * @throws \Exception
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function intended($default = '/', $status = 302, $headers = [], $secure = null)
     {
@@ -44,11 +46,9 @@ class Redirector extends BaseRedirector
         $method = $this->session->get('url.method', 'GET');
         $intended = $this->session->get('url.intended', $default);
 
-        if ($request->isMethod($method)) {
+        // Handle POST & non-GET requests
+        if ($method !== 'GET') {
             $params['_token'] = csrf_token();
-
-            $this->session->put('url.intended', $intended);
-
             $request = $request::create($intended, $method, $params);
 
             return app()->handle($request);
