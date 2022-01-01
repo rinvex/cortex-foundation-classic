@@ -64,7 +64,18 @@ class Application extends BaseApplication
     }
 
     /**
-     * {@inheritdoc}
+     * Handles a Request to convert it to a Response.
+     *
+     * When $catch is true, the implementation must catch all exceptions
+     * and do its best to convert them to a Response instance.
+     *
+     * @param int  $type  The type of the request
+     *                    (one of HttpKernelInterface::MAIN_REQUEST or HttpKernelInterface::SUB_REQUEST)
+     * @param bool $catch Whether to catch exceptions or not
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Exception When an Exception occurs during processing
      */
     public function handle(SymfonyRequest $request, int $type = self::MASTER_REQUEST, bool $catch = true)
     {

@@ -58,6 +58,12 @@ class Redirector extends BaseRedirector
     /**
      * Set the intended method.
      *
+     * @related Save state, and redirect, or resubmit form after authentication.
+     *          - Scenario #1 - Authentication succeeded: session replaced by default, so all items are automatically flushed, no need to force forget!
+     *          - Scenario #2 - Authentication failed: session stays, and all items are persisted across subsequent requests, until authentication!
+     *          - Scenario #3 - Authentication failed, but user visits another page that triggers `saveStateUntilAuthentication` again, in that
+     *                          case session values are replaced, then all items are persisted across requests, until authentication!
+     *
      * @return void
      */
     public function saveStateUntilAuthentication()
