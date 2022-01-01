@@ -73,9 +73,9 @@ class Application extends BaseApplication
      *                    (one of HttpKernelInterface::MAIN_REQUEST or HttpKernelInterface::SUB_REQUEST)
      * @param bool $catch Whether to catch exceptions or not
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Exception When an Exception occurs during processing
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(SymfonyRequest $request, int $type = self::MASTER_REQUEST, bool $catch = true)
     {
