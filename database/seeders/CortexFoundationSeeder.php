@@ -33,6 +33,8 @@ class CortexFoundationSeeder extends Seeder
         ];
 
         $accessareas = [
+            ['name' => 'absentarea', 'slug' => 'absentarea', 'is_protected' => true],
+            ['name' => 'centralarea', 'slug' => 'centralarea', 'is_protected' => true],
             ['name' => 'frontarea', 'slug' => 'frontarea', 'is_protected' => true],
             ['name' => 'adminarea', 'slug' => 'adminarea', 'is_protected' => true, 'is_scoped' => false, 'is_indexable' => false, 'prefix' => 'adminarea'],
             ['name' => 'managerarea', 'slug' => 'managerarea', 'is_protected' => true, 'is_scoped' => false, 'is_indexable' => false, 'prefix' => 'managerarea'],

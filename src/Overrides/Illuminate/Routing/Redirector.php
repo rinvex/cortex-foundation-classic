@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Illuminate\Routing;
 
+use Exception;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Redirector as BaseRedirector;
 
@@ -28,25 +29,32 @@ class Redirector extends BaseRedirector
     /**
      * Create a new redirect response to the previously intended location.
      *
+     * @related Save state, and redirect, or resubmit form after authentication.
+     *
      * @param string    $default
      * @param int       $status
      * @param array     $headers
      * @param bool|null $secure
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Client\Response
+     * @throws \Exception
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function intended($default = '/', $status = 302, $headers = [], $secure = null)
     {
         $request = $this->generator->getRequest();
-        $intended = $this->session->pull('url.intended', $default);
-        $method = $this->session->pull('url.method', 'GET');
-        $params = $this->session->pull('url.params', []);
+        $params = $this->session->get('url.params', []);
+        $method = $this->session->get('url.method', 'GET');
+        $intended = $this->session->get('url.intended', $default);
 
-        if ($request->isMethod($method)) {
+        // Throw an exception in case of potentially infinite redirects!
+        if ($intended === url()->current() && $request->isMethod('GET')) {
+            throw new Exception(trans('cortex/foundation::messages.infinite_redirects'));
+        }
+
+        // Handle POST & non-GET requests
+        if ($method !== 'GET') {
             $params['_token'] = csrf_token();
-
-            $this->session->put('url.intended', $intended);
-
             $request = $request::create($intended, $method, $params);
 
             return app()->handle($request);
@@ -58,15 +66,20 @@ class Redirector extends BaseRedirector
     /**
      * Set the intended method.
      *
+     * @related Save state, and redirect, or resubmit form after authentication.
+     *          - Scenario #1 - Authentication succeeded: session replaced by default, so all items are automatically flushed, no need to force forget!
+     *          - Scenario #2 - Authentication failed: session stays, and all items are persisted across subsequent requests, until authentication!
+     *          - Scenario #3 - Authentication failed, but user visits another page that triggers `saveStateUntilAuthentication` again, in that
+     *                          case session values are replaced, then all items are persisted across requests, until authentication!
+     *
      * @return void
      */
-    public function afterAuthentication()
+    public function saveStateUntilAuthentication()
     {
         $request = $this->generator->getRequest();
-        $intended = Route::is('*.login') ? url()->previous() : url()->current();
 
-        $this->session->put('url.intended', $intended);
         $this->session->put('url.params', $request->all());
         $this->session->put('url.method', $request->method());
+        $this->session->put('url.intended', Route::is('*.login') ? url()->previous() : url()->current());
     }
 }

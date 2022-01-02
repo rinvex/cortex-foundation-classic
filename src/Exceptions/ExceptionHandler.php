@@ -113,7 +113,7 @@ class ExceptionHandler extends BaseExceptionHandler
             ], $e->getStatusCode()); // 401, 403, 302
         } elseif ($e instanceof AuthenticationException) {
             // Save state, and redirect, or resubmit form after authentication
-            request()->expectsJson() || redirect()->afterAuthentication();
+            request()->expectsJson() || redirect()->saveStateUntilAuthentication();
 
             return intend([
                 'url' => route($request->accessarea().'.cortex.auth.account.login'),

@@ -19,5 +19,6 @@ return [
     'records_deactivated' => 'Records deactivated!',
     'records_revoked' => 'Records revoked!',
     'no_records_selected' => 'No selected records!',
+    'infinite_redirects' => 'Potentially infinite redirects detected!',
 
 ];
