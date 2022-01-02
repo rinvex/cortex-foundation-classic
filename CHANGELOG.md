@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.2.7] - 2022-01-02
+- Add support for centralarea & absentarea
+- Throw an exception in case of potentially infinite redirects
+- Fix saveStateUntilAuthentication logic to handle POST requests correctly
+- Fix saveStateUntilAuthentication logic to persist data between requests
+- Rename afterAuthentication to saveStateUntilAuthentication
+
 ## [v7.2.6] - 2021-12-20
 - Fix route missing accessarea parameter issue
 
@@ -618,6 +625,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.2.7]: https://github.com/rinvex/cortex-foundation/compare/v7.2.6...v7.2.7
 [v7.2.6]: https://github.com/rinvex/cortex-foundation/compare/v7.2.5...v7.2.6
 [v7.2.5]: https://github.com/rinvex/cortex-foundation/compare/v7.2.4...v7.2.5
 [v7.2.4]: https://github.com/rinvex/cortex-foundation/compare/v7.2.3...v7.2.4
