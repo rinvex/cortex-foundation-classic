@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Rinvex\Tags\Traits\Taggable;
 use Spatie\Sluggable\SlugOptions;
 use Rinvex\Support\Traits\HasSlug;
@@ -67,6 +68,7 @@ class Accessarea extends Model
     use Taggable;
     use Auditable;
     use Macroable;
+    use HasFactory;
     use SoftDeletes;
     use LogsActivity;
     use HashidsTrait;
