@@ -18,6 +18,7 @@ class HttpConnectionHandler extends ConnectionHandler
     {
         return LifecycleManager::fromSubsequentRequest($payload)->boot()->hydrate()->renderToView()->dehydrate()->toSubsequentResponse();
     }
+
     public function __invoke()
     {
         $this->applyPersistentMiddleware();
@@ -53,7 +54,9 @@ class HttpConnectionHandler extends ConnectionHandler
 
         $filteredMiddleware = collect($originalRouteMiddleware)->filter(function ($middleware) use ($persistentMiddleware) {
             // Some middlewares can be closures.
-            if (! is_string($middleware)) return false;
+            if (! is_string($middleware)) {
+                return false;
+            }
 
             return in_array(Str::before($middleware, ':'), $persistentMiddleware);
         })->toArray();
@@ -62,7 +65,7 @@ class HttpConnectionHandler extends ConnectionHandler
         (new Pipeline(app()))
             ->send($request)
             ->through($filteredMiddleware)
-            ->then(function() {
+            ->then(function () {
                 // noop
             });
     }

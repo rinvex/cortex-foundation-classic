@@ -25,11 +25,10 @@ class MakeCommand extends FileManipulationCommand
             $this->getResourcePath($rootNamespace, 'resources/views'),
             $this->getAccessareaName(),
             $this->argument('name'),
-
             $this->option('stub')
         );
 
-        if (!$this->isClassNameValid($name = $this->parser->className())) {
+        if (! $this->isClassNameValid($name = $this->parser->className())) {
             $this->line("<options=bold,reverse;fg=red> WHOOPS! </> 😳 \n");
             $this->line("<fg=red;options=bold>Class is invalid:</> {$name}");
 
@@ -56,7 +55,7 @@ class MakeCommand extends FileManipulationCommand
 
         $this->refreshComponentAutodiscovery();
 
-        if($class || $view) {
+        if ($class || $view) {
             $this->line("<options=bold,reverse;fg=green> COMPONENT CREATED </> 🤙\n");
             $class && $this->line("<options=bold;fg=green>CLASS:</> {$this->parser->relativeClassPath()}");
 
@@ -133,7 +132,7 @@ class MakeCommand extends FileManipulationCommand
 
     public function isReservedClassName($name)
     {
-        return array_search(strtolower($name), $this->getReservedName()) !== false;
+        return array_search(mb_strtolower($name), $this->getReservedName()) !== false;
     }
 
     private function getReservedName()

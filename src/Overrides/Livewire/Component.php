@@ -20,7 +20,8 @@ abstract class Component extends BaseComponent
 
     public static function getName()
     {
-        $fullName = str(collect(explode('.', str_replace(['Http\\Components', '\\\\', '\\', '/'], ['', '\\', '.', '.'], static::class)))
+        $fullName = str(
+            collect(explode('.', str_replace(['Http\\Components', '\\\\', '\\', '/'], ['', '\\', '.', '.'], static::class)))
             ->map([Str::class, 'kebab'])
             ->implode('.')
         );
@@ -34,7 +35,7 @@ abstract class Component extends BaseComponent
     {
         // With octane and full page components the route is caching the
         // component, so always create a fresh instance.
-        $instance = new static;
+        $instance = new static();
 
         // For some reason Octane doesn't play nice with the injected $route.
         // We need to override it here. However, we can't remove the actual

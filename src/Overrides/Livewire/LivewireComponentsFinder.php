@@ -14,8 +14,11 @@ use Symfony\Component\Finder\SplFileInfo;
 class LivewireComponentsFinder
 {
     protected $path;
+
     protected $files;
+
     protected $manifest;
+
     protected $manifestPath;
 
     public function __construct(Filesystem $files, $manifestPath, $path)
@@ -75,7 +78,8 @@ class LivewireComponentsFinder
                         ->after(app_path().'/')
                         ->replace(['src/', '/', '.php'], ['', '\\', ''])
                         ->__toString(),
-                    '\\');
+                    '\\'
+                );
             })
             ->filter(function (string $class) {
                 return is_subclass_of($class, Component::class) &&
@@ -85,7 +89,7 @@ class LivewireComponentsFinder
 
     public function getComponentFiles()
     {
-        $accessareaResources = app('accessareas')->map(fn($accessarea) => 'src/Http/Components/'.ucfirst($accessarea->slug))->toArray();
+        $accessareaResources = app('accessareas')->map(fn ($accessarea) => 'src/Http/Components/'.ucfirst($accessarea->slug))->toArray();
         $moduleResources = $accessareaResources ? $this->files->moduleResources($accessareaResources, 'files', 4) : [];
 
         return collect($moduleResources)->prioritizeLoading();
