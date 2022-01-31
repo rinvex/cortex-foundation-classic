@@ -44,6 +44,41 @@ trait ConsoleMakeModuleCommand
     }
 
     /**
+     * Get the destination component path.
+     *
+     * @param string $module
+     * @param string $name
+     *
+     * @throws \Exception
+     *
+     * @return string
+     */
+    protected function getResourcePath(string $module, string $name): string
+    {
+        return $this->getModulePath($module).$name.DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * Get the destination module path.
+     *
+     * @param string $name
+     *
+     * @throws \Exception
+     *
+     * @return string
+     */
+    protected function getModulePath($name): string
+    {
+        $name = Str::replaceFirst($this->rootNamespace(), $this->moduleName().DIRECTORY_SEPARATOR, $name);
+
+        if (! $this->files->exists($path = $this->laravel['path'].DIRECTORY_SEPARATOR.$this->moduleName())) {
+            throw new \Exception("Invalid path: {$path}");
+        }
+
+        return $this->laravel['path'].DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $name);
+    }
+
+    /**
      * Get the root namespace for the class.
      *
      * @return string
@@ -61,6 +96,16 @@ trait ConsoleMakeModuleCommand
     protected function moduleName(): string
     {
         return $this->moduleName ?? $this->input->getOption('module') ?? $this->moduleName = $this->ask('What is your module?');
+    }
+
+    /**
+     * Get the accessarea name for the resource.
+     *
+     * @return string
+     */
+    protected function getAccessareaName(): string
+    {
+        return $this->accessarea ?? $this->input->getOption('accessarea') ?? $this->accessarea = $this->choice('What is your accessarea?', app('accessareas')->pluck('slug')->toArray());
     }
 
     /**
