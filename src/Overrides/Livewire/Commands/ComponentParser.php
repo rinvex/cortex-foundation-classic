@@ -54,7 +54,7 @@ class ComponentParser extends BaseComponentParser
 
     public function viewName()
     {
-        return $this->moduleName().'::'.$this->accessarea.'.livewire.'. $this->component;
+        return $this->moduleName().'::'.$this->accessarea.'.livewire.'.$this->component;
     }
 
     public function classNamespace()
@@ -84,7 +84,7 @@ class ComponentParser extends BaseComponentParser
         return preg_replace(['/\[namespace\]/', '/\[class\]/', '/\[view\]/'], [
             $this->classNamespace(),
             $this->className(),
-            $this->viewName()
+            $this->viewName(),
         ], $template);
     }
 
@@ -101,7 +101,7 @@ class ComponentParser extends BaseComponentParser
     {
         $stubName = 'livewire.test.stub';
 
-        if(File::exists($stubPath = base_path($this->stubDirectory.$stubName))) {
+        if (File::exists($stubPath = base_path($this->stubDirectory.$stubName))) {
             $template = file_get_contents($stubPath);
         } else {
             $template = file_get_contents(__DIR__.DIRECTORY_SEPARATOR.$stubName);
@@ -109,7 +109,7 @@ class ComponentParser extends BaseComponentParser
 
         return preg_replace(
             ['/\[testnamespace\]/', '/\[classwithnamespace\]/', '/\[testclass\]/', '/\[class\]/'],
-            [$this->testNamespace(), $this->classNamespace() . '\\' . $this->className(), $this->testClassName(), $this->className()],
+            [$this->testNamespace(), $this->classNamespace().'\\'.$this->className(), $this->testClassName(), $this->className()],
             $template
         );
     }
