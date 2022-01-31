@@ -56,7 +56,7 @@ class LivewireServiceProvider extends BaseLivewireServiceProvider
 
         $this->app->singleton(LivewireComponentsFinder::class, function () use ($defaultManifestPath) {
             return new LivewireComponentsFinder(
-                new Filesystem,
+                new Filesystem(),
                 config('livewire.manifest_path') ?: $defaultManifestPath,
                 ''
             );

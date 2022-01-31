@@ -32,14 +32,14 @@ class FileUploadHandler
     public function validateAndStore($files, $disk)
     {
         Validator::make(['files' => $files], [
-            'files.*' => FileUploadConfiguration::rules()
+            'files.*' => FileUploadConfiguration::rules(),
         ])->validate();
 
         $fileHashPaths = collect($files)->map(function ($file) use ($disk) {
             $filename = TemporaryUploadedFile::generateHashNameWithOriginalNameEmbedded($file);
 
             return $file->storeAs('/'.FileUploadConfiguration::path(), $filename, [
-                'disk' => $disk
+                'disk' => $disk,
             ]);
         });
 

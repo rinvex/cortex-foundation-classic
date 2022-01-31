@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Livewire\Commands;
 
-use Cortex\Foundation\Overrides\Livewire\LivewireComponentsFinder;
-
 use Illuminate\Console\Command;
+use Cortex\Foundation\Overrides\Livewire\LivewireComponentsFinder;
 
 class DiscoverCommand extends Command
 {
