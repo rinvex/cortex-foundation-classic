@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Rinvex\Tags\Traits\Taggable;
 use Spatie\Sluggable\SlugOptions;
 use Rinvex\Support\Traits\HasSlug;
@@ -22,6 +21,7 @@ use Cortex\Foundation\Events\AccessareaCreated;
 use Cortex\Foundation\Events\AccessareaDeleted;
 use Cortex\Foundation\Events\AccessareaUpdated;
 use Cortex\Foundation\Events\AccessareaRestored;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Cortex\Foundation\Exceptions\ProtectedResourceException;
 
