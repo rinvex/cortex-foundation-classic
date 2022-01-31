@@ -19,7 +19,7 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
      * @var string
      */
     protected $signature = 'make:migration {name : The name of the migration.}
-        {--module= : The name of the module.}
+        {--m|module= : The module name to generate the file within.}
         {--create= : The table to be created.}
         {--table= : The table to migrate.}';
 
