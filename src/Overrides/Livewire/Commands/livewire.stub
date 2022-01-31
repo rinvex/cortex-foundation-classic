@@ -1,0 +1,13 @@
+<?php
+
+namespace [namespace];
+
+use Cortex\Foundation\Overrides\Livewire\AbstractComponent;
+
+class [class] extends AbstractComponent
+{
+    public function render()
+    {
+        return view('[view]');
+    }
+}

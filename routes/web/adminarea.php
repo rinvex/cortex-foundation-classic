@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Cortex\Foundation\Overrides\Livewire\Controllers\FileUploadHandler;
+use Cortex\Foundation\Overrides\Livewire\Controllers\FilePreviewHandler;
+use Cortex\Foundation\Overrides\Livewire\Controllers\HttpConnectionHandler;
+
 Route::domain('{adminarea}')->group(function () {
     Route::name('adminarea.')
          ->namespace('Cortex\Foundation\Http\Controllers\Adminarea')
@@ -27,4 +31,10 @@ Route::domain('{adminarea}')->group(function () {
                  Route::delete('{accessarea}')->name('destroy')->uses('AccessareasController@destroy');
              });
          });
+
+             // Livewire Routes
+            Route::post('livewire/message/{name}')->name('cortex.foundation.livewire.message')->uses([HttpConnectionHandler::class, '__invoke']);
+            Route::get('livewire/preview-file/{filename}')->name('cortex.foundation.livewire.preview-file')->uses([FilePreviewHandler::class, 'handle']);
+            Route::post('livewire/upload-file')->name('cortex.foundation.livewire.upload-file')->uses([FileUploadHandler::class, 'handle']);
+        });
 });

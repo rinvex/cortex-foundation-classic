@@ -110,6 +110,7 @@
                 "Cortex\\Foundation\\Providers\\DiscoveryServiceProvider",
                 "Cortex\\Foundation\\Providers\\FoundationServiceProvider",
                 "Cortex\\Foundation\\Providers\\ConsoleSupportServiceProvider",
+                "Cortex\\Foundation\\Overrides\\Livewire\\LivewireServiceProvider",
                 "Cortex\\Foundation\\Overrides\\Lord\\Laroute\\LarouteServiceProvider",
                 "Cortex\\Foundation\\Overrides\\Appstract\\Opcache\\OpcacheServiceProvider"
             ]
