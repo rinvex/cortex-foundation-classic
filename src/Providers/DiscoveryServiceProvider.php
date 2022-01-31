@@ -136,8 +136,8 @@ class DiscoveryServiceProvider extends ServiceProvider
             $this->discoverRoutes('web');
         }
 
-        // Discover broadcasting channel routes
-        $this->discoverRoutes('channels');
+        // Discover broadcasting channels
+        $this->discoverBroadcasts();
 
         $this->app->booted(function () {
             if ($this->app->routesAreCached()) {
@@ -147,6 +147,20 @@ class DiscoveryServiceProvider extends ServiceProvider
                 $this->app['router']->getRoutes()->refreshActionLookups();
             }
         });
+    }
+
+    /**
+     * Discover the broadcast channels for the application.
+     *
+     * @return void
+     */
+    protected function discoverBroadcasts(): void
+    {
+        $moduleResources = $this->app['files']->moduleResources('routes/broadcasts/channels.php', 'files', 2);
+
+        collect($moduleResources)
+            ->prioritizeLoading()
+            ->each(fn (SplFileInfo $file) => require $file->getPathname());
     }
 
     /**
