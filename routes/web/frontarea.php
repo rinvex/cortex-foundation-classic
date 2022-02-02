@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Cortex\Foundation\Http\Controllers\Frontarea\HomeController;
+use Cortex\Foundation\Http\Controllers\Frontarea\GenericController;
 use Cortex\Foundation\Overrides\Livewire\Controllers\FileUploadHandler;
 use Cortex\Foundation\Overrides\Livewire\Controllers\FilePreviewHandler;
 use Cortex\Foundation\Overrides\Livewire\Controllers\HttpConnectionHandler;
@@ -10,15 +12,13 @@ use Cortex\Foundation\Overrides\Livewire\Controllers\LivewireJavaScriptAssets;
 Route::domain('{frontarea}')->group(function () {
     Route::name('frontarea.')
          ->middleware(['web'])
-         ->namespace('Cortex\Foundation\Http\Controllers\Frontarea')
          ->prefix(route_prefix('frontarea'))->group(function () {
 
             // Homepage Routes
-             Route::get('/')->name('home')->uses('HomeController@index');
-             Route::post('country')->name('country')->uses('GenericController@country');
-         });
+            Route::get('/')->name('home')->uses([HomeController::class, 'index']);
+            Route::post('country')->name('country')->uses([GenericController::class, 'country']);
 
-             // Livewire Routes
+            // Livewire Routes
             Route::get('livewire/turbo.js')->name('cortex.foundation.turbo.js')->uses([LivewireJavaScriptAssets::class, 'turbo']);
             Route::get('livewire/livewire.js')->name('cortex.foundation.livewire.js')->uses([LivewireJavaScriptAssets::class, 'source']);
             Route::get('livewire/livewire.js.map')->name('cortex.foundation.livewire.js.map')->uses([LivewireJavaScriptAssets::class, 'maps']);
