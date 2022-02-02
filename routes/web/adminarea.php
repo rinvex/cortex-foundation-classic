@@ -33,8 +33,8 @@ Route::domain('{adminarea}')->group(function () {
              });
 
              // Livewire Routes
-            Route::post('livewire/message/{name}')->name('cortex.foundation.livewire.message')->uses([HttpConnectionHandler::class, '__invoke']);
-            Route::get('livewire/preview-file/{filename}')->name('cortex.foundation.livewire.preview-file')->uses([FilePreviewHandler::class, 'handle']);
-            Route::post('livewire/upload-file')->name('cortex.foundation.livewire.upload-file')->uses([FileUploadHandler::class, 'handle']);
-        });
+             Route::post('livewire/message/{name}')->name('cortex.foundation.livewire.message')->uses([HttpConnectionHandler::class, '__invoke']);
+             Route::get('livewire/preview-file/{filename}')->name('cortex.foundation.livewire.preview-file')->uses([FilePreviewHandler::class, 'handle']);
+             Route::post('livewire/upload-file')->name('cortex.foundation.livewire.upload-file')->uses([FileUploadHandler::class, 'handle']);
+         });
 });
