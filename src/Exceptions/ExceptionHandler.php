@@ -149,10 +149,11 @@ class ExceptionHandler extends BaseExceptionHandler
             $model = $e->getModel();
             $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
             $plural = Str::plural($single);
+            preg_match("/".\Route::getPatterns()[$single]."/", $request->route($single), $matches);
 
             return intend([
                 'url' => Route::has("{$request->accessarea()}.{$plural}.index") ? route("{$request->accessarea()}.{$plural}.index") : route("{$request->accessarea()}.home"),
-                'withErrors' => ['error' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $request->route($single)])],
+                'withErrors' => ['error' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $matches[0]])],
             ], 404);
         } elseif ($e instanceof UniversityLoaderException || $e instanceof CountryLoaderException || $e instanceof LanguageLoaderException) {
             return intend([
