@@ -149,7 +149,7 @@ class ExceptionHandler extends BaseExceptionHandler
             $model = $e->getModel();
             $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
             $plural = Str::plural($single);
-            preg_match("/".\Route::getPatterns()[$single]."/", $request->route($single), $matches);
+            preg_match('/'.\Route::getPatterns()[$single].'/', $request->route($single), $matches);
 
             return intend([
                 'url' => Route::has("{$request->accessarea()}.{$plural}.index") ? route("{$request->accessarea()}.{$plural}.index") : route("{$request->accessarea()}.home"),
