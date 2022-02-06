@@ -15,7 +15,6 @@ use Cortex\Foundation\Models\ImportRecord;
 use Cortex\Foundation\Models\AbstractModel;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Session as SessionFacade;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
@@ -77,12 +76,6 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Early set application locale globaly
         $this->app['laravellocalization']->setLocale();
-
-        // Map relations
-        Relation::morphMap([
-            'media' => config('medialibrary.media_model'),
-            'accessarea' => config('cortex.foundation.models.accessarea'),
-        ]);
 
         SessionFacade::extend('database', function ($app) {
             $table = $app['config']['session.table'];
