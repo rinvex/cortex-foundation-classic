@@ -18,6 +18,49 @@ This package still not yet documented, but you can use it on your own responsibi
 To be documented soon..!
 
 
+## Examples
+
+Rinvex Cortex supports Livewire, to add an example Livewire Component, do the following:
+
+Create a new component class `app/cortex/foundation/src/Http/Components/Adminarea/Counter.php`:
+```php
+<?php
+
+namespace Cortex\Foundation\Http\Components\Adminarea;
+
+use Cortex\Foundation\Overrides\Livewire\Component;
+
+class Counter extends Component
+{
+    public $count = 0;
+
+    public function increment()
+    {
+        $this->count++;
+    }
+
+    public function render()
+    {
+        //$this->authorize('update', $this->post);
+
+        return view('cortex/foundation::adminarea.components.counter');
+    }
+}
+```
+
+Create a new component view `app/cortex/foundation/src/Http/Components/Adminarea/Counter.php`:
+```php
+<div style="text-align: center">
+    <button wire:click="increment">+</button>
+    <h1>{{ $count }}</h1>
+</div>
+```
+
+Use the new component anywhere in your blade templates:
+```php
+<livewire:adminarea.cortex.foundation.counter />
+```
+
 ## Changelog
 
 Refer to the [Changelog](CHANGELOG.md) for a full history of the project.
