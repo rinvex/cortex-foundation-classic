@@ -148,8 +148,8 @@ class ExceptionHandler extends BaseExceptionHandler
         } elseif ($e instanceof ModelNotFoundException) {
             $model = $e->getModel();
             $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
+            preg_match('/'.(Route::getPattern($single) ?: '[a-zA-Z0-9-_]+').'/', $request->route($single), $matches);
             $plural = Str::plural($single);
-            preg_match('/'.\Route::getPatterns()[$single].'/', $request->route($single), $matches);
 
             return intend([
                 'url' => Route::has("{$request->accessarea()}.{$plural}.index") ? route("{$request->accessarea()}.{$plural}.index") : route("{$request->accessarea()}.home"),

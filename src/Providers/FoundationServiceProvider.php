@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Illuminate\Routing\Router;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Cortex\Foundation\Http\FormRequest;
@@ -89,6 +90,22 @@ class FoundationServiceProvider extends ServiceProvider
                 $lifetime,
                 $app
             );
+        });
+
+        /**
+         * Get an item from the patterns by key.
+         *
+         * @param mixed $key
+         * @param mixed $default
+         *
+         * @return mixed
+         */
+        Router::macro('getPattern', function ($key, $default = null) {
+            if (array_key_exists($key, $this->patterns)) {
+                return $this->patterns[$key];
+            }
+
+            return value($default);
         });
 
         // Override `FormRequest` container binding
