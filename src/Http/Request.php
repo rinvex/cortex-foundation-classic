@@ -104,9 +104,12 @@ class Request extends BaseRequest
      *   Ex: 'adminarea.cortex.auth.abilities.index' => means guard is 'Admin' for that named route!
      *       'Cortex\Auth\Http\Controllers\Adminarea\AbilitiesController' => means guard is 'Admin' for that controller!
      *
-     * - URL prefixes does NOT necessarily match guards. Ex: adminarea could have URL prefix of '/blahblah' or '/secret'
-     * - Middleware list is not complete, since controller constructors can still append it, just be aware.
-     * - Accessarea must match guards. Ex: 'adminarea' always use 'admin' guard, and so on.
+     * - Route middleware list is not complete, since the controller constructors can still append the list in runtime!
+     *
+     * - URL prefix itself does NOT necessarily match the guard name, however we query the accessarea details
+     *   using its URL prefix. Ex: Accessarea 'adminarea' could have URL prefix of '/blahblah' or '/secret'
+     *
+     * - Accessarea slug must match guard name. Ex: 'adminarea' always use 'admin' guard, and so on.
      *
      * @return string
      */
@@ -150,8 +153,8 @@ class Request extends BaseRequest
             }
         }
 
-        // B. Guess guard from: prefixed url (possibly route not found / 404 page)
-        if (($segment = $this->segment(1)) && $guard = Str::before($segment, 'area')) {
+        // B. Guess guard from: accessarea-specific prefixed url (possibly route not found / 404 page)
+        if (($rawSegment = $this->segment(1)) && ($segment = app('accessareas')->first(fn($accessarea) => $accessarea['prefix'] === $rawSegment)?->slug) && $guard = Str::before($segment, 'area')) {
             ! Str::startsWith($guard, 'api') || $this->isApi = true;
 
             if (array_key_exists($guard, config('auth.guards'))) {
@@ -160,7 +163,6 @@ class Request extends BaseRequest
         }
 
         // C. Guess guard from: accessarea-specific domain
-        //if (! empty($domains = Arr::first(config('app.domains'), fn($accessareas, $domain) => $domain === $this->getHost()))) {
         if (! empty($domains = Arr::first(config('app.domains'), fn($accessareas, $domain) => $domain === $this->getHost())) && ($segment = $domains[0]) && $guard = Str::before($segment, 'area')) {
             ! Str::startsWith($guard, 'api') || $this->isApi = true;
 
