@@ -161,7 +161,7 @@ class Request extends BaseRequest
 
         // C. Guess guard from: accessarea-specific domain
         //if (! empty($domains = Arr::first(config('app.domains'), fn($accessareas, $domain) => $domain === $this->getHost()))) {
-        if (! empty($domains = Arr::first(config('app.domains'), fn($accessareas, $domain) => $domain === $this->getHost())) && ($segment = $domains[0]) && $guard = Str::before($segment, 'area')) {
+        if (! empty($domains = Arr::first(config('app.domains'), fn ($accessareas, $domain) => $domain === $this->getHost())) && ($segment = $domains[0]) && $guard = Str::before($segment, 'area')) {
             ! Str::startsWith($guard, 'api') || $this->isApi = true;
 
             if (array_key_exists($guard, config('auth.guards'))) {
