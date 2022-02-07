@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Http;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request as BaseRequest;
 
@@ -149,11 +150,30 @@ class Request extends BaseRequest
             }
         }
 
-        // B. Catch other use cases:
-        // B.1. Route NOT matched / Wrong URL (ex. 404 error)
-        // B.2. Route matched but NOT a valid accessarea. This could happen if route is mistakenly named,
+        // B. Guess guard from: prefixed url (possibly route not found / 404 page)
+        if (($segment = $this->segment(1)) && $guard = Str::before($segment, 'area')) {
+            ! Str::startsWith($guard, 'api') || $this->isApi = true;
+
+            if (array_key_exists($guard, config('auth.guards'))) {
+                return $this->guard = $guard;
+            }
+        }
+
+        // C. Guess guard from: accessarea-specific domain
+        //if (! empty($domains = Arr::first(config('app.domains'), fn($accessareas, $domain) => $domain === $this->getHost()))) {
+        if (! empty($domains = Arr::first(config('app.domains'), fn($accessareas, $domain) => $domain === $this->getHost())) && ($segment = $domains[0]) && $guard = Str::before($segment, 'area')) {
+            ! Str::startsWith($guard, 'api') || $this->isApi = true;
+
+            if (array_key_exists($guard, config('auth.guards'))) {
+                return $this->guard = $guard;
+            }
+        }
+
+        // D. Catch other use cases:
+        // D.1. Route NOT matched / Wrong URL (ex. 404 error)
+        // D.2. Route matched but NOT a valid accessarea. This could happen if route is mistakenly named,
         //      or controller namespace is not correct, make sure route names contain valid accessarea prefix.
-        // B.3. Route matched, but guessed guard is not found. Ex: 'tenant', so the guard is defaulted to 'member'.
+        // D.3. Route matched, but guessed guard is not found. Ex: 'tenant', so the guard is defaulted to 'member'.
         return $this->guard = $this->isApi ? config('auth.defaults.apiguard') : config('auth.defaults.guard');
     }
 
