@@ -154,7 +154,7 @@ class Request extends BaseRequest
         }
 
         // B. Guess guard from: accessarea-specific prefixed url (possibly route not found / 404 page)
-        if (($rawSegment = $this->segment(1)) && ($segment = app('accessareas')->first(fn($accessarea) => $accessarea['prefix'] === $rawSegment)?->slug) && $guard = Str::before($segment, 'area')) {
+        if (($rawSegment = $this->segment(1)) && ($segment = app('accessareas')->first(fn ($accessarea) => $accessarea['prefix'] === $rawSegment)?->slug) && $guard = Str::before($segment, 'area')) {
             ! Str::startsWith($guard, 'api') || $this->isApi = true;
 
             if (array_key_exists($guard, config('auth.guards'))) {
@@ -163,7 +163,7 @@ class Request extends BaseRequest
         }
 
         // C. Guess guard from: accessarea-specific domain
-        if (! empty($domains = Arr::first(config('app.domains'), fn($accessareas, $domain) => $domain === $this->getHost())) && ($segment = $domains[0]) && $guard = Str::before($segment, 'area')) {
+        if (! empty($domains = Arr::first(config('app.domains'), fn ($accessareas, $domain) => $domain === $this->getHost())) && ($segment = $domains[0]) && $guard = Str::before($segment, 'area')) {
             ! Str::startsWith($guard, 'api') || $this->isApi = true;
 
             if (array_key_exists($guard, config('auth.guards'))) {
