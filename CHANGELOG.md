@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.2.9] - 2022-02-13
+- Require Livewire composer dependency
+
 ## [v7.2.8] - 2022-02-13
 - Clean migrations
 - ExceptionHandler > ModelNotFound: Fix issue when route pattern doesn't exist
@@ -642,6 +645,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.2.9]: https://github.com/rinvex/cortex-foundation/compare/v7.2.8...v7.2.9
 [v7.2.8]: https://github.com/rinvex/cortex-foundation/compare/v7.2.7...v7.2.8
 [v7.2.7]: https://github.com/rinvex/cortex-foundation/compare/v7.2.6...v7.2.7
 [v7.2.6]: https://github.com/rinvex/cortex-foundation/compare/v7.2.5...v7.2.6
