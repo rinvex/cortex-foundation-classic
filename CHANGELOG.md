@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.2.8] - 2022-02-13
+- Clean migrations
+- ExceptionHandler > ModelNotFound: Fix issue when route pattern doesn't exist
+- Update reuqest()->guard() logic to support dynamic accessarea URL prefixes
+- Request guard: add support for url prefix & accessarea-specific domain check
+- Move Relation::morphMap to module bootstrap
+- Add Livewire component example
+- Sanitize request route parameter on ModelNotFoundException
+- Update routes to use class based definitions
+- Enfoce consistency
+- Add artisan command shortcut
+- Add Livewire support
+- Add getResourcePath & getModulePath methods to artisan commands
+- Separate AuthorizesRequests into it's own trait
+- Update broadcasting channels discovery
+- Add support for model HasFactory
+
 ## [v7.2.7] - 2022-01-02
 - Add support for centralarea & absentarea
 - Throw an exception in case of potentially infinite redirects
@@ -625,6 +642,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.2.8]: https://github.com/rinvex/cortex-foundation/compare/v7.2.7...v7.2.8
 [v7.2.7]: https://github.com/rinvex/cortex-foundation/compare/v7.2.6...v7.2.7
 [v7.2.6]: https://github.com/rinvex/cortex-foundation/compare/v7.2.5...v7.2.6
 [v7.2.5]: https://github.com/rinvex/cortex-foundation/compare/v7.2.4...v7.2.5
