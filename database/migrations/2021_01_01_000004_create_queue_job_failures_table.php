@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFailedQueueJobsTable extends Migration
+class CreateQueueJobFailuresTable extends Migration
 {
     /**
      * Run the migrations.
