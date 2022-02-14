@@ -14,8 +14,8 @@ use Cortex\Foundation\Providers\RoutingServiceProvider;
 use Illuminate\Foundation\Application as BaseApplication;
 use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Illuminate\Foundation\PackageManifest as BasePackageManifest;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class Application extends BaseApplication
 {
