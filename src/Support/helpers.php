@@ -28,7 +28,7 @@ if (! function_exists('route_prefix')) {
      */
     function route_prefix($accessarea)
     {
-        $prefix = optional(app('accessareas')->firstWhere('slug', $accessarea))->prefix;
+        $prefix = app('accessareas')->firstWhere('slug', $accessarea)?->prefix;
 
         return config('cortex.foundation.route.locale_prefix') ? "{locale}/{$prefix}" : $prefix;
     }
