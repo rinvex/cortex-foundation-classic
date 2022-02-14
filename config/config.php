@@ -56,6 +56,8 @@ return [
         'temporary_uploads' => 'temporary_uploads',
         'accessareas' => 'accessareas',
         'accessibles' => 'accessibles',
+        'cache_records' => 'cache_records',
+        'cache_locks' => 'cache_locks',
     ],
 
     // Media storage config
