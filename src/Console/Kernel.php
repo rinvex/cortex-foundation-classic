@@ -86,6 +86,9 @@ class Kernel extends ConsoleKernel
     /**
      * Register all of the commands in the given directory.
      *
+     * @TODO: support loading dev commands on dev env only, and production commands everywhere,
+     *        maybe we can add a property inside each command, and check it here if exists before loading.
+     *
      * @param array|string $paths
      *
      * @return void

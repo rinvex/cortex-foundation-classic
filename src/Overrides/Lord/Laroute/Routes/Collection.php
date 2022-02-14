@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Overrides\Lord\Laroute\Routes;
 
 use Illuminate\Routing\Route;
-use Illuminate\Routing\AbstractRouteCollection;
+use Illuminate\Routing\RouteCollectionInterface;
 use Lord\Laroute\Routes\Collection as BaseCollection;
 use Lord\Laroute\Routes\Exceptions\ZeroRoutesException;
 
 class Collection extends BaseCollection
 {
-    public function __construct(AbstractRouteCollection $routes, $filter, $namespace)
+    public function __construct(RouteCollectionInterface $routes, $filter, $namespace)
     {
         $this->items = $this->parseRoutes($routes, $filter, $namespace);
     }
@@ -19,15 +19,14 @@ class Collection extends BaseCollection
     /**
      * Parse the routes into a jsonable output.
      *
-     * @param AbstractRouteCollection $routes
-     * @param string                  $filter
-     * @param string                  $namespace
-     *
-     * @throws ZeroRoutesException
+     * @param RouteCollectionInterface $routes
+     * @param string $filter
+     * @param string $namespace
      *
      * @return array
+     * @throws ZeroRoutesException
      */
-    protected function parseRoutes(AbstractRouteCollection $routes, $filter, $namespace)
+    protected function parseRoutes(RouteCollectionInterface $routes, $filter, $namespace)
     {
         $this->guardAgainstZeroRoutes($routes);
 
@@ -41,13 +40,13 @@ class Collection extends BaseCollection
     }
 
     /**
-     * Throw an exception if there aren't any routes to process.
+     * Throw an exception if there aren't any routes to process
      *
-     * @param AbstractRouteCollection $routes
+     * @param RouteCollectionInterface $routes
      *
      * @throws ZeroRoutesException
      */
-    protected function guardAgainstZeroRoutes(AbstractRouteCollection $routes)
+    protected function guardAgainstZeroRoutes(RouteCollectionInterface $routes)
     {
         if (count($routes) < 1) {
             throw new ZeroRoutesException("You don't have any routes!");
@@ -63,7 +62,7 @@ class Collection extends BaseCollection
      *
      * @return array
      */
-    protected function getRouteInformation(Route $route, $filter, $namespace): ?array
+    protected function getRouteInformation(Route $route, $filter, $namespace)
     {
         $uri = $route->uri();
         $host = $route->domain();

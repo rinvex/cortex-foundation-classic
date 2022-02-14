@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.2] - 2022-02-14
+- Add todo note for future improvement of artisan autoloading
+- L9: Fix compatibility issue with Laroute
+- L9: Update Artisan & Migration service providers
+- Add cache migrations
+
 ## [v7.3.1] - 2022-02-14
 - L9: drop fideloper/proxy dependency
 - L9: update Application::handle signature compatobol;compatibility
@@ -654,6 +660,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.2]: https://github.com/rinvex/cortex-foundation/compare/v7.3.1...v7.3.2
 [v7.3.1]: https://github.com/rinvex/cortex-foundation/compare/v7.3.0...v7.3.1
 [v7.3.0]: https://github.com/rinvex/cortex-foundation/compare/v7.2.9...v7.3.0
 [v7.2.9]: https://github.com/rinvex/cortex-foundation/compare/v7.2.8...v7.2.9

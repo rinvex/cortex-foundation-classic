@@ -6,11 +6,46 @@ namespace Cortex\Foundation\Providers;
 
 use Rinvex\Support\Traits\ConsoleTools;
 use Illuminate\Database\Console\DbCommand;
+use Illuminate\Database\Console\DumpCommand;
+use Illuminate\Database\Console\WipeCommand;
+use Illuminate\Foundation\Console\UpCommand;
+use Illuminate\Database\Console\PruneCommand;
+use Illuminate\Foundation\Console\DownCommand;
+use Illuminate\Auth\Console\ClearResetsCommand;
+use Illuminate\Foundation\Console\OptimizeCommand;
+use Illuminate\Foundation\Console\RouteListCommand;
+use Illuminate\Foundation\Console\ScopeMakeCommand;
+use Illuminate\Foundation\Console\ViewCacheCommand;
+use Illuminate\Foundation\Console\ViewClearCommand;
+use Illuminate\Foundation\Console\RouteCacheCommand;
+use Illuminate\Foundation\Console\RouteClearCommand;
+use Illuminate\Foundation\Console\EventClearCommand;
+use Illuminate\Foundation\Console\ConfigCacheCommand;
+use Illuminate\Foundation\Console\ConfigClearCommand;
+use Illuminate\Foundation\Console\EnvironmentCommand;
 use Illuminate\Console\Scheduling\ScheduleRunCommand;
 use Illuminate\Console\Scheduling\ScheduleListCommand;
 use Illuminate\Console\Scheduling\ScheduleTestCommand;
 use Illuminate\Console\Scheduling\ScheduleWorkCommand;
+use Illuminate\Foundation\Console\OptimizeClearCommand;
+use Illuminate\Foundation\Console\ClearCompiledCommand;
 use Illuminate\Console\Scheduling\ScheduleFinishCommand;
+use Illuminate\Foundation\Console\PackageDiscoverCommand;
+use Illuminate\Console\Scheduling\ScheduleClearCacheCommand;
+use Illuminate\Queue\Console\WorkCommand as QueueWorkCommand;
+use Illuminate\Cache\Console\ClearCommand as CacheClearCommand;
+use Illuminate\Queue\Console\RetryCommand as QueueRetryCommand;
+use Illuminate\Queue\Console\ClearCommand as QueueClearCommand;
+use Illuminate\Cache\Console\ForgetCommand as CacheForgetCommand;
+use Illuminate\Queue\Console\ListenCommand as QueueListenCommand;
+use Illuminate\Queue\Console\MonitorCommand as QueueMonitorCommand;
+use Illuminate\Queue\Console\RestartCommand as QueueRestartCommand;
+use Illuminate\Queue\Console\RetryBatchCommand as QueueRetryBatchCommand;
+use Illuminate\Queue\Console\ListFailedCommand as ListFailedQueueCommand;
+use Illuminate\Queue\Console\FlushFailedCommand as FlushFailedQueueCommand;
+use Illuminate\Queue\Console\ForgetFailedCommand as ForgetFailedQueueCommand;
+use Illuminate\Queue\Console\PruneBatchesCommand as QueuePruneBatchesCommand;
+use Illuminate\Queue\Console\PruneFailedJobsCommand as QueuePruneFailedJobsCommand;
 use Illuminate\Foundation\Providers\ArtisanServiceProvider as BaseArtisanServiceProvider;
 
 class ArtisanServiceProvider extends BaseArtisanServiceProvider
@@ -23,42 +58,46 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      * @var array
      */
     protected $commands = [
-        'CacheClear' => 'command.cache.clear',
-        'CacheForget' => 'command.cache.forget',
-        'ClearCompiled' => 'command.clear-compiled',
-        'ConfigCache' => 'command.config.cache',
-        'ConfigClear' => 'command.config.clear',
+        'CacheClear' => CacheClearCommand::class,
+        'CacheForget' => CacheForgetCommand::class,
+        'ClearCompiled' => ClearCompiledCommand::class,
+        'ClearResets' => ClearResetsCommand::class,
+        'ConfigCache' => ConfigCacheCommand::class,
+        'ConfigClear' => ConfigClearCommand::class,
         'Db' => DbCommand::class,
-        'Down' => 'command.down',
-        'Environment' => 'command.environment',
-        'EventClear' => 'command.event.clear',
-        'KeyGenerate' => 'command.key.generate',
-        'Optimize' => 'command.optimize',
-        'OptimizeClear' => 'command.optimize.clear',
-        'PackageDiscover' => 'command.package.discover',
-        'QueueClear' => 'command.queue.clear',
-        'QueueFailed' => 'command.queue.failed',
-        'QueueFlush' => 'command.queue.flush',
-        'QueueForget' => 'command.queue.forget',
-        'QueueListen' => 'command.queue.listen',
-        'QueuePruneBatches' => 'command.queue.prune-batches',
-        'QueueRestart' => 'command.queue.restart',
-        'QueueRetry' => 'command.queue.retry',
-        'QueueRetryBatch' => 'command.queue.retry-batch',
-        'QueueWork' => 'command.queue.work',
-        'RouteCache' => 'command.route.cache',
-        'RouteClear' => 'command.route.clear',
-        'RouteList' => 'command.route.list',
-        'SchemaDump' => 'command.schema.dump',
-        'Seed' => 'command.seed',
+        'DbPrune' => PruneCommand::class,
+        'DbWipe' => WipeCommand::class,
+        'Down' => DownCommand::class,
+        'Environment' => EnvironmentCommand::class,
+        'EventClear' => EventClearCommand::class,
+        'Optimize' => OptimizeCommand::class,
+        'OptimizeClear' => OptimizeClearCommand::class,
+        'PackageDiscover' => PackageDiscoverCommand::class,
+        'QueueClear' => QueueClearCommand::class,
+        'QueueFailed' => ListFailedQueueCommand::class,
+        'QueueFlush' => FlushFailedQueueCommand::class,
+        'QueueForget' => ForgetFailedQueueCommand::class,
+        'QueueListen' => QueueListenCommand::class,
+        'QueueMonitor' => QueueMonitorCommand::class,
+        'QueuePruneBatches' => QueuePruneBatchesCommand::class,
+        'QueuePruneFailedJobs' => QueuePruneFailedJobsCommand::class,
+        'QueueRestart' => QueueRestartCommand::class,
+        'QueueRetry' => QueueRetryCommand::class,
+        'QueueRetryBatch' => QueueRetryBatchCommand::class,
+        'QueueWork' => QueueWorkCommand::class,
+        'RouteCache' => RouteCacheCommand::class,
+        'RouteClear' => RouteClearCommand::class,
+        'RouteList' => RouteListCommand::class,
+        'SchemaDump' => DumpCommand::class,
         'ScheduleFinish' => ScheduleFinishCommand::class,
         'ScheduleList' => ScheduleListCommand::class,
         'ScheduleRun' => ScheduleRunCommand::class,
+        'ScheduleClearCache' => ScheduleClearCacheCommand::class,
         'ScheduleTest' => ScheduleTestCommand::class,
         'ScheduleWork' => ScheduleWorkCommand::class,
-        'Up' => 'command.up',
-        'ViewCache' => 'command.view.cache',
-        'ViewClear' => 'command.view.clear',
+        'Up' => UpCommand::class,
+        'ViewCache' => ViewCacheCommand::class,
+        'ViewClear' => ViewClearCommand::class,
     ];
 
     /**
@@ -66,15 +105,10 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
      *
      * @var array
      */
-    protected $devCommands = [
-        'DbWipe' => 'command.db.wipe',
-    ];
+    protected $devCommands = [];
 
     /**
      * Register the service provider.
-     *
-     * @TODO: Move artisan command registration to `Cortex\Foundation\Console\Kernel`
-     *        to be autoloaded like other module commands!
      *
      * @return void
      */
