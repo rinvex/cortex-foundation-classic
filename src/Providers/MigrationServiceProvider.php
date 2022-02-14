@@ -5,7 +5,14 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Providers;
 
 use Rinvex\Support\Traits\ConsoleTools;
-use Cortex\Foundation\Console\Commands\MigrateMakeCommand;
+use Illuminate\Database\Console\Migrations\ResetCommand;
+use Illuminate\Database\Console\Migrations\FreshCommand;
+use Illuminate\Database\Console\Migrations\StatusCommand;
+use Illuminate\Database\Console\Migrations\RefreshCommand;
+use Illuminate\Database\Console\Migrations\InstallCommand;
+use Illuminate\Database\Console\Migrations\MigrateCommand;
+use Illuminate\Database\Console\Migrations\RollbackCommand;
+use Illuminate\Database\Console\Migrations\MigrateMakeCommand;
 use Illuminate\Database\MigrationServiceProvider as BaseMigrationServiceProvider;
 
 class MigrationServiceProvider extends BaseMigrationServiceProvider
@@ -18,9 +25,9 @@ class MigrationServiceProvider extends BaseMigrationServiceProvider
      * @var array
      */
     protected $commands = [
-        'Migrate' => 'command.migrate',
-        'MigrateRollback' => 'command.migrate.rollback',
-        'MigrateStatus' => 'command.migrate.status',
+        'Migrate' => MigrateCommand::class,
+        'MigrateRollback' => RollbackCommand::class,
+        'MigrateStatus' => StatusCommand::class,
     ];
 
     /**
@@ -29,11 +36,11 @@ class MigrationServiceProvider extends BaseMigrationServiceProvider
      * @var array
      */
     protected $devCommands = [
-        'MigrateFresh' => 'command.migrate.fresh',
-        'MigrateInstall' => 'command.migrate.install',
-        'MigrateRefresh' => 'command.migrate.refresh',
-        'MigrateReset' => 'command.migrate.reset',
-        'MigrateMake' => 'command.migrate.make',
+        'MigrateFresh' => FreshCommand::class,
+        'MigrateInstall' => InstallCommand::class,
+        'MigrateRefresh' => RefreshCommand::class,
+        'MigrateReset' => ResetCommand::class,
+        'MigrateMake' => MigrateMakeCommand::class,
     ];
 
     /**
@@ -63,7 +70,7 @@ class MigrationServiceProvider extends BaseMigrationServiceProvider
     protected function registerCommands(array $commands)
     {
         foreach (array_keys($commands) as $command) {
-            call_user_func_array([$this, "register{$command}Command"], []);
+            $this->{"register{$command}Command"}();
         }
 
         $this->commands(array_values($commands));
@@ -74,9 +81,9 @@ class MigrationServiceProvider extends BaseMigrationServiceProvider
      *
      * @return void
      */
-    protected function registerMigrateMakeCommand(): void
+    protected function registerMigrateMakeCommand()
     {
-        $this->app->singleton('command.migrate.make', function ($app) {
+        $this->app->singleton(MigrateMakeCommand::class, function ($app) {
             // Once we have the migration creator registered, we will create the command
             // and inject the creator. The creator is responsible for the actual file
             // creation of the migrations, and may be extended by these developers.
