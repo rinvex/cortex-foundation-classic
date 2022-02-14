@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Http\Middleware;
 
 use Illuminate\Http\Request;
-use Fideloper\Proxy\TrustProxies as BaseTrustProxies;
+use Illuminate\Http\Middleware\TrustProxies as BaseTrustProxies;
 
 class TrustProxies extends BaseTrustProxies
 {
