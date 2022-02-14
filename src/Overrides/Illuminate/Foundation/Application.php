@@ -14,6 +14,7 @@ use Cortex\Foundation\Providers\RoutingServiceProvider;
 use Illuminate\Foundation\Application as BaseApplication;
 use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Illuminate\Foundation\PackageManifest as BasePackageManifest;
 
 class Application extends BaseApplication
@@ -64,20 +65,11 @@ class Application extends BaseApplication
     }
 
     /**
-     * Handles a Request to convert it to a Response.
-     *
-     * When $catch is true, the implementation must catch all exceptions
-     * and do its best to convert them to a Response instance.
-     *
-     * @param int  $type  The type of the request
-     *                    (one of HttpKernelInterface::MAIN_REQUEST or HttpKernelInterface::SUB_REQUEST)
-     * @param bool $catch Whether to catch exceptions or not
-     *
-     * @throws \Exception When an Exception occurs during processing
+     * {@inheritdoc}
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handle(SymfonyRequest $request, int $type = self::MASTER_REQUEST, bool $catch = true)
+    public function handle(SymfonyRequest $request, int $type = self::MAIN_REQUEST, bool $catch = true): SymfonyResponse
     {
         return $this[HttpKernelContract::class]->handle(Request::createFromBase($request));
     }
