@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Providers;
 
 use Rinvex\Support\Traits\ConsoleTools;
-use Illuminate\Database\Console\Migrations\ResetCommand;
 use Illuminate\Database\Console\Migrations\FreshCommand;
+use Illuminate\Database\Console\Migrations\ResetCommand;
 use Illuminate\Database\Console\Migrations\StatusCommand;
-use Illuminate\Database\Console\Migrations\RefreshCommand;
 use Illuminate\Database\Console\Migrations\InstallCommand;
 use Illuminate\Database\Console\Migrations\MigrateCommand;
+use Illuminate\Database\Console\Migrations\RefreshCommand;
 use Illuminate\Database\Console\Migrations\RollbackCommand;
 use Illuminate\Database\Console\Migrations\MigrateMakeCommand;
 use Illuminate\Database\MigrationServiceProvider as BaseMigrationServiceProvider;
