@@ -40,7 +40,7 @@ class BootServiceProvider extends ServiceProvider
         $modulesManifestPath = $this->app->getCachedModulesPath();
         $modulesManifest = is_file($modulesManifestPath) ? $this->app['files']->getRequire($modulesManifestPath) : [];
         $enabledModules = collect($modulesManifest)->filter(fn ($attributes) => $attributes['active'] && $attributes['autoload']);
-        $enabledModulesPaths = $enabledModules->map(fn ($val, $key) => app()->path($key))->toArray();
+        $enabledModulesPaths = $enabledModules->map(fn ($val, $key) => app()->path($key))->filter(fn ($path) => file_exists($path))->toArray();
 
         // Register filesystem module resources macro
         Filesystem::macro('moduleResources', function ($resource, $type = 'files', $depth = 1) use ($enabledModulesPaths) {
