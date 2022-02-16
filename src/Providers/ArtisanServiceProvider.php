@@ -12,6 +12,7 @@ use Illuminate\Foundation\Console\UpCommand;
 use Illuminate\Database\Console\PruneCommand;
 use Illuminate\Foundation\Console\DownCommand;
 use Illuminate\Auth\Console\ClearResetsCommand;
+use Illuminate\Database\Console\Seeds\SeedCommand;
 use Illuminate\Foundation\Console\OptimizeCommand;
 use Illuminate\Foundation\Console\RouteListCommand;
 use Illuminate\Foundation\Console\ViewCacheCommand;
@@ -68,7 +69,10 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'DbWipe' => WipeCommand::class,
         'Down' => DownCommand::class,
         'Environment' => EnvironmentCommand::class,
+        //'EventCache' => EventCacheCommand::class,
         'EventClear' => EventClearCommand::class,
+        //'EventList' => EventListCommand::class,
+        //'KeyGenerate' => KeyGenerateCommand::class,
         'Optimize' => OptimizeCommand::class,
         'OptimizeClear' => OptimizeClearCommand::class,
         'PackageDiscover' => PackageDiscoverCommand::class,
@@ -88,12 +92,14 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
         'RouteClear' => RouteClearCommand::class,
         'RouteList' => RouteListCommand::class,
         'SchemaDump' => DumpCommand::class,
+        'Seed' => SeedCommand::class,
         'ScheduleFinish' => ScheduleFinishCommand::class,
         'ScheduleList' => ScheduleListCommand::class,
         'ScheduleRun' => ScheduleRunCommand::class,
         'ScheduleClearCache' => ScheduleClearCacheCommand::class,
         'ScheduleTest' => ScheduleTestCommand::class,
         'ScheduleWork' => ScheduleWorkCommand::class,
+        //'StorageLink' => StorageLinkCommand::class,
         'Up' => UpCommand::class,
         'ViewCache' => ViewCacheCommand::class,
         'ViewClear' => ViewClearCommand::class,
