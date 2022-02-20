@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.5] - 2022-02-20
+- Override Datatables DataArrayTransformer to export columns with their db names instead of their localized titles
+- Fix dropzone accepted file extensions and make it configurable
+
 ## [v7.3.4] - 2022-02-17
 - Bind missing db:seed artisan command
 
@@ -666,6 +670,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.5]: https://github.com/rinvex/cortex-foundation/compare/v7.3.4...v7.3.5
 [v7.3.4]: https://github.com/rinvex/cortex-foundation/compare/v7.3.3...v7.3.4
 [v7.3.3]: https://github.com/rinvex/cortex-foundation/compare/v7.3.2...v7.3.3
 [v7.3.2]: https://github.com/rinvex/cortex-foundation/compare/v7.3.1...v7.3.2
