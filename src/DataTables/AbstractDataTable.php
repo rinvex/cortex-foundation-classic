@@ -7,9 +7,10 @@ namespace Cortex\Foundation\DataTables;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Vinkla\Hashids\Facades\Hashids;
-use Yajra\DataTables\Services\DataTable;
+use Cortex\Foundation\Transformers\DataArrayTransformer;
+use Yajra\DataTables\Services\DataTable as BaseDataTable;
 
-abstract class AbstractDataTable extends DataTable
+abstract class AbstractDataTable extends BaseDataTable
 {
     /**
      * The model class.
@@ -302,5 +303,22 @@ CDATA;
         $resource = Str::plural(mb_strtolower(Arr::last(explode(class_exists($model) ? '\\' : '.', $model))));
 
         return $resource.'-export-'.date('Y-m-d').'-'.time();
+    }
+
+    /**
+     * Map ajax response to columns definition.
+     *
+     * @param mixed  $columns
+     * @param string $type
+     *
+     * @return array
+     */
+    protected function mapResponseToColumns($columns, $type)
+    {
+        $transformer = new DataArrayTransformer;
+
+        return array_map(function ($row) use ($columns, $type, $transformer) {
+            return $transformer->transform($row, $columns, $type);
+        }, $this->getAjaxResponseData());
     }
 }

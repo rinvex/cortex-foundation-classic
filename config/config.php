@@ -111,6 +111,17 @@ return [
             'pageLength' => true,
         ],
 
+        'imports' => [
+            'xlsx',
+            'xlsm',
+            'xltx',
+            'xltm',
+            'xls',
+            'xlt',
+            'csv',
+            'tsv',
+        ],
+
     ],
 
 ];
