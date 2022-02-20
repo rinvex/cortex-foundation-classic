@@ -315,7 +315,7 @@ CDATA;
      */
     protected function mapResponseToColumns($columns, $type)
     {
-        $transformer = new DataArrayTransformer;
+        $transformer = new DataArrayTransformer();
 
         return array_map(function ($row) use ($columns, $type, $transformer) {
             return $transformer->transform($row, $columns, $type);
