@@ -4,40 +4,26 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Importers;
 
-use Maatwebsite\Excel\Files\ExcelFile;
+use Illuminate\Database\Eloquent\Model;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class DefaultImporter extends ExcelFile
+class DefaultImporter implements ToModel, WithHeadingRow
 {
-    /**
-     * The importer config.
-     *
-     * @var array
-     */
-    public $config = [
-        'name' => 'name',
-        'log' => true,
-    ];
+    use Importable;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected $delimiter = ';';
+    protected Model $model;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected $enclosure = '"';
-
-    /**
-     * {@inheritdoc}
-     */
-    protected $lineEnding = '\r\n';
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFile()
+    public function of(Model $resource)
     {
-        return request()->file('file');
+        $this->model = $resource;
+
+        return $this;
+    }
+
+    public function model(array $row)
+    {
+        return $this->model->create($row);
     }
 }

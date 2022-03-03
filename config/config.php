@@ -52,7 +52,6 @@ return [
         'media' => 'media',
         'activity_log' => 'activity_log',
         'notifications' => 'notifications',
-        'import_records' => 'import_records',
         'temporary_uploads' => 'temporary_uploads',
         'accessareas' => 'accessareas',
         'accessibles' => 'accessibles',
