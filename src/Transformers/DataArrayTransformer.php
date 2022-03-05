@@ -30,7 +30,7 @@ class DataArrayTransformer extends BaseDataArrayTransformer
                 $title = $column['name'];
                 $data = Arr::get($row, $column['data']);
 
-                if ($type == 'exportable') {
+                if ($type === 'exportable') {
                     $title = $this->decodeContent($title);
                     $dataType = gettype($data);
                     $data = $this->decodeContent($data);
