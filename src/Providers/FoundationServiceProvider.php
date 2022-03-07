@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
@@ -106,6 +107,21 @@ class FoundationServiceProvider extends ServiceProvider
             }
 
             return value($default);
+        });
+
+        /**
+         * Determine a given parameter name exists from the route.
+         *
+         * @param string $name
+         *
+         * @return bool
+         */
+        Route::macro('hasParameterName', function ($name) {
+            if ($parameterNames = $this->parameterNames()) {
+                return in_array($name, $parameterNames);
+            }
+
+            return false;
         });
 
         // Override `FormRequest` container binding
