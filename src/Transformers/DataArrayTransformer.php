@@ -24,9 +24,10 @@ class DataArrayTransformer extends BaseDataArrayTransformer
     protected function buildColumnByCollection(array $row, Collection $columns, $type = 'printable')
     {
         $results = [];
+        $visibleCOlumns = request()->get('visible_columnss', []);
 
         foreach ($columns->all() as $column) {
-            if ($column[$type] && in_array($column['name'], request()->get('visible_columns', []))) {
+            if ($column[$type] && (! $visibleCOlumns || in_array($column['name'], $visibleCOlumns))) {
                 $title = $column['name'];
                 $data = Arr::get($row, $column['data']);
 
