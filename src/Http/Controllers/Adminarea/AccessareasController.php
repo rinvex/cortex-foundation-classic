@@ -35,6 +35,7 @@ class AccessareasController extends AuthorizedController
     {
         return $accessareasDataTable->with([
             'id' => 'adminarea-cortex-foundation-accessareas-index',
+            'routePrefix' => 'adminarea.cortex.foundation.accessareas',
             'pusher' => ['entity' => 'accessarea', 'channel' => 'cortex.foundation.accessareas.index'],
         ])->render('cortex/foundation::adminarea.pages.datatable-index');
     }
