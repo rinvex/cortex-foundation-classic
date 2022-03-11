@@ -13,5 +13,5 @@ Route::domain('{tenantarea}')->group(function () {
             // Homepage Routes
              Route::get('/')->name('home')->uses([HomeController::class, 'index']);
              Route::post('country')->name('country')->uses([GenericController::class, 'country']);
-        });
+         });
 });

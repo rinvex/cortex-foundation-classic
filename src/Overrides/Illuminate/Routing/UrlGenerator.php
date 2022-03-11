@@ -100,7 +100,7 @@ class UrlGenerator extends BaseUrlGenerator
                         : (get_str_contains($this->request->getHost(), $routeDomains)
                             // 3. If route does not exist, and accessed via non-registered domain or IP address
                             ?: ($routeDomains ? $routeDomains[0] : ''));
-                                // 4. return empty string if accessarea doesn't have any domains
+                // 4. return empty string if accessarea doesn't have any domains
             }
         });
 

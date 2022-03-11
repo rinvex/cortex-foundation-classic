@@ -18,7 +18,7 @@ Route::domain('{adminarea}')->group(function () {
              Route::get('/')->name('home')->uses([HomeController::class, 'index']);
              Route::post('country')->name('country')->uses([GenericController::class, 'country']);
 
-            // Accessareas Routes
+             // Accessareas Routes
              Route::name('cortex.foundation.accessareas.')->prefix('accessareas')->group(function () {
                  Route::match(['get', 'post'], '/')->name('index')->uses([AccessareasController::class, 'index']);
                  Route::post('import')->name('import')->uses([AccessareasController::class, 'import']);
