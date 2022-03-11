@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace {{ namespace }};
 
 use {{ namespacedModel }};
-use Parent{{ namespacedModel }};
 use Illuminate\Http\Request;
-use Cortex\Foundation\Importers\DefaultImporter;
-use Cortex\Foundation\DataTables\ImportLogsDataTable;
+use Parent{{ namespacedModel }};
+use Cortex\Foundation\Importers\InsertImporter;
 use Cortex\Foundation\Http\Requests\ImportFormRequest;
 use Cortex\Foundation\Http\Controllers\AuthorizedController;
 
@@ -29,48 +28,15 @@ class {{ class }} extends AuthorizedController
     /**
      * Import resources.
      *
-     * @return \Illuminate\View\View
-     */
-    public function import()
-    {
-        //
-    }
-
-    /**
-     * Stash resources.
-     *
      * @param \Cortex\Foundation\Http\Requests\ImportFormRequest $request
-     * @param \Cortex\Foundation\Importers\DefaultImporter       $importer
+     * @param \Cortex\Foundation\Importers\InsertImporter        $importer
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
      *
      * @return void
      */
-    public function stash(ImportFormRequest $request, DefaultImporter $importer)
+    public function import(ImportFormRequest $request, InsertImporter $importer, {{ model }} ${{ modelVariable }})
     {
-        //
-    }
-
-    /**
-     * Hoard resources.
-     *
-     * @param \Cortex\Foundation\Http\Requests\ImportFormRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function hoard(ImportFormRequest $request)
-    {
-        //
-    }
-
-    /**
-     * List resource import logs.
-     *
-     * @param \Cortex\Foundation\DataTables\ImportLogsDataTable $importLogsDatatable
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function importLogs(ImportLogsDataTable $importLogsDatatable)
-    {
-        //
+        $importer->withModel(${{ modelVariable }})->import($request->file('file'));
     }
 
     /**

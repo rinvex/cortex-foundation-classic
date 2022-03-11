@@ -13,7 +13,6 @@ use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
 use Cortex\Foundation\Models\Accessarea;
 use Illuminate\Database\Schema\Blueprint;
-use Cortex\Foundation\Models\ImportRecord;
 use Cortex\Foundation\Models\AbstractModel;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
@@ -49,7 +48,6 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Bind eloquent models to IoC container
         $this->registerModels([
-            'cortex.foundation.import_record' => ImportRecord::class,
             'cortex.foundation.accessarea' => Accessarea::class,
         ]);
 

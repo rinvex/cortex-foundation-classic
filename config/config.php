@@ -44,7 +44,6 @@ return [
     ],
 
     'models' => [
-        'import_record' => \Cortex\Foundation\Models\ImportRecord::class,
         'accessarea' => \Cortex\Foundation\Models\Accessarea::class,
     ],
 
@@ -120,6 +119,9 @@ return [
             'csv',
             'tsv',
         ],
+
+        'chunk_size' => 1000,
+        'batch_size' => 1000,
 
     ],
 

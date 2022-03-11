@@ -23,9 +23,7 @@ class AuthorizedController extends AuthenticatedController
      * @var array
      */
     protected $resourceMethodsWithoutModels = [
-        'importLogs',
         'import',
-        'stash',
     ];
 
     /**
