@@ -9,8 +9,8 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\RemembersRowNumber;
 use Maatwebsite\Excel\Concerns\RemembersChunkOffset;
 
@@ -21,7 +21,9 @@ class InsertImporter implements ToModel, WithHeadingRow, WithBatchInserts, WithC
     use RemembersChunkOffset;
 
     protected Model $model;
+
     protected int $chunkSize;
+
     protected int $batchSize;
 
     public function model(array $row)

@@ -10,8 +10,8 @@ use Maatwebsite\Excel\Concerns\Importable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithUpserts;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithUpsertColumns;
 use Maatwebsite\Excel\Concerns\RemembersRowNumber;
 use Maatwebsite\Excel\Concerns\RemembersChunkOffset;
@@ -23,9 +23,13 @@ class UpsertImporter implements ToModel, WithHeadingRow, WithBatchInserts, WithU
     use RemembersChunkOffset;
 
     protected Model $model;
+
     protected int $chunkSize;
+
     protected int $batchSize;
+
     protected array $uniqueBy;
+
     protected array $upsertColumns;
 
     public function model(array $row)

@@ -13,5 +13,5 @@ Route::domain('{managerarea}')->group(function () {
             // Managerarea Home route
              Route::get('/')->name('home')->uses([HomeController::class, 'index']);
              Route::post('country')->name('country')->uses([GenericController::class, 'country']);
-        });
+         });
 });
