@@ -26,7 +26,7 @@ class ImportFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file.*' => 'required|file|mimetypes:application/vnd.ms-excel',
+            'file.*' => 'required|file|mimetypes:'.implode(',', config('cortex.foundation.datatables.imports')),
         ];
     }
 }
