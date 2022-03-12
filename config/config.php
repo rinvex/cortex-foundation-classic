@@ -44,7 +44,6 @@ return [
     ],
 
     'models' => [
-        'import_record' => \Cortex\Foundation\Models\ImportRecord::class,
         'accessarea' => \Cortex\Foundation\Models\Accessarea::class,
     ],
 
@@ -52,7 +51,6 @@ return [
         'media' => 'media',
         'activity_log' => 'activity_log',
         'notifications' => 'notifications',
-        'import_records' => 'import_records',
         'temporary_uploads' => 'temporary_uploads',
         'accessareas' => 'accessareas',
         'accessibles' => 'accessibles',
@@ -121,6 +119,9 @@ return [
             'csv',
             'tsv',
         ],
+
+        'chunk_size' => 1000,
+        'batch_size' => 1000,
 
     ],
 

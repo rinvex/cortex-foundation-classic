@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Cortex\Foundation\Http\Controllers\Tenantarea\HomeController;
+use Cortex\Foundation\Http\Controllers\Tenantarea\GenericController;
 
 Route::domain('{tenantarea}')->group(function () {
     Route::name('tenantarea.')
@@ -11,5 +12,6 @@ Route::domain('{tenantarea}')->group(function () {
 
             // Homepage Routes
              Route::get('/')->name('home')->uses([HomeController::class, 'index']);
+             Route::post('country')->name('country')->uses([GenericController::class, 'country']);
          });
 });

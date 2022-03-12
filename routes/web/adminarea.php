@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Cortex\Foundation\Http\Controllers\Adminarea\HomeController;
+use Cortex\Foundation\Http\Controllers\Adminarea\GenericController;
 use Cortex\Foundation\Http\Controllers\Adminarea\AccessareasController;
 use Cortex\Foundation\Overrides\Livewire\Controllers\FileUploadHandler;
 use Cortex\Foundation\Overrides\Livewire\Controllers\FilePreviewHandler;
@@ -15,14 +16,12 @@ Route::domain('{adminarea}')->group(function () {
 
             // Adminarea Home route
              Route::get('/')->name('home')->uses([HomeController::class, 'index']);
+             Route::post('country')->name('country')->uses([GenericController::class, 'country']);
 
              // Accessareas Routes
              Route::name('cortex.foundation.accessareas.')->prefix('accessareas')->group(function () {
                  Route::match(['get', 'post'], '/')->name('index')->uses([AccessareasController::class, 'index']);
-                 Route::get('import')->name('import')->uses([AccessareasController::class, 'import']);
-                 Route::post('import')->name('stash')->uses([AccessareasController::class, 'stash']);
-                 Route::post('hoard')->name('hoard')->uses([AccessareasController::class, 'hoard']);
-                 Route::get('import/logs')->name('import.logs')->uses([AccessareasController::class, 'importLogs']);
+                 Route::post('import')->name('import')->uses([AccessareasController::class, 'import']);
                  Route::get('create')->name('create')->uses([AccessareasController::class, 'create']);
                  Route::post('create')->name('store')->uses([AccessareasController::class, 'store']);
                  Route::get('{accessarea}')->name('show')->uses([AccessareasController::class, 'show']);

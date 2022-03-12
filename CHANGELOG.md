@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.6] - 2022-03-12
+- Fix GenericController routes to be per accessarea
+  - Reason: we can not use POST requests between accessareas since each accessarea has it's own session, thus CSRF will always fail because it's different
+- return empty string if accessarea doesn't have any domains
+- Fix datatable import extensions to be dynamic/configurable
+- WIP Refactor & Simplify datatables import functionality
+- Update composer dependency codedungeon/phpunit-result-printer
+- Enforce form actions routePrefix consistency
+- Update JS global variables & add routeDomains support
+- Add datatables routePrefix support
+- Fix datatables export to export all columns if no visible columns requested
+- Fix route domain parameter binding
+  - 1. If route exists, bound, and has the accessarea parameter: 
+  - 2. If route does not exist, but accessed through a registered domain name 
+  - 3. If route does not exist, and accessed via non-registered domain or IP address
+- Merge branch 'develop' of github.com:rinvex/cortex-foundation into develop
+- ImgBot: Optimize images (#266)
+- Refactor and simplify datatable import functionality and upgrade maatwebsite/excel to v3
+
 ## [v7.3.5] - 2022-02-20
 - Override Datatables DataArrayTransformer to export columns with their db names instead of their localized titles
 - Fix dropzone accepted file extensions and make it configurable
@@ -670,6 +689,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.6]: https://github.com/rinvex/cortex-foundation/compare/v7.3.5...v7.3.6
 [v7.3.5]: https://github.com/rinvex/cortex-foundation/compare/v7.3.4...v7.3.5
 [v7.3.4]: https://github.com/rinvex/cortex-foundation/compare/v7.3.3...v7.3.4
 [v7.3.3]: https://github.com/rinvex/cortex-foundation/compare/v7.3.2...v7.3.3

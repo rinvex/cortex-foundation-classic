@@ -4,15 +4,10 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Http\Controllers\Adminarea;
 
-use Exception;
 use Illuminate\Http\Request;
 use Cortex\Foundation\Http\FormRequest;
 use Cortex\Foundation\Models\Accessarea;
 use Cortex\Foundation\DataTables\LogsDataTable;
-use Cortex\Foundation\Importers\DefaultImporter;
-use Cortex\Foundation\DataTables\ImportLogsDataTable;
-use Cortex\Foundation\Http\Requests\ImportFormRequest;
-use Cortex\Foundation\DataTables\ImportRecordsDataTable;
 use Cortex\Foundation\Http\Controllers\AuthorizedController;
 use Cortex\Foundation\DataTables\Adminarea\AccessareasDataTable;
 use Cortex\Foundation\Http\Requests\Adminarea\AccessareaFormRequest;
@@ -35,6 +30,7 @@ class AccessareasController extends AuthorizedController
     {
         return $accessareasDataTable->with([
             'id' => 'adminarea-cortex-foundation-accessareas-index',
+            'routePrefix' => 'adminarea.cortex.foundation.accessareas',
             'pusher' => ['entity' => 'accessarea', 'channel' => 'cortex.foundation.accessareas.index'],
         ])->render('cortex/foundation::adminarea.pages.datatable-index');
     }
@@ -53,86 +49,6 @@ class AccessareasController extends AuthorizedController
             'resource' => $accessarea,
             'tabs' => 'adminarea.cortex.foundation.accessareas.tabs',
             'id' => "adminarea-cortex-foundation-accessareas-{$accessarea->getRouteKey()}-logs",
-        ])->render('cortex/foundation::adminarea.pages.datatable-tab');
-    }
-
-    /**
-     * Import accessareas.
-     *
-     * @param \Cortex\Foundation\Models\Accessarea                 $accessarea
-     * @param \Cortex\Foundation\DataTables\ImportRecordsDataTable $importRecordsDataTable
-     *
-     * @return \Illuminate\View\View
-     */
-    public function import(Accessarea $accessarea, ImportRecordsDataTable $importRecordsDataTable)
-    {
-        return $importRecordsDataTable->with([
-            'resource' => $accessarea,
-            'tabs' => 'adminarea.cortex.foundation.accessareas.tabs',
-            'url' => route('adminarea.cortex.foundation.accessareas.stash'),
-            'id' => "adminarea-cortex-foundation-accessareas-{$accessarea->getRouteKey()}-import",
-        ])->render('cortex/foundation::adminarea.pages.datatable-dropzone');
-    }
-
-    /**
-     * Stash accessareas.
-     *
-     * @param \Cortex\Foundation\Http\Requests\ImportFormRequest $request
-     * @param \Cortex\Foundation\Importers\DefaultImporter       $importer
-     *
-     * @return void
-     */
-    public function stash(ImportFormRequest $request, DefaultImporter $importer)
-    {
-        // Handle the import
-        $importer->config['resource'] = $this->resource;
-        $importer->handleImport();
-    }
-
-    /**
-     * Hoard accessareas.
-     *
-     * @param \Cortex\Foundation\Http\Requests\ImportFormRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function hoard(ImportFormRequest $request)
-    {
-        foreach ((array) $request->input('selected_ids') as $recordId) {
-            $record = app('cortex.foundation.import_record')->find($recordId);
-
-            try {
-                $fillable = collect($record['data'])->intersectByKeys(array_flip(app('cortex.foundation.accessarea')->getFillable()))->toArray();
-
-                tap(app('cortex.foundation.accessarea')->firstOrNew($fillable), function ($instance) use ($record) {
-                    $instance->save() && $record->delete();
-                });
-            } catch (Exception $exception) {
-                $record->notes = $exception->getMessage().(method_exists($exception, 'getMessageBag') ? "\n".json_encode($exception->getMessageBag())."\n\n" : '');
-                $record->status = 'fail';
-                $record->save();
-            }
-        }
-
-        return intend([
-            'back' => true,
-            'with' => ['success' => trans('cortex/foundation::messages.import_complete')],
-        ]);
-    }
-
-    /**
-     * List accessarea import logs.
-     *
-     * @param \Cortex\Foundation\DataTables\ImportLogsDataTable $importLogsDatatable
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function importLogs(ImportLogsDataTable $importLogsDatatable)
-    {
-        return $importLogsDatatable->with([
-            'resource' => trans('cortex/foundation::common.accessarea'),
-            'tabs' => 'adminarea.cortex.foundation.accessareas.tabs',
-            'id' => 'adminarea-cortex-foundation-accessareas-import-logs',
         ])->render('cortex/foundation::adminarea.pages.datatable-tab');
     }
 

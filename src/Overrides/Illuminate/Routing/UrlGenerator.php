@@ -87,8 +87,20 @@ class UrlGenerator extends BaseUrlGenerator
 
         // Bind route domain parameters. Ex: {frontarea}, {adminarea} ..etc
         app('accessareas')->each(function ($accessarea) use ($route, &$parameters) {
-            if (in_array($accessarea->slug, $route->parameterNames()) && ! isset($parameters[$accessarea->slug]) && $centralDomain = get_str_contains($this->request->getHost(), route_domains($accessarea->slug))) {
-                $parameters[$accessarea->slug] = $route->hasParameter($accessarea->slug) ? $route->parameter($accessarea->slug) : $centralDomain;
+            // We are using `hasParameterName` instead of `hasParameter` because in some cases (i.e. 404 exceptions)
+            // the route does not exist, thus there's no route bound, and using these methods will always return
+            // false, additionally when using `parameters` method throws an exception `Route is not bound.`
+            if ($route->hasParameterName($accessarea->slug) && ! isset($parameters[$accessarea->slug])) {
+                $routeDomains = route_domains($accessarea->slug);
+
+                $parameters[$accessarea->slug] =
+                    // 1. If route exists, bound, and has the accessarea parameter
+                    $route->hasParameter($accessarea->slug) ? $route->parameter($accessarea->slug)
+                        // 2. If route does not exist, but accessed through a registered domain name
+                        : (get_str_contains($this->request->getHost(), $routeDomains)
+                            // 3. If route does not exist, and accessed via non-registered domain or IP address
+                            ?: ($routeDomains ? $routeDomains[0] : ''));
+                // 4. return empty string if accessarea doesn't have any domains
             }
         });
 

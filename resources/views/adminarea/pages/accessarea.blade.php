@@ -24,7 +24,7 @@
         <section class="content">
 
             <div class="nav-tabs-custom">
-                @includeWhen($accessarea->exists, 'cortex/foundation::adminarea.partials.actions', ['name' => 'accessarea', 'model' => $accessarea, 'resource' => trans('cortex/foundation::common.accessarea'), 'routePrefix' => 'adminarea.cortex.foundation.accessareas.'])
+                @includeWhen($accessarea->exists, 'cortex/foundation::adminarea.partials.actions', ['name' => 'accessarea', 'model' => $accessarea, 'resource' => trans('cortex/foundation::common.accessarea'), 'routePrefix' => 'adminarea.cortex.foundation.accessareas'])
                 {!! Menu::render('adminarea.cortex.foundation.accessareas.tabs', 'nav-tab') !!}
 
                 <div class="tab-content">

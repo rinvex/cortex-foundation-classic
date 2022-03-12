@@ -25,7 +25,7 @@
                     </nav>
 
                     @yield('datatable-filters')
-                    {!! $dataTable->pusher($pusher ?? null)->table(['id' => $id]) !!}
+                    {!! $dataTable->pusher($pusher ?? null)->routePrefix($routePrefix ?? null)->table(['id' => $id]) !!}
 
                 </div>
             </div>

@@ -17,6 +17,13 @@ class Builder extends BaseBuilder
     protected $pusher = [];
 
     /**
+     * The route prefix.
+     *
+     * @var string
+     */
+    protected $routePrefix = '';
+
+    /**
      * Get generated raw scripts.
      *
      * @throws \Exception
@@ -58,6 +65,7 @@ class Builder extends BaseBuilder
         return $this->view->make($template, [
             'id' => $this->getTableAttribute('id'),
             'options' => $this->generateJson(),
+            'routePrefix' => $this->routePrefix,
             'editors' => $this->editors,
             'pusher' => $this->pusher,
         ])->render();
@@ -73,6 +81,20 @@ class Builder extends BaseBuilder
     public function pusher(array $pusher = null)
     {
         ! $pusher || $this->pusher = array_merge($this->pusher, $pusher);
+
+        return $this;
+    }
+
+    /**
+     * Configure DataTable's route prefix.
+     *
+     * @param string|null $routePrefix
+     *
+     * @return $this
+     */
+    public function routePrefix(string $routePrefix = null)
+    {
+        $this->routePrefix = $routePrefix;
 
         return $this;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
@@ -12,7 +13,6 @@ use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
 use Cortex\Foundation\Models\Accessarea;
 use Illuminate\Database\Schema\Blueprint;
-use Cortex\Foundation\Models\ImportRecord;
 use Cortex\Foundation\Models\AbstractModel;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
@@ -48,7 +48,6 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Bind eloquent models to IoC container
         $this->registerModels([
-            'cortex.foundation.import_record' => ImportRecord::class,
             'cortex.foundation.accessarea' => Accessarea::class,
         ]);
 
@@ -106,6 +105,21 @@ class FoundationServiceProvider extends ServiceProvider
             }
 
             return value($default);
+        });
+
+        /**
+         * Determine a given parameter name exists from the route.
+         *
+         * @param string $name
+         *
+         * @return bool
+         */
+        Route::macro('hasParameterName', function ($name) {
+            if ($parameterNames = $this->parameterNames()) {
+                return in_array($name, $parameterNames);
+            }
+
+            return false;
         });
 
         // Override `FormRequest` container binding
