@@ -8,7 +8,6 @@
 
 {{-- Main Content --}}
 @section('content')
-
     <div class="content-wrapper">
 
         {{-- Main content --}}

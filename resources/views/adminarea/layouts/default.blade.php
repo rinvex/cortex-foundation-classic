@@ -25,16 +25,20 @@
     @stack('vendor-scripts')
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini antialiased">
 
     {{-- Main content --}}
-    <div id="app" class="wrapper">
+    <div id="app" class="min-h-full bg-gray-50">
 
         @include('cortex/foundation::adminarea.partials.header')
-        @include('cortex/foundation::adminarea.partials.sidebar')
-
-        @yield('content')
-
+{{--        @include('cortex/foundation::adminarea.partials.sidebar')--}}
+        <div class="py-10">
+            <main>
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    @yield('content')
+                </div>
+            </main>
+        </div>
         @include('cortex/foundation::adminarea.partials.footer')
 
     </div>
