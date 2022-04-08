@@ -32,13 +32,11 @@
 
         @include('cortex/foundation::adminarea.partials.header')
 {{--        @include('cortex/foundation::adminarea.partials.sidebar')--}}
-        <div class="py-10">
-            <main>
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    @yield('content')
-                </div>
-            </main>
-        </div>
+        <main>
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                @yield('content')
+            </div>
+        </main>
         @include('cortex/foundation::adminarea.partials.footer')
 
     </div>

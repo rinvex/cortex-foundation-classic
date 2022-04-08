@@ -9,31 +9,15 @@
 {{-- Main Content --}}
 @section('content')
 
-    <div class="content-wrapper">
-        <section class="content-header">
+    <div>
+        <section class="pt-3">
             <h1>{{ Breadcrumbs::render() }}</h1>
         </section>
-
         {{-- Main content --}}
-        <section class="content">
-
-            <div class="row">
-
-                <div class="col-md-12">
-
-                    <div class="box">
-                        <div class="box-body">
-                            @yield('datatable-filters')
-                            {!! $dataTable->pusher($pusher ?? null)->routePrefix($routePrefix ?? null)->table(['id' => $id]) !!}
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
+        <div class="bg-white p-3 my-3 rounded-sm shadow-md border border-gray-100">
+            @yield('datatable-filters')
+            {!! $dataTable->pusher($pusher ?? null)->routePrefix($routePrefix ?? null)->table(['id' => $id]) !!}
+        </div>
     </div>
 
 @endsection

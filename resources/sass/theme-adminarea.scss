@@ -1,2 +1,18 @@
 //@import '~admin-lte/dist/css/AdminLTE';
 //@import '~admin-lte/dist/css/skins/skin-blue';
+
+html,
+body {
+  height: 100%;
+}
+.layout-boxed html,
+.layout-boxed body {
+  height: 100%;
+}
+body {
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

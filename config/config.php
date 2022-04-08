@@ -73,7 +73,7 @@ return [
         'actions' => ['print', 'csv', 'excel', 'pdf', 'delete', 'activate', 'deactivate', 'revoke'],
 
         'options' => [
-            'dom' => "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>",
+            'dom' => "<'flex flex-wrap justify-between content-center pb-6'<''B><'md:mt-6'f>> <'grid grid-cols-1'r><'grid grid-cols-1'<''t>> <'flex flex-row md:flex-col py-3 md:justify-between content-center'<''i><''p>>",
             'select' => '{"style":"multi"}',
             'order' => [[1, 'asc']],
             'mark' => true,
