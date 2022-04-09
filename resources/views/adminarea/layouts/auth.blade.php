@@ -25,7 +25,7 @@
     @stack('vendor-scripts')
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition bg-gray-300 login-page">
 
     {{-- Main content --}}
     <div id="app" class="wrapper">
