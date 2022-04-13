@@ -95,13 +95,13 @@ class ExceptionHandler extends BaseExceptionHandler
             ], 403);
         } elseif ($e instanceof WatsonValidationException) {
             return intend([
-                'intended' =>  $e->redirectTo ?? url()->previous(),
+                'intended' => $e->redirectTo ?? url()->previous(),
                 'withInput' => $request->all(),
                 'withErrors' => $e->errors(),
             ], $e->status); // 422
         } elseif ($e instanceof ValidationException) {
             return intend([
-                'intended' =>  $e->redirectTo ?? url()->previous(),
+                'intended' => $e->redirectTo ?? url()->previous(),
                 'withInput' => $request->all(),
                 'withErrors' => $e->errors(),
             ], $e->status); // 422
