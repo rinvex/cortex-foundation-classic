@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.7] - 2022-05-01
+- Fix validation error redirections
+- Add support for app settings cache path
+
 ## [v7.3.6] - 2022-03-12
 - Fix GenericController routes to be per accessarea
   - Reason: we can not use POST requests between accessareas since each accessarea has it's own session, thus CSRF will always fail because it's different
@@ -689,6 +693,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.7]: https://github.com/rinvex/cortex-foundation/compare/v7.3.6...v7.3.7
 [v7.3.6]: https://github.com/rinvex/cortex-foundation/compare/v7.3.5...v7.3.6
 [v7.3.5]: https://github.com/rinvex/cortex-foundation/compare/v7.3.4...v7.3.5
 [v7.3.4]: https://github.com/rinvex/cortex-foundation/compare/v7.3.3...v7.3.4
