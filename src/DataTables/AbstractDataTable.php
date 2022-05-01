@@ -122,6 +122,7 @@ abstract class AbstractDataTable extends BaseDataTable
         if ($results = $this->query()->get()) {
             $results->each(function ($item) use ($action) {
                 // Check if current user can execute this action on that model
+                // @TODO: allow dynamic bulk actions, map actions like controller mapping
                 if ($this->request()->user()->can($action, $item)) {
                     $item->{$action}();
                 }
@@ -245,12 +246,14 @@ CDATA;
      */
     protected function getButtons(): array
     {
+        // @TODO: allow dynamic bulk actions, possibly use wildcard or filter button by name starting with bulk
         $this->buttons['bulk'] = $this->buttons['bulkDelete']
                                 || $this->buttons['bulkActivate']
                                 || $this->buttons['bulkDeactivate']
                                 || $this->buttons['bulkRevoke'];
 
         $buttons = collect($this->buttons)->filter(fn ($value) => $value);
+        // @TODO: allow dynamic bulk actions, possibly use wildcard or filter button by name starting with bulk
         $bulkButtons = $buttons->only(['bulkDelete', 'bulkActivate', 'bulkDeactivate', 'bulkRevoke']);
 
         return collect([
