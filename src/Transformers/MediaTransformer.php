@@ -6,7 +6,7 @@ namespace Cortex\Foundation\Transformers;
 
 use Rinvex\Support\Traits\Escaper;
 use League\Fractal\TransformerAbstract;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Cortex\Foundation\Models\Media;
 
 class MediaTransformer extends TransformerAbstract
 {
