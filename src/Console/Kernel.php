@@ -62,7 +62,7 @@ class Kernel extends ConsoleKernel
 
         collect($moduleResources)
             ->prioritizeLoading()
-            ->each(fn($file) => (require $file)($schedule));
+            ->each(fn ($file) => (require $file)($schedule));
     }
 
     /**

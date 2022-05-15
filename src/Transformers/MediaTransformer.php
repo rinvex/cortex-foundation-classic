@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Transformers;
 
 use Rinvex\Support\Traits\Escaper;
-use League\Fractal\TransformerAbstract;
 use Cortex\Foundation\Models\Media;
+use League\Fractal\TransformerAbstract;
 
 class MediaTransformer extends TransformerAbstract
 {
