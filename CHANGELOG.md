@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.8] - 2022-05-17
+- Add support for menu list item attributes
+- Add support for dynamic scheduled tasks discovery
+- Override Spatie Media model to support Hashids
+- Fix media deletion issues and media model implicit binding
+- Revert "Fix validation error redirections"
+
 ## [v7.3.7] - 2022-05-01
 - Fix validation error redirections
 - Add support for app settings cache path
@@ -693,6 +700,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.8]: https://github.com/rinvex/cortex-foundation/compare/v7.3.7...v7.3.8
 [v7.3.7]: https://github.com/rinvex/cortex-foundation/compare/v7.3.6...v7.3.7
 [v7.3.6]: https://github.com/rinvex/cortex-foundation/compare/v7.3.5...v7.3.6
 [v7.3.5]: https://github.com/rinvex/cortex-foundation/compare/v7.3.4...v7.3.5

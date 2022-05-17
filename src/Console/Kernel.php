@@ -58,7 +58,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $moduleResources = $this->app['files']->moduleResources('bootstrap/schedule.php');
+
+        collect($moduleResources)
+            ->prioritizeLoading()
+            ->each(fn ($file) => (require $file)($schedule));
     }
 
     /**
