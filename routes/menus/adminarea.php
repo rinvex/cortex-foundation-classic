@@ -17,7 +17,7 @@ if (config('cortex.foundation.route.locale_prefix')) {
 }
 
 Menu::register('adminarea.sidebar', function (MenuGenerator $menu) {
-    $menu->findByTitleOrAdd(trans('cortex/foundation::common.cms'), 40, 'fa fa-file-text-o', 'header', [], function (MenuItem $dropdown) {
+    $menu->findByTitleOrAdd(trans('cortex/foundation::common.cms'), 40, 'fa fa-file-text-o', 'header', [], [], function (MenuItem $dropdown) {
         $dropdown->route(['adminarea.cortex.foundation.accessareas.index'], trans('cortex/foundation::common.accessareas'), 20, 'fa fa-files-o')->ifCan('list', app('cortex.foundation.accessarea'))->activateOnRoute('adminarea.cortex.foundation.accessareas');
     });
 });
