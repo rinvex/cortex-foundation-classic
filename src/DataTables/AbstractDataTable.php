@@ -330,7 +330,9 @@ CDATA;
     }
     
     /**
-     *
+     * Validate the export request.
+     * @param string $action
+     * @return mixed
      */
     
     public function validateExportOptionsRequest(string $action)
