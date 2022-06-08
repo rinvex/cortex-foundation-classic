@@ -22,6 +22,13 @@ class Builder extends BaseBuilder
      * @var string
      */
     protected $routePrefix = '';
+    
+    /**
+     * The route parameters.
+     *
+     * @var string
+     */
+    protected $routeParams = '';
 
     /**
      * Get generated raw scripts.
@@ -66,6 +73,7 @@ class Builder extends BaseBuilder
             'id' => $this->getTableAttribute('id'),
             'options' => $this->generateJson(),
             'routePrefix' => $this->routePrefix,
+            'routeParams' => $this->routeParams,
             'editors' => $this->editors,
             'pusher' => $this->pusher,
         ])->render();
@@ -96,6 +104,20 @@ class Builder extends BaseBuilder
     {
         $this->routePrefix = $routePrefix;
 
+        return $this;
+    }
+    
+    /**
+     * Configure DataTable's route parameters.
+     *
+     * @param array|null $routeParams
+     *
+     * @return $this
+     */
+    public function routeParams(array $routeParams = null)
+    {
+        $this->routeParams = $routeParams;
+        
         return $this;
     }
 }
