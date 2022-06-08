@@ -194,11 +194,15 @@ CDATA;
                 case 'activate':
                 case 'deactivate':
                     return app()->call([$this, 'bulkAction'], ['action' => $action]);
+                case 'csv':
+                case 'excel':
+                case 'pdf':
+                    return app()->call([$this, 'validateExportOptionsRequest'], ['action' => $action]);
                 default:
                     return app()->call([$this, $action]);
             }
         }
-
+        
         if ($this->request()->ajax() && $this->request()->wantsJson()) {
             return app()->call([$this, 'ajax']);
         }
@@ -323,5 +327,18 @@ CDATA;
         return array_map(function ($row) use ($columns, $type, $transformer) {
             return $transformer->transform($row, $columns, $type);
         }, $this->getAjaxResponseData());
+    }
+    
+    /**
+     *
+     */
+    
+    public function validateExportOptionsRequest(string $action)
+    {
+        if (!Arr::get($this->buttons, 'export')) {
+            abort(404);
+        }
+    
+        return app()->call([$this, $action]);
     }
 }
