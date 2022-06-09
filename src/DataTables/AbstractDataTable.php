@@ -256,6 +256,15 @@ CDATA;
         // @TODO: allow dynamic bulk actions, possibly use wildcard or filter button by name starting with bulk
         $bulkButtons = $buttons->only(['bulkDelete', 'bulkActivate', 'bulkDeactivate', 'bulkRevoke']);
 
+        
+        if ($customBulkActions = Arr::get($this->attributes, 'customBulkActions')) {
+            foreach ($customBulkActions as $customBulkAction) {
+                if (Arr::has($customBulkAction, ['title', 'url'])) {
+                    $bulkButtons->put(Str::camel(Arr::get($customBulkAction, 'title')), true);
+                }
+            }
+        }
+        
         return collect([
             'create' => ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.create')],
             'import' => ['extend' => 'import', 'text' => '<i class="fa fa-upload"></i> '.trans('cortex/foundation::common.import')],
