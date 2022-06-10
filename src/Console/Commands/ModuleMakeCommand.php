@@ -123,6 +123,10 @@ class ModuleMakeCommand extends Command
         $this->call('make:transformer', ['name' => 'ExampleTransformer', '--model' => 'Example', '--module' => $this->getNameInput()]);
         $this->call('make:datatable', ['name' => 'ExampleDatatable', '--model' => 'Example', '--transformer' => 'ExampleTransformer', '--module' => $this->getNameInput()]);
         $this->call('make:seeder', ['name' => 'ExampleSeeder', '--module' => $this->getNameInput()]);
+    
+        $this->warn('Optionally create migrations and seeds (it may take some time):');
+        $this->warn("artisan make:migration create_{$module}_example_table --module {$this->getNameInput()}");
+        $this->warn("artisan make:seeder ExampleSeeder --module {$this->getNameInput()}");
     }
 
     /**
