@@ -29,7 +29,6 @@
 
     {{-- Main content --}}
     <div id="app" class="wrapper">
-
         @include('cortex/foundation::adminarea.partials.header')
         @include('cortex/foundation::adminarea.partials.sidebar')
 
