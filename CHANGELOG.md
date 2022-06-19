@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.9] - 2022-06-20
+- Update composer dependencies
+  - league/fractal to ^0.20.0 from ^0.19.0
+  - yajra/laravel-datatables-html to ^9.0.0 from ^4.41.0
+  - yajra/laravel-datatables-fractal to ^9.0.0 from ^1.6.0
+  - yajra/laravel-datatables-buttons to ^9.0.0 from ^4.13.0
+  - yajra/laravel-datatables-oracle to ^10.0.0 from ^9.19.0
+  - fruitcake/laravel-cors to ^3.0.0 from ^2.0.0",
+  - symfony/console to ^6.1.0" from ^6.0.0"
+  - symfony/finder to ^6.1.0" from ^6.0.0"
+  - symfony/http-kernel to ^6.1.0" from ^6.0.0"
+
 ## [v7.3.8] - 2022-05-17
 - Add support for menu list item attributes
 - Add support for dynamic scheduled tasks discovery
@@ -700,6 +712,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.9]: https://github.com/rinvex/cortex-foundation/compare/v7.3.8...v7.3.9
 [v7.3.8]: https://github.com/rinvex/cortex-foundation/compare/v7.3.7...v7.3.8
 [v7.3.7]: https://github.com/rinvex/cortex-foundation/compare/v7.3.6...v7.3.7
 [v7.3.6]: https://github.com/rinvex/cortex-foundation/compare/v7.3.5...v7.3.6
