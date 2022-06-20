@@ -146,7 +146,7 @@ abstract class AbstractDataTable extends BaseDataTable
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax() : JsonRespons
+    public function ajax() : JsonResponse
     {
         return datatables($this->query())
             ->setTransformer(app($this->transformer))
