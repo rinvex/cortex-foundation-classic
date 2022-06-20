@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.10] - 2022-06-20
+- Composer require maatwebsite/excel
+
 ## [v7.3.9] - 2022-06-20
 - Update composer dependencies
   - league/fractal to ^0.20.0 from ^0.19.0
@@ -712,6 +715,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.10]: https://github.com/rinvex/cortex-foundation/compare/v7.3.9...v7.3.10
 [v7.3.9]: https://github.com/rinvex/cortex-foundation/compare/v7.3.8...v7.3.9
 [v7.3.8]: https://github.com/rinvex/cortex-foundation/compare/v7.3.7...v7.3.8
 [v7.3.7]: https://github.com/rinvex/cortex-foundation/compare/v7.3.6...v7.3.7
