@@ -30,7 +30,7 @@ class Builder extends BaseBuilder
      *
      * @return \Illuminate\Support\HtmlString
      */
-    public function generateScripts()
+    public function generateScripts() : HtmlString
     {
         return new HtmlString($this->template());
     }
@@ -44,7 +44,7 @@ class Builder extends BaseBuilder
      *
      * @return \Illuminate\Support\HtmlString
      */
-    public function table(array $attributes = [], $drawFooter = false, $drawSearch = false)
+    public function table(array $attributes = [], bool $drawFooter = false, bool $drawSearch = false): HtmlString
     {
         $this->tableAttributes = array_merge($this->getTableAttributes(), $attributes);
         $htmlAttr = $this->html->attributes($this->tableAttributes);
@@ -58,7 +58,7 @@ class Builder extends BaseBuilder
      *
      * @return string
      */
-    protected function template()
+    protected function template() : string
     {
         $template = $this->template ?: $this->config->get('datatables-html.script', 'datatables::script');
 
