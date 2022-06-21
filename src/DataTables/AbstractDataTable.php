@@ -6,6 +6,7 @@ namespace Cortex\Foundation\DataTables;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Http\JsonResponse;
 use Vinkla\Hashids\Facades\Hashids;
 use Cortex\Foundation\Transformers\DataArrayTransformer;
 use Yajra\DataTables\Services\DataTable as BaseDataTable;
@@ -33,7 +34,7 @@ abstract class AbstractDataTable extends BaseDataTable
      *
      * @var array
      */
-    protected $actions = ['print', 'csv', 'excel', 'pdf', 'delete', 'activate', 'deactivate'];
+    protected array $actions = ['print', 'csv', 'excel', 'pdf', 'delete', 'activate', 'deactivate'];
 
     /**
      * Set default options.
@@ -145,7 +146,7 @@ abstract class AbstractDataTable extends BaseDataTable
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables($this->query())
             ->setTransformer(app($this->transformer))
@@ -311,12 +312,12 @@ CDATA;
     /**
      * Map ajax response to columns definition.
      *
-     * @param mixed  $columns
-     * @param string $type
+     * @param array|Collection $columns
+     * @param string           $type
      *
      * @return array
      */
-    protected function mapResponseToColumns($columns, $type)
+    protected function mapResponseToColumns($columns, string $type): array
     {
         $transformer = new DataArrayTransformer();
 
