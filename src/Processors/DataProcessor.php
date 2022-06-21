@@ -16,7 +16,7 @@ class DataProcessor extends BaseDataProcessor
      *
      * @return array
      */
-    protected function escapeRow(array $row)
+    protected function escapeRow(array $row) : array
     {
         $arrayDot = array_filter(Arr::dot($row));
 

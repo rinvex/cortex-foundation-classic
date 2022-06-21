@@ -17,13 +17,13 @@ class EloquentDataTable extends BaseEloquentDataTable
      *
      * @return array
      */
-    protected function processResults($results, $object = false)
+    protected function processResults($results, $object = false) : array
     {
         $processor = new DataProcessor(
             $results,
             $this->getColumnsDefinition(),
             $this->templates,
-            $this->request->input('start')
+            $this->request->start()
         );
 
         return $processor->process($object);
