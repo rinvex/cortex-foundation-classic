@@ -26,11 +26,9 @@ class Builder extends BaseBuilder
     /**
      * Get generated raw scripts.
      *
-     * @throws \Exception
-     *
      * @return \Illuminate\Support\HtmlString
      */
-    public function generateScripts()
+    public function generateScripts(): HtmlString
     {
         return new HtmlString($this->template());
     }
@@ -44,7 +42,7 @@ class Builder extends BaseBuilder
      *
      * @return \Illuminate\Support\HtmlString
      */
-    public function table(array $attributes = [], $drawFooter = false, $drawSearch = false)
+    public function table(array $attributes = [], bool $drawFooter = false, bool $drawSearch = false): HtmlString
     {
         $this->tableAttributes = array_merge($this->getTableAttributes(), $attributes);
         $htmlAttr = $this->html->attributes($this->tableAttributes);
@@ -58,7 +56,7 @@ class Builder extends BaseBuilder
      *
      * @return string
      */
-    protected function template()
+    protected function template(): string
     {
         $template = $this->template ?: $this->config->get('datatables-html.script', 'datatables::script');
 
@@ -78,7 +76,7 @@ class Builder extends BaseBuilder
      *
      * @return $this
      */
-    public function pusher(array $pusher = null)
+    public function pusher(array $pusher = null): static
     {
         ! $pusher || $this->pusher = array_merge($this->pusher, $pusher);
 
@@ -92,7 +90,7 @@ class Builder extends BaseBuilder
      *
      * @return $this
      */
-    public function routePrefix(string $routePrefix = null)
+    public function routePrefix(string $routePrefix = null): static
     {
         $this->routePrefix = $routePrefix;
 
