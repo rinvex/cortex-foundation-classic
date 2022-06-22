@@ -313,7 +313,7 @@ CDATA;
      * Map ajax response to columns definition.
      *
      * @param array|\Illuminate\Support\Collection $columns
-     * @param string           $type
+     * @param string                               $type
      *
      * @return array
      */
