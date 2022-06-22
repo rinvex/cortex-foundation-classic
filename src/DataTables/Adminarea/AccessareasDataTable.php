@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\DataTables\Adminarea;
 
+use Illuminate\Http\JsonResponse;
 use Cortex\Foundation\Models\Accessarea;
 use Cortex\Foundation\DataTables\AbstractDataTable;
 use Cortex\Foundation\Transformers\AccessareaTransformer;
@@ -25,7 +26,7 @@ class AccessareasDataTable extends AbstractDataTable
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables($this->query())
             ->setTransformer(app($this->transformer))
