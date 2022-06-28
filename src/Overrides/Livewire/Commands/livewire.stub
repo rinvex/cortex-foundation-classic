@@ -2,9 +2,9 @@
 
 namespace [namespace];
 
-use Cortex\Foundation\Overrides\Livewire\AbstractComponent;
+use Cortex\Foundation\Overrides\Livewire\Component;
 
-class [class] extends AbstractComponent
+class [class] extends Component
 {
     public function render()
     {
