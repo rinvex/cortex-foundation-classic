@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.12] - 2022-07-02
+- Fix Livewire wrong AbstractComponent class name
+
 ## [v7.3.11] - 2022-06-22
 - Fix datatables ajax method signature
 - Fix datatables method signature compatibility
@@ -722,6 +725,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.12]: https://github.com/rinvex/cortex-foundation/compare/v7.3.11...v7.3.12
 [v7.3.11]: https://github.com/rinvex/cortex-foundation/compare/v7.3.10...v7.3.11
 [v7.3.10]: https://github.com/rinvex/cortex-foundation/compare/v7.3.9...v7.3.10
 [v7.3.9]: https://github.com/rinvex/cortex-foundation/compare/v7.3.8...v7.3.9
