@@ -68,10 +68,6 @@ return [
     // Datatables
     'datatables' => [
 
-        // Available button actions. When calling an action, the value will be used as the
-        // function name. If you want to add or disable an action, overload and modify this config.
-        'actions' => ['print', 'csv', 'excel', 'pdf', 'delete', 'activate', 'deactivate', 'revoke'],
-
         'options' => [
             'dom' => "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>",
             'select' => '{"style":"multi"}',
@@ -100,10 +96,10 @@ return [
             'print' => true,
             'export' => true,
 
-            'bulkDelete' => true,
-            'bulkActivate' => false,
-            'bulkDeactivate' => false,
-            'bulkRevoke' => false,
+            'delete' => true,
+            'activate' => false,
+            'deactivate' => false,
+            'revoke' => false,
 
             'colvis' => true,
             'pageLength' => true,

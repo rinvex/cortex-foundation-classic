@@ -20,5 +20,7 @@ return [
     'records_revoked' => 'Records revoked!',
     'no_records_selected' => 'No selected records!',
     'infinite_redirects' => 'Potentially infinite redirects detected!',
+    'action_disabled' => 'The given action is disabled for this resource!',
+    'action_unauthorized' => 'The given action is unauthorized for this resource!',
 
 ];
