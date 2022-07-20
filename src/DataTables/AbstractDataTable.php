@@ -35,7 +35,9 @@ abstract class AbstractDataTable extends BaseDataTable
      * @var array
      */
     protected array $actions = ['print', 'csv', 'excel', 'pdf'];
+
     protected array $bulkActions = ['delete', 'revoke', 'activate', 'deactivate'];
+
     protected array $authorizedActions = ['create', 'import', 'export', 'delete', 'revoke', 'activate', 'deactivate'];
 
     /**
@@ -84,7 +86,7 @@ abstract class AbstractDataTable extends BaseDataTable
     {
         $model = app($this->model);
 
-        $buttons = collect(config('cortex.foundation.datatables.buttons'))->merge($this->buttons)->mapWithKeys(function ($value, $key) use($model) {
+        $buttons = collect(config('cortex.foundation.datatables.buttons'))->merge($this->buttons)->mapWithKeys(function ($value, $key) use ($model) {
             if (in_array($key, $this->authorizedActions) || $key === 'print') {
                 return [$key => $this->request()->user()->can($key === 'print' ? 'export' : $key, $model) && $value];
             }
@@ -175,15 +177,15 @@ abstract class AbstractDataTable extends BaseDataTable
      *
      * @param string $action
      *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     *
      * @throws \Cortex\Foundation\Exceptions\GenericException
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function bulkAction($action)
     {
         if ($results = $this->query()->get()) {
             $results->each(function ($item) use ($action) {
-                 if ($this->isActionAuthorized($action, $item)) {
+                if ($this->isActionAuthorized($action, $item)) {
                     $item->{$action}();
                 }
             });
