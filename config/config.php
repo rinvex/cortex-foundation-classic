@@ -70,7 +70,7 @@ return [
 
         'options' => [
             'dom' => "<'row'<'col-sm-8'B><'col-sm-4'f>> <'row'r><'row'<'col-sm-12't>> <'row'<'col-sm-5'i><'col-sm-7'p>>",
-            'select' => '{"style":"multi"}',
+            'select' => json_decode('{"style":"multi+shift"}'),
             'order' => [[1, 'asc']],
             'mark' => true,
             'keys' => false,
