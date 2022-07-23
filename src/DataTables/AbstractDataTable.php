@@ -8,6 +8,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Database\Eloquent\Model;
+use Cortex\Foundation\Exceptions\GenericException;
 use Cortex\Foundation\Transformers\DataArrayTransformer;
 use Yajra\DataTables\Services\DataTable as BaseDataTable;
 
@@ -28,13 +30,15 @@ abstract class AbstractDataTable extends BaseDataTable
     protected $transformer;
 
     /**
-     * Available button actions. When calling an action, the value will be used
-     * as the function name (so it should be available)
-     * If you want to add or disable an action, overload and modify this property.
+     * Available button actions.
      *
      * @var array
      */
-    protected array $actions = ['print', 'csv', 'excel', 'pdf', 'delete', 'activate', 'deactivate'];
+    protected array $actions = ['print', 'csv', 'excel', 'pdf'];
+
+    protected array $bulkActions = ['delete', 'revoke', 'activate', 'deactivate'];
+
+    protected array $authorizedActions = ['create', 'import', 'export', 'delete', 'revoke', 'activate', 'deactivate'];
 
     /**
      * Set default options.
@@ -69,8 +73,28 @@ abstract class AbstractDataTable extends BaseDataTable
      */
     public function __construct()
     {
+        $this->buttons = $this->getAuthorizedButtons();
         $this->options = array_merge(config('cortex.foundation.datatables.options'), (array) $this->options);
-        $this->buttons = array_merge(config('cortex.foundation.datatables.buttons'), (array) $this->buttons);
+    }
+
+    /**
+     * Get authorized buttons.
+     *
+     * @return array
+     */
+    public function getAuthorizedButtons(): array
+    {
+        $model = app($this->model);
+
+        $buttons = collect(config('cortex.foundation.datatables.buttons'))->merge($this->buttons)->mapWithKeys(function ($value, $key) use ($model) {
+            if (in_array($key, $this->authorizedActions) || $key === 'print') {
+                return [$key => $this->request()->user()->can($key === 'print' ? 'export' : $key, $model) && $value];
+            }
+
+            return [$key => $value];
+        });
+
+        return $buttons->toArray();
     }
 
     /**
@@ -112,19 +136,56 @@ abstract class AbstractDataTable extends BaseDataTable
     }
 
     /**
+     * Check if the given action is enabled.
+     *
+     * @param $action
+     *
+     * @throws \Cortex\Foundation\Exceptions\GenericException
+     *
+     * @return bool
+     */
+    public function isActionEnabled($action): bool
+    {
+        if (! Arr::get($this->buttons, $action)) {
+            throw new GenericException(trans('cortex/foundation::messages.action_disabled'), $this->request->url());
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if the given action is authorized.
+     *
+     * @param $action
+     * @param \Illuminate\Database\Eloquent\Model $item
+     *
+     * @throws \Cortex\Foundation\Exceptions\GenericException
+     *
+     * @return bool
+     */
+    public function isActionAuthorized($action, Model $item): bool
+    {
+        if (! $this->request()->user()->can($action, $item)) {
+            throw new GenericException(trans('cortex/foundation::messages.action_unauthorized'), $this->request->url());
+        }
+
+        return true;
+    }
+
+    /**
      * Perform bulk action.
      *
      * @param string $action
      *
+     * @throws \Cortex\Foundation\Exceptions\GenericException
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function bulkAction(string $action)
+    public function bulkAction($action)
     {
         if ($results = $this->query()->get()) {
             $results->each(function ($item) use ($action) {
-                // Check if current user can execute this action on that model
-                // @TODO: allow dynamic bulk actions, map actions like controller mapping
-                if ($this->request()->user()->can($action, $item)) {
+                if ($this->isActionAuthorized($action, $item)) {
                     $item->{$action}();
                 }
             });
@@ -186,18 +247,22 @@ CDATA;
      */
     public function render($view, $data = [], $mergeData = [])
     {
-        if (($action = $this->request()->get('action')) && in_array($action, $this->actions)) {
-            switch ($action) {
-                case 'print':
-                    return app()->call([$this, 'printPreview']);
-                case 'revoke':
-                case 'delete':
-                case 'activate':
-                case 'deactivate':
-                    return app()->call([$this, 'bulkAction'], ['action' => $action]);
-                default:
-                    return app()->call([$this, $action]);
-            }
+        $action = $this->request()->get('action');
+
+        // Export actions
+        if (in_array($action, $this->actions)) {
+            $this->isActionEnabled('export');
+            $this->isActionAuthorized('export', app($this->model));
+
+            return app()->call([$this, $action === 'print' ? 'printPreview' : $action]);
+        }
+
+        // Bulk actions
+        if (in_array($action, $this->bulkActions)) {
+            $this->isActionEnabled($action);
+            $this->isActionAuthorized($action, app($this->model));
+
+            return app()->call([$this, 'bulkAction'], ['action' => $action]);
         }
 
         if ($this->request()->ajax() && $this->request()->wantsJson()) {
@@ -247,15 +312,10 @@ CDATA;
      */
     protected function getButtons(): array
     {
-        // @TODO: allow dynamic bulk actions, possibly use wildcard or filter button by name starting with bulk
-        $this->buttons['bulk'] = $this->buttons['bulkDelete']
-                                || $this->buttons['bulkActivate']
-                                || $this->buttons['bulkDeactivate']
-                                || $this->buttons['bulkRevoke'];
-
-        $buttons = collect($this->buttons)->filter(fn ($value) => $value);
-        // @TODO: allow dynamic bulk actions, possibly use wildcard or filter button by name starting with bulk
-        $bulkButtons = $buttons->only(['bulkDelete', 'bulkActivate', 'bulkDeactivate', 'bulkRevoke']);
+        $this->buttons['bulk'] = collect($this->buttons)
+            ->filter()->keys()->intersect($this->bulkActions)->isNotEmpty();
+        $buttons = collect($this->buttons)->filter();
+        $bulkButtons = $buttons->only($this->bulkActions);
 
         return collect([
             'create' => ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.create')],

@@ -46,7 +46,7 @@ class AccessareasDataTable extends AbstractDataTable
             : '"<a href=\""+routes.route(\'adminarea.cortex.foundation.accessareas.edit\', {accessarea: full.id})+"\">"+data+"</a>"';
 
         return [
-            'id' => ['checkboxes' => '{"selectRow": true}', 'exportable' => false, 'printable' => false],
+            'id' => ['checkboxes' => json_decode('{"selectRow": true}'), 'exportable' => false, 'printable' => false],
             'name' => ['title' => trans('cortex/foundation::common.name'), 'render' => $link.'+(full.is_active ? " <i class=\"text-success fa fa-check\"></i>" : " <i class=\"text-danger fa fa-close\"></i>")', 'responsivePriority' => 0],
             'is_active' => ['title' => trans('cortex/foundation::common.is_active')],
             'is_obscured' => ['title' => trans('cortex/foundation::common.is_obscured')],

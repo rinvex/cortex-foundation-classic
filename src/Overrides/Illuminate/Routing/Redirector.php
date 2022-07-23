@@ -43,9 +43,9 @@ class Redirector extends BaseRedirector
     public function intended($default = '/', $status = 302, $headers = [], $secure = null)
     {
         $request = $this->generator->getRequest();
-        $params = $this->session->get('url.params', []);
-        $method = $this->session->get('url.method', 'GET');
-        $intended = $this->session->get('url.intended', $default);
+        $params = $this->session->pull('url.params', []);
+        $method = $this->session->pull('url.method', 'GET');
+        $intended = $this->session->pull('url.intended', $default);
 
         // Throw an exception in case of potentially infinite redirects!
         if ($intended === url()->current() && $request->isMethod('GET')) {
@@ -80,6 +80,6 @@ class Redirector extends BaseRedirector
 
         $this->session->put('url.params', $request->all());
         $this->session->put('url.method', $request->method());
-        $this->session->put('url.intended', Route::is('*.login') ? url()->previous() : url()->current());
+        $this->session->put('url.intended', Route::is('*.login') ? url()->previous() : url()->full());
     }
 }

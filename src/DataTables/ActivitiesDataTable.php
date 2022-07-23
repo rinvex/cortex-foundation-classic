@@ -40,7 +40,7 @@ class ActivitiesDataTable extends LogsDataTable
     protected function getColumns(): array
     {
         return [
-            'id' => ['checkboxes' => '{"selectRow": true}', 'exportable' => false, 'printable' => false],
+            'id' => ['checkboxes' => json_decode('{"selectRow": true}'), 'exportable' => false, 'printable' => false],
             'details' => ['title' => '', 'data' => null, 'defaultContent' => '', 'class' => 'dt-details-control', 'searchable' => false, 'orderable' => false],
             'subject' => ['title' => trans('cortex/foundation::common.subject'), 'name' => 'subject.name', 'searchable' => false, 'orderable' => false, 'render' => 'full.subject_route ? "<a href=\""+full.subject_route+"\">"+data+"</a>" : data', 'responsivePriority' => 0],
             'description' => ['title' => trans('cortex/foundation::common.description'), 'orderable' => false],

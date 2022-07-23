@@ -21,7 +21,7 @@ class DataArrayTransformer extends BaseDataArrayTransformer
      *
      * @return array
      */
-    protected function buildColumnByCollection(array $row, Collection $columns, $type = 'printable')
+    protected function buildColumnByCollection(array $row, Collection $columns, $type = 'printable'): array
     {
         $results = [];
         $visibleCOlumns = request()->get('visible_columnss', []);
