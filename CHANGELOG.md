@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.13] - 2022-07-24
+- Fix datatables checkbox select-row options
+- Fix audit ability check for import logs
+- Refactor datatables bulk actions and check if action is enabled and authorized (closes #275)
+- fix buildColumnByCollection method signature (#280)
+- use session pull function to delete the item after retrieve it (#281)
+- use full function instead of current to get query string parameters (#282)
+
 ## [v7.3.12] - 2022-07-02
 - Fix Livewire wrong AbstractComponent class name
 
@@ -725,6 +733,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.13]: https://github.com/rinvex/cortex-foundation/compare/v7.3.12...v7.3.13
 [v7.3.12]: https://github.com/rinvex/cortex-foundation/compare/v7.3.11...v7.3.12
 [v7.3.11]: https://github.com/rinvex/cortex-foundation/compare/v7.3.10...v7.3.11
 [v7.3.10]: https://github.com/rinvex/cortex-foundation/compare/v7.3.9...v7.3.10
