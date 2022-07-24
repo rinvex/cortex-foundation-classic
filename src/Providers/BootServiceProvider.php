@@ -69,7 +69,7 @@ class BootServiceProvider extends ServiceProvider
                 $this->app->singleton('accessareas', fn () => app('cortex.foundation.accessarea')->where('is_active', true)->get());
             }
         } catch (Exception $e) {
-            // Be quite! Do not do or say anything!!
+            // Be quiet! Do not do or say anything!!
         }
 
         $this->bootstrapModules();
