@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.14] - 2022-08-06
+- Tweak model IDs hashing to support configurable hashed keys
+
 ## [v7.3.13] - 2022-07-24
 - Fix datatables checkbox select-row options
 - Fix audit ability check for import logs
@@ -733,6 +736,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.14]: https://github.com/rinvex/cortex-foundation/compare/v7.3.13...v7.3.14
 [v7.3.13]: https://github.com/rinvex/cortex-foundation/compare/v7.3.12...v7.3.13
 [v7.3.12]: https://github.com/rinvex/cortex-foundation/compare/v7.3.11...v7.3.12
 [v7.3.11]: https://github.com/rinvex/cortex-foundation/compare/v7.3.10...v7.3.11
