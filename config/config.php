@@ -7,9 +7,16 @@ return [
     // Manage autoload migrations
     'autoload_migrations' => true,
 
-    // IDs obscuration rotations, higher number means more secure, and less efficient
-    // For random IDs every request you can use `random_int(1, 999)` (not recommended)
-    'obscure' => 1,
+    // Obscure IDs
+    'obscure' => [
+        // IDs obscuration rotations, higher number means more secure, and less efficient
+        // For random IDs every request you can use `random_int(1, 999)` (not recommended)
+        'numbers' => 1,
+
+        'hashed_keys' => [
+            'id',
+        ],
+    ],
 
     // Global Route Override
     'route' => [

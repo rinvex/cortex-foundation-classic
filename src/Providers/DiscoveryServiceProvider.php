@@ -67,7 +67,7 @@ class DiscoveryServiceProvider extends ServiceProvider
                 $this->callAfterResolving('router', fn () => $this->bootDiscoveredRoutes());
             }
         } catch (Exception $e) {
-            // Be quite! Do not do or say anything!!
+            // Be quiet! Do not do or say anything!!
         }
     }
 
