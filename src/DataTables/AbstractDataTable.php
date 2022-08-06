@@ -241,9 +241,9 @@ CDATA;
      * @param array  $data
      * @param array  $mergeData
      *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
-     *
      * @throws \Cortex\Foundation\Exceptions\GenericException
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function render($view, $data = [], $mergeData = [])
     {
