@@ -38,7 +38,7 @@ abstract class AbstractDataTable extends BaseDataTable
 
     protected array $bulkActions = ['delete', 'revoke', 'activate', 'deactivate'];
 
-    protected array $authorizedActions = ['create', 'import', 'export', 'delete', 'revoke', 'activate', 'deactivate'];
+    protected array $authorizedActions = ['create', 'import', 'export', 'print', 'delete', 'revoke', 'activate', 'deactivate'];
 
     /**
      * Set default options.
@@ -84,11 +84,9 @@ abstract class AbstractDataTable extends BaseDataTable
      */
     public function getAuthorizedButtons(): array
     {
-        $model = app($this->model);
-
-        $buttons = collect(config('cortex.foundation.datatables.buttons'))->merge($this->buttons)->mapWithKeys(function ($value, $key) use ($model) {
-            if (in_array($key, $this->authorizedActions) || $key === 'print') {
-                return [$key => $this->request()->user()->can($key === 'print' ? 'export' : $key, $model) && $value];
+        $buttons = collect(config('cortex.foundation.datatables.buttons'))->merge($this->buttons)->mapWithKeys(function ($value, $key) {
+            if (in_array($key, $this->authorizedActions)) {
+                return [$key => $this->request()->user()->can($key === 'print' ? 'export' : $key, app($this->model)) && $value];
             }
 
             return [$key => $value];
