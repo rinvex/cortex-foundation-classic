@@ -86,7 +86,7 @@ abstract class AbstractDataTable extends BaseDataTable
     {
         $buttons = collect(config('cortex.foundation.datatables.buttons'))->merge($this->buttons)->mapWithKeys(function ($value, $key) {
             if (in_array($key, $this->authorizedActions)) {
-                return [$key => $this->request()->user()->can($key === 'print' ? 'export' : $key, $this->model ? app($this->model) : []) && $value];
+                return [$key => ($user = $this->request()->user()) && $user->can($key === 'print' ? 'export' : $key, $this->model ? app($this->model) : []) && $value];
             }
 
             return [$key => $value];
@@ -241,9 +241,9 @@ CDATA;
      * @param array  $data
      * @param array  $mergeData
      *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
-     *
      * @throws \Cortex\Foundation\Exceptions\GenericException
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function render($view, $data = [], $mergeData = [])
     {
