@@ -86,7 +86,7 @@ abstract class AbstractDataTable extends BaseDataTable
     {
         $buttons = collect(config('cortex.foundation.datatables.buttons'))->merge($this->buttons)->mapWithKeys(function ($value, $key) {
             if (in_array($key, $this->authorizedActions)) {
-                return [$key => $this->request()->user()->can($key === 'print' ? 'export' : $key, app($this->model)) && $value];
+                return [$key => $this->request()->user()->can($key === 'print' ? 'export' : $key, $this->model ? app($this->model) : []) && $value];
             }
 
             return [$key => $value];
@@ -155,15 +155,15 @@ abstract class AbstractDataTable extends BaseDataTable
      * Check if the given action is authorized.
      *
      * @param $action
-     * @param \Illuminate\Database\Eloquent\Model $item
+     * @param \Illuminate\Database\Eloquent\Model|null $item
      *
      * @throws \Cortex\Foundation\Exceptions\GenericException
      *
      * @return bool
      */
-    public function isActionAuthorized($action, Model $item): bool
+    public function isActionAuthorized($action, Model $item = null): bool
     {
-        if (! $this->request()->user()->can($action, $item)) {
+        if (in_array($action, $this->authorizedActions) && ! $this->request()->user()->can($action, $item ?? ($this->model ? app($this->model) : []))) {
             throw new GenericException(trans('cortex/foundation::messages.action_unauthorized'), $this->request->url());
         }
 
@@ -242,6 +242,8 @@ CDATA;
      * @param array  $mergeData
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
+     *
+     * @throws \Cortex\Foundation\Exceptions\GenericException
      */
     public function render($view, $data = [], $mergeData = [])
     {
@@ -250,7 +252,7 @@ CDATA;
         // Export actions
         if (in_array($action, $this->actions)) {
             $this->isActionEnabled('export');
-            $this->isActionAuthorized('export', app($this->model));
+            $this->isActionAuthorized('export');
 
             return app()->call([$this, $action === 'print' ? 'printPreview' : $action]);
         }
@@ -258,7 +260,7 @@ CDATA;
         // Bulk actions
         if (in_array($action, $this->bulkActions)) {
             $this->isActionEnabled($action);
-            $this->isActionAuthorized($action, app($this->model));
+            $this->isActionAuthorized($action);
 
             return app()->call([$this, 'bulkAction'], ['action' => $action]);
         }
