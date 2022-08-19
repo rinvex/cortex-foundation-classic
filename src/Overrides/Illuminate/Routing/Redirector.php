@@ -48,7 +48,7 @@ class Redirector extends BaseRedirector
         $intended = $this->session->pull('url.intended', $default);
 
         // Throw an exception in case of potentially infinite redirects!
-        if ($intended === url()->current() && $request->isMethod('GET')) {
+        if ($intended === url()->full() && $request->isMethod('GET')) {
             throw new Exception(trans('cortex/foundation::messages.infinite_redirects'));
         }
 
