@@ -69,7 +69,7 @@ class EloquentPresenceVerifier extends DatabasePresenceVerifier
     {
         $query = $this->model($collection)->whereIn($column, $values);
 
-        return $this->addConditions($query, $extra)->count();
+        return $this->addConditions($query, $extra)->distinct()->count($column);
     }
 
     /**
