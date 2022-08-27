@@ -73,9 +73,11 @@ class EloquentPresenceVerifier extends DatabasePresenceVerifier
     }
 
     /**
+     * Get model eloquent builder.
+     *
      * @param $collection
      *
-     * @return Model
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     private function model($collection)
     {
