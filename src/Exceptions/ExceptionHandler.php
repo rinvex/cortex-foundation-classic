@@ -146,14 +146,15 @@ class ExceptionHandler extends BaseExceptionHandler
 
             return $this->prepareResponse($request, $e);
         } elseif ($e instanceof ModelNotFoundException) {
-            $model = $e->getModel();
-            $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
-            preg_match('/'.(Route::getPattern($single) ?: '[a-zA-Z0-9-_]+').'/', $request->route($single), $matches);
-            $plural = Str::plural($single);
+            $model = Str::lower($e->getModel());
+            $vendor = Str::before($model, '\\');
+            $resource = Str::afterLast($model, '\\');
+            $route = $request->accessarea().'.'.$vendor.'.'.Str::plural($resource).'.'.Str::plural($resource).'.index';
+            preg_match('/'.(Route::getPattern($resource) ?: '[a-zA-Z0-9-_]+').'/', $request->route($resource), $matches);
 
             return intend([
-                'url' => Route::has("{$request->accessarea()}.{$plural}.index") ? route("{$request->accessarea()}.{$plural}.index") : route("{$request->accessarea()}.home"),
-                'withErrors' => ['error' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $single, 'identifier' => $matches[0]])],
+                'url' => Route::has($route) ? route($route) : route("{$request->accessarea()}.home"),
+                'withErrors' => ['error' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $resource, 'identifier' => $matches[0]])],
             ], 404);
         } elseif ($e instanceof UniversityLoaderException || $e instanceof CountryLoaderException || $e instanceof LanguageLoaderException) {
             return intend([
