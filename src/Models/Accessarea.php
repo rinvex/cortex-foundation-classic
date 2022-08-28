@@ -158,7 +158,7 @@ class Accessarea extends Model
     {
         $this->setTable(config('cortex.accessareas.tables.accessareas'));
         $this->mergeRules([
-            'slug' => 'required|alpha_dash|max:150|unique:'.config('cortex.accessareas.tables.accessareas').',slug',
+            'slug' => 'required|alpha_dash|max:150|unique:'.config('cortex.accessareas.models.accessarea').',slug',
             'name' => 'required|string|strip_tags|max:150',
             'description' => 'nullable|string|max:32768',
             'is_active' => 'sometimes|boolean',
@@ -166,7 +166,7 @@ class Accessarea extends Model
             'is_obscured' => 'sometimes|boolean',
             'is_indexable' => 'sometimes|boolean',
             'is_protected' => 'sometimes|boolean',
-            'prefix' => 'nullable|alpha_dash|max:150|unique:'.config('cortex.accessareas.tables.accessareas').',prefix',
+            'prefix' => 'nullable|alpha_dash|max:150|unique:'.config('cortex.accessareas.models.accessarea').',prefix',
         ]);
 
         parent::__construct($attributes);
