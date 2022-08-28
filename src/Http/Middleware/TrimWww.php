@@ -26,5 +26,4 @@ class TrimWww
 
         return $next($request);
     }
-
 }
