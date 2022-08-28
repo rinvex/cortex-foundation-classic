@@ -21,10 +21,10 @@ class Kernel extends HttpKernel
         \Fruitcake\Cors\HandleCors::class,
         \Cortex\Foundation\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Cortex\Foundation\Http\Middleware\TrimWww::class,
+        \Cortex\Foundation\Http\Middleware\EnforceTrailingSlash::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Cortex\Foundation\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \Cortex\Foundation\Http\Middleware\EnforceTrailingSlash::class,
         \Cortex\Foundation\Http\Middleware\SetCrawlingRobotsHeaders::class,
     ];
 

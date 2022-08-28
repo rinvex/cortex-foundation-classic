@@ -30,7 +30,7 @@ return [
         'locale_redirect' => false,
 
         // Automatically add a trailing slash to the end of all routes
-        'trailing_slash' => false,
+        'trailing_slash' => true,
 
         // Automatically trim www. from the host prefix and redirect
         'trim_www' => true,
