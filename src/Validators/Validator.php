@@ -26,7 +26,7 @@ class Validator extends BaseValidator
         [$connection, $table] = str_contains($table, '.') ? explode('.', $table, 2) : [null, $table];
 
         if (str_contains($table, '\\') && class_exists($table) && is_a($table, Model::class, true)) {
-            $model = new $table;
+            $model = new $table();
 
             $table = $model->getTable();
             $connection ??= $model->getConnectionName();
@@ -38,7 +38,6 @@ class Validator extends BaseValidator
             $idColumn = $model->getKeyName();
         }
 
-        return [$connection, $model ?? (new AbstractModel)->setTable($table), $idColumn ?? null];
+        return [$connection, $model ?? (new AbstractModel())->setTable($table), $idColumn ?? null];
     }
-
 }
