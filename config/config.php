@@ -32,6 +32,9 @@ return [
         // Automatically add a trailing slash to the end of all routes
         'trailing_slash' => false,
 
+        // Automatically trim www. from the host prefix and redirect
+        'trim_www' => true,
+
         /*
          * Set trusted proxy IP addresses. Both IPv4 and IPv6 addresses are supported, along with CIDR notation.
          *
