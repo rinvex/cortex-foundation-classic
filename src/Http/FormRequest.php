@@ -11,7 +11,6 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Validation\ValidatesWhenResolvedTrait;
-use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 
@@ -97,13 +96,6 @@ class FormRequest extends Request implements ValidatesWhenResolved
             $validator = $this->container->call([$this, 'validator'], compact('factory'));
         } else {
             $validator = $this->createDefaultValidator($factory);
-        }
-
-        if (method_exists($this, 'getModel')) {
-            // Swap the `EloquentPresenceVerifier` model from `Cortex\Foundation\Models\AbstractModel`,
-            // to the actual model. This is used by the validator instance, for validation rules (exists/unique),
-            // used by FormRequests, and also useful for "Tenantable" models to enforce the relevant query constraints.
-            $validator->setPresenceVerifier(new EloquentPresenceVerifier($this->container['db'], $this->getModel()));
         }
 
         if (method_exists($this, 'withValidator')) {
