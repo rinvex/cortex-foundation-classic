@@ -5,6 +5,8 @@ declare(strict_types=1);
 return [
 
     'id' => 'ID',
+    'route_id' => 'Route ID',
+    'database_id' => 'Database ID',
     'new' => 'New',
     'cancel' => 'Cancel',
     'close' => 'Close',

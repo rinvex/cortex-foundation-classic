@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Http;
 
 use Illuminate\Routing\Redirector;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
@@ -13,6 +14,11 @@ use Illuminate\Validation\ValidatesWhenResolvedTrait;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 
+/**
+ * @override `\Illuminate\Foundation\Http\FormRequest` because we need to extend our custom
+ *           `\Cortex\Foundation\Http\Request` instead of the default `Illuminate\Http\Request`.
+ *           We duplicate the whole class logic because we can't extend two classes simultaneously!
+ */
 class FormRequest extends Request implements ValidatesWhenResolved
 {
     use ValidatesWhenResolvedTrait;
@@ -58,6 +64,13 @@ class FormRequest extends Request implements ValidatesWhenResolved
      * @var string
      */
     protected $errorBag = 'default';
+
+    /**
+     * Indicates whether validation should stop after the first rule failure.
+     *
+     * @var bool
+     */
+    protected $stopOnFirstFailure = false;
 
     /**
      * The validator instance.
@@ -108,7 +121,7 @@ class FormRequest extends Request implements ValidatesWhenResolved
             $this->container->call([$this, 'rules']),
             $this->messages(),
             $this->attributes()
-        );
+        )->stopOnFirstFailure($this->stopOnFirstFailure);
     }
 
     /**
@@ -160,12 +173,16 @@ class FormRequest extends Request implements ValidatesWhenResolved
     /**
      * Determine if the request passes the authorization check.
      *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
      * @return bool
      */
     protected function passesAuthorization()
     {
         if (method_exists($this, 'authorize')) {
-            return $this->container->call([$this, 'authorize']);
+            $result = $this->container->call([$this, 'authorize']);
+
+            return $result instanceof Response ? $result->authorize() : $result;
         }
 
         return true;
@@ -184,6 +201,20 @@ class FormRequest extends Request implements ValidatesWhenResolved
     }
 
     /**
+     * Get a validated input container for the validated input.
+     *
+     * @param array|null $keys
+     *
+     * @return \Illuminate\Support\ValidatedInput|array
+     */
+    public function safe(array $keys = null)
+    {
+        return is_array($keys)
+                    ? $this->validator->safe()->only($keys)
+                    : $this->validator->safe();
+    }
+
+    /**
      * Get the validated data from the request.
      *
      * @param string|null       $key
@@ -193,7 +224,7 @@ class FormRequest extends Request implements ValidatesWhenResolved
      */
     public function validated($key = null, $default = null)
     {
-        return $this->validator->validated();
+        return data_get($this->validator->validated(), $key, $default);
     }
 
     /**

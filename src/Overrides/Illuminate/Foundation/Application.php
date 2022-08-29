@@ -42,26 +42,6 @@ class Application extends BaseApplication
     }
 
     /**
-     * Determine if the application settings are cached.
-     *
-     * @return bool
-     */
-    public function settingsAreCached()
-    {
-        return is_file($this->getCachedSettingsPath());
-    }
-
-    /**
-     * Get the path to the settings cache file.
-     *
-     * @return string
-     */
-    public function getCachedSettingsPath()
-    {
-        return $this->normalizeCachePath('APP_SETTINGS_CACHE', 'cache/settings.php');
-    }
-
-    /**
      * Register the basic bindings into the container.
      *
      * @return void

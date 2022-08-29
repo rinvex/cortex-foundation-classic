@@ -14,6 +14,7 @@
 
         <div class="navbar-custom-menu">
             {!! Menu::render('adminarea.header.language') !!}
+            {!! Menu::render('adminarea.header.system') !!}
             {!! Menu::render('adminarea.header.user') !!}
         </div>
     </nav>

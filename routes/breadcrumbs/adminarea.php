@@ -6,8 +6,12 @@ use Diglactic\Breadcrumbs\Generator;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Cortex\Foundation\Models\Accessarea;
 
-Breadcrumbs::for('adminarea.cortex.foundation.accessareas.index', function (Generator $breadcrumbs) {
+Breadcrumbs::for('adminarea.home', function (Generator $breadcrumbs) {
     $breadcrumbs->push('<i class="fa fa-dashboard"></i> '.config('app.name'), route('adminarea.home'));
+});
+
+Breadcrumbs::for('adminarea.cortex.foundation.accessareas.index', function (Generator $breadcrumbs) {
+    $breadcrumbs->parent('adminarea.home');
     $breadcrumbs->push(trans('cortex/foundation::common.accessareas'), route('adminarea.cortex.foundation.accessareas.index'));
 });
 
@@ -17,8 +21,7 @@ Breadcrumbs::for('adminarea.cortex.foundation.accessareas.import', function (Gen
 });
 
 Breadcrumbs::for('adminarea.cortex.foundation.accessareas.import.logs', function (Generator $breadcrumbs) {
-    $breadcrumbs->parent('adminarea.cortex.foundation.accessareas.index');
-    $breadcrumbs->push(trans('cortex/foundation::common.import'), route('adminarea.cortex.foundation.accessareas.import'));
+    $breadcrumbs->parent('adminarea.cortex.foundation.accessareas.import');
     $breadcrumbs->push(trans('cortex/foundation::common.logs'), route('adminarea.cortex.foundation.accessareas.import.logs'));
 });
 
@@ -33,13 +36,11 @@ Breadcrumbs::for('adminarea.cortex.foundation.accessareas.edit', function (Gener
 });
 
 Breadcrumbs::for('adminarea.cortex.foundation.accessareas.logs', function (Generator $breadcrumbs, Accessarea $accessarea) {
-    $breadcrumbs->parent('adminarea.cortex.foundation.accessareas.index');
-    $breadcrumbs->push(strip_tags($accessarea->name), route('adminarea.cortex.foundation.accessareas.edit', ['accessarea' => $accessarea]));
+    $breadcrumbs->parent('adminarea.cortex.foundation.accessareas.edit', $accessarea);
     $breadcrumbs->push(trans('cortex/foundation::common.logs'), route('adminarea.cortex.foundation.accessareas.logs', ['accessarea' => $accessarea]));
 });
 
 Breadcrumbs::for('adminarea.cortex.foundation.accessareas.media.index', function (Generator $breadcrumbs, Accessarea $accessarea) {
-    $breadcrumbs->parent('adminarea.cortex.foundation.accessareas.index');
-    $breadcrumbs->push(strip_tags($accessarea->name), route('adminarea.cortex.foundation.accessareas.edit', ['accessarea' => $accessarea]));
+    $breadcrumbs->parent('adminarea.cortex.foundation.accessareas.edit', $accessarea);
     $breadcrumbs->push(trans('cortex/foundation::common.media'), route('adminarea.cortex.foundation.accessareas.media.index', ['accessarea' => $accessarea]));
 });

@@ -13,11 +13,12 @@ use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
 use Cortex\Foundation\Models\Accessarea;
 use Illuminate\Database\Schema\Blueprint;
-use Cortex\Foundation\Models\AbstractModel;
+use Cortex\Foundation\Validators\Validator;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
 use Illuminate\Support\Facades\Session as SessionFacade;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
+use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Barryvdh\Debugbar\DebugbarServiceProvider;
@@ -65,6 +66,10 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        ValidatorFacade::resolver(function ($translator, $data, $rules, $messages) {
+            return new Validator($translator, $data, $rules, $messages);
+        });
+
         // Fix the specified key was too long error
         Schema::defaultStringLength(191);
 
@@ -72,7 +77,9 @@ class FoundationServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         // Override presence verifier
-        $this->app['validator']->setPresenceVerifier($this->app['cortex.foundation.presence.verifier']);
+        if (isset($this->app['db'], $this->app['cortex.foundation.presence.verifier'])) {
+            $this->app['validator']->setPresenceVerifier($this->app['cortex.foundation.presence.verifier']);
+        }
 
         // Early set application locale globaly
         $this->app['laravellocalization']->setLocale();
@@ -206,7 +213,7 @@ class FoundationServiceProvider extends ServiceProvider
     protected function bindPresenceVerifier(): void
     {
         $this->app->bind('cortex.foundation.presence.verifier', function ($app) {
-            return new EloquentPresenceVerifier($app['db'], new $app[AbstractModel::class]());
+            return new EloquentPresenceVerifier($app['db']);
         });
     }
 
