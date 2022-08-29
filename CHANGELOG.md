@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.17] - 2022-08-30
+- Add a new adminarea.header.system menu
+- Tweak form timestamps
+- Refactor EloquentPresenceVerifier and override the default Validator service
+- Update exists and unique validation rules to use models instead of tables
+- Revert "Swap the `EloquentPresenceVerifier` model from `Cortex\Foundation\Models\AbstractModel`,"
+- Enable trailing slash by default and change middleware order to be executed earlier
+- Add a new middleware to trim www. host prefix
+- Override TrustProxies middleware to make it configurable, and allow any proxy by default
+- Update docblock
+- Revert "Add support for app settings cache path"
+- Fix exception handler redirect on ModelNotFoundException
+- Revert "Apply tenantable global scope on Eloquent Presence Verifier (i.e. used in validation rules like unique & exists)"
+- Swap the `EloquentPresenceVerifier` model from `Cortex\Foundation\Models\AbstractModel`, to the actual model. This is used by the validator instance, for validation rules (exists/unique), used by FormRequests, and also useful for "Tenantable" models to enforce the relevant query constraints.
+- Sync with parent \Illuminate\Foundation\Http\FormRequest
+- Clean the breadcrumbs definition and utilize parent features
+- Improve "exists" validation with array values
+- Apply tenantable global scope on Eloquent Presence Verifier (i.e. used in validation rules like unique & exists)
+- Fix infinite redirects issue with intended URLs
+
 ## [v7.3.16] - 2022-08-06
 - FIx datatables authorization to check if there's authenticated user
 
@@ -742,6 +762,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.17]: https://github.com/rinvex/cortex-foundation/compare/v7.3.16...v7.3.17
 [v7.3.16]: https://github.com/rinvex/cortex-foundation/compare/v7.3.15...v7.3.16
 [v7.3.15]: https://github.com/rinvex/cortex-foundation/compare/v7.3.14...v7.3.15
 [v7.3.14]: https://github.com/rinvex/cortex-foundation/compare/v7.3.13...v7.3.14
