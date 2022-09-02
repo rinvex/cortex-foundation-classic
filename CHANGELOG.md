@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.18] - 2022-09-02
+- Add support for per model enable/disable scoped validation
+
 ## [v7.3.17] - 2022-08-30
 - Add a new adminarea.header.system menu
 - Tweak form timestamps
@@ -762,6 +765,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.18]: https://github.com/rinvex/cortex-foundation/compare/v7.3.17...v7.3.18
 [v7.3.17]: https://github.com/rinvex/cortex-foundation/compare/v7.3.16...v7.3.17
 [v7.3.16]: https://github.com/rinvex/cortex-foundation/compare/v7.3.15...v7.3.16
 [v7.3.15]: https://github.com/rinvex/cortex-foundation/compare/v7.3.14...v7.3.15
