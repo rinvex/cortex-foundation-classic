@@ -66,17 +66,18 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        ValidatorFacade::resolver(function ($translator, $data, $rules, $messages) {
-            return new Validator($translator, $data, $rules, $messages);
-        });
-
         // Fix the specified key was too long error
         Schema::defaultStringLength(191);
 
         // Use Pagination bootstrap styles
         Paginator::useBootstrap();
 
-        // Override presence verifier
+        // Override validator resolver
+        ValidatorFacade::resolver(function ($translator, $data, $rules, $messages) {
+            return new Validator($translator, $data, $rules, $messages);
+        });
+
+        // Override validator presence verifier
         if (isset($this->app['db'], $this->app['cortex.foundation.presence.verifier'])) {
             $this->app['validator']->setPresenceVerifier($this->app['cortex.foundation.presence.verifier']);
         }
