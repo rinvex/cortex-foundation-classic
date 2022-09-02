@@ -55,7 +55,7 @@ class Validator extends BaseValidator
     }
 
     /**
-     * Returns whether the model validation be scoped or not. (Default: true)
+     * Returns whether the model validation be scoped or not. (Default: true).
      *
      * @param $model \Illuminate\Database\Eloquent\Model
      *
@@ -63,6 +63,6 @@ class Validator extends BaseValidator
      */
     protected function isValidationScoped(Model $model): bool
     {
-        return isset($model->isValidationScoped) ? $model->isValidationScoped : true;
+        return $model->isValidationScoped ?? true;
     }
 }
