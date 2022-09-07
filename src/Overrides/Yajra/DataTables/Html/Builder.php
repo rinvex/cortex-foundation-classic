@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Yajra\DataTables\Html;
 
-use Cortex\Auth\Models\Ability;
 use Illuminate\Support\HtmlString;
 use Yajra\DataTables\Html\Builder as BaseBuilder;
 use Yajra\DataTables\Html\Column;
@@ -78,7 +77,7 @@ class Builder extends BaseBuilder
      *
      * @return $this
      */
-AbstractDataTablepublic function applySearchPanes()
+    public function applySearchPanes()
     {
         $searchPane = SearchPane::make()->cascadePanes()->hideTotal()->hideCount()->layout('columns-4');
         $targetColumns = collect();
