@@ -44,6 +44,7 @@
 
 @push('styles')
     <link href="{{ mix('css/datatables.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/searchPanes.css') }}" rel="stylesheet">
 @endpush
 
 @push('vendor-scripts')
@@ -51,5 +52,7 @@
 @endpush
 
 @push('inline-scripts')
+    <script src="{{ asset('js/dataTables.searchPanes.js') }}" defer></script>
+    <script src="{{ asset('js/searchPanes.bootstrap.js') }}" defer></script>
     {!! $dataTable->scripts() !!}
 @endpush
