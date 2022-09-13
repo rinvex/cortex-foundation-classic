@@ -32,4 +32,11 @@ class HomeController extends AuthorizedController
         });
     }
 
+    public function layoutMemory()
+    {
+        return response()->json([
+            'items' => AdjustableLayout::query()->pluck('position', 'element_id')->toArray(),
+        ]);
+    }
+
 }
