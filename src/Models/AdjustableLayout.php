@@ -24,12 +24,12 @@ class AdjustableLayout extends Model
 
     protected $fillable = [
         'element_id',
-        'position',
+        'data',
     ];
 
     protected $casts = [
         'element_id' => 'string',
-        'position' => 'string',
+        'data' => 'json',
     ];
 
 
@@ -49,7 +49,7 @@ class AdjustableLayout extends Model
     {
         $this->setTable(config('cortex.foundation.tables.adjustable_layouts'));
 
-        $this->mergeRules(['element_id' => 'string', 'position' => 'string']);
+        $this->mergeRules(['element_id' => 'string', 'data' => 'array']);
 
         parent::__construct($attributes);
     }

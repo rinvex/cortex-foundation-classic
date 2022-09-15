@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Providers;
 
+use Cortex\Foundation\View\Components\Dashboard;
+use Cortex\Foundation\View\Components\DashboardTile;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Cortex\Foundation\Http\FormRequest;
 use Illuminate\Support\ServiceProvider;
@@ -136,6 +139,9 @@ class FoundationServiceProvider extends ServiceProvider
 
             $request->setContainer($app)->setRedirector($app->make(Redirector::class));
         });
+
+        Blade::component('cortex-dashboard', Dashboard::class);
+        Blade::component('cortex-dashboard-tile', DashboardTile::class);
     }
 
     /**

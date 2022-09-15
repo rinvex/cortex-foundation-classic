@@ -19,7 +19,7 @@ class CreateAdjustableLayoutsTable extends Migration
             // Columns
             $table->increments('id');
             $table->string('element_id');
-            $table->string('position')->default(0);
+            $table->json('data')->nullable();
             $table->timestamps();
         });
     }
