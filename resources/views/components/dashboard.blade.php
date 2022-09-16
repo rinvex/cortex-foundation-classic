@@ -1,6 +1,13 @@
-<div class="drag-container"></div>
-<div class="grid drag-enabled">
-    {{ $slot }}
+<div class="row">
+    <div class="col-sm-12">
+        <button class="btn btn-primary pull-right" id="grid-edit">{{ trans('cortex/foundation::common.layout_edit') }}</button>
+    </div>
+    <div class="col-sm-12">
+        <div class="drag-container"></div>
+        <div class="grid drag-enabled">
+            {{ $slot }}
+        </div>
+    </div>
 </div>
 
 

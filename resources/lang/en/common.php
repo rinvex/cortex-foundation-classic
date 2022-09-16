@@ -89,5 +89,5 @@ return [
     'submit' => 'Submit',
     'yes' => 'Yes',
     'slug' => 'Slug',
-
+    'layout_edit' => 'Layout Edit',
 ];

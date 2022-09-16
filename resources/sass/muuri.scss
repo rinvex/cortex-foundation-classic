@@ -26,10 +26,12 @@
   position: absolute;
   width: auto;
   height: auto;
-  line-height: 1rem;
-  margin: 0.5rem;
+  margin: 1rem;
   z-index: 1;
 
+  &.tile-disabled {
+    opacity: 60%;
+  }
 
   &.grid-item-w1 {
     width: 10%;
@@ -110,6 +112,33 @@
     user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
   }
+
+  .hover-tile-btn {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    display: none;
+    z-index: 9999;
+  }
+
+  &:hover {
+    .hover-tile-btn {
+      display: block;
+    }
+  }
+
+  &.tile-editing {
+    animation: tile-shaking 1.3s infinite;
+  }
+
+}
+
+@keyframes tile-shaking {
+  0% { transform: translateX(0) }
+  25% { transform: translateX(2px) }
+  50% { transform: translateX(-2px) }
+  75% { transform: translateX(2px) }
+  100% { transform: translateX(0) }
 }
 /* purgecss end ignore */
 

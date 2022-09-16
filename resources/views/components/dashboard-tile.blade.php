@@ -3,6 +3,7 @@
      style="width: {{ $width }}px; height: {{ $height }}px;"
      sortable="{{ $sortable ? 1 : 0 }}"
      resizable="{{ $resizable ? 1 : 0 }}"
+     data-enable="{{ $is_enable ? 1 : 0 }}"
      data-index="{{ $position }}">
     <div class="grid-item-content">
         <div class="panel panel-default">

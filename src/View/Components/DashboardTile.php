@@ -18,11 +18,11 @@ class DashboardTile extends Component
 
     public null|bool $is_enable;
 
-    public int $position;
+    public int $position = 1000;
 
-    public int $width;
+    public int $width = 350;
 
-    public int $height;
+    public int $height = 350;
     /**
      * Create a new component instance.
      *
@@ -41,9 +41,6 @@ class DashboardTile extends Component
         $this->resizable = $resizable;
         $this->sortable = $sortable;
         $this->is_enable = $is_enable;
-        $this->position = 1000;
-        $this->width = 350;
-        $this->height = 350;
     }
 
     /**
@@ -61,9 +58,10 @@ class DashboardTile extends Component
     {
         $setting = AdjustableLayout::query()->where('element_id', $this->name)->first();
         if ($setting) {
-            $this->position = Arr::get($setting->data, 'position', 1000);
-            $this->width = Arr::get($setting->data, 'width', 350);
-            $this->height = Arr::get($setting->data, 'height', 350);
+            $this->position = Arr::get($setting->data, 'position', $this->position);
+            $this->width = Arr::get($setting->data, 'width', $this->width);
+            $this->height = Arr::get($setting->data, 'height', $this->height);
+            $this->is_enable = Arr::get($setting->data, 'is_enable', $this->is_enable);
         }
     }
 
