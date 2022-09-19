@@ -1,9 +1,11 @@
-<div class="grid-item grid-item-w1"
+<div class="grid-item"
      id="{{ $name }}"
      style="width: {{ $width }}px; height: {{ $height }}px;"
      sortable="{{ $sortable ? 1 : 0 }}"
      resizable="{{ $resizable ? 1 : 0 }}"
      data-enable="{{ $is_enable ? 1 : 0 }}"
+     data-width="{{ $width }}"
+     data-height="{{ $height }}"
      data-index="{{ $position }}">
     <div class="grid-item-content">
         <div class="panel panel-default">

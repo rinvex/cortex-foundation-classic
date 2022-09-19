@@ -59,8 +59,8 @@ class DashboardTile extends Component
         $setting = AdjustableLayout::query()->where('element_id', $this->name)->first();
         if ($setting) {
             $this->position = Arr::get($setting->data, 'position', $this->position);
-            $this->width = Arr::get($setting->data, 'width', $this->width);
-            $this->height = Arr::get($setting->data, 'height', $this->height);
+            $this->width = intval(Arr::get($setting->data, 'width', $this->width));
+            $this->height = intval(Arr::get($setting->data, 'height', $this->height));
             $this->is_enable = Arr::get($setting->data, 'is_enable', $this->is_enable);
         }
     }

@@ -1,8 +1,10 @@
 /* Grid */
 /* purgecss start ignore */
-.grid {
+.grid , .columns {
   position: relative;
   width: 100%;
+  min-width: 100px;
+  min-height: 100px;
   padding-bottom: 3rem;
   box-sizing: content-box;
   -webkit-user-select: none;

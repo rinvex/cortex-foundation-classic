@@ -1,11 +1,63 @@
 window.addEventListener('turbolinks:load', function () {
     const dragContainer = document.querySelector('.drag-container');
     const gridElement = document.querySelector('.grid');
+    const grid2Element = document.querySelector('.grid-2');
     initResizeElement();
-    let layoutEditing = false;
+    let disableItems = [];
+    let enableItems = [];
+
+    $("#grid-items").children().each( function (key, item) {
+        item = $(item);
+        if (item.attr('data-enable') != 1) {
+            disableItems.push(item.get(0));
+        }
+        else {
+            enableItems.push(item.get(0));
+        }
+    });
+
+    let grid2 = new Muuri(grid2Element, {
+        items: disableItems,
+        dragEnabled: true,
+        showEasing: 'ease',
+        hideDuration: 400,
+        hideEasing: 'ease',
+        layoutDuration: 400,
+        dragHandle: '.grid-card-handle',
+        dragContainer: dragContainer,
+        dragSort: function () {
+            return [grid, grid2]
+        }
+    })
+        .on('layoutStart', function (items) {
+            let maxWidth = $('.grid-2').width() - 20;
+            items.forEach(function (item, key) {
+                $(item.getElement()).find('.panel-body').addClass("narrow-layout");
+                item.getElement().style.width = maxWidth + 'px';
+                item.getElement().style.height = '40px';
+                grid2.refreshItems([item]).layout();
+            })
+        })
+        .on('receive', function (data) {
+            // console.log(items);
+            disableItem(data.item);
+        });
+
+    function disableItem(item) {
+        let maxWidth = $('.grid-2').width() - 20;
+        let el = item.getElement();
+        el.style.width = maxWidth + 'px';
+        el.style.height = '40px';
+        $(el).find('.panel-body').addClass("narrow-layout");
+        $(el).attr('data-enable', 0);
+        grid2.refreshItems([item]).layout();
+        updateItems([item]);
+
+
+    }
 
     let grid = new Muuri(gridElement, {
-        items: "*",
+        items: enableItems,
         showDuration: 400,
         showEasing: 'ease',
         hideDuration: 400,
@@ -20,10 +72,8 @@ window.addEventListener('turbolinks:load', function () {
         },
         dragHandle: '.grid-card-handle',
         dragContainer: dragContainer,
-        dragSort: true,
-        dragSortPredicate:{
-            action: "swap",
-            migrateAction: 'swap',
+        dragSort: function () {
+            return [grid, grid2]
         },
         dragRelease: {
             duration: 800,
@@ -46,17 +96,20 @@ window.addEventListener('turbolinks:load', function () {
         .on('move', function (data) {
             updateItems(grid.getItems());
         })
-        .on('layoutStart', function (items) {
-            $.each(items, function (key, item) {
-                let el = $(item.getElement());
-                if (el.attr('data-enable') != 1) {
-                    el.addClass('tile-disabled');
-                    if ( !layoutEditing ) {
-                        grid.hide([item]);
-                    }
-                }
-            })
+        .on('receive', function (data) {
+            enableItem(data.item);
         });
+
+    function enableItem(item) {
+        let el = item.getElement();
+        el.style.width = $(el).data('width') + 'px';
+        el.style.height = $(el).data('height') + 'px';
+        $(el).find('.panel-body').removeClass("narrow-layout");
+        $(el).attr('data-enable', 1);
+        grid.refreshItems([item]).layout();
+
+        updateItems([item]);
+    }
 
     grid.sort('index');
 
@@ -116,17 +169,26 @@ window.addEventListener('turbolinks:load', function () {
         data.forEach( function (item, key) {
             const el = $(item.getElement());
             let is_enable = parseInt(el.attr('data-enable'));
+            let width = item.getWidth();
+            let height = item.getHeight();
+
+            if (is_enable == 0) {
+                width = el.data('width');
+                height = el.data('height');
+            }
+            console.log('is_enable', is_enable, is_enable == 0, height);
             items.push({
                 element_id: el.attr('id'),
                 data: {
                     position: (1 + key),
-                    width: item.getWidth(),
-                    height: item.getHeight(),
+                    width: width,
+                    height: height,
                     is_enable: is_enable
                 }
             })
             el.attr('data-index', key);
         })
+
         $.ajax({
             url: routes.route('adminarea.update-layout'),
             data: {items: items},
@@ -137,69 +199,5 @@ window.addEventListener('turbolinks:load', function () {
             },
             type: 'POST'
         });
-    }
-
-    $(document).on('click', '.disable-tile', function (e) {
-        let item = grid.getItems()[parseInt($(this).attr('data-index')) - 1];
-        let el = $(item.getElement());
-        el.attr('data-enable', 0);
-        el.addClass('tile-disabled');
-        initEditing();
-        updateItems([item]);
-    });
-
-    $(document).on('click','.enable-tile', function (e) {
-        let item = grid.getItems()[parseInt($(this).attr('data-index')) - 1];
-        let el = $(item.getElement());
-        el.attr('data-enable', 1);
-        el.removeClass('tile-disabled');
-        initEditing();
-        updateItems([item]);
-    });
-
-    $('#grid-edit').on('click', function (e) {
-
-        if (!layoutEditing) {
-            layoutEditing = true;
-            $(this).removeClass('btn-primary')
-            $(this).addClass('btn-default')
-            $(this).html(Lang.get('cortex/foundation::common.close'));
-            initEditing();
-        }
-        else {
-            layoutEditing = false;
-            $(this).removeClass('btn-default')
-            $(this).addClass('btn-primary')
-            destroyEditing()
-        }
-    });
-
-    function destroyEditing() {
-        $('.hover-tile-btn').remove();
-        $('#grid-edit').html(Lang.get('cortex/foundation::common.layout_edit'));
-        grid.layout();
-    }
-
-    function initEditing() {
-        $('.hover-tile-btn').remove();
-        let items = grid.getItems();
-        grid.show(items);
-        let disableBtn = `<button class="btn btn-danger btn-sm disable-tile hover-tile-btn">
-                                            <span class="fa fa-minus fa-lg"></span>
-                                        </button>`;
-        let enableBtn = `<button class="btn btn-success btn-sm hover-tile-btn enable-tile">
-                                        <span class="fa fa-plus fa-lg"></span>
-                                    </button>`;
-        $.each(items, function (k, item) {
-            let el = $(item.getElement());
-            if (el.attr('data-enable') == 1) {
-                let btn = $(disableBtn).attr('data-index', k + 1);
-                el.prepend(disableBtn, btn.get());
-            }
-            else {
-                let btn = $(enableBtn).attr('data-index', k + 1);
-                el.prepend(btn);
-            }
-        })
     }
 })

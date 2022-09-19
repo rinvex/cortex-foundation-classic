@@ -90,4 +90,5 @@ return [
     'yes' => 'Yes',
     'slug' => 'Slug',
     'layout_edit' => 'Layout Edit',
+    'available_components' => 'Available components',
 ];

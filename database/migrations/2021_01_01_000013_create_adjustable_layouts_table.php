@@ -20,7 +20,7 @@ class CreateAdjustableLayoutsTable extends Migration
             $table->increments('id');
             $table->string('element_id');
             $table->json('data')->nullable();
-            $table->timestamps();
+            $table->auditableAndTimestamps();
         });
     }
 

@@ -1,18 +1,33 @@
 <div class="row">
-    <div class="col-sm-12">
-        <button class="btn btn-primary pull-right" id="grid-edit">{{ trans('cortex/foundation::common.layout_edit') }}</button>
-    </div>
-    <div class="col-sm-12">
-        <div class="drag-container"></div>
-        <div class="grid drag-enabled">
-            {{ $slot }}
+    <div class="drag-container"></div>
+    <div class="col-md-2" style="padding-right: 0">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span>{{ trans('cortex/foundation::common.available_components') }}</span>
+            </div>
+            <div class="panel-body" style="padding: 0">
+                <div class="grid-2 columns drag-enabled">
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="col-md-10">
+        <div class="grid drag-enabled">
+        </div>
+    </div>
+    <div id="grid-items" style="display: none">
+        {{ $slot }}
     </div>
 </div>
 
 
 @push('styles')
     <link href="{{ mix('css/muuri.css') }}" rel="stylesheet">
+    <style>
+        .narrow-layout {
+            display: none;
+        }
+    </style>
 @endpush
 
 @push('vendor-scripts')
