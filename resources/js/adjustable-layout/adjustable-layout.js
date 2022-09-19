@@ -2,9 +2,15 @@ window.addEventListener('turbolinks:load', function () {
     const dragContainer = document.querySelector('.drag-container');
     const gridElement = document.querySelector('.grid');
     const grid2Element = document.querySelector('.grid-2');
-    initResizeElement();
+    const filterField = document.querySelector('.grid-control-field.filter-field');
+    const searchField = document.querySelector('.grid-control-field.search-field');
+    const sortField = document.querySelector('.grid-control-field.sort-field');
+    const layoutField = document.querySelector('.grid-control-field.layout-field');
     let disableItems = [];
     let enableItems = [];
+    let sortFieldValue;
+    let searchFieldValue;
+    initResizeElement();
 
     $("#grid-items").children().each( function (key, item) {
         item = $(item);
@@ -39,7 +45,6 @@ window.addEventListener('turbolinks:load', function () {
             })
         })
         .on('receive', function (data) {
-            // console.log(items);
             disableItem(data.item);
         });
 
@@ -68,7 +73,13 @@ window.addEventListener('turbolinks:load', function () {
         sortData: {
             index(item, element) {
                 return parseInt(element.getAttribute('data-index')) || 1000;
-            }
+            },
+            title(item, element) {
+                return element.getAttribute('data-title')
+            },
+            color(item, element) {
+                return element.getAttribute('data-title')
+            },
         },
         dragHandle: '.grid-card-handle',
         dragContainer: dragContainer,
@@ -176,7 +187,6 @@ window.addEventListener('turbolinks:load', function () {
                 width = el.data('width');
                 height = el.data('height');
             }
-            console.log('is_enable', is_enable, is_enable == 0, height);
             items.push({
                 element_id: el.attr('id'),
                 data: {
@@ -200,4 +210,76 @@ window.addEventListener('turbolinks:load', function () {
             type: 'POST'
         });
     }
+
+    function filter(onFinish = null) {
+        const filterFieldValue = filterField.value;
+        grid.filter(
+            (item) => {
+                const element = item.getElement();
+                const isSearchMatch =
+                    !searchFieldValue ||
+                    (element.getAttribute('data-title') || '').toLowerCase().indexOf(searchFieldValue) > -1;
+                const isFilterMatch =
+                    !filterFieldValue || filterFieldValue === element.getAttribute('data-color') || filterFieldValue === 'all';
+                return isSearchMatch && isFilterMatch;
+            },
+            { onFinish: onFinish }
+        );
+    }
+
+    function sort() {
+        var currentSort = sortField.value;
+        if (sortFieldValue === currentSort) return;
+        // Sort the items.
+        grid.sort(
+            currentSort === 'title' ? 'title' : 'index'
+        );
+        // Update active sort value.
+        sortFieldValue = currentSort;
+        grid.refreshItems().layout();
+    }
+
+    $("#layout-field").on('change', function (e) {
+        const { layout } = grid._settings;
+        const val = $(this).find(":selected").val();
+        layout.alignRight = val.indexOf('right') > -1;
+        layout.alignBottom = val.indexOf('bottom') > -1;
+        layout.fillGaps = val.indexOf('fillgaps') > -1;
+        grid.layout();
+    });
+
+    $('.sort-field').on('change', function (e) {
+        sort();
+    });
+
+    $(".filter-field").on('change', function (e) {
+        filter();
+    })
+
+    function initGridOptions() {
+        // Reset field values.
+        searchField.value = '';
+        [sortField, filterField, layoutField].forEach((field) => {
+            field.value = field.querySelectorAll('option')[0].value;
+        });
+
+        // Set inital search query, active filter, active sort value and active layout.
+        searchFieldValue = searchField.value.toLowerCase();
+        sortFieldValue = sortField.value;
+
+        // Search field binding.
+        searchField.addEventListener('keyup', function () {
+            var newSearch = searchField.value.toLowerCase();
+            if (searchFieldValue !== newSearch) {
+                searchFieldValue = newSearch;
+                filter();
+            }
+        });
+
+        // Filter, sort and layout bindings.
+        filterField.addEventListener('change', filter);
+        sortField.addEventListener('change', sort);
+    }
+
+    initGridOptions();
 })

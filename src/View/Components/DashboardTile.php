@@ -12,6 +12,8 @@ class DashboardTile extends Component
 
     public string $title;
 
+    public null|string $color;
+
     public null|bool $resizable;
 
     public null|bool $sortable;
@@ -23,6 +25,13 @@ class DashboardTile extends Component
     public int $width = 350;
 
     public int $height = 350;
+
+    public array $colors = [
+        'gray'   => 'default',
+        'blue'   => 'primary',
+        'green'   => 'success',
+        'red'    => 'danger',
+    ];
     /**
      * Create a new component instance.
      *
@@ -31,6 +40,7 @@ class DashboardTile extends Component
     public function __construct(
         string $id,
         string $title,
+        ?string $color = 'gray',
         ?bool $sortable = true,
         ?bool $resizable = false,
         ?bool $is_enable = true
@@ -41,6 +51,8 @@ class DashboardTile extends Component
         $this->resizable = $resizable;
         $this->sortable = $sortable;
         $this->is_enable = $is_enable;
+
+        $this->color = Arr::get($this->colors, $color, 'default');
     }
 
     /**

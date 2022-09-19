@@ -22,6 +22,20 @@
     margin-bottom: 0;
     height: inherit !important;
   }
+
+  .panel-success {
+    .panel-heading {
+      color: #fff;
+      background-color: #008d4c;
+    }
+  }
+
+  .panel-danger {
+    .panel-heading {
+      color: #fff;
+      background-color: #d73925;
+    }
+  }
 }
 
 .grid-item {

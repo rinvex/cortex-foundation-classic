@@ -12,6 +12,20 @@
         </div>
     </div>
     <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-3">
+                {{ Form::text('search', '', [ 'class' => 'grid-control-field form-control search-field', 'placeholder' => trans('cortex/foundation::common.search')]) }}
+            </div>
+            <div class="col-md-3">
+                {{ Form::select('sort', $dragOptions, 'drag', [ 'class' => 'grid-control-field form-control sort-field select2', 'placeholder' => trans ('cortex/foundation::common.sort') ]) }}
+            </div>
+            <div class="col-md-3">
+                {{ Form::select('filter', $colorOptions, 'all', [ 'class' => 'form-control grid-control-field filter-field select2', 'placeholder' => trans ('cortex/foundation::common.filter') ]) }}
+            </div>
+            <div class="col-md-3">
+                {{ Form::select('layout', $positionOptions, 'left-top', [ 'class' => 'form-control layout-field grid-control-field select2', 'id' => 'layout-field', 'placeholder' => trans ('cortex/foundation::common.layout') ]) }}
+            </div>
+        </div>
         <div class="grid drag-enabled">
         </div>
     </div>
