@@ -161,11 +161,29 @@ window.addEventListener('turbolinks:load', function () {
 
         function doDrag(e) {
             gridElement.classList.remove('drag-enabled');
+
             element.style.width = startWidth + e.clientX - startX + "px";
             element.style.height = startHeight + e.clientY - startY + "px";
         }
 
         function stopDrag(e) {
+            let width = startWidth + Math.floor((e.clientX - startX)/100) * 100;
+            let height = startHeight + Math.floor((e.clientY - startY)/100) * 100;
+            let diffWidth = Math.floor(width/300);
+            let diffHeight = Math.floor(height/300);
+
+            width = ((diffWidth - 1) * 20) + (Math.abs(diffWidth) * 300);
+            height = ((diffHeight - 1) * 20) + (Math.abs(diffHeight) * 300);
+            if (width < 300) {
+                width = 300;
+            }
+            if (height < 300) {
+                height = 300;
+            }
+
+            element.style.width = width + 'px';
+            element.style.height = height + 'px';
+
             document.documentElement.removeEventListener("mousemove", doDrag, false);
             document.documentElement.removeEventListener("mouseup", stopDrag, false);
             grid.refreshItems();
@@ -187,6 +205,11 @@ window.addEventListener('turbolinks:load', function () {
                 width = el.data('width');
                 height = el.data('height');
             }
+
+            el.attr('data-index', key);
+            el.attr('data-width', width);
+            el.attr('data-height', height);
+
             items.push({
                 element_id: el.attr('id'),
                 data: {
@@ -196,7 +219,6 @@ window.addEventListener('turbolinks:load', function () {
                     is_enable: is_enable
                 }
             })
-            el.attr('data-index', key);
         })
 
         $.ajax({

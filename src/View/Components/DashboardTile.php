@@ -22,9 +22,9 @@ class DashboardTile extends Component
 
     public int $position = 1000;
 
-    public int $width = 350;
+    public int $width = 300;
 
-    public int $height = 350;
+    public int $height = 300;
 
     public array $colors = [
         'gray'   => 'default',

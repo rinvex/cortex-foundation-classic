@@ -37,11 +37,6 @@
 
 @push('styles')
     <link href="{{ mix('css/muuri.css') }}" rel="stylesheet">
-    <style>
-        .narrow-layout {
-            display: none;
-        }
-    </style>
 @endpush
 
 @push('vendor-scripts')

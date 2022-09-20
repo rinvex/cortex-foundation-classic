@@ -21,6 +21,10 @@
   .panel {
     margin-bottom: 0;
     height: inherit !important;
+
+    .panel-body.narrow-layout {
+      display: none;
+    }
   }
 
   .panel-success {
