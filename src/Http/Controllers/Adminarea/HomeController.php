@@ -28,7 +28,11 @@ class HomeController extends AuthorizedController
     public function updateLayout(Request $request)
     {
         collect($request->get('items', []))->each( function ($item) {
-            AdjustableLayout::query()->updateOrCreate(['element_id' => $item['element_id']], ['data' => $item['data']]);
+            AdjustableLayout::query()->updateOrCreate([
+                'element_id' => $item['element_id'],
+                'created_by_id' => \Auth::id(),
+                'created_by_type' => \Auth::user()->getMorphClass(),
+            ], ['data' => $item['data']]);
         });
     }
 

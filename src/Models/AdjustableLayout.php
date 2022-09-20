@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Models;
 
+use Cortex\Foundation\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Support\Traits\ValidatingTrait;
 use Rinvex\Support\Traits\HashidsTrait;
@@ -21,6 +22,7 @@ class AdjustableLayout extends Model
 {
     use ValidatingTrait;
     use HashidsTrait;
+    use Auditable;
 
     protected $fillable = [
         'element_id',

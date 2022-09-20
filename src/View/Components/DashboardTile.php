@@ -68,7 +68,7 @@ class DashboardTile extends Component
 
     private function adjustSettings()
     {
-        $setting = AdjustableLayout::query()->where('element_id', $this->name)->first();
+        $setting = AdjustableLayout::query()->createdBy(\Auth::user())->where('element_id', $this->name)->first();
         if ($setting) {
             $this->position = Arr::get($setting->data, 'position', $this->position);
             $this->width = intval(Arr::get($setting->data, 'width', $this->width));
