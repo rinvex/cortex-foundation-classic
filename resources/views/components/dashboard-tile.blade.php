@@ -1,6 +1,6 @@
-<div class="grid-item"
+<div class="grid-item col-md-{{ $width }}"
      id="{{ $name }}"
-     style="width: {{ $width }}px; height: {{ $height }}px;"
+     style=" height: {{ $height }}px;"
      sortable="{{ $sortable ? 1 : 0 }}"
      resizable="{{ $resizable ? 1 : 0 }}"
      data-enable="{{ $is_enable ? 1 : 0 }}"

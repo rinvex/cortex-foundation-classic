@@ -22,7 +22,7 @@ class DashboardTile extends Component
 
     public int $position = 1000;
 
-    public int $width = 300;
+    public int $width = 3;
 
     public int $height = 300;
 

@@ -2,9 +2,8 @@
 /* purgecss start ignore */
 .grid , .columns {
   position: relative;
-  width: 100%;
-  min-width: 100px;
-  min-height: 100px;
+  min-width: 200px;
+  min-height: 200px;
   padding-bottom: 3rem;
   box-sizing: content-box;
   -webkit-user-select: none;
@@ -44,10 +43,9 @@
 
 .grid-item {
   position: absolute;
-  width: auto;
-  height: auto;
-  margin: 1rem;
+  margin-bottom: 20px;
   z-index: 1;
+  padding-right: 0;
 
   &.tile-disabled {
     opacity: 60%;
