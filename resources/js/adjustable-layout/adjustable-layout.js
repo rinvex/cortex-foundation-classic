@@ -278,6 +278,26 @@ window.addEventListener('turbolinks:load', function () {
         filter();
     })
 
+    $('.edit-dashboard-layout').on('click', function (e) {
+        let editButton = $(this);
+        let availableComponents = $('.available-components');
+        let showingComponents = $('.showing-components');
+
+        showingComponents.toggleClass('col-md-12');
+        showingComponents.toggleClass('col-md-10');
+        availableComponents.toggleClass('hide');
+
+        if (availableComponents.hasClass('hide')) {
+            editButton.html(Lang.get('cortex/foundation::common.available_components'));
+        }
+        else {
+            editButton.html(Lang.get('cortex/foundation::common.close'));
+        }
+        editButton.toggleClass('btn-primary');
+        editButton.toggleClass('btn-default');
+        grid.layout();
+    });
+
     function initGridOptions() {
         // Reset field values.
         searchField.value = '';
