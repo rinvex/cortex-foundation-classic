@@ -113,7 +113,11 @@ window.addEventListener('turbolinks:load', function () {
 
     function enableItem(item) {
         let el = item.getElement();
-        el.style.width = $(el).data('width') + 'px';
+        $(el).removeClass (function (index, className) {
+            return (className.match (/(^|\s)col-md-\S+/g) || []).join(' ');
+        });
+        $(el).css('width', '');
+        $(el).addClass('col-md-'+$(el).data('width'));
         el.style.height = $(el).data('height') + 'px';
         $(el).find('.panel-body').removeClass("narrow-layout");
         $(el).attr('data-enable', 1);
@@ -128,6 +132,7 @@ window.addEventListener('turbolinks:load', function () {
         var popups = $('.grid-item');
         var element = null;
         var startX, startY, startWidth, startHeight;
+        var screenWidth = $('.showing-components').width();
 
         $.each(popups, function (key, p) {
             var right = document.createElement("div");
@@ -149,7 +154,7 @@ window.addEventListener('turbolinks:load', function () {
             both.parentPopup = p;
         })
 
-        function initDrag(e) {
+        function initDrag(e, el) {
             element = this.parentPopup;
             startX = e.clientX;
             startY = e.clientY;
@@ -167,22 +172,41 @@ window.addEventListener('turbolinks:load', function () {
         }
 
         function stopDrag(e) {
-            let width = startWidth + Math.floor((e.clientX - startX)/100) * 100;
+            let width = startWidth + Math.floor((e.clientX - startX)/50) * 50;
             let height = startHeight + Math.floor((e.clientY - startY)/100) * 100;
-            let diffWidth = Math.floor(width/300);
-            let diffHeight = Math.floor(height/300);
+            let diffHeight = Math.floor(height/100);
 
-            width = ((diffWidth - 1) * 20) + (Math.abs(diffWidth) * 300);
-            height = ((diffHeight - 1) * 20) + (Math.abs(diffHeight) * 300);
-            if (width < 300) {
-                width = 300;
-            }
-            if (height < 300) {
-                height = 300;
+            width = (width / screenWidth) * 100
+            if (width < 10) {
+                width = 10;
+            } else if(width > 100) {
+                width = 100;
             }
 
-            element.style.width = width + 'px';
+            //let calculate the columns with percentage. min to max columns values are 1 to 12;
+            columns = (width / 8.33).toFixed();
+
+            if (columns < 1) {
+                columns = 1;
+            }else if (columns > 12) {
+                columns = 12;
+            }
+
+            height = ((diffHeight - 1) * 20) + (Math.abs(diffHeight) * 100);
+            if (height < 100) {
+                height = 100;
+            }
+
+            // element.style.width = width + '%';
             element.style.height = height + 'px';
+            $(element).removeClass (function (index, className) {
+                return (className.match (/(^|\s)col-md-\S+/g) || []).join(' ');
+            });
+
+            $(element).addClass('col-md-'+columns);
+            $(element).css('width', '');
+            $(element).attr('data-width', columns);
+            $(element).attr('data-height', height);
 
             document.documentElement.removeEventListener("mousemove", doDrag, false);
             document.documentElement.removeEventListener("mouseup", stopDrag, false);
@@ -198,11 +222,10 @@ window.addEventListener('turbolinks:load', function () {
         data.forEach( function (item, key) {
             const el = $(item.getElement());
             let is_enable = parseInt(el.attr('data-enable'));
-            let width = item.getWidth();
-            let height = item.getHeight();
 
+            let height = item.getHeight();
+            width = el.data('width');
             if (is_enable == 0) {
-                width = el.data('width');
                 height = el.data('height');
             }
 
@@ -295,7 +318,7 @@ window.addEventListener('turbolinks:load', function () {
         }
         editButton.toggleClass('btn-primary');
         editButton.toggleClass('btn-default');
-        grid.layout();
+        grid.refreshItems().layout();
     });
 
     function initGridOptions() {
