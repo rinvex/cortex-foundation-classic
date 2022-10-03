@@ -9,64 +9,33 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 class Kernel extends HttpKernel
 {
     /**
-     * Temporary store for disabled middleware.
+     * Temporary store for disabled global middleware.
      *
      * @var array
      */
-    protected $disabledMiddleware = [];
+    protected array $disabledGlobalMiddleware = [];
 
     /**
-     * Temporary store for disabled route middleware.
-     *
-     * @var array
-     */
-    protected $disabledRouteMiddleware = [];
-
-    /**
-     * Disable middleware.
+     * Disable global middleware.
      *
      * @return void
      */
-    public function disableMiddleware(): void
+    public function disableGlobalMiddleware(): void
     {
-        $this->disabledMiddleware = $this->middleware;
+        $this->disabledGlobalMiddleware = $this->middleware;
 
         $this->middleware = [];
     }
 
     /**
-     * Enable middleware.
+     * Enable global middleware.
      *
      * @return void
      */
-    public function enableMiddleware(): void
+    public function enableGlobalMiddleware(): void
     {
-        $this->middleware = $this->disabledMiddleware;
+        $this->middleware = $this->disabledGlobalMiddleware;
 
-        $this->disabledMiddleware = [];
-    }
-
-    /**
-     * Disable route middleware.
-     *
-     * @return void
-     */
-    public function disableRouteMiddleware(): void
-    {
-        $this->disabledRouteMiddleware = $this->routeMiddleware;
-
-        $this->routeMiddleware = [];
-    }
-
-    /**
-     * Enable route middleware.
-     *
-     * @return void
-     */
-    public function enableRouteMiddleware(): void
-    {
-        $this->routeMiddleware = $this->disabledRouteMiddleware;
-
-        $this->disabledRouteMiddleware = [];
+        $this->disabledGlobalMiddleware = [];
     }
 }
