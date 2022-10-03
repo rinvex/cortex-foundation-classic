@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
-## [v7.3.19] - 2022-09-03
+## [v7.3.19] - 2022-10-03
 - Override session.cookie dynamically for tenants
 - Improve HTTP Kernel global middleware enable/disable
 - Move middleware registration from HTTP Kernel to module bootstrap
