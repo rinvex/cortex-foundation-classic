@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.19] - 2022-09-03
+- Override session.cookie dynamically for tenants
+- Improve HTTP Kernel global middleware enable/disable
+- Move middleware registration from HTTP Kernel to module bootstrap
+- Move SetAuthDefaults middleware to cortex/auth from cortex/foundation
+- Remove useless EncryptCookies middleware override
+- Reorder composer dependencies
+- Lock psr/simple-cache package to v2.x since maatwebsite/excel is not compatible with v3.x
+- refactor: register commands in artisan service #44257 https://github.com/laravel/framework/pull/44257/files
+- Fix validator when a table name is provided instead of a model
+
 ## [v7.3.18] - 2022-09-02
 - Add support for per model enable/disable scoped validation
 
@@ -765,6 +776,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.19]: https://github.com/rinvex/cortex-foundation/compare/v7.3.18...v7.3.19
 [v7.3.18]: https://github.com/rinvex/cortex-foundation/compare/v7.3.17...v7.3.18
 [v7.3.17]: https://github.com/rinvex/cortex-foundation/compare/v7.3.16...v7.3.17
 [v7.3.16]: https://github.com/rinvex/cortex-foundation/compare/v7.3.15...v7.3.16
