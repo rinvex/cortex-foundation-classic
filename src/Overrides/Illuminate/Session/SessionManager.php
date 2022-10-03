@@ -17,6 +17,10 @@ class SessionManager extends BaseSessionManager
      */
     protected function buildSession($handler)
     {
+        if ($tenant = app('request.tenant')) {
+            $this->config->set('session.cookie', $tenant->slug.'_session');
+        }
+
         return $this->config->get('session.encrypt')
                 ? $this->buildEncryptedSession($handler)
                 : new Store($this->config->get('session.cookie'), $handler);

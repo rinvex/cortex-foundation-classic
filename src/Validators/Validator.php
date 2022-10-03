@@ -38,31 +38,31 @@ class Validator extends BaseValidator
             $idColumn = $model->getKeyName();
         }
 
-        return [$connection, $this->getValidationModel($model, $table), $idColumn ?? null];
+        return [$connection, $this->getValidationModel($model ?? null, $table), $idColumn ?? null];
     }
 
     /**
      * Return the model instance to be used in validation.
      *
-     * @param $model \Illuminate\Database\Eloquent\Model
-     * @param $table string
+     * @param \Illuminate\Database\Eloquent\Model|null $model
+     * @param                                          $table string
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    protected function getValidationModel(Model $model, string $table): Model
+    protected function getValidationModel(?Model $model, string $table): Model
     {
         return $model ? ($this->isValidationScoped($model) ? $model : $model->withoutGlobalScopes()) : (new AbstractModel())->setTable($table);
     }
 
     /**
-     * Returns whether the model validation be scoped or not. (Default: true)
+     * Returns whether the model validation be scoped or not. (Default: true).
      *
-     * @param $model \Illuminate\Database\Eloquent\Model
+     * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return bool
      */
     protected function isValidationScoped(Model $model): bool
     {
-        return isset($model->isValidationScoped) ? $model->isValidationScoped : true;
+        return $model->isValidationScoped ?? true;
     }
 }
