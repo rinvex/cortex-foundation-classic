@@ -237,7 +237,7 @@ CDATA;
     /**
      * Process DataTables needed render output.
      *
-     * @param string $view
+     * @param string|null $view
      * @param array  $data
      * @param array  $mergeData
      *
