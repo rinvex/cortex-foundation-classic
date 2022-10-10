@@ -245,7 +245,7 @@ CDATA;
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
-    public function render($view, $data = [], $mergeData = [])
+    public function render(?string $view = null, array $data = [], array $mergeData = [])
     {
         $action = $this->request()->get('action');
 
