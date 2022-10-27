@@ -48,7 +48,7 @@ class Counter extends Component
 }
 ```
 
-Create a new component view `app/cortex/foundation/src/Http/Components/Adminarea/Counter.php`:
+Create a new component view `app/cortex/foundation/resources/views/adminarea/components/counter.blade.php`:
 ```php
 <div style="text-align: center">
     <button wire:click="increment">+</button>
