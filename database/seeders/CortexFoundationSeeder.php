@@ -56,7 +56,7 @@ class CortexFoundationSeeder extends Seeder
 
         collect($accessareas)->each(function (array $accessarea) {
             app('cortex.foundation.accessarea')->firstOrCreate([
-                'name' => $accessarea['name'],
+                'slug' => $accessarea['slug'],
             ], $accessarea);
         });
     }
