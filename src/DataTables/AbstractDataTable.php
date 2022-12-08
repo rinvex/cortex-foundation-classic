@@ -39,7 +39,12 @@ abstract class AbstractDataTable extends BaseDataTable
     protected array $bulkActions = ['delete', 'revoke', 'activate', 'deactivate'];
 
     protected array $authorizedActions = ['create', 'import', 'export', 'print', 'delete', 'revoke', 'activate', 'deactivate'];
-
+    /**
+     * The resource Ability Map.
+     *
+     * @var array
+     */
+    protected $resourceAbilityMap = [];
     /**
      * Set default options.
      *
@@ -85,8 +90,8 @@ abstract class AbstractDataTable extends BaseDataTable
     public function getAuthorizedButtons(): array
     {
         $buttons = collect(config('cortex.foundation.datatables.buttons'))->merge($this->buttons)->mapWithKeys(function ($value, $key) {
-            if (in_array($key, $this->authorizedActions)) {
-                return [$key => ($user = $this->request()->user()) && $user->can($key === 'print' ? 'export' : $key, $this->model ? app($this->model) : []) && $value];
+            if ($value && in_array($key, $this->authorizedActions)) {
+                return [$key => $this->request()->user() && $this->userHasAbilityForAction($key === 'print' ? 'export' : $key)];
             }
 
             return [$key => $value];
@@ -163,13 +168,28 @@ abstract class AbstractDataTable extends BaseDataTable
      */
     public function isActionAuthorized($action, Model $item = null): bool
     {
-        if (in_array($action, $this->authorizedActions) && ! $this->request()->user()->can($action, $item ?? ($this->model ? app($this->model) : []))) {
+        if (in_array($action, $this->authorizedActions) && ! $this->userHasAbilityForAction($action, $item)) {
             throw new GenericException(trans('cortex/foundation::messages.action_unauthorized'), $this->request->url());
         }
 
         return true;
     }
+    public function userHasAbilityForAction($action, Model $item = null): bool
+    {
+        if(isset($this->resourceAbilityMap[$action]) && isset($this->resourceAbilityMap[$action]['ability'])){
+            $ability = $this->resourceAbilityMap[$action]['ability'];
+            $model = isset($this->resourceAbilityMap[$action]['model']) && $this->resourceAbilityMap[$action]['model'] ? app($this->resourceAbilityMap[$action]['model']) : [];
+        }else{
+            $ability = $action;
+            $model = $this->model ? app($this->model) : [];
+        }
 
+        if ($this->request()->user()->can($ability, $item ?? $model)) {
+            return true;
+        }
+
+        return false;
+    }
     /**
      * Perform bulk action.
      *
