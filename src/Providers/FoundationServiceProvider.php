@@ -24,6 +24,7 @@ use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
 use Cortex\Foundation\Overrides\Barryvdh\Debugbar\DebugbarServiceProvider;
 use Cortex\Foundation\Overrides\Mcamara\LaravelLocalization\LaravelLocalization;
 use Cortex\Foundation\Overrides\Mariuzzo\LaravelJsLocalization\Commands\LangJsCommand;
+use Cortex\Foundation\Overrides\Felixkiss\UniqueWithValidator\Validator as UniqueWithValidator;
 
 class FoundationServiceProvider extends ServiceProvider
 {
@@ -85,6 +86,8 @@ class FoundationServiceProvider extends ServiceProvider
         // Early set application locale globaly
         $this->app['laravellocalization']->setLocale();
 
+        $this->overrideUniqueWithValidator();
+
         SessionFacade::extend('database', function ($app) {
             $table = $app['config']['session.table'];
 
@@ -137,7 +140,36 @@ class FoundationServiceProvider extends ServiceProvider
             $request->setContainer($app)->setRedirector($app->make(Redirector::class));
         });
     }
+    /**
+     * Override notification middleware.
+     *
+     * @return void
+     */
+    public function overrideUniqueWithValidator(): void
+    {
+        if (method_exists($this->app->translator, 'trans')) {
+            $message = $this->app->translator->trans('uniquewith-validator::validation.unique_with');
+        }
+        else {
+            $message = $this->app->translator->get('uniquewith-validator::validation.unique_with');
+        }
+        $this->app->validator->extend('unique_with', UniqueWithValidator::class . '@validateUniqueWith', $message);
+        $this->app->validator->replacer('unique_with', function() {
+            // Since 5.4.20, the validator is passed in as the 5th parameter.
+            // In order to preserve backwards compatibility, we check if the 
+            // validator is passed and use the validator's translator instead
+            // of getting it out of the container.
+            $arguments = func_get_args();
+            if (sizeof($arguments) >= 5) {
+                $arguments[4] = $arguments[4]->getTranslator();
+            }
+            else {
+                $arguments[4] = $this->app->translator;
+            }
 
+            return call_user_func_array([new UniqueWithValidator, 'replaceUniqueWith'], $arguments);
+        });
+    }
     /**
      * Override notification middleware.
      *
