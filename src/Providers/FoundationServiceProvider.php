@@ -8,8 +8,8 @@ use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
-use Cortex\Foundation\Support\DfsToken;
 use Cortex\Foundation\Http\FormRequest;
+use Cortex\Foundation\Support\DfsToken;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
 use Cortex\Foundation\Models\Accessarea;
@@ -61,7 +61,7 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->environment('production') || $this->app->register(DebugbarServiceProvider::class);
 
         // Bind DfsToken into IoC service container
-        $this->app->singleton(DfsToken::class, fn() => new DfsToken($this->app['request']));
+        $this->app->singleton(DfsToken::class, fn () => new DfsToken($this->app['request']));
     }
 
     /**

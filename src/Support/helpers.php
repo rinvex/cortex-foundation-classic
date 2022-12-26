@@ -25,7 +25,6 @@ if (! function_exists('dfs_token')) {
      * @throws \RuntimeException
      *
      * @return string
-     *
      */
     function dfs_token()
     {

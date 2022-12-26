@@ -35,8 +35,8 @@ class VerifyDfsToken
     /**
      * Create a new middleware instance.
      *
-     * @param \Illuminate\Contracts\Foundation\Application   $app
-     * @param \Cortex\Foundation\Support\DfsToken $dfsToken
+     * @param \Illuminate\Contracts\Foundation\Application $app
+     * @param \Cortex\Foundation\Support\DfsToken          $dfsToken
      */
     public function __construct(Application $app, DfsToken $dfsToken)
     {
@@ -50,9 +50,9 @@ class VerifyDfsToken
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
      *
-     * @return mixed
-     *
      * @throws \Cortex\Foundation\Exceptions\DfsTokenMismatchException
+     *
+     * @return mixed
      */
     public function handle($request, Closure $next)
     {
@@ -73,7 +73,7 @@ class VerifyDfsToken
     /**
      * Determine if the HTTP request uses a ‘read’ verb.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return bool
      */
@@ -95,7 +95,7 @@ class VerifyDfsToken
     /**
      * Determine if the request has a URI that should pass through DFS verification.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return bool
      */
@@ -117,7 +117,8 @@ class VerifyDfsToken
     /**
      * Determine if the session and input DFS tokens match.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return bool
      */
     protected function tokensMatch($request): bool
@@ -131,7 +132,7 @@ class VerifyDfsToken
     /**
      * Get the DFS token from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return ?string
      */
