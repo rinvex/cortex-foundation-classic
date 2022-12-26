@@ -8,6 +8,7 @@ use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
+use Cortex\Foundation\Support\DfsToken;
 use Cortex\Foundation\Http\FormRequest;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
@@ -18,6 +19,7 @@ use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
 use Illuminate\Support\Facades\Session as SessionFacade;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
+use Cortex\Foundation\Overrides\Collective\Html\FormBuilder;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
@@ -57,6 +59,23 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Register dev service providers
         $this->app->environment('production') || $this->app->register(DebugbarServiceProvider::class);
+
+        // Bind DfsToken into IoC service container
+        $this->app->singleton(DfsToken::class, fn() => new DfsToken($this->app['request']));
+    }
+
+    /**
+     * Register attemptUser request macro.
+     *
+     * @return void
+     */
+    protected function extendFormBuilder(): void
+    {
+        $this->app->singleton('form', function ($app) {
+            $form = new FormBuilder($app['html'], $app['url'], $app['view'], $app['session.store']->token(), $app['request']);
+
+            return $form->setSessionStore($app['session.store']);
+        });
     }
 
     /**
@@ -71,6 +90,9 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Use Pagination bootstrap styles
         Paginator::useBootstrap();
+
+        // Extend Form Builder
+        $this->extendFormBuilder();
 
         // Override validator resolver
         ValidatorFacade::resolver(function ($translator, $data, $rules, $messages) {
