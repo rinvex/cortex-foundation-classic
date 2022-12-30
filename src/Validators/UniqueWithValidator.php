@@ -22,7 +22,7 @@ class UniqueWithValidator
             $presenceVerifier->setConnection($ruleParser->getConnection());
         }
 
-        return $presenceVerifier->getCount($ruleParser->getTable(), $ruleParser->getPrimaryField(), $ruleParser->getPrimaryValue(), $ruleParser->getIgnoreValue(), $ruleParser->getIgnoreColumn(), $ruleParser->getAdditionalFields()) == 0;
+        return $presenceVerifier->getCount($ruleParser->getTable(), $ruleParser->getPrimaryField(), $ruleParser->getPrimaryValue(), $ruleParser->getIgnoreValue(), $ruleParser->getIgnoreColumn(), $ruleParser->getAdditionalFields()) === 0;
     }
 
     public function replaceUniqueWith($message, $attribute, $rule, $parameters, $validator)
