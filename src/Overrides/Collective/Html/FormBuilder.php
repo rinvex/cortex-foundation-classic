@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Cortex\Foundation\Overrides\Collective\Html;
 
 use Cortex\Foundation\Support\DfsToken;
@@ -22,13 +24,13 @@ class FormBuilder extends BaseFormBuilder
      *
      * @override append DFS Token to forms.
      *
-     * @param  string $method
+     * @param string $method
      *
      * @return string
      */
     protected function getAppendage($method)
     {
-        [$method, $appendage] = [strtoupper($method), ''];
+        [$method, $appendage] = [mb_strtoupper($method), ''];
 
         // If the HTTP method is in this list of spoofed methods, we will attach the
         // method spoofer hidden input to the form. This allows us to use regular

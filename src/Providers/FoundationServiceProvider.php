@@ -8,8 +8,8 @@ use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
-use Cortex\Foundation\Support\DfsToken;
 use Cortex\Foundation\Http\FormRequest;
+use Cortex\Foundation\Support\DfsToken;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
 use Cortex\Foundation\Models\Accessarea;
@@ -62,7 +62,7 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->environment('production') || $this->app->register(DebugbarServiceProvider::class);
 
         // Bind DfsToken into IoC service container
-        $this->app->singleton(DfsToken::class, fn() => new DfsToken($this->app['request']));
+        $this->app->singleton(DfsToken::class, fn () => new DfsToken($this->app['request']));
     }
 
     /**
@@ -103,7 +103,7 @@ class FoundationServiceProvider extends ServiceProvider
         // Add support for unique_with validator
         ValidatorFacade::extend('unique_with', UniqueWithValidator::class.'@validateUniqueWith', trans('validation.unique_with'));
         ValidatorFacade::replacer('unique_with', function () {
-            return call_user_func_array([new UniqueWithValidator, 'replaceUniqueWith'], func_get_args());
+            return call_user_func_array([new UniqueWithValidator(), 'replaceUniqueWith'], func_get_args());
         });
 
         // Override validator presence verifier

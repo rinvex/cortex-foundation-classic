@@ -11,16 +11,27 @@ use Illuminate\Database\Eloquent\Model;
 class UniqueWithRuleParser
 {
     protected $table;
+
     protected $connection;
+
     protected $primaryField;
+
     protected $primaryValue;
+
     protected $additionalFields;
+
     protected $parsed = false;
+
     protected $ignoreColumn;
+
     protected $ignoreValue;
+
     protected $dataFields;
+
     protected $parameters;
+
     protected $attribute;
+
     protected $data;
 
     public function __construct($attribute = null, $value = null, array $parameters = [], array $data = [])
@@ -33,7 +44,9 @@ class UniqueWithRuleParser
 
     protected function parse()
     {
-        if ($this->parsed) { return; }
+        if ($this->parsed) {
+            return;
+        }
         $this->parsed = true;
 
         // cleaning: trim whitespace
@@ -77,7 +90,7 @@ class UniqueWithRuleParser
                 continue;
             }
 
-            if (!Arr::has($this->data, $fieldName)) {
+            if (! Arr::has($this->data, $fieldName)) {
                 continue;
             }
 
@@ -90,6 +103,7 @@ class UniqueWithRuleParser
     public function getConnection()
     {
         $this->parse();
+
         return $this->connection;
     }
 
@@ -103,9 +117,9 @@ class UniqueWithRuleParser
             $table = $model->getTable();
 
             return $model ? ($this->isValidationScoped($model) ? $model : $model->withoutGlobalScopes()) : (new AbstractModel())->setTable($table);
-        } else {
-            return $table;
         }
+
+        return $table;
     }
 
     /**
@@ -123,36 +137,42 @@ class UniqueWithRuleParser
     public function getPrimaryField()
     {
         $this->parse();
+
         return $this->primaryField;
     }
 
     public function getPrimaryValue()
     {
         $this->parse();
+
         return $this->primaryValue;
     }
 
     public function getAdditionalFields()
     {
         $this->parse();
+
         return $this->additionalFields;
     }
 
     public function getIgnoreValue()
     {
         $this->parse();
+
         return $this->ignoreValue;
     }
 
     public function getIgnoreColumn()
     {
         $this->parse();
+
         return $this->ignoreColumn;
     }
 
     public function getDataFields()
     {
         $this->parse();
+
         return $this->dataFields;
     }
 
@@ -160,12 +180,14 @@ class UniqueWithRuleParser
     {
         // Ignore has to be specified as the last parameter
         $lastParameter = end($this->parameters);
-        if (!$this->isIgnore($lastParameter)) { return; }
+        if (! $this->isIgnore($lastParameter)) {
+            return;
+        }
 
         $lastParameter = array_map('trim', explode('=', $lastParameter));
 
         $this->ignoreValue = str_replace('ignore:', '', $lastParameter[0]);
-        $this->ignoreColumn = (sizeof($lastParameter) > 1) ? end($lastParameter) : null;
+        $this->ignoreColumn = (count($lastParameter) > 1) ? end($lastParameter) : null;
 
         // Shave of the ignore_id from the array for later processing
         array_pop($this->parameters);
@@ -174,13 +196,14 @@ class UniqueWithRuleParser
     protected function isIgnore($parameter)
     {
         // An ignore_id can be specified by prefixing with 'ignore:'
-        if (strpos($parameter, 'ignore:') !== false) {
+        if (mb_strpos($parameter, 'ignore:') !== false) {
             return true;
         }
 
         // An ignore_id can be specified if parameter starts with a
         // number greater than 1 (a valid id in the database)
         $parts = array_map('trim', explode('=', $parameter));
+
         return preg_match('/^[1-9][0-9]*$/', $parts[0]);
     }
 
@@ -204,13 +227,13 @@ class UniqueWithRuleParser
 
             // 2. Figure out what parts of the current field string should be
             //    replaced (Basically everything before the last wildcard)
-            $positionOfLastWildcard = strrpos($attributeWithWildcards, '*.');
-            $wildcardPartToBeReplaced = substr($attributeWithWildcards, 0, $positionOfLastWildcard + 2);
+            $positionOfLastWildcard = mb_strrpos($attributeWithWildcards, '*.');
+            $wildcardPartToBeReplaced = mb_substr($attributeWithWildcards, 0, $positionOfLastWildcard + 2);
 
             // 3. Figure out what the substitute for the replacement in the
             //    current field string should be (Basically delete everything
             //    after the final index part in the main attribute)
-            $endPartToDismiss = substr($attributeWithWildcards, $positionOfLastWildcard + 2);
+            $endPartToDismiss = mb_substr($attributeWithWildcards, $positionOfLastWildcard + 2);
             $actualIndexPartToBeSubstitute = str_replace($endPartToDismiss, '', $this->attribute);
 
             // 4. Do the actual replacement. The end result should be a string
