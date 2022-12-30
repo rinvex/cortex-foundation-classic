@@ -16,7 +16,7 @@ class TrustHosts extends BaseTrustHosts
     public function hosts()
     {
         $hosts = [];
-        $domains = array_keys($this->app['config']->get('app.domains'));
+        $domains = route_domains(request()->accessarea());
 
         foreach ($domains as $domain) {
             $hosts[] = '^(.+\.)?'.preg_quote($domain).'$';

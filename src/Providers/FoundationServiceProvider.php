@@ -9,6 +9,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Cortex\Foundation\Http\FormRequest;
+use Cortex\Foundation\Support\DfsToken;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
 use Cortex\Foundation\Models\Accessarea;
@@ -16,8 +17,10 @@ use Illuminate\Database\Schema\Blueprint;
 use Cortex\Foundation\Validators\Validator;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
+use Cortex\Foundation\Validators\UniqueWithValidator;
 use Illuminate\Support\Facades\Session as SessionFacade;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
+use Cortex\Foundation\Overrides\Collective\Html\FormBuilder;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Overrides\Illuminate\Routing\Redirector;
@@ -57,6 +60,23 @@ class FoundationServiceProvider extends ServiceProvider
 
         // Register dev service providers
         $this->app->environment('production') || $this->app->register(DebugbarServiceProvider::class);
+
+        // Bind DfsToken into IoC service container
+        $this->app->singleton(DfsToken::class, fn () => new DfsToken($this->app['request']));
+    }
+
+    /**
+     * Register attemptUser request macro.
+     *
+     * @return void
+     */
+    protected function extendFormBuilder(): void
+    {
+        $this->app->singleton('form', function ($app) {
+            $form = new FormBuilder($app['html'], $app['url'], $app['view'], $app['session.store']->token(), $app['request']);
+
+            return $form->setSessionStore($app['session.store']);
+        });
     }
 
     /**
@@ -72,9 +92,18 @@ class FoundationServiceProvider extends ServiceProvider
         // Use Pagination bootstrap styles
         Paginator::useBootstrap();
 
+        // Extend Form Builder
+        $this->extendFormBuilder();
+
         // Override validator resolver
         ValidatorFacade::resolver(function ($translator, $data, $rules, $messages) {
             return new Validator($translator, $data, $rules, $messages);
+        });
+
+        // Add support for unique_with validator
+        ValidatorFacade::extend('unique_with', UniqueWithValidator::class.'@validateUniqueWith', trans('validation.unique_with'));
+        ValidatorFacade::replacer('unique_with', function () {
+            return call_user_func_array([new UniqueWithValidator(), 'replaceUniqueWith'], func_get_args());
         });
 
         // Override validator presence verifier

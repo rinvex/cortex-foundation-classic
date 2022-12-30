@@ -19,9 +19,9 @@ Route::domain('{frontarea}')->group(function () {
              Route::post('country')->name('country')->uses([GenericController::class, 'country']);
 
              // Livewire Routes
-             Route::get('livewire/turbo.js')->name('cortex.foundation.turbo.js')->uses([LivewireJavaScriptAssets::class, 'turbo']);
-             Route::get('livewire/livewire.js')->name('cortex.foundation.livewire.js')->uses([LivewireJavaScriptAssets::class, 'source']);
-             Route::get('livewire/livewire.js.map')->name('cortex.foundation.livewire.js.map')->uses([LivewireJavaScriptAssets::class, 'maps']);
+             Route::get('livewire/turbo.js')->name('cortex.foundation.turbo.js')->uses([LivewireJavaScriptAssets::class, 'turbo'])->withoutMiddleware('web');
+             Route::get('livewire/livewire.js')->name('cortex.foundation.livewire.js')->uses([LivewireJavaScriptAssets::class, 'source'])->withoutMiddleware('web');
+             Route::get('livewire/livewire.js.map')->name('cortex.foundation.livewire.js.map')->uses([LivewireJavaScriptAssets::class, 'maps'])->withoutMiddleware('web');
              Route::post('livewire/message/{name}')->name('cortex.foundation.livewire.message')->uses([HttpConnectionHandler::class, '__invoke']);
              Route::get('livewire/preview-file/{filename}')->name('cortex.foundation.livewire.preview-file')->uses([FilePreviewHandler::class, 'handle']);
              Route::post('livewire/upload-file')->name('cortex.foundation.livewire.upload-file')->uses([FileUploadHandler::class, 'handle']);

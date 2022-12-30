@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
-## [v7.3.19] - 2022-09-03
+## [v7.3.20] - 2022-12-30
+- Whitelist datatable columns to avoid invalid columns sent from client-side which might be a security issue in some scenarios
+- EloquentPresenceVerifier compatibility: Add support for model path instead of table name
+- Add support for unique_with Validator Rule natively in Cortex, no third-party packages required
+- Prevent Duplicate Form Submission (DFS)
+- Update livewire assets
+- use slug instead of name when call firstOrCreate for accessarea since name is not unique and translatable and could have a different value (#298)
+- use route_domains helper to get current tenant domains (#295)
+- add datatable blades at tenantarea (#287)
+
+## [v7.3.19] - 2022-10-03
 - Override session.cookie dynamically for tenants
 - Improve HTTP Kernel global middleware enable/disable
 - Move middleware registration from HTTP Kernel to module bootstrap
@@ -776,6 +786,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.20]: https://github.com/rinvex/cortex-foundation/compare/v7.3.19...v7.3.20
 [v7.3.19]: https://github.com/rinvex/cortex-foundation/compare/v7.3.18...v7.3.19
 [v7.3.18]: https://github.com/rinvex/cortex-foundation/compare/v7.3.17...v7.3.18
 [v7.3.17]: https://github.com/rinvex/cortex-foundation/compare/v7.3.16...v7.3.17

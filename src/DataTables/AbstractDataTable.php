@@ -209,6 +209,7 @@ abstract class AbstractDataTable extends BaseDataTable
     {
         return datatables($this->query())
             ->setTransformer(app($this->transformer))
+            ->whitelist(array_keys($this->getColumns()))
             ->make(true);
     }
 

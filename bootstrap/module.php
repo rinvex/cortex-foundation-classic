@@ -15,6 +15,7 @@ use Cortex\Foundation\Http\Middleware\TrustProxies;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Routing\Middleware\ValidateSignature;
+use Cortex\Foundation\Http\Middleware\VerifyDfsToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Cortex\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -74,6 +75,7 @@ return function () {
     Route::pushMiddlewareToGroup('web', LocalizationRedirect::class);
     Route::pushMiddlewareToGroup('web', ShareErrorsFromSession::class);
     Route::pushMiddlewareToGroup('web', VerifyCsrfToken::class);
+    Route::pushMiddlewareToGroup('web', VerifyDfsToken::class);
     Route::pushMiddlewareToGroup('web', SubstituteBindings::class);
     Route::pushMiddlewareToGroup('web', NotificationMiddleware::class);
     Route::pushMiddlewareToGroup('web', DiscoverNavigationRoutes::class);
