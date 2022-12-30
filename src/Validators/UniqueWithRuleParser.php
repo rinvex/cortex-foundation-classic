@@ -6,6 +6,7 @@ namespace Cortex\Foundation\Validators;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
 
 class UniqueWithRuleParser
 {
@@ -95,7 +96,28 @@ class UniqueWithRuleParser
     public function getTable()
     {
         $this->parse();
-        return $this->table;
+        $table = $this->table;
+
+        if (str_contains($table, '\\') && class_exists($table) && is_a($table, Model::class, true)) {
+            $model = new $table();
+            $table = $model->getTable();
+
+            return $model ? ($this->isValidationScoped($model) ? $model : $model->withoutGlobalScopes()) : (new AbstractModel())->setTable($table);
+        } else {
+            return $table;
+        }
+    }
+
+    /**
+     * Returns whether the model validation be scoped or not. (Default: true).
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
+     * @return bool
+     */
+    protected function isValidationScoped(Model $model): bool
+    {
+        return $model->isValidationScoped ?? true;
     }
 
     public function getPrimaryField()
