@@ -240,13 +240,13 @@ CDATA;
      *
      * @phpstan-param view-string|null $view
      *
-     * @param string|null              $view
-     * @param array  $data
-     * @param array  $mergeData
+     * @param string|null $view
+     * @param array       $data
+     * @param array       $mergeData
      *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      *@throws \Cortex\Foundation\Exceptions\GenericException
      *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function render(string $view = null, array $data = [], array $mergeData = [])
     {
