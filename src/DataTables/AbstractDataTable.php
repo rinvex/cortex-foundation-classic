@@ -238,20 +238,22 @@ CDATA;
     /**
      * Process DataTables needed render output.
      *
-     * @param string $view
-     * @param array  $data
-     * @param array  $mergeData
+     * @phpstan-param view-string|null $view
      *
-     * @throws \Cortex\Foundation\Exceptions\GenericException
+     * @param string|null $view
+     * @param array       $data
+     * @param array       $mergeData
+     *
+     *@throws \Cortex\Foundation\Exceptions\GenericException
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
-    public function render($view, $data = [], $mergeData = [])
+    public function render(string $view = null, array $data = [], array $mergeData = [])
     {
         $action = $this->request()->get('action');
 
         // Export actions
-        if (in_array($action, $this->actions)) {
+        if (in_array($action, $this->actions) && method_exists($this, $action)) {
             $this->isActionEnabled('export');
             $this->isActionAuthorized('export');
 

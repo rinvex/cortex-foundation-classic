@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.21] - 2022-12-30
+- Fix yajra/laravel-datatables-fractal compatibility #297
+
 ## [v7.3.20] - 2022-12-30
 - Whitelist datatable columns to avoid invalid columns sent from client-side which might be a security issue in some scenarios
 - EloquentPresenceVerifier compatibility: Add support for model path instead of table name
@@ -786,6 +789,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.21]: https://github.com/rinvex/cortex-foundation/compare/v7.3.20...v7.3.21
 [v7.3.20]: https://github.com/rinvex/cortex-foundation/compare/v7.3.19...v7.3.20
 [v7.3.19]: https://github.com/rinvex/cortex-foundation/compare/v7.3.18...v7.3.19
 [v7.3.18]: https://github.com/rinvex/cortex-foundation/compare/v7.3.17...v7.3.18
