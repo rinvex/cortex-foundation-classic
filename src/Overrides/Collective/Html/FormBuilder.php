@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Collective\Html;
 
+use Illuminate\Support\HtmlString;
 use Cortex\Foundation\Support\DfsToken;
 use Collective\Html\FormBuilder as BaseFormBuilder;
 
@@ -14,7 +15,7 @@ class FormBuilder extends BaseFormBuilder
      *
      * @return string
      */
-    public function dfsToken(): string
+    public function dfsToken(): HtmlString
     {
         return $this->hidden('_dfs_token', app(DfsToken::class)->token());
     }
