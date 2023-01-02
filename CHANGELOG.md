@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.22] - 2023-01-02
+- fix dfsToken function type hint (#304)
+
 ## [v7.3.21] - 2022-12-30
 - Fix yajra/laravel-datatables-fractal compatibility #297
 
@@ -789,6 +792,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.22]: https://github.com/rinvex/cortex-foundation/compare/v7.3.21...v7.3.22
 [v7.3.21]: https://github.com/rinvex/cortex-foundation/compare/v7.3.20...v7.3.21
 [v7.3.20]: https://github.com/rinvex/cortex-foundation/compare/v7.3.19...v7.3.20
 [v7.3.19]: https://github.com/rinvex/cortex-foundation/compare/v7.3.18...v7.3.19
