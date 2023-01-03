@@ -56,11 +56,14 @@ class VerifyDfsToken
      */
     public function handle($request, Closure $next)
     {
+        // @TODO: Support DFS on AJAX requests, currently we skip verifying any AJAX requests. To fix this use-case,
+        //        we need to dynamically update `_dfs_token` value everytime an AJAX POST request is submitted!
         if ($this->isReading($request) || $this->runningUnitTests() || $this->inExceptArray($request)) {
             $this->dfsToken->regenerateToken();
         }
 
-        // @TODO: Support DFS on Livewire requests, currently we skip verifying any requests coming from Livewire
+        // @TODO: Support DFS on Livewire requests, currently we skip verifying any requests coming from Livewire. To fix this
+        //        use-case, we need to dynamically update `_dfs_token` value everytime a Livewire POST request is submitted!
         if ($request->isMethod('POST') && ! $this->tokensMatch($request) && ! $request->header('X-Livewire')) {
             throw new DfsTokenMismatchException('DFS token mismatch');
         }

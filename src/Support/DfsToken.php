@@ -54,6 +54,7 @@ class DfsToken
      */
     public function regenerateToken(): void
     {
+        // @TODO: Add support for when caching is disabled too!
         cache()->put($this->fingerprint(), $this->generateTokenId());
     }
 
@@ -76,7 +77,7 @@ class DfsToken
      *
      * @return string
      */
-    public function generateTokenId()
+    protected function generateTokenId()
     {
         return Str::random(40);
     }
