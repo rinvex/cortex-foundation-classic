@@ -58,7 +58,7 @@ class VerifyDfsToken
     {
         // @TODO: Support DFS on AJAX requests, currently we skip verifying any AJAX requests. To fix this use-case,
         //        we need to dynamically update `_dfs_token` value everytime an AJAX POST request is submitted!
-        if ($this->isReading($request) || $this->runningUnitTests() || $this->inExceptArray($request)) {
+        if (($this->isReading($request) || $this->runningUnitTests() || $this->inExceptArray($request)) && ! $request->ajax()) {
             $this->dfsToken->regenerateToken();
         }
 
@@ -68,7 +68,7 @@ class VerifyDfsToken
             throw new DfsTokenMismatchException('DFS token mismatch');
         }
 
-        $request->expectsJson() || $this->dfsToken->regenerateToken();
+        $request->ajax() || $this->dfsToken->regenerateToken();
 
         return $next($request);
     }
