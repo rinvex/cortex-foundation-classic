@@ -141,4 +141,7 @@ return [
 
     ],
 
+    // Prevent duplicate form submission
+    'dfs_enabled' => true,
+
 ];
