@@ -126,7 +126,6 @@ class VerifyDfsToken
      */
     protected function tokensMatch($request): bool
     {
-        //dd($this->getTokenFromRequest($request), $this->dfsToken->token());
         return is_string($tokenFromRequest = $this->getTokenFromRequest($request))
                && is_string($dfsToken = $this->dfsToken->token())
                && hash_equals($dfsToken, $tokenFromRequest);

@@ -14,8 +14,6 @@ if (! function_exists('dfs_field')) {
      */
     function dfs_field()
     {
-        // We're returning explicit HTML field instead of using FormBuilder to avoid populating
-        // the field with old field value after redirects. We need a freshly generated value everytime.
         return new HtmlString('<input type="hidden" name="_dfs_token" value="'.dfs_token().'">');
     }
 }

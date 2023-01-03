@@ -33,6 +33,9 @@ class FormBuilder extends BaseFormBuilder
         // always have available on every form the developers creates for them.
         if ($method !== 'GET') {
             $appendage .= $this->token();
+
+            // We're returning explicit HTML field instead of using FormBuilder to avoid populating
+            // the field with old field value after redirects. We need a freshly generated value everytime.
             $appendage .= dfs_field();
         }
 
