@@ -4,22 +4,10 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Collective\Html;
 
-use Illuminate\Support\HtmlString;
-use Cortex\Foundation\Support\DfsToken;
 use Collective\Html\FormBuilder as BaseFormBuilder;
 
 class FormBuilder extends BaseFormBuilder
 {
-    /**
-     * Generate a hidden field with the current DFS token.
-     *
-     * @return string
-     */
-    public function dfsToken(): HtmlString
-    {
-        return $this->hidden('_dfs_token', app(DfsToken::class)->token());
-    }
-
     /**
      * Get the form appendage for the given method.
      *
@@ -45,7 +33,7 @@ class FormBuilder extends BaseFormBuilder
         // always have available on every form the developers creates for them.
         if ($method !== 'GET') {
             $appendage .= $this->token();
-            $appendage .= $this->dfsToken();
+            $appendage .= dfs_field();
         }
 
         return $appendage;
