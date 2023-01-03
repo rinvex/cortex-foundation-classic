@@ -55,7 +55,7 @@
         "mcamara/laravel-localization": "^1.7.0",
         "mariuzzo/laravel-js-localization": "^1.9.0",
         "proengsoft/laravel-jsvalidation": "^4.7.0",
-        "psr/simple-cache": "^2.0.0",
+        "psr/simple-cache": "^3.0.0",
         "rinvex/laravel-composer": "^6.0.0",
         "rinvex/laravel-menus": "^6.0.0",
         "rinvex/laravel-pages": "^6.0.0",
