@@ -56,16 +56,19 @@ class VerifyDfsToken
      */
     public function handle($request, Closure $next)
     {
-        if ($this->isReading($request) || $this->runningUnitTests() || $this->inExceptArray($request)) {
+        // @TODO: Support DFS on AJAX requests, currently we skip verifying any AJAX requests. To fix this use-case,
+        //        we need to dynamically update `_dfs_token` value everytime an AJAX POST request is submitted!
+        if (($this->isReading($request) || $this->runningUnitTests() || $this->inExceptArray($request)) && ! $request->ajax()) {
             $this->dfsToken->regenerateToken();
         }
 
-        // @TODO: Support DFS on Livewire requests, currently we skip verifying any requests coming from Livewire
+        // @TODO: Support DFS on Livewire requests, currently we skip verifying any requests coming from Livewire. To fix this
+        //        use-case, we need to dynamically update `_dfs_token` value everytime a Livewire POST request is submitted!
         if ($request->isMethod('POST') && ! $this->tokensMatch($request) && ! $request->header('X-Livewire')) {
             throw new DfsTokenMismatchException('DFS token mismatch');
         }
 
-        $request->expectsJson() || $this->dfsToken->regenerateToken();
+        $request->ajax() || $this->dfsToken->regenerateToken();
 
         return $next($request);
     }
@@ -123,7 +126,6 @@ class VerifyDfsToken
      */
     protected function tokensMatch($request): bool
     {
-        //dd($this->getTokenFromRequest($request), $this->dfsToken->token());
         return is_string($tokenFromRequest = $this->getTokenFromRequest($request))
                && is_string($dfsToken = $this->dfsToken->token())
                && hash_equals($dfsToken, $tokenFromRequest);
