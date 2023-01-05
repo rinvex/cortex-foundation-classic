@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.3.23] - 2023-01-05
+- Return explicit HTML field instead of using FormBuilder to avoid populating the field with old field value after redirects. We need a freshly generated value everytime.
+- Skip DFS on AJAX requests at the moment
+- Add support for DFS enable/disable
+
 ## [v7.3.22] - 2023-01-02
 - fix dfsToken function type hint (#304)
 
@@ -792,6 +797,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v7.3.23]: https://github.com/rinvex/cortex-foundation/compare/v7.3.22...v7.3.23
 [v7.3.22]: https://github.com/rinvex/cortex-foundation/compare/v7.3.21...v7.3.22
 [v7.3.21]: https://github.com/rinvex/cortex-foundation/compare/v7.3.20...v7.3.21
 [v7.3.20]: https://github.com/rinvex/cortex-foundation/compare/v7.3.19...v7.3.20
