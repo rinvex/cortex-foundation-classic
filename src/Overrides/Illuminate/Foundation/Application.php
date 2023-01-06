@@ -77,9 +77,9 @@ class Application extends BaseApplication
     /**
      * Get the application namespace.
      *
-     * @return string
-     *
      * @throws \RuntimeException
+     *
+     * @return string
      */
     public function getNamespace()
     {
