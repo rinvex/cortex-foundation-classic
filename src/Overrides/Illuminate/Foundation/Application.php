@@ -73,4 +73,16 @@ class Application extends BaseApplication
     {
         return $this[HttpKernelContract::class]->handle(Request::createFromBase($request));
     }
+
+    /**
+     * Get the application namespace.
+     *
+     * @return string
+     *
+     * @throws \RuntimeException
+     */
+    public function getNamespace()
+    {
+        return $this->namespace;
+    }
 }
