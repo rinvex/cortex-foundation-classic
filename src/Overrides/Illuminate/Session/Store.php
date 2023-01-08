@@ -73,7 +73,7 @@ class Store extends BaseStore
     }
 
     /**
-     * Reflash all of the session flash data.
+     * Reflash all session flash data.
      *
      * @return void
      */

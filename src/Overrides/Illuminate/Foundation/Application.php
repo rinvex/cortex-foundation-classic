@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 class Application extends BaseApplication
 {
     /**
-     * Register all of the base service providers.
+     * Register all base service providers.
      *
      * @return void
      */

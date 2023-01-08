@@ -12,7 +12,7 @@ use Illuminate\Foundation\Console\EventCacheCommand as BaseEventCacheCommand;
 class EventCacheCommand extends BaseEventCacheCommand
 {
     /**
-     * Get all of the events and listeners configured for the application.
+     * Get all events and listeners configured for the application.
      *
      * @return array
      */

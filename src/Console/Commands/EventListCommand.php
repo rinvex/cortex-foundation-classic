@@ -12,7 +12,7 @@ use Illuminate\Foundation\Console\EventListCommand as BaseEventListCommand;
 class EventListCommand extends BaseEventListCommand
 {
     /**
-     * Get all of the events and listeners configured for the application.
+     * Get all events and listeners configured for the application.
      *
      * @return array
      */
