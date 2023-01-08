@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Mariuzzo\LaravelJsLocalization\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Mariuzzo\LaravelJsLocalization\Commands\LangJsCommand as BaseLangJsCommand;
 
+#[AsCommand(name: 'lang:js')]
 class LangJsCommand extends BaseLangJsCommand
 {
     /**

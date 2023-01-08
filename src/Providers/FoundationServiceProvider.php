@@ -17,6 +17,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Cortex\Foundation\Validators\Validator;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Cortex\Foundation\Validators\UniqueWithValidator;
 use Illuminate\Support\Facades\Session as SessionFacade;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
@@ -49,6 +50,9 @@ class FoundationServiceProvider extends ServiceProvider
         $this->bindBlueprintMacro();
         $this->bindBladeCompiler();
         $this->overrideLangJS();
+
+        // Enforce polymorphic relationship model mappings
+        Relation::requireMorphMap();
 
         // Bind eloquent models to IoC container
         $this->registerModels([

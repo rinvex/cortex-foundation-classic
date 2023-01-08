@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Cortex\Foundation\Database\Seeders\CortexFoundationSeeder;
 
+#[AsCommand(name: 'cortex:seed:foundation')]
 class SeedCommand extends Command
 {
     /**

@@ -142,6 +142,6 @@ return [
     ],
 
     // Prevent duplicate form submission
-    'dfs_enabled' => true,
+    'dfs_enabled' => env('DFS_ENABLED', true),
 
 ];

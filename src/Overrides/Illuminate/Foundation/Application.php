@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 class Application extends BaseApplication
 {
     /**
-     * Register all of the base service providers.
+     * Register all base service providers.
      *
      * @return void
      */
@@ -72,5 +72,17 @@ class Application extends BaseApplication
     public function handle(SymfonyRequest $request, int $type = self::MAIN_REQUEST, bool $catch = true): SymfonyResponse
     {
         return $this[HttpKernelContract::class]->handle(Request::createFromBase($request));
+    }
+
+    /**
+     * Get the application namespace.
+     *
+     * @throws \RuntimeException
+     *
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return $this->namespace;
     }
 }

@@ -6,9 +6,11 @@ namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Support\Str;
 use Illuminate\Console\ConfirmableTrait;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 use Illuminate\Foundation\Console\ObserverMakeCommand as BaseObserverMakeCommand;
 
+#[AsCommand(name: 'make:observer')]
 class ObserverMakeCommand extends BaseObserverMakeCommand
 {
     use ConfirmableTrait;

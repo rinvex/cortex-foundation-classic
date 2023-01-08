@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.0.0] - 2023-01-09
+- Drop PHP v8.0 support and update composer dependencies
+- Add missing model:show artisan command
+- Check first if accessareas IoC service exists before using, this fix issues happens with exception handler when there's no access area detected!
+- Update and tweak DFS implementation & exception handling
+- Require relation morphMap
+- Drop PHP v8.0 support and enforce consistency
+- Update composer dependencies
+- Utilize PHP 8.1 attributes feature for artisan commands
+- Fix app namespace issues by overriding the default behavior
+- Add support for environment variable DFS_ENABLED
+
 ## [v7.3.23] - 2023-01-05
 - Return explicit HTML field instead of using FormBuilder to avoid populating the field with old field value after redirects. We need a freshly generated value everytime.
 - Skip DFS on AJAX requests at the moment
@@ -797,6 +809,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.0.0]: https://github.com/rinvex/cortex-foundation/compare/v7.3.23...v8.0.0
 [v7.3.23]: https://github.com/rinvex/cortex-foundation/compare/v7.3.22...v7.3.23
 [v7.3.22]: https://github.com/rinvex/cortex-foundation/compare/v7.3.21...v7.3.22
 [v7.3.21]: https://github.com/rinvex/cortex-foundation/compare/v7.3.20...v7.3.21

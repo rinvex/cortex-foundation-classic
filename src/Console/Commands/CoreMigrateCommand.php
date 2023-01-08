@@ -7,8 +7,10 @@ namespace Cortex\Foundation\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Output\BufferedOutput;
 
+#[AsCommand(name: 'cortex:migrate')]
 class CoreMigrateCommand extends Command
 {
     /**

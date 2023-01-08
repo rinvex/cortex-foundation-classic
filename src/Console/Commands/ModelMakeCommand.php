@@ -6,9 +6,11 @@ namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Support\Str;
 use Illuminate\Console\ConfirmableTrait;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 use Illuminate\Foundation\Console\ModelMakeCommand as BaseModelMakeCommand;
 
+#[AsCommand(name: 'make:model')]
 class ModelMakeCommand extends BaseModelMakeCommand
 {
     use ConfirmableTrait;

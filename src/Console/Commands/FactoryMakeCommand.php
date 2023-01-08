@@ -6,9 +6,11 @@ namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Support\Str;
 use Illuminate\Console\ConfirmableTrait;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 use Illuminate\Database\Console\Factories\FactoryMakeCommand as BaseFactoryMakeCommand;
 
+#[AsCommand(name: 'make:factory')]
 class FactoryMakeCommand extends BaseFactoryMakeCommand
 {
     use ConfirmableTrait;

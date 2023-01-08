@@ -8,9 +8,11 @@ use Illuminate\Support\Str;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 
+#[AsCommand(name: 'make:datatable')]
 class DataTableMakeCommand extends GeneratorCommand
 {
     use ConfirmableTrait;

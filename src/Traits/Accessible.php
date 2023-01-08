@@ -135,7 +135,7 @@ trait Accessible
     }
 
     /**
-     * Determine if the model has all of the given accessareas.
+     * Determine if the model has all given accessareas.
      *
      * @param mixed $accessareas
      *

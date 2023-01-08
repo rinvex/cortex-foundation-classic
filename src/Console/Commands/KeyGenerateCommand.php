@@ -6,8 +6,10 @@ namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Support\Str;
 use Illuminate\Encryption\Encrypter;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Illuminate\Foundation\Console\KeyGenerateCommand as BaseKeyGenerateCommand;
 
+#[AsCommand(name: 'key:generate')]
 class KeyGenerateCommand extends BaseKeyGenerateCommand
 {
     /**
