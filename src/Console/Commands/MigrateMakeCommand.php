@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Console\Commands;
 
 use Illuminate\Console\ConfirmableTrait;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 use Illuminate\Database\Console\Migrations\MigrateMakeCommand as BaseMigrateMakeCommand;
 
+#[AsCommand(name: 'make:migration')]
 class MigrateMakeCommand extends BaseMigrateMakeCommand
 {
     use ConfirmableTrait;

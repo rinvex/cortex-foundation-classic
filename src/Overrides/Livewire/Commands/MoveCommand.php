@@ -6,7 +6,9 @@ namespace Cortex\Foundation\Overrides\Livewire\Commands;
 
 use Illuminate\Support\Facades\File;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'livewire:move')]
 class MoveCommand extends FileManipulationCommand
 {
     use ConsoleMakeModuleCommand;

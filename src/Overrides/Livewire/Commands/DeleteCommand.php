@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Overrides\Livewire\Commands;
 
 use Illuminate\Support\Facades\File;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 
+#[AsCommand(name: 'livewire:delete')]
 class DeleteCommand extends FileManipulationCommand
 {
     use ConsoleMakeModuleCommand;

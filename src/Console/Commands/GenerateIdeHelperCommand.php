@@ -7,7 +7,9 @@ namespace Cortex\Foundation\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Console\ConfirmableTrait;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'cortex:generate:idehelper')]
 class GenerateIdeHelperCommand extends Command
 {
     use ConfirmableTrait;

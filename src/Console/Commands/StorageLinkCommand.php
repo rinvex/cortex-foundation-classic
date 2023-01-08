@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Illuminate\Foundation\Console\StorageLinkCommand as BaseStorageLinkCommand;
 
+#[AsCommand(name: 'storage:link')]
 class StorageLinkCommand extends BaseStorageLinkCommand
 {
     /**

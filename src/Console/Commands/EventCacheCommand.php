@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Console\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Cortex\Foundation\Providers\DiscoveryServiceProvider;
 use Illuminate\Foundation\Console\EventCacheCommand as BaseEventCacheCommand;
 
+#[AsCommand(name: 'event:cache')]
 class EventCacheCommand extends BaseEventCacheCommand
 {
     /**

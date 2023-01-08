@@ -8,7 +8,9 @@ use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Console\ConfirmableTrait;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'make:module')]
 class ModuleMakeCommand extends Command
 {
     use ConfirmableTrait;

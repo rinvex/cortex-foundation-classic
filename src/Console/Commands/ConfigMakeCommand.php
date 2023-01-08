@@ -7,8 +7,10 @@ namespace Cortex\Foundation\Console\Commands;
 use Illuminate\Support\Str;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Console\GeneratorCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Cortex\Foundation\Traits\ConsoleMakeModuleCommand;
 
+#[AsCommand(name: 'make:config')]
 class ConfigMakeCommand extends GeneratorCommand
 {
     use ConfirmableTrait;
