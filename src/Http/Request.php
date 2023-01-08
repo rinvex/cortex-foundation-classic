@@ -76,7 +76,7 @@ class Request extends BaseRequest
 
         $accessarea = (app()->has('request.tenant') && app('request.tenant') && $this->guard() === 'member' ? 'tenant' : $this->guard()).'area';
 
-        return $this->accessarea = $this->isApi ? 'apiarea' : (app('accessareas')->contains('slug', $accessarea) ? $accessarea : (app()->runningInConsole() ? 'consolearea' : 'frontarea'));
+        return $this->accessarea = $this->isApi ? 'apiarea' : (app()->has('accessareas') && app('accessareas')->contains('slug', $accessarea) ? $accessarea : (app()->runningInConsole() ? 'consolearea' : 'frontarea'));
     }
 
     /**
@@ -133,7 +133,7 @@ class Request extends BaseRequest
             }
 
             // A.2. Guess guard from: controller namespace
-            if (($this->route()->getAction('controller') && $accessarea = Str::lower(collect(explode('\\', $this->route()->getAction('controller')))->first(fn ($seg) => app('accessareas')->contains('slug', Str::lower($seg))))) && $guard = Str::before($accessarea, 'area')) {
+            if (($this->route()->getAction('controller') && $accessarea = Str::lower(collect(explode('\\', $this->route()->getAction('controller')))->first(fn ($seg) => app()->has('accessareas') && app('accessareas')->contains('slug', Str::lower($seg))))) && $guard = Str::before($accessarea, 'area')) {
                 ! Str::startsWith($guard, 'api') || $this->isApi = true;
 
                 if (array_key_exists($guard, config('auth.guards'))) {
@@ -154,7 +154,7 @@ class Request extends BaseRequest
         }
 
         // B. Guess guard from: accessarea-specific prefixed url (possibly route not found / 404 page)
-        if (($rawSegment = $this->segment(1)) && ($segment = app('accessareas')->first(fn ($accessarea) => $accessarea['prefix'] === $rawSegment)?->slug) && $guard = Str::before($segment, 'area')) {
+        if (($rawSegment = $this->segment(1)) && app()->has('accessareas') && ($segment = app('accessareas')->first(fn ($accessarea) => $accessarea['prefix'] === $rawSegment)?->slug) && $guard = Str::before($segment, 'area')) {
             ! Str::startsWith($guard, 'api') || $this->isApi = true;
 
             if (array_key_exists($guard, config('auth.guards'))) {
