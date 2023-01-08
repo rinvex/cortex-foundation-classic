@@ -8,4 +8,6 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Illuminate\Foundation\Console\ShowModelCommand as BaseShowModelCommand;
 
 #[AsCommand(name: 'model:show')]
-class ShowModelCommand extends BaseShowModelCommand {}
+class ShowModelCommand extends BaseShowModelCommand
+{
+}
