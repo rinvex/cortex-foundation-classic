@@ -7,6 +7,7 @@ namespace Cortex\Foundation\Overrides\Diglactic\Breadcrumbs;
 use Illuminate\Contracts\View\View;
 use Diglactic\Breadcrumbs\Manager as BaseManager;
 use Diglactic\Breadcrumbs\Exceptions\ViewNotSetException;
+use Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException;
 
 class Manager extends BaseManager
 {
@@ -53,5 +54,48 @@ class Manager extends BaseManager
         }
 
         return $this->view($view, $name, ...$params);
+    }
+
+    /**
+     * Get the current route name and parameters.
+     *
+     * This may be the route set manually with the setCurrentRoute() method, but normally is the route retrieved from
+     * the Laravel Router.
+     *
+     * #### Example
+     * ```php
+     * [$name, $params] = $this->getCurrentRoute();
+     * ```
+     *
+     * @throws \Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException if the current route doesn't have an associated name.
+     *
+     * @return array A two-element array consisting of the route name (string) and any parameters (array).
+     */
+    protected function getCurrentRoute(): array
+    {
+        // Manually set route
+        if ($this->route) {
+            return $this->route;
+        }
+
+        // Determine the current route
+        $route = $this->router->current();
+
+        // No current route - must be the 404 page
+        if ($route === null) {
+            return ['errors.404', []];
+        }
+
+        // Convert route to name
+        $name = $route->getName();
+
+        if ($name === null) {
+            throw new UnnamedRouteException($route);
+        }
+
+        // Get the current route parameters
+        $params = array_values($route->parameters());
+
+        return [$name, $params];
     }
 }

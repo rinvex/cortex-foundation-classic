@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.0.1] - 2023-01-09
+- Revert how Diglactic/Breadcrumbs handles route parameters
+  https://github.com/diglactic/laravel-breadcrumbs/pull/52
+
 ## [v8.0.0] - 2023-01-09
 - Drop PHP v8.0 support and update composer dependencies
 - Add missing model:show artisan command
@@ -809,6 +813,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.0.1]: https://github.com/rinvex/cortex-foundation/compare/v8.0.0...v8.0.1
 [v8.0.0]: https://github.com/rinvex/cortex-foundation/compare/v7.3.23...v8.0.0
 [v7.3.23]: https://github.com/rinvex/cortex-foundation/compare/v7.3.22...v7.3.23
 [v7.3.22]: https://github.com/rinvex/cortex-foundation/compare/v7.3.21...v7.3.22
