@@ -67,8 +67,9 @@ class Manager extends BaseManager
      * [$name, $params] = $this->getCurrentRoute();
      * ```
      *
-     * @return array A two-element array consisting of the route name (string) and any parameters (array).
      * @throws \Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException if the current route doesn't have an associated name.
+     *
+     * @return array A two-element array consisting of the route name (string) and any parameters (array).
      */
     protected function getCurrentRoute(): array
     {
