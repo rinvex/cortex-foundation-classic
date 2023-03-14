@@ -7,9 +7,10 @@ namespace Cortex\Foundation\Overrides\Livewire;
 use Exception;
 use ReflectionClass;
 use Livewire\Component;
-use function Livewire\str;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
+
+use function Livewire\str;
 
 class LivewireComponentsFinder
 {
