@@ -99,12 +99,20 @@ class ExceptionHandler extends BaseExceptionHandler
                 'withErrors' => ['error' => $e->getMessage()],
             ], 403);
         } elseif ($e instanceof WatsonValidationException) {
+            if($request->expectsJson()){
+                return $this->invalidJson($request, $e);
+            }
+            
             return intend([
                 'intended' => $e->redirectTo ?? url()->previous(),
                 'withInput' => $request->all(),
                 'withErrors' => $e->errors(),
             ], $e->status); // 422
         } elseif ($e instanceof ValidationException) {
+            if($request->expectsJson()){
+                return $this->invalidJson($request, $e);
+            }
+
             return intend([
                 'intended' => $e->redirectTo ?? url()->previous(),
                 'withInput' => $request->all(),
