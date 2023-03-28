@@ -28,16 +28,17 @@ use Rinvex\Support\Traits\ValidatingTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|\Spatie\Activitylog\Models\Activity causedBy(\Illuminate\Database\Eloquent\Model $causer)
  * @method static \Illuminate\Database\Eloquent\Builder|\Spatie\Activitylog\Models\Activity forSubject(\Illuminate\Database\Eloquent\Model $subject)
  * @method static \Illuminate\Database\Eloquent\Builder|\Spatie\Activitylog\Models\Activity inLog($logNames)
- * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log whereCauserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log whereCauserType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log whereLogName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log whereProperties($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log whereSubjectId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log whereSubjectType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log       whereCauserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log       whereCauserType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log       whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log       whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log       whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log       whereLogName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log       whereProperties($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log       whereSubjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log       whereSubjectType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Log       whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Log extends Activity
