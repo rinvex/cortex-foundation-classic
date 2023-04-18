@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Livewire;
 
-use function Livewire\str;
 use Illuminate\Support\Str;
 use Illuminate\Routing\Route;
 use Livewire\LifecycleManager;
@@ -13,6 +12,8 @@ use Livewire\Component as BaseComponent;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+use function Livewire\str;
 
 abstract class Component extends BaseComponent
 {
