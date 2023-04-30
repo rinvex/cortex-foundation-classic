@@ -20,7 +20,7 @@
 <meta name="HandheldFriendly" content="true" />
 <meta name="original" content="yes" />
 <meta name="language" content="English" />
-<meta name="robots" content="index, follow" />
+<meta name="robots" content="noindex" />
 <meta name="revisit-after" CONTENT="0 days" />
 <meta name="identifier" content="{{ request()->url() }}" />
 <meta name="identifier-URL" content="{{ request()->url() }}" />
