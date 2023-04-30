@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Fruitcake\Cors\HandleCors;
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\Middleware\HandleCors;
 use Cortex\Foundation\Http\Middleware\TrimWww;
 use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Session\Middleware\StartSession;
