@@ -54,7 +54,7 @@
         "maatwebsite/excel": "^3.1.40",
         "mcamara/laravel-localization": "^1.7.0",
         "mariuzzo/laravel-js-localization": "^1.9.0",
-        "proengsoft/laravel-jsvalidation": "^4.7.0",
+        "proengsoft/laravel-jsvalidation": "^4.8.0",
         "psr/simple-cache": "^3.0.0",
         "rinvex/laravel-composer": "^7.0.0",
         "rinvex/laravel-menus": "^7.0.0",
