@@ -73,7 +73,7 @@
         "torann/geoip": "^3.0.0",
         "vinkla/hashids": "^10.0.0",
         "watson/validating": "^8.0.0",
-        "yajra/laravel-datatables-buttons": "^9.0.0",
+        "yajra/laravel-datatables-buttons": "^10.0.0",
         "yajra/laravel-datatables-fractal": "^10.0.0",
         "yajra/laravel-datatables-html": "^9.0.0",
         "yajra/laravel-datatables-oracle": "^10.0.0"
