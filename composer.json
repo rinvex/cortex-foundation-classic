@@ -51,7 +51,7 @@
         "laravelcollective/html": "^6.3.0",
         "league/fractal": "^0.20.0",
         "livewire/livewire": "^2.10.0",
-        "maatwebsite/excel": "^3.1.40",
+        "maatwebsite/excel": "^3.1.0",
         "mcamara/laravel-localization": "^1.8.0",
         "mariuzzo/laravel-js-localization": "^1.10.0",
         "proengsoft/laravel-jsvalidation": "^4.8.0",
