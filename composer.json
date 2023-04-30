@@ -72,7 +72,7 @@
         "symfony/http-kernel": "^6.2.0",
         "torann/geoip": "^3.0.0",
         "vinkla/hashids": "^10.0.0",
-        "watson/validating": "^7.0.0",
+        "watson/validating": "^8.0.0",
         "yajra/laravel-datatables-buttons": "^9.0.0",
         "yajra/laravel-datatables-fractal": "^9.0.0",
         "yajra/laravel-datatables-html": "^9.0.0",
