@@ -63,7 +63,7 @@
         "rinvex/tmp-edvinaskrucas-notification": "^5.2.0",
         "rinvex/tmp-lord-laroute": "^2.4.0",
         "rinvex/tmp-josephsilber-bouncer": "^1.0.0",
-        "spatie/laravel-activitylog": "^4.4.0",
+        "spatie/laravel-activitylog": "^4.7.0",
         "spatie/laravel-collection-macros": "^7.10.0",
         "spatie/laravel-medialibrary": "^10.0.0",
         "spatie/laravel-sitemap": "^6.1.0",
