@@ -231,7 +231,7 @@ Route::post('test', function() {
     $user->last_name = Input::get('last_name');
     $user->save();
 
-    return Redirect::home()->with('success', 'User created!');
+    return Redirect::route('home')->with('success', 'User created!');
 });
 ```
 
