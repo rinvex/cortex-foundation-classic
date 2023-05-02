@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.1.0] - 2023-05-02
+2c6dc79 - Add support for Laravel v11, and drop support for Laravel v9
+23a5f90 - Since Laravel 9.2, this Middleware is included in laravel/framework. You can use the provided middleware, which should be compatible with the Middleware and config provided in this package. See https://github.com/laravel/laravel/pull/5825/files for the changes.
+aed3f2e - Upgrade vinkla/hashids to v11.0 from v10.0
+b85f3e8 - Upgrade spatie/laravel-sitemap to v6.3 from v6.1
+7503ba2 - Normalize maatwebsite/excel to v3.1.0 from v3.1.40
+26eb776 - Upgrade mcamara/laravel-localization to v1.8 from v1.7
+25971f9 - Upgrade mariuzzo/laravel-js-localization to v1.10 from v1.0
+3e720e7 - Upgrade yajra/laravel-datatables-oracle to v10.4 from v10.0
+bf94f6f - Upgrade yajra/laravel-datatables-html to v10.0 from v9.0
+23c64b1 - Upgrade yajra/laravel-datatables-buttons to v10.0 from v9.0
+65e4dfc - Upgrade proengsoft/laravel-jsvalidation to v4.8 from v4.7
+0557754 - Upgrade spatie/laravel-activitylog to v4.7 from v4.4
+d135bd3 - Update yajra/laravel-datatables-fractal to v10.0 from v9.0
+d518181 - Update watson/validating to v8.0 from v7.0
+13015b1 - Update phpunit to v10.1 from v9.5
+cbfcac1 - Fix robot follow
+d01a862 - Disable DFS by default
+e94afbe - add morph map for activitylog model (#323)
+
 ## [v8.0.1] - 2023-01-09
 - Revert how Diglactic/Breadcrumbs handles route parameters
   https://github.com/diglactic/laravel-breadcrumbs/pull/52
@@ -813,6 +833,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.1.0]: https://github.com/rinvex/cortex-foundation/compare/v8.0.1...v8.1.0
 [v8.0.1]: https://github.com/rinvex/cortex-foundation/compare/v8.0.0...v8.0.1
 [v8.0.0]: https://github.com/rinvex/cortex-foundation/compare/v7.3.23...v8.0.0
 [v7.3.23]: https://github.com/rinvex/cortex-foundation/compare/v7.3.22...v7.3.23

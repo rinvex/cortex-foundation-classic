@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Fruitcake\Cors\HandleCors;
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\Middleware\HandleCors;
 use Cortex\Foundation\Http\Middleware\TrimWww;
 use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Session\Middleware\StartSession;
@@ -44,6 +44,7 @@ return function () {
     Relation::morphMap([
         'media' => config('media-library.media_model'),
         'accessarea' => config('cortex.foundation.models.accessarea'),
+        'activity_model' => config('activitylog.activity_model'),
     ]);
 
     // Update the priority-sorted list of middleware. This forces non-global middleware to always be in the GIVEN ORDER.
