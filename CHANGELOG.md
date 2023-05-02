@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.1.1] - 2023-05-02
+- Laravel v10: The deprecated Redirect::home method has been removed. Instead, your application should redirect to an explicitly named route
+- Laravel v10: fix update ShowModelCommand console command namespace
+- Fix changelog format
+
 ## [v8.1.0] - 2023-05-02
 - 2c6dc79: Add support for Laravel v11, and drop support for Laravel v9
 - 23a5f90: Since Laravel 9.2, this Middleware is included in laravel/framework. You can use the provided middleware, which should be compatible with the Middleware and config provided in this package. See https://github.com/laravel/laravel/pull/5825/files for the changes.
@@ -833,6 +838,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.1.1]: https://github.com/rinvex/cortex-foundation/compare/v8.1.0...v8.1.1
 [v8.1.0]: https://github.com/rinvex/cortex-foundation/compare/v8.0.1...v8.1.0
 [v8.0.1]: https://github.com/rinvex/cortex-foundation/compare/v8.0.0...v8.0.1
 [v8.0.0]: https://github.com/rinvex/cortex-foundation/compare/v7.3.23...v8.0.0
