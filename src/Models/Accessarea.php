@@ -60,6 +60,7 @@ use Cortex\Foundation\Exceptions\ProtectedResourceException;
  * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Accessarea whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Accessarea whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Cortex\Foundation\Models\Accessarea whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Accessarea extends Model
