@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
+
 class AuthorizedController extends AuthenticatedController
 {
     /**
@@ -52,9 +54,11 @@ class AuthorizedController extends AuthenticatedController
 
         if (property_exists(static::class, 'resource')) {
             if ($this->isClassName($this->resource)) {
-                $this->authorizeResource($this->resource);
+                $morphMap = array_flip(Relation::morphMap());
+                $this->authorizeResource($this->resource, $morphMap[$this->resource] ?? null);
             } elseif ($modelConfig = config($this->resource)) {
-                $this->authorizeResource($modelConfig);
+                $morphMap = array_flip(Relation::morphMap());
+                $this->authorizeResource($modelConfig , $morphMap[$modelConfig] ?? null);
             } else {
                 $this->authorizeGeneric($this->resource);
             }
