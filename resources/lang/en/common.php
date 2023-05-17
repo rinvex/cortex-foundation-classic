@@ -90,4 +90,5 @@ return [
     'yes' => 'Yes',
     'slug' => 'Slug',
 
+    'datatable_search_placeholder' => 'Search',
 ];
