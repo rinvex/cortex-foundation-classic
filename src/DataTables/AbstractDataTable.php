@@ -299,6 +299,7 @@ CDATA;
             'scrollX' => $this->options['scrollX'],
             'pageLength' => $this->options['pageLength'],
             'lengthMenu' => $this->options['lengthMenu'],
+            'language' => $this->options['language'],
             'buttons' => $buttons,
             'initComplete' => $this->getAjaxForm() ? "function () {
                 $('".$this->getAjaxForm()."').on('change',  (e)=> {
