@@ -90,5 +90,9 @@ return [
     'yes' => 'Yes',
     'slug' => 'Slug',
 
-    'datatable_search_placeholder' => 'Search',
+    'datatable_language' => [
+        'search' => 'Search',
+        'previous' => 'Previous',
+        'next' => 'Next',
+    ],
 ];
