@@ -76,7 +76,8 @@ abstract class AbstractDataTable extends BaseDataTable
         $this->buttons = $this->getAuthorizedButtons();
         $this->options = array_merge(config('cortex.foundation.datatables.options'), (array) $this->options);
         $this->options['language'] = [
-            'searchPlaceholder' => trans('cortex/foundation::common.datatable_language.search'),
+            'search' => trans('cortex/foundation::common.datatable_language.search'),
+            'searchPlaceholder' => trans('cortex/foundation::common.datatable_language.search_placeholder'),
             'paginate' => ['previous' => trans('cortex/foundation::common.datatable_language.previous'), 'next' => trans('cortex/foundation::common.datatable_language.next')]
         ];
     }
