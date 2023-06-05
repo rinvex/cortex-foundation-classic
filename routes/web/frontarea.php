@@ -13,8 +13,7 @@ Route::domain('{frontarea}')->group(function () {
     Route::name('frontarea.')
          ->middleware(['web'])
          ->prefix(route_prefix('frontarea'))->group(function () {
-
-            // Homepage Routes
+             // Homepage Routes
              Route::get('/')->name('home')->uses([HomeController::class, 'index']);
              Route::post('country')->name('country')->uses([GenericController::class, 'country']);
 

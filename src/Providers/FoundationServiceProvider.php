@@ -195,7 +195,6 @@ class FoundationServiceProvider extends ServiceProvider
     protected function bindBladeCompiler(): void
     {
         $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
-
             // @alerts('container')
             $bladeCompiler->directive('alerts', function ($container = null) {
                 if (strcasecmp('()', $container) === 0) {
