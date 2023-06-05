@@ -26,6 +26,7 @@ use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Cortex\Foundation\Http\Middleware\UnbindRouteParameters;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
+use Cortex\Foundation\Http\Middleware\SetSessionConfigRuntime;
 use Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes;
 use Cortex\Foundation\Http\Middleware\SetCrawlingRobotsHeaders;
 use Cortex\Foundation\Http\Middleware\SetTurbolinksLocationHeaders;
@@ -39,6 +40,14 @@ return function () {
     Route::pattern('accessarea', '[a-zA-Z0-9-_]+');
     Route::model('media', config('media-library.media_model'));
     Route::model('accessarea', config('cortex.foundation.models.accessarea'));
+
+    Route::pattern('absentarea', '^([a-zA-Z0-9\-\.]+)$');
+    Route::pattern('centralarea', route_pattern());
+    Route::pattern('frontarea', route_pattern('frontarea'));
+    Route::pattern('adminarea', route_pattern('adminarea'));
+
+    // prepend middleware to the 'web' middleware group
+    Route::prependMiddlewareToGroup('web', SetSessionConfigRuntime::class);
 
     // Map relations
     Relation::morphMap([
