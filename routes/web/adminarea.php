@@ -13,8 +13,7 @@ Route::domain('{adminarea}')->group(function () {
     Route::name('adminarea.')
          ->middleware(['web', 'nohttpcache', 'can:access-adminarea'])
          ->prefix(route_prefix('adminarea'))->group(function () {
-
-            // Adminarea Home route
+             // Adminarea Home route
              Route::get('/')->name('home')->uses([HomeController::class, 'index']);
              Route::post('country')->name('country')->uses([GenericController::class, 'country']);
 

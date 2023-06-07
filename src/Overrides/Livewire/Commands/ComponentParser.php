@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Cortex\Foundation\Overrides\Livewire\Commands;
 
-use function Livewire\str;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Livewire\Commands\ComponentParser as BaseComponentParser;
+
+use function Livewire\str;
 
 class ComponentParser extends BaseComponentParser
 {
