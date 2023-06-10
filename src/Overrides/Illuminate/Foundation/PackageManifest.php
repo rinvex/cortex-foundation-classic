@@ -148,6 +148,7 @@ class PackageManifest extends BasePackageManifest
                     'active' => in_array($module, config('rinvex.composer.always_active')) ? true : false,
                     'autoload' => in_array($module, config('rinvex.composer.always_active')) ? true : false,
                     'version' => $installed['version'],
+                    'extends' => $installed['extends'],
                 ]);
             }
         });

@@ -37,17 +37,15 @@ class BootServiceProvider extends ServiceProvider
         );
 
         // Register modules list
-        $modulesManifestPath = $this->app->getCachedModulesPath();
-        $modulesManifest = is_file($modulesManifestPath) ? $this->app['files']->getRequire($modulesManifestPath) : [];
-        $enabledModules = collect($modulesManifest)->filter(fn ($attributes) => $attributes['active'] && $attributes['autoload']);
-        $enabledModulesPaths = $enabledModules->map(fn ($val, $key) => app()->path($key))->filter(fn ($path) => file_exists($path))->toArray();
+        $this->app->singleton('modules_manifest_path', fn () => $this->app->getCachedModulesPath());
+        $this->app->singleton('modules_manifest', fn () => is_file($this->app['modules_manifest_path']) ? $this->app['files']->getRequire($this->app['modules_manifest_path']) : []);
+        $this->app->singleton('enabled_modules', fn () => collect($this->app['modules_manifest'])->filter(fn($moduleAttributes) => $moduleAttributes['active'] && $moduleAttributes['autoload']));
+        $this->app->singleton('enabled_modules_paths', fn () => $this->app['enabled_modules']->map(fn($val, $key) => app()->path($key))->filter(fn($path) => file_exists($path))->toArray());
+        $enabledModulesPaths = $this->app['enabled_modules_paths'];
 
         // Register filesystem module resources macro
         Filesystem::macro('moduleResources', function ($resource, $type = 'files', $depth = 1) use ($enabledModulesPaths) {
-            return iterator_to_array(
-                Finder::create()->{$type}()->in($enabledModulesPaths)->path($resource)->depth($depth)->sortByName(),
-                false
-            );
+            return iterator_to_array(Finder::create()->{$type}()->in($enabledModulesPaths)->path($resource)->depth($depth)->sortByName(), false);
         });
     }
 

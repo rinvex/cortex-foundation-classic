@@ -198,16 +198,16 @@ class DiscoveryServiceProvider extends ServiceProvider
 
                 switch ($type) {
                     case 'resources/lang':
-                        $this->loadTranslationsFrom($dir->getPathname(), $module);
-                        $this->publishesLang($module, true);
+                        $this->loadTranslationsFrom($dir->getPathname(), app('enabled_modules')[$module]['extends'] ?? $module);
+                        $this->publishesLang($module, true, app('enabled_modules')[$module]['extends'] ?? null);
                         break;
                     case 'resources/views':
-                        $this->loadViewsFrom($dir->getPathname(), $module);
-                        $this->publishesViews($module, true);
+                        $this->loadViewsFrom($dir->getPathname(), app('enabled_modules')[$module]['extends'] ?? $module);
+                        $this->publishesViews($module, true, app('enabled_modules')[$module]['extends'] ?? null);
                         break;
                     case 'database/migrations':
                         ! $this->autoloadMigrations($module) || $this->loadMigrationsFrom($dir->getPathname());
-                        $this->publishesMigrations($module, true);
+                        $this->publishesMigrations($module, true, app('enabled_modules')[$module]['extends'] ?? $module);
                         break;
                 }
             });
