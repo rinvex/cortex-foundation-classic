@@ -11,9 +11,10 @@ class FileLoader extends BaseFileLoader
     /**
      * Load a namespaced translation group.
      *
-     * @param  string  $locale
-     * @param  string  $group
-     * @param  string  $namespace
+     * @param string $locale
+     * @param string $group
+     * @param string $namespace
+     *
      * @return array
      */
     protected function loadNamespaced($locale, $group, $namespace)
