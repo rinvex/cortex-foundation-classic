@@ -198,16 +198,16 @@ class DiscoveryServiceProvider extends ServiceProvider
 
                 switch ($type) {
                     case 'resources/lang':
-                        $this->loadTranslationsFrom($dir->getPathname(), app('enabled_modules')[$module]['extends'] ?? $module);
-                        $this->publishesLang($module, true, app('enabled_modules')[$module]['extends'] ?? null);
+                        $this->loadTranslationsFrom($dir->getPathname(), app('cortex.foundation.modules.enabled')[$module]['extends'] ?? $module);
+                        $this->publishesLang($module, true, app('cortex.foundation.modules.enabled')[$module]['extends'] ?? null);
                         break;
                     case 'resources/views':
-                        $this->loadViewsFrom($dir->getPathname(), app('enabled_modules')[$module]['extends'] ?? $module);
-                        $this->publishesViews($module, true, app('enabled_modules')[$module]['extends'] ?? null);
+                        $this->loadViewsFrom($dir->getPathname(), app('cortex.foundation.modules.enabled')[$module]['extends'] ?? $module);
+                        $this->publishesViews($module, true, app('cortex.foundation.modules.enabled')[$module]['extends'] ?? null);
                         break;
                     case 'database/migrations':
                         ! $this->autoloadMigrations($module) || $this->loadMigrationsFrom($dir->getPathname());
-                        $this->publishesMigrations($module, true, app('enabled_modules')[$module]['extends'] ?? $module);
+                        $this->publishesMigrations($module, true, app('cortex.foundation.modules.enabled')[$module]['extends'] ?? $module);
                         break;
                 }
             });

@@ -37,11 +37,11 @@ class BootServiceProvider extends ServiceProvider
         );
 
         // Register modules list
-        $this->app->singleton('modules_manifest_path', fn () => $this->app->getCachedModulesPath());
-        $this->app->singleton('modules_manifest', fn () => is_file($this->app['modules_manifest_path']) ? $this->app['files']->getRequire($this->app['modules_manifest_path']) : []);
-        $this->app->singleton('enabled_modules', fn () => collect($this->app['modules_manifest'])->filter(fn ($moduleAttributes) => $moduleAttributes['active'] && $moduleAttributes['autoload']));
-        $this->app->singleton('enabled_modules_paths', fn () => $this->app['enabled_modules']->map(fn ($val, $key) => app()->path($key))->filter(fn ($path) => file_exists($path))->toArray());
-        $enabledModulesPaths = $this->app['enabled_modules_paths'];
+        $this->app->singleton('cortex.foundation.modules.manifest.path', fn () => $this->app->getCachedModulesPath());
+        $this->app->singleton('cortex.foundation.modules.manifest', fn () => is_file($this->app['cortex.foundation.modules.manifest.path']) ? $this->app['files']->getRequire($this->app['cortex.foundation.modules.manifest.path']) : []);
+        $this->app->singleton('cortex.foundation.modules.enabled', fn () => collect($this->app['cortex.foundation.modules.manifest'])->filter(fn ($moduleAttributes) => $moduleAttributes['active'] && $moduleAttributes['autoload']));
+        $this->app->singleton('cortex.foundation.modules.enabled.paths', fn () => $this->app['cortex.foundation.modules.enabled']->map(fn ($val, $key) => app()->path($key))->filter(fn ($path) => file_exists($path))->toArray());
+        $enabledModulesPaths = $this->app['cortex.foundation.modules.enabled.paths'];
 
         // Register filesystem module resources macro
         Filesystem::macro('moduleResources', function ($resource, $type = 'files', $depth = 1) use ($enabledModulesPaths) {
