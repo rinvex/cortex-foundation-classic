@@ -17,7 +17,7 @@ class SessionManager extends BaseSessionManager
      */
     protected function buildSession($handler)
     {
-        if ($tenant = app('request.tenant')) {
+        if (app()->has('request.tenant') && $tenant = app('request.tenant')) {
             $this->config->set('session.cookie', $tenant->slug.'_session');
         }
 

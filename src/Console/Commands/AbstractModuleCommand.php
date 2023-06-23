@@ -49,6 +49,7 @@ abstract class AbstractModuleCommand extends Command
                     'active' => in_array($module, config('rinvex.composer.always_active')) ? true : Arr::get($attributes, 'active', $manifestAttributes['active'] ?? false),
                     'autoload' => in_array($module, config('rinvex.composer.always_active')) ? true : Arr::get($attributes, 'autoload', $manifestAttributes['autoload'] ?? false),
                     'version' => $manifestAttributes['version'],
+                    'extends' => $manifestAttributes['extends'],
                 ], true);
             }
         });

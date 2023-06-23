@@ -17,7 +17,6 @@ class CortexFoundationSeeder extends Seeder
     {
         $accessAbilities = [
             ['name' => 'access-adminarea', 'title' => 'Access adminarea'],
-            ['name' => 'access-managerarea', 'title' => 'Access managerarea'],
         ];
 
         $abilities = [
@@ -37,8 +36,6 @@ class CortexFoundationSeeder extends Seeder
             ['name' => 'centralarea', 'slug' => 'centralarea', 'is_protected' => true],
             ['name' => 'frontarea', 'slug' => 'frontarea', 'is_protected' => true],
             ['name' => 'adminarea', 'slug' => 'adminarea', 'is_protected' => true, 'is_scoped' => false, 'is_indexable' => false, 'prefix' => 'adminarea'],
-            ['name' => 'managerarea', 'slug' => 'managerarea', 'is_protected' => true, 'is_scoped' => false, 'is_indexable' => false, 'prefix' => 'managerarea'],
-            ['name' => 'tenantarea', 'slug' => 'tenantarea', 'is_protected' => true],
         ];
 
         collect($accessAbilities)->each(function (array $ability) {
