@@ -17,14 +17,14 @@ class CoreDeactivateCommand extends AbstractModuleCommand
      *
      * @var string
      */
-    protected $signature = 'cortex:deactivate {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to deactivate.} {--u|unload : Unload modules before deactivating.}';
+    protected $signature = 'cortex:deactivate {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to deactivate.} {--e|extension=* : Specify which extensions to deactivate.} {--u|unload : Unload modules/extensions before deactivating.} {--all-modules : deactivate all modules.} {--all-extensions : deactivate all extensions.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Deactivate Cortex Modules.';
+    protected $description = 'Deactivate Cortex Modules/Extensions.';
 
     /**
      * Execute the console command.

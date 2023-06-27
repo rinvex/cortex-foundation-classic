@@ -17,14 +17,14 @@ class CoreAutoloadCommand extends AbstractModuleCommand
      *
      * @var string
      */
-    protected $signature = 'cortex:autoload {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to autoload.} {--a|activate : Activate modules after autoloading.}';
+    protected $signature = 'cortex:autoload {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to autoload.} {--e|extension=* : Specify which extensions to autoload.} {--a|activate : Activate modules/extensions after autoloading.} {--all-modules : autoload all modules.} {--all-extensions : autoload all extensions.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Autoload Cortex Modules.';
+    protected $description = 'Autoload Cortex Modules/Extensions.';
 
     /**
      * Execute the console command.

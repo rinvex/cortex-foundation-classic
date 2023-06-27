@@ -6,12 +6,20 @@ namespace Cortex\Foundation\Overrides\Illuminate\Foundation;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Rinvex\Composer\Services\Config;
 use Illuminate\Filesystem\Filesystem;
-use Rinvex\Composer\Services\ModuleManifest;
+use Rinvex\Composer\Services\Manifest;
 use Illuminate\Foundation\PackageManifest as BasePackageManifest;
 
 class PackageManifest extends BasePackageManifest
 {
+    /**
+     * Modules path.
+     *
+     * @var string
+     */
+    public $modulesPath;
+
     /**
      * The modules manifest path.
      *
@@ -25,6 +33,27 @@ class PackageManifest extends BasePackageManifest
      * @var array
      */
     public $modulesManifest;
+
+    /**
+     * Extensions path.
+     *
+     * @var string
+     */
+    public $extensionsPath;
+
+    /**
+     * The extensions manifest path.
+     *
+     * @var string|null
+     */
+    public $extensionsManifestPath;
+
+    /**
+     * The loaded extensions manifest array.
+     *
+     * @var array
+     */
+    public $extensionsManifest;
 
     /**
      * The installed packages.
@@ -46,7 +75,14 @@ class PackageManifest extends BasePackageManifest
     {
         parent::__construct($files, $basePath, $manifestPath);
 
-        $this->modulesManifestPath = app()->getCachedModulesPath();
+        // Using \Rinvex\Composer\Services\Config::get() instead of config() helper,
+        // to avoid "Class 'config' not found" error when running composer commands, since
+        // package service providers are not loaded yet, and `mergeConfigFrom` is not called yet.
+        $this->modulesPath = Config::get('cortex-module.path').'/';
+        $this->modulesManifestPath = Config::get('cortex-module.manifest');
+
+        $this->extensionsPath = Config::get('cortex-extension.path').'/';
+        $this->extensionsManifestPath = Config::get('cortex-extension.manifest');
     }
 
     /**
@@ -62,36 +98,12 @@ class PackageManifest extends BasePackageManifest
             return $this->manifest;
         }
 
-        if (! is_file($this->manifestPath) || ! is_file($this->modulesManifestPath)) {
+        if (! is_file($this->manifestPath) || ! is_file($this->modulesManifestPath) || ! is_file($this->extensionsManifestPath)) {
             $this->build();
         }
 
         return $this->manifest = is_file($this->manifestPath) ?
             $this->files->getRequire($this->manifestPath) : [];
-    }
-
-    /**
-     * Write modules manifest.
-     *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @throws \Exception
-     *
-     * @return array
-     */
-    protected function getModulesManifest(): array
-    {
-        if (! is_null($this->modulesManifest)) {
-            return $this->modulesManifest;
-        }
-
-        $this->modulesManifest = is_file($this->modulesManifestPath) ?
-            $this->files->getRequire($this->modulesManifestPath) : [];
-
-        if (! is_file($this->modulesManifestPath) || empty($this->modulesManifest)) {
-            $this->writeModulesManifest();
-        }
-
-        return $this->modulesManifest;
     }
 
     /**
@@ -122,12 +134,61 @@ class PackageManifest extends BasePackageManifest
           ->partition(fn ($item, $key) => Str::startsWith($key, config('app.provider_loading.priority_1')))->flatMap(fn ($values) => $values);
 
         $disabledModules = collect($this->getModulesManifest())->reject(fn ($attributes, $module) => $attributes['autoload'])->keys();
+        $disabledExtensions = collect($this->getExtensionsManifest())->reject(fn ($attributes, $extension) => $attributes['autoload'])->keys();
 
-        $this->write($list->except($disabledModules)->all());
+        $this->write($list->except($disabledModules)->except($disabledExtensions)->all());
     }
 
     /**
-     * Write the given manifest array to disk.
+     * Get module manifest.
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws \Exception
+     *
+     * @return array
+     */
+    protected function getModulesManifest(): array
+    {
+        if (! is_null($this->modulesManifest)) {
+            return $this->modulesManifest;
+        }
+
+        $this->modulesManifest = is_file($this->modulesManifestPath) ?
+            $this->files->getRequire($this->modulesManifestPath) : [];
+
+        if (! is_file($this->modulesManifestPath) || empty($this->modulesManifest)) {
+            $this->writeModulesManifest();
+        }
+
+        return $this->modulesManifest;
+    }
+
+    /**
+     * Write extension manifest.
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws \Exception
+     *
+     * @return array
+     */
+    protected function getExtensionsManifest(): array
+    {
+        if (! is_null($this->extensionsManifest)) {
+            return $this->extensionsManifest;
+        }
+
+        $this->extensionsManifest = is_file($this->extensionsManifestPath) ?
+            $this->files->getRequire($this->extensionsManifestPath) : [];
+
+        if (! is_file($this->extensionsManifestPath) || empty($this->extensionsManifest)) {
+            $this->writeExtensionsManifest();
+        }
+
+        return $this->extensionsManifest;
+    }
+
+    /**
+     * Write modules manifest array to disk.
      *
      * @throws \Exception
      *
@@ -135,25 +196,51 @@ class PackageManifest extends BasePackageManifest
      */
     protected function writeModulesManifest(): void
     {
-        $paths = $this->getModulePaths();
-        $modulePath = app()->path().DIRECTORY_SEPARATOR;
+        $modulesManifest = new Manifest($this->modulesManifestPath);
 
-        $moduleManifest = new ModuleManifest($this->modulesManifestPath);
-
-        collect($paths)->flatMap(function ($path) use ($modulePath, $moduleManifest) {
-            $module = Str::after($path, $modulePath);
+        collect($this->getModulePaths())->flatMap(function ($path) use ($modulesManifest) {
+            $module = Str::after($path, $this->modulesPath);
 
             if ($installed = $this->installedPackages->firstWhere('name', $module)) {
-                $moduleManifest->add($module, [
-                    'active' => in_array($module, config('rinvex.composer.always_active')) ? true : false,
-                    'autoload' => in_array($module, config('rinvex.composer.always_active')) ? true : false,
+                $modulesManifest->add($module, [
+                    'active' => in_array($module, Config::get('cortex-module.always_active')),
+                    'autoload' => in_array($module, Config::get('cortex-module.always_active')),
                     'version' => $installed['version'],
-                    'extends' => $installed['extends'],
                 ]);
             }
         });
 
-        $moduleManifest->persist();
+        $modulesManifest->persist();
+    }
+
+
+    /**
+     * Write extensions manifest array to disk.
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    protected function writeExtensionsManifest(): void
+    {
+        $extensionsManifest = new Manifest($this->extensionsManifestPath);
+
+        collect($this->getExtensionPaths())->flatMap(function ($path) use ($extensionsManifest) {
+            $extension = Str::after($path, $this->extensionsPath);
+
+            if ($installed = $this->installedPackages->firstWhere('name', $extension)) {
+                $extendedModule = $installed['extra']['cortex']['extends'];
+
+                $extensionsManifest->add($extension, [
+                    'active' => $this->modulesManifest[$extendedModule]['active'] && in_array($extension, Config::get('cortex-extension.always_active')),
+                    'autoload' => $this->modulesManifest[$extendedModule]['active'] && in_array($extension, Config::get('cortex-extension.always_active')),
+                    'version' => $installed['version'],
+                    'extends' => $extendedModule ?? null,
+                ]);
+            }
+        });
+
+        $extensionsManifest->persist();
     }
 
     /**
@@ -163,7 +250,7 @@ class PackageManifest extends BasePackageManifest
      */
     public function getModulePaths(): array
     {
-        return $this->files->glob(app()->path('*/*'), GLOB_ONLYDIR);
+        return $this->files->glob($this->modulesPath.'*/*', GLOB_ONLYDIR);
     }
 
     /**
@@ -171,13 +258,29 @@ class PackageManifest extends BasePackageManifest
      *
      * @return \Illuminate\Support\Collection
      */
-    public function getModules(): Collection
+    public function getModuleNames(): Collection
     {
-        $modulePath = app()->path().DIRECTORY_SEPARATOR;
+        return collect($this->getModulePaths())->map(fn ($path) => Str::after($path, $this->modulesPath));
+    }
 
-        return collect($this->getModulePaths())->map(function ($path) use ($modulePath) {
-            return Str::after($path, $modulePath);
-        });
+    /**
+     * Get extension paths.
+     *
+     * @return array
+     */
+    public function getExtensionPaths(): array
+    {
+        return $this->files->glob($this->extensionsPath.'*/*', GLOB_ONLYDIR);
+    }
+
+    /**
+     * Get extension names.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getExtensionNames(): Collection
+    {
+        return collect($this->getExtensionPaths())->map(fn ($path) => Str::after($path, $this->extensionsPath));
     }
 
     /**
