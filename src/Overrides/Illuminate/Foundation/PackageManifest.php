@@ -6,9 +6,9 @@ namespace Cortex\Foundation\Overrides\Illuminate\Foundation;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
-use Rinvex\Composer\Services\Config;
+use Rinvex\Composer\Models\Config;
 use Illuminate\Filesystem\Filesystem;
-use Rinvex\Composer\Services\Manifest;
+use Rinvex\Composer\Models\Manifest;
 use Illuminate\Foundation\PackageManifest as BasePackageManifest;
 
 class PackageManifest extends BasePackageManifest
@@ -75,7 +75,7 @@ class PackageManifest extends BasePackageManifest
     {
         parent::__construct($files, $basePath, $manifestPath);
 
-        // Using \Rinvex\Composer\Services\Config::get() instead of config() helper,
+        // Using \Rinvex\Composer\Models\Config::get() instead of config() helper,
         // to avoid "Class 'config' not found" error when running composer commands, since
         // package service providers are not loaded yet, and `mergeConfigFrom` is not called yet.
         $this->modulesPath = Config::get('cortex-module.path').'/';

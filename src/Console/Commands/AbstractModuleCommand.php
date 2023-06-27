@@ -7,7 +7,7 @@ namespace Cortex\Foundation\Console\Commands;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
-use Rinvex\Composer\Services\Manifest;
+use Rinvex\Composer\Models\Manifest;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Foundation\PackageManifest;
 
