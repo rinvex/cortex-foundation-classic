@@ -57,8 +57,8 @@ class Collection extends BaseCollection
     /**
      * Get the route information for a given route.
      *
-     * @param $route \Illuminate\Routing\Route
-     * @param $filter string
+     * @param $route     \Illuminate\Routing\Route
+     * @param $filter    string
      * @param $namespace string
      *
      * @return array
