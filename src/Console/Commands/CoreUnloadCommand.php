@@ -17,14 +17,14 @@ class CoreUnloadCommand extends AbstractModuleCommand
      *
      * @var string
      */
-    protected $signature = 'cortex:unload {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to unload.} {--d|deactivate : Deactivate modules after unloading.}';
+    protected $signature = 'cortex:unload {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to unload.} {--e|extension=* : Specify which extensions to unload.} {--d|deactivate : Deactivate modules/extensions after unloading.} {--all-modules : unload all modules.} {--all-extensions : unload all extensions.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Unload Cortex Modules.';
+    protected $description = 'Unload Cortex Modules/Extensions.';
 
     /**
      * Execute the console command.

@@ -17,14 +17,14 @@ class CoreActivateCommand extends AbstractModuleCommand
      *
      * @var string
      */
-    protected $signature = 'cortex:activate {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to activate.} {--a|autoload : Autoload modules before activating.}';
+    protected $signature = 'cortex:activate {--f|force : Force the operation to run when in production.} {--m|module=* : Specify which modules to activate.} {--e|extension=* : Specify which extensions to activate.} {--a|autoload : Autoload modules/extensions before activating.} {--all-modules : activate all modules.} {--all-extensions : activate all extensions.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Activate Cortex Modules.';
+    protected $description = 'Activate Cortex Modules/Extensions.';
 
     /**
      * Execute the console command.

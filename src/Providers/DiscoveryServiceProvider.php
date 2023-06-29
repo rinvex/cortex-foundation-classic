@@ -107,11 +107,9 @@ class DiscoveryServiceProvider extends ServiceProvider
      */
     protected function discoverEvents()
     {
-        $moduleResources = $this->app['files']->moduleResources('src/Listeners', 'directories');
-
-        return collect($moduleResources)
-            ->prioritizeLoading()
-            ->reduce(fn ($discovered, SplFileInfo $dir) => array_merge_recursive($discovered, DiscoverEvents::within($dir->getPathname(), base_path())), []);
+        return collect(['module', 'extension'])->flatMap(function ($moduleType) {
+            return collect($this->app['files']->{"{$moduleType}Resources"}('src/Listeners', 'directories'))->prioritizeLoading()->reduce(fn($discovered, SplFileInfo $dir) => array_merge_recursive($discovered, DiscoverEvents::within($dir->getPathname(), base_path())), []);
+        })->all();
     }
 
     /**
@@ -156,62 +154,72 @@ class DiscoveryServiceProvider extends ServiceProvider
      */
     protected function discoverBroadcasts(): void
     {
-        $moduleResources = $this->app['files']->moduleResources('routes/broadcasts/channels.php', 'files', 2);
+        foreach (['module', 'extension'] as $moduleType) {
+            $resources = $this->app['files']->{"{$moduleType}Resources"}('routes/broadcasts/channels.php', 'files', 2);
 
-        collect($moduleResources)
-            ->prioritizeLoading()
-            ->each(fn (SplFileInfo $file) => require $file->getPathname());
+            collect($resources)
+                ->prioritizeLoading()
+                ->each(fn (SplFileInfo $file) => require $file->getPathname());
+        }
     }
 
     /**
      * Discover the routes for the application.
      *
-     * @param string $type
+     * @param string $resourceType
      *
      * @return void
      */
-    protected function discoverRoutes(string $type): void
+    protected function discoverRoutes(string $resourceType): void
     {
-        $accessareaResources = app('accessareas')->map(fn ($accessarea) => "routes/$type/$accessarea->slug")->toArray();
-        $moduleResources = $accessareaResources ? $this->app['files']->moduleResources($accessareaResources, 'files', 2) : [];
+        $accessareas = app('accessareas')->map(fn ($accessarea) => "routes/$resourceType/$accessarea->slug")->toArray();
 
-        collect($moduleResources)
-            ->prioritizeLoading()
-            ->each(fn (SplFileInfo $file) => require $file->getPathname());
+        foreach (['module', 'extension'] as $moduleType) {
+            $resources = $this->app['files']->{"{$moduleType}Resources"}($accessareas, 'files', 2);
+
+            collect($resources)
+                ->prioritizeLoading()
+                ->each(fn (SplFileInfo $file) => require $file->getPathname());
+        }
     }
 
     /**
      * Discover the resources for the application.
      *
-     * @param string $type
+     * @param string $resourceType
      *
      * @return void
      */
-    protected function discoverResources(string $type): void
+    protected function discoverResources(string $resourceType): void
     {
-        $moduleResources = $this->app['files']->moduleResources($type, 'directories');
+        foreach (['module', 'extension'] as $moduleType) {
+            $resources = $this->app['files']->{"{$moduleType}Resources"}($resourceType, 'directories');
+            $configPath = config("rinvex.composer.cortex-{$moduleType}.path");
 
-        collect($moduleResources)
-            ->prioritizeLoading()
-            ->each(function (SplFileInfo $dir) use ($type) {
-                $module = str_replace([$this->app->path().DIRECTORY_SEPARATOR, "/$type"], '', $dir->getPathname());
+            collect($resources)
+                ->prioritizeLoading()
+                ->each(function (SplFileInfo $dir) use ($resourceType, $moduleType, $configPath) {
+                    $packageName = str_replace([$configPath . '/', "/$resourceType"], '', $dir->getPathname());
+                    $moduleName = app('cortex.foundation.extensions.enabled')[$packageName]['extends'] ?? $packageName;
 
-                switch ($type) {
-                    case 'resources/lang':
-                        $this->loadTranslationsFrom($dir->getPathname(), app('cortex.foundation.modules.enabled')[$module]['extends'] ?? $module);
-                        $this->publishesLang($module, true, app('cortex.foundation.modules.enabled')[$module]['extends'] ?? null);
-                        break;
-                    case 'resources/views':
-                        $this->loadViewsFrom($dir->getPathname(), app('cortex.foundation.modules.enabled')[$module]['extends'] ?? $module);
-                        $this->publishesViews($module, true, app('cortex.foundation.modules.enabled')[$module]['extends'] ?? null);
-                        break;
-                    case 'database/migrations':
-                        ! $this->autoloadMigrations($module) || $this->loadMigrationsFrom($dir->getPathname());
-                        $this->publishesMigrations($module, true, app('cortex.foundation.modules.enabled')[$module]['extends'] ?? $module);
-                        break;
-                }
-            });
+                    switch ($resourceType) {
+                        case 'resources/lang':
+                            $this->loadTranslationsFrom($dir->getPathname(), $moduleName);
+                            $this->publishTranslationsFrom($dir->getPathname(), $moduleName);
+                            break;
+                        case 'resources/views':
+                            $this->loadViewsFrom($dir->getPathname(), $moduleName);
+                            $this->publishViewsFrom($dir->getPathname(), $moduleName);
+                            break;
+                        case 'database/migrations':
+                            ! $this->app['config'][str_replace('/', '.', $moduleName).'.autoload_migrations'] || $this->loadMigrationsFrom($dir->getPathname());
+                            $this->publishMigrationsFrom($dir->getPathname(), $moduleName);
+                            break;
+                    }
+                });
+        }
     }
+
 
     /**
      * Discover the config for the application.
@@ -220,16 +228,17 @@ class DiscoveryServiceProvider extends ServiceProvider
      */
     protected function discoverConfig(): void
     {
-        $moduleResources = $this->app['files']->moduleResources('config/config.php');
+        foreach (['module', 'extension'] as $moduleType) {
+            $resources = $this->app['files']->{"{$moduleType}Resources"}('config/config.php');
+            $configPath = config("rinvex.composer.cortex-{$moduleType}.path");
 
-        collect($moduleResources)
-            ->prioritizeLoading()
-            ->each(function (SplFileInfo $file) {
-                $module = str_replace([$this->app->path().DIRECTORY_SEPARATOR, '/config/config.php'], '', $file->getPathname());
-
-                $this->mergeConfigFrom($file->getPathname(), str_replace('/', '.', $module));
-
-                $this->publishesConfig($module, true);
-            });
+            collect($resources)
+                ->prioritizeLoading()
+                ->each(function (SplFileInfo $file) use ($configPath) {
+                    $moduleName = str_replace([$configPath . '/', '/config/config.php'], '', $file->getPathname());
+                    $this->mergeConfigFrom($file->getPathname(), str_replace('/', '.', $moduleName));
+                    $this->publishConfigFrom($file->getPathname(), $moduleName);
+                });
+        }
     }
 }

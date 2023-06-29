@@ -37,15 +37,25 @@ class BootServiceProvider extends ServiceProvider
         );
 
         // Register modules list
-        $this->app->singleton('cortex.foundation.modules.manifest.path', fn () => $this->app->getCachedModulesPath());
-        $this->app->singleton('cortex.foundation.modules.manifest', fn () => is_file($this->app['cortex.foundation.modules.manifest.path']) ? $this->app['files']->getRequire($this->app['cortex.foundation.modules.manifest.path']) : []);
-        $this->app->singleton('cortex.foundation.modules.enabled', fn () => collect($this->app['cortex.foundation.modules.manifest'])->filter(fn ($moduleAttributes) => $moduleAttributes['active'] && $moduleAttributes['autoload']));
-        $this->app->singleton('cortex.foundation.modules.enabled.paths', fn () => $this->app['cortex.foundation.modules.enabled']->map(fn ($val, $key) => app()->path($key))->filter(fn ($path) => file_exists($path))->toArray());
+        $this->app->singleton('cortex.foundation.modules', fn () => collect(is_file(config('rinvex.composer.cortex-module.manifest')) ? $this->app['files']->getRequire(config('rinvex.composer.cortex-module.manifest')) : []));
+        $this->app->singleton('cortex.foundation.modules.enabled', fn () => $this->app['cortex.foundation.modules']->filter(fn ($moduleAttributes) => $moduleAttributes['active'] && $moduleAttributes['autoload']));
+        $this->app->singleton('cortex.foundation.modules.enabled.paths', fn () => $this->app['cortex.foundation.modules.enabled']->map(fn ($val, $key) => app()->modulePath($key))->filter(fn ($path) => file_exists($path))->toArray());
+
+        $this->app->singleton('cortex.foundation.extensions', fn () => collect(is_file(config('rinvex.composer.cortex-extension.manifest')) ? $this->app['files']->getRequire(config('rinvex.composer.cortex-extension.manifest')) : []));
+        $this->app->singleton('cortex.foundation.extensions.enabled', fn () => $this->app['cortex.foundation.extensions']->filter(fn($extension) => $this->app['cortex.foundation.modules.enabled']->has($extension['extends'] ?? null)));
+        $this->app->singleton('cortex.foundation.extensions.enabled.paths', fn () => $this->app['cortex.foundation.extensions.enabled']->map(fn ($val, $key) => app()->extensionPath($key))->filter(fn ($path) => file_exists($path))->toArray());
+
         $enabledModulesPaths = $this->app['cortex.foundation.modules.enabled.paths'];
+        $enabledExtensionsPaths = $this->app['cortex.foundation.extensions.enabled.paths'];
 
         // Register filesystem module resources macro
         Filesystem::macro('moduleResources', function ($resource, $type = 'files', $depth = 1) use ($enabledModulesPaths) {
             return iterator_to_array(Finder::create()->{$type}()->in($enabledModulesPaths)->path($resource)->depth($depth)->sortByName(), false);
+        });
+
+        // Register filesystem extension resources macro
+        Filesystem::macro('extensionResources', function ($resource, $type = 'files', $depth = 1) use ($enabledExtensionsPaths) {
+            return iterator_to_array(Finder::create()->{$type}()->in($enabledExtensionsPaths)->path($resource)->depth($depth)->sortByName(), false);
         });
     }
 
@@ -80,10 +90,12 @@ class BootServiceProvider extends ServiceProvider
      */
     public function bootstrapModules(): void
     {
-        $moduleResources = $this->app['files']->moduleResources('bootstrap/module.php');
+        foreach (['module', 'extension'] as $moduleType) {
+            $resources = $this->app['files']->{"{$moduleType}Resources"}('bootstrap/module.php');
 
-        collect($moduleResources)
-            ->prioritizeLoading()
-            ->each(fn ($file) => (require $file)());
+            collect($resources)
+                ->prioritizeLoading()
+                ->each(fn ($file) => (require $file)());
+        }
     }
 }

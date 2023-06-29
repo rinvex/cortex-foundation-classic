@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cortex\Foundation\Console;
 
 use ReflectionClass;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Symfony\Component\Finder\Finder;
@@ -58,68 +57,43 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $moduleResources = $this->app['files']->moduleResources('bootstrap/schedule.php');
+        foreach (['module', 'extension'] as $moduleType) {
+            $resources = $this->app['files']->{"{$moduleType}Resources"}('bootstrap/schedule.php');
 
-        collect($moduleResources)
-            ->prioritizeLoading()
-            ->each(fn ($file) => (require $file)($schedule));
-    }
-
-    /**
-     * Register the commands for the application.
-     *
-     * @return void
-     */
-    protected function commands(): void
-    {
-        $this->load($this->discoverCommands());
-    }
-
-    /**
-     * Discover the artisan commands for the application.
-     *
-     * @return array
-     */
-    public function discoverCommands(): array
-    {
-        $moduleResources = $this->app['files']->moduleResources('src/Console/Commands', 'directories', 2);
-
-        return collect($moduleResources)->map->getPathname()->toArray();
-    }
-
-    /**
-     * Register all of the commands in the given directory.
-     *
-     * @TODO: support loading dev commands on dev env only, and production commands everywhere,
-     *        maybe we can add a property inside each command, and check it here if exists before loading.
-     *
-     * @param array|string $paths
-     *
-     * @return void
-     */
-    protected function load($paths)
-    {
-        $paths = array_unique(Arr::wrap($paths));
-
-        $paths = array_filter($paths, function ($path) {
-            return is_dir($path);
-        });
-
-        if (empty($paths)) {
-            return;
+            collect($resources)
+                ->prioritizeLoading()
+                ->each(fn ($file) => (require $file)($schedule));
         }
+    }
 
-        foreach ((new Finder())->in($paths)->files() as $command) {
-            $command = ucwords(str_replace(
-                ['src/', '/', '.php'],
-                ['', '\\', ''],
-                Str::after($command->getRealPath(), realpath(app_path()).DIRECTORY_SEPARATOR)
-            ), '\\');
+    /**
+     * Discover and register all the application commands.
+     *
+     * @return void
+     */
+    protected function commands()
+    {
+        foreach (['module', 'extension'] as $moduleType) {
+            $resources = $this->app['files']->{"{$moduleType}Resources"}('src/Console/Commands', 'directories', 2);
+            $paths = array_filter(array_unique(collect($resources)->map->getPathname()->toArray()), fn($path) => is_dir($path));
+            $configPath = config("rinvex.composer.cortex-{$moduleType}.path");
 
-            if (is_subclass_of($command, Command::class) && ! (new ReflectionClass($command))->isAbstract() && ! in_array($command, $this->ignoreCommads)) {
-                Artisan::starting(function ($artisan) use ($command) {
-                    $artisan->resolve($command);
-                });
+            if (empty($paths)) {
+                return;
+            }
+
+            foreach ((new Finder())->in($paths)->files() as $command) {
+                $command = ucwords(str_replace(
+                    ['src/', '/', '.php'],
+                    ['', '\\', ''],
+                    Str::after($command->getRealPath(), $configPath . '/')
+                ), '\\');
+
+                if (is_subclass_of($command, Command::class) && ! (new ReflectionClass($command))->isAbstract() && ! in_array($command, $this->ignoreCommads)) {
+                    Artisan::starting(function ($artisan) use ($command) {
+                        $artisan->resolve($command);
+                    });
+                }
             }
         }
     }
