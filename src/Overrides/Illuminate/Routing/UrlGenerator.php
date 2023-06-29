@@ -30,12 +30,8 @@ class UrlGenerator extends BaseUrlGenerator
             return $path;
         }
 
-        $tail = implode(
-            '/',
-            array_map(
-                'rawurlencode',
-                (array) $this->formatParameters($extra)
-            )
+        $tail = implode('/', array_map(
+            'rawurlencode', (array) $this->formatParameters($extra))
         );
 
         // Once we have the scheme we will compile the "tail" by collapsing the values
@@ -46,8 +42,7 @@ class UrlGenerator extends BaseUrlGenerator
         [$path, $query] = $this->extractQueryString($path);
 
         return $this->format(
-            $root,
-            '/'.trim($path.'/'.$tail, '/')
+            $root, '/'.trim($path.'/'.$tail, '/')
         ).(config('cortex.foundation.route.trailing_slash') ? '/' : '').$query;
     }
 

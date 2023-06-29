@@ -94,6 +94,8 @@ class Manager extends BaseManager
         }
 
         // Get the current route parameters
+        // Don't use the default logic, bug introduced!
+        // https://github.com/diglactic/laravel-breadcrumbs/issues/63
         $params = array_values($route->parameters());
 
         return [$name, $params];
