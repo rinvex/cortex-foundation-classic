@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.2.1] - 2023-06-29
+- Update overridden classes to match Laravel v10 logic
+- Refactor module/extension resource auto discovery
+- Simplify rinvex/composer namespaces
+
 ## [v8.2.0] - 2023-06-23
 - Remove useless ,DS_Store
 - Rename modules manifest service names
@@ -847,6 +852,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.2.1]: https://github.com/rinvex/cortex-foundation/compare/v8.2.0...v8.2.1
 [v8.2.0]: https://github.com/rinvex/cortex-foundation/compare/v8.1.1...v8.2.0
 [v8.1.1]: https://github.com/rinvex/cortex-foundation/compare/v8.1.0...v8.1.1
 [v8.1.0]: https://github.com/rinvex/cortex-foundation/compare/v8.0.1...v8.1.0
