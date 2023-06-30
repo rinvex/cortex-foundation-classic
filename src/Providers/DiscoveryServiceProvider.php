@@ -198,7 +198,7 @@ class DiscoveryServiceProvider extends ServiceProvider
 
             collect($resources)
                 ->prioritizeLoading()
-                ->each(function (SplFileInfo $dir) use ($resourceType, $moduleType, $configPath) {
+                ->each(function (SplFileInfo $dir) use ($resourceType, $configPath) {
                     $packageName = str_replace([$configPath . '/', "/$resourceType"], '', $dir->getPathname());
                     $moduleName = app('cortex.foundation.extensions.enabled')[$packageName]['extends'] ?? $packageName;
 
