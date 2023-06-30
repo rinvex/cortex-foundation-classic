@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.2.2] - 2023-06-30
+- Catch empty modules & extensions array use-case
+
 ## [v8.2.1] - 2023-06-29
 - Update overridden classes to match Laravel v10 logic
 - Refactor module/extension resource auto discovery
@@ -852,6 +855,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.2.2]: https://github.com/rinvex/cortex-foundation/compare/v8.2.1...v8.2.2
 [v8.2.1]: https://github.com/rinvex/cortex-foundation/compare/v8.2.0...v8.2.1
 [v8.2.0]: https://github.com/rinvex/cortex-foundation/compare/v8.1.1...v8.2.0
 [v8.1.1]: https://github.com/rinvex/cortex-foundation/compare/v8.1.0...v8.1.1
