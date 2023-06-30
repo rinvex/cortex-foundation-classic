@@ -7,8 +7,8 @@ namespace Cortex\Foundation\Overrides\Illuminate\Foundation;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Rinvex\Composer\Models\Config;
-use Illuminate\Filesystem\Filesystem;
 use Rinvex\Composer\Models\Manifest;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\PackageManifest as BasePackageManifest;
 
 class PackageManifest extends BasePackageManifest
@@ -212,7 +212,6 @@ class PackageManifest extends BasePackageManifest
 
         $modulesManifest->persist();
     }
-
 
     /**
      * Write extensions manifest array to disk.

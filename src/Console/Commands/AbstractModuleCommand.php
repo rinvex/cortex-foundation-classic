@@ -50,10 +50,9 @@ abstract class AbstractModuleCommand extends Command
 
                     $moduleManifest->add($module, $moduleType === 'extension'
                         ? ['active' => $isAlwaysActive ? true : $isSetActive, 'autoload' => $isAlwaysActive ? true : $isSetAutoload, 'version' => $moduleAttributes['version'], 'extends' => $moduleAttributes['extends'] ?? $moduleAttributes['extra']['cortex']['extends'] ?? null]
-                        : ['active' => $isAlwaysActive ? true : $isSetActive, 'autoload' => $isAlwaysActive ? true : $isSetAutoload, 'version' => $moduleAttributes['version']]
-                    , true);
+                        : ['active' => $isAlwaysActive ? true : $isSetActive, 'autoload' => $isAlwaysActive ? true : $isSetAutoload, 'version' => $moduleAttributes['version']], true);
                 }
-            })->whenNotEmpty(fn($modules) => $moduleManifest->persist() || $this->alert(ucfirst(Str::plural($moduleType)).' processed!'), fn() => $this->components->info('No '.ucfirst(Str::plural($moduleType)).' to process!'));
+            })->whenNotEmpty(fn ($modules) => $moduleManifest->persist() || $this->alert(ucfirst(Str::plural($moduleType)).' processed!'), fn () => $this->components->info('No '.ucfirst(Str::plural($moduleType)).' to process!'));
         }
 
         $this->call('clear-compiled');
