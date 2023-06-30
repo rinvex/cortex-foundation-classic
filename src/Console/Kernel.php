@@ -75,7 +75,7 @@ class Kernel extends ConsoleKernel
     {
         foreach (['module', 'extension'] as $moduleType) {
             $resources = $this->app['files']->{"{$moduleType}Resources"}('src/Console/Commands', 'directories', 2);
-            $paths = array_filter(array_unique(collect($resources)->map->getPathname()->toArray()), fn($path) => is_dir($path));
+            $paths = array_filter(array_unique(collect($resources)->map->getPathname()->toArray()), fn ($path) => is_dir($path));
             $configPath = config("rinvex.composer.cortex-{$moduleType}.path");
 
             if (empty($paths)) {
@@ -86,7 +86,7 @@ class Kernel extends ConsoleKernel
                 $command = ucwords(str_replace(
                     ['src/', '/', '.php'],
                     ['', '\\', ''],
-                    Str::after($command->getRealPath(), $configPath . '/')
+                    Str::after($command->getRealPath(), $configPath.'/')
                 ), '\\');
 
                 if (is_subclass_of($command, Command::class) && ! (new ReflectionClass($command))->isAbstract() && ! in_array($command, $this->ignoreCommads)) {
