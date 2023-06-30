@@ -108,7 +108,7 @@ class DiscoveryServiceProvider extends ServiceProvider
     protected function discoverEvents()
     {
         return collect(['module', 'extension'])->flatMap(function ($moduleType) {
-            return collect($this->app['files']->{"{$moduleType}Resources"}('src/Listeners', 'directories'))->prioritizeLoading()->reduce(fn($discovered, SplFileInfo $dir) => array_merge_recursive($discovered, DiscoverEvents::within($dir->getPathname(), base_path())), []);
+            return collect($this->app['files']->{"{$moduleType}Resources"}('src/Listeners', 'directories'))->prioritizeLoading()->reduce(fn ($discovered, SplFileInfo $dir) => array_merge_recursive($discovered, DiscoverEvents::within($dir->getPathname(), base_path())), []);
         })->all();
     }
 
@@ -199,7 +199,7 @@ class DiscoveryServiceProvider extends ServiceProvider
             collect($resources)
                 ->prioritizeLoading()
                 ->each(function (SplFileInfo $dir) use ($resourceType, $configPath) {
-                    $packageName = str_replace([$configPath . '/', "/$resourceType"], '', $dir->getPathname());
+                    $packageName = str_replace([$configPath.'/', "/$resourceType"], '', $dir->getPathname());
                     $moduleName = app('cortex.foundation.extensions.enabled')[$packageName]['extends'] ?? $packageName;
 
                     switch ($resourceType) {
@@ -220,7 +220,6 @@ class DiscoveryServiceProvider extends ServiceProvider
         }
     }
 
-
     /**
      * Discover the config for the application.
      *
@@ -235,7 +234,7 @@ class DiscoveryServiceProvider extends ServiceProvider
             collect($resources)
                 ->prioritizeLoading()
                 ->each(function (SplFileInfo $file) use ($configPath) {
-                    $moduleName = str_replace([$configPath . '/', '/config/config.php'], '', $file->getPathname());
+                    $moduleName = str_replace([$configPath.'/', '/config/config.php'], '', $file->getPathname());
                     $this->mergeConfigFrom($file->getPathname(), str_replace('/', '.', $moduleName));
                     $this->publishConfigFrom($file->getPathname(), $moduleName);
                 });
