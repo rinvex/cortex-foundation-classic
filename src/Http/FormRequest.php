@@ -80,6 +80,13 @@ class FormRequest extends Request implements ValidatesWhenResolved
     protected $validator;
 
     /**
+     * The validation rules that the FormRequest will validate against.
+     *
+     * @var array
+     */
+    protected $rules = [];
+
+    /**
      * Get the validator instance for the request.
      *
      * @return \Illuminate\Contracts\Validation\Validator
@@ -115,6 +122,20 @@ class FormRequest extends Request implements ValidatesWhenResolved
     }
 
     /**
+     * Merge new validation rules with existing validation rules on the FormRequest.
+     *
+     * @param array $rules
+     *
+     * @return $this
+     */
+    public function mergeRules(array $rules)
+    {
+        $this->rules = array_merge($this->rules, $rules);
+
+        return $this;
+    }
+
+    /**
      * Create the default validator instance.
      *
      * @param \Illuminate\Contracts\Validation\Factory $factory
@@ -123,7 +144,7 @@ class FormRequest extends Request implements ValidatesWhenResolved
      */
     protected function createDefaultValidator(ValidationFactory $factory)
     {
-        $rules = method_exists($this, 'rules') ? $this->container->call([$this, 'rules']) : [];
+        $rules = array_merge(method_exists($this, 'rules') ? $this->container->call([$this, 'rules']) : [], $this->rules);
 
         $validator = $factory->make(
             $this->validationData(),

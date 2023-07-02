@@ -154,7 +154,7 @@ abstract class AbstractDataTable extends BaseDataTable
     /**
      * Check if the given action is authorized.
      *
-     * @param $action
+     * @param                                          $action
      * @param \Illuminate\Database\Eloquent\Model|null $item
      *
      * @throws \Cortex\Foundation\Exceptions\GenericException
