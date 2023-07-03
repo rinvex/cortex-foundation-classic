@@ -40,7 +40,7 @@ class CoreMigrateCommand extends Command
             [$vendor, , $namespace] = explode(':', $command->getName());
             $module = $vendor.'/'.$namespace;
 
-            return in_array($module, config('rinvex.composer.always_active'));
+            return in_array($module, array_merge(config('rinvex.composer.cortex-module.always_active'), config('rinvex.composer.cortex-extension.always_active')));
         })->flatten();
 
         $progressBar = $this->output->createProgressBar($commands->count());
