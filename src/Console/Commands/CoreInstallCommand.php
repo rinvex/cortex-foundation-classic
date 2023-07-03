@@ -34,7 +34,7 @@ class CoreInstallCommand extends Command
         $this->alert($this->description);
 
         $this->call('key:generate', ['--ansi' => true]);
-        $this->call('storage:link');
+        $this->call('storage:link', ['--force' => true]);
 
         $this->call('self-diagnosis');
 
