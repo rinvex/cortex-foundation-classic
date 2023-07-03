@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.2.5] - 2023-07-03
+- Update composer dependencies
+
 ## [v8.2.4] - 2023-07-03
 - Fix migration paths
 - Fix webpack asset paths
@@ -865,6 +868,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.2.5]: https://github.com/rinvex/cortex-foundation/compare/v8.2.4...v8.2.5
 [v8.2.4]: https://github.com/rinvex/cortex-foundation/compare/v8.2.3...v8.2.4
 [v8.2.3]: https://github.com/rinvex/cortex-foundation/compare/v8.2.2...v8.2.3
 [v8.2.2]: https://github.com/rinvex/cortex-foundation/compare/v8.2.1...v8.2.2
