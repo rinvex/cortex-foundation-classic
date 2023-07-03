@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.2.4] - 2023-07-03
+- Fix migration paths
+- Fix webpack asset paths
+- Fix core artisan commands
+- Temporary disable self-diagnosis command since package is outdated
+- Force storage:link creation to avoid installation exception when exists
+
 ## [v8.2.3] - 2023-07-02
 - Add mergeRules method to FormRequest
 
@@ -858,6 +865,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.2.4]: https://github.com/rinvex/cortex-foundation/compare/v8.2.3...v8.2.4
 [v8.2.3]: https://github.com/rinvex/cortex-foundation/compare/v8.2.2...v8.2.3
 [v8.2.2]: https://github.com/rinvex/cortex-foundation/compare/v8.2.1...v8.2.2
 [v8.2.1]: https://github.com/rinvex/cortex-foundation/compare/v8.2.0...v8.2.1
