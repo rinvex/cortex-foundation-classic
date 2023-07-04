@@ -33,8 +33,6 @@ class CoreDeactivateCommand extends AbstractModuleCommand
      */
     public function handle()
     {
-        ! $this->option('unload') || $this->call('cortex:unload');
-
-        $this->process(['active' => false]);
+        $this->option('unload') ? $this->process(['autoload' => false, 'active' => false]) : $this->process(['active' => false]);
     }
 }

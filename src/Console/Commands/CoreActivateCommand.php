@@ -33,8 +33,6 @@ class CoreActivateCommand extends AbstractModuleCommand
      */
     public function handle()
     {
-        ! $this->option('autoload') || $this->call('cortex:autoload');
-
-        $this->process(['active' => true]);
+        $this->option('autoload') ? $this->process(['autoload' => true, 'active' => true]) : $this->process(['active' => true]);
     }
 }

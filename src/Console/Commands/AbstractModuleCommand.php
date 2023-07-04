@@ -35,7 +35,9 @@ abstract class AbstractModuleCommand extends Command
         $packages = $packageManifest->getInstalledPackages();
 
         foreach (['module', 'extension'] as $moduleType) {
-            if (($allModules = $this->option("all-{$moduleType}s")) && ! $this->confirmToProceed('No modules passed, are you sure you want to process all modules? [y|N]')) {
+            $plural = Str::plural($moduleType);
+
+            if (($allModules = $this->option("all-{$plural}")) && ! $this->confirmToProceed('Are you sure you want to process all modules/extensions? [y|N]')) {
                 return 1;
             }
 
@@ -44,7 +46,7 @@ abstract class AbstractModuleCommand extends Command
 
             $modules->each(function ($module) use ($packages, $attributes, $moduleManifest, $moduleType) {
                 if ($moduleAttributes = $moduleManifest->get($module) ?? $packages->firstWhere('name', $module)) {
-                    $isAlwaysActive = in_array($module, config("rinvex.composer.{$moduleType}.always_active"));
+                    $isAlwaysActive = in_array($module, config("rinvex.composer.cortex-{$moduleType}.always_active"));
                     $isSetAutoload = Arr::get($attributes, 'autoload', $moduleAttributes['autoload'] ?? false);
                     $isSetActive = Arr::get($attributes, 'active', $moduleAttributes['active'] ?? false);
 
@@ -52,7 +54,7 @@ abstract class AbstractModuleCommand extends Command
                         ? ['active' => $isAlwaysActive ? true : $isSetActive, 'autoload' => $isAlwaysActive ? true : $isSetAutoload, 'version' => $moduleAttributes['version'], 'extends' => $moduleAttributes['extends'] ?? $moduleAttributes['extra']['cortex']['extends'] ?? null]
                         : ['active' => $isAlwaysActive ? true : $isSetActive, 'autoload' => $isAlwaysActive ? true : $isSetAutoload, 'version' => $moduleAttributes['version']], true);
                 }
-            })->whenNotEmpty(fn ($modules) => $moduleManifest->persist() || $this->alert(ucfirst(Str::plural($moduleType)).' processed!'), fn () => $this->components->info('No '.ucfirst(Str::plural($moduleType)).' to process!'));
+            })->whenNotEmpty(fn ($modules) => $moduleManifest->persist() || $this->components->info(ucfirst($plural).' processed!'), fn () => $this->components->warn('No '.ucfirst($plural).' to process!'));
         }
 
         $this->call('clear-compiled');

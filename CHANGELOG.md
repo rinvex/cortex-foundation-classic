@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.2.7] - 2023-07-04
+- Tweak and improve core module artisan commands
+
 ## [v8.2.6] - 2023-07-03
 - Add geoip2/geoip2 missing composer dependency
 
@@ -871,6 +874,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.2.7]: https://github.com/rinvex/cortex-foundation/compare/v8.2.6...v8.2.7
 [v8.2.6]: https://github.com/rinvex/cortex-foundation/compare/v8.2.5...v8.2.6
 [v8.2.5]: https://github.com/rinvex/cortex-foundation/compare/v8.2.4...v8.2.5
 [v8.2.4]: https://github.com/rinvex/cortex-foundation/compare/v8.2.3...v8.2.4
