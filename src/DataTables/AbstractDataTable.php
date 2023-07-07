@@ -78,7 +78,7 @@ abstract class AbstractDataTable extends BaseDataTable
         $this->options['language'] = [
             'search' => trans('cortex/foundation::common.datatable_language.search'),
             'searchPlaceholder' => trans('cortex/foundation::common.datatable_language.search_placeholder'),
-            'paginate' => ['previous' => trans('cortex/foundation::common.datatable_language.previous'), 'next' => trans('cortex/foundation::common.datatable_language.next')]
+            'paginate' => ['previous' => trans('cortex/foundation::common.datatable_language.previous'), 'next' => trans('cortex/foundation::common.datatable_language.next')],
         ];
     }
 
