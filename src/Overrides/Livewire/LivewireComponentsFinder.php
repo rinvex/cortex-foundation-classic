@@ -90,6 +90,7 @@ class LivewireComponentsFinder
 
     public function getComponentFiles()
     {
+        // @TODO: missing extensions support, we need to loop through both modules & extensions and register components
         $accessareaResources = app('accessareas')->map(fn ($accessarea) => 'src/Http/Components/'.ucfirst($accessarea->slug))->toArray();
         $moduleResources = $accessareaResources ? $this->files->moduleResources($accessareaResources, 'files', 4) : [];
 
