@@ -29,7 +29,6 @@ use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Http\Middleware\SetSessionConfigRuntime;
 use Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes;
 use Cortex\Foundation\Http\Middleware\SetCrawlingRobotsHeaders;
-use Cortex\Foundation\Http\Middleware\SetTurbolinksLocationHeaders;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
 use Cortex\Foundation\Http\Middleware\PreventRequestsDuringMaintenance;
 
@@ -90,6 +89,5 @@ return function () {
     Route::pushMiddlewareToGroup('web', NotificationMiddleware::class);
     Route::pushMiddlewareToGroup('web', DiscoverNavigationRoutes::class);
     Route::pushMiddlewareToGroup('web', UnbindRouteParameters::class);
-    Route::pushMiddlewareToGroup('web', SetTurbolinksLocationHeaders::class);
     $this->app->environment('production') || Route::pushMiddlewareToGroup('web', Clockwork::class);
 };
