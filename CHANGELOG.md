@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.3.0] - 2023-07-12
+- Drop using DFS
+- Drop using turbolinks
+- Drop using Livewire
+- Allows authorizeResource method to receive arrays of models and parameters
+  - https://github.com/laravel/framework/commit/d11d431ff271daa9e170567a04a5679e9197523f
+- Add support for extension menus auto discovery
+- display placeholder for datatable search input and buttons (#344)
+
 ## [v8.2.7] - 2023-07-04
 - Tweak and improve core module artisan commands
 
@@ -874,6 +883,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.3.0]: https://github.com/rinvex/cortex-foundation/compare/v8.2.7...v8.3.0
 [v8.2.7]: https://github.com/rinvex/cortex-foundation/compare/v8.2.6...v8.2.7
 [v8.2.6]: https://github.com/rinvex/cortex-foundation/compare/v8.2.5...v8.2.6
 [v8.2.5]: https://github.com/rinvex/cortex-foundation/compare/v8.2.4...v8.2.5
