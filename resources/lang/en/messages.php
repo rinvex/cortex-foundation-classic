@@ -22,6 +22,5 @@ return [
     'infinite_redirects' => 'Potentially infinite redirects detected!',
     'action_disabled' => 'The given action is disabled for this resource!',
     'action_unauthorized' => 'The given action is unauthorized for this resource!',
-    'dfs_token_mismatch' => 'Hold your horses, a duplicate form submission is detected! One valid submission was recorded, and the duplicates were ignored.',
 
 ];

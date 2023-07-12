@@ -93,11 +93,6 @@ class ExceptionHandler extends BaseExceptionHandler
                 'back' => true,
                 'withErrors' => ['error' => trans('cortex/foundation::messages.token_mismatch')],
             ], 403);
-        } elseif ($e instanceof DfsTokenMismatchException) {
-            return intend([
-                'intended' => Route::has($route = Str::beforeLast($request->route()->getName(), '.').'.index') ? route($route) : route("{$request->accessarea()}.home"),
-                'withErrors' => ['error' => $e->getMessage()],
-            ], 403);
         } elseif ($e instanceof WatsonValidationException) {
             return intend([
                 'intended' => $e->redirectTo ?? url()->previous(),
