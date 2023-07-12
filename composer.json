@@ -68,7 +68,6 @@
         "laravel/framework": "^10.0.0 || ^11.0.0",
         "laravelcollective/html": "^6.3.0",
         "league/fractal": "^0.20.0",
-        "livewire/livewire": "^2.10.0",
         "maatwebsite/excel": "^3.1.0",
         "mcamara/laravel-localization": "^1.8.0",
         "mariuzzo/laravel-js-localization": "^1.10.0",
@@ -128,7 +127,6 @@
                 "Cortex\\Foundation\\Providers\\DiscoveryServiceProvider",
                 "Cortex\\Foundation\\Providers\\FoundationServiceProvider",
                 "Cortex\\Foundation\\Providers\\ConsoleSupportServiceProvider",
-                "Cortex\\Foundation\\Overrides\\Livewire\\LivewireServiceProvider",
                 "Cortex\\Foundation\\Overrides\\Lord\\Laroute\\LarouteServiceProvider",
                 "Cortex\\Foundation\\Overrides\\Appstract\\Opcache\\OpcacheServiceProvider"
             ]

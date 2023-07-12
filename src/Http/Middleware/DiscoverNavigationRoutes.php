@@ -20,11 +20,13 @@ class DiscoverNavigationRoutes
     public function handle($request, Closure $next)
     {
         if (($accessarea = $request->accessarea()) && app('accessareas')->contains('slug', $accessarea)) {
-            $moduleResources = app('files')->moduleResources(["routes/menus/{$accessarea}.php", "routes/breadcrumbs/{$accessarea}.php"], 'files', '2');
+            foreach (['module', 'extension'] as $moduleType) {
+                $resources = app('files')->{"{$moduleType}Resources"}(["routes/menus/{$accessarea}.php", "routes/breadcrumbs/{$accessarea}.php"], 'files', '2');
 
-            collect($moduleResources)
-                ->prioritizeLoading()
-                ->each(fn (SplFileInfo $file) => require $file->getPathname());
+                collect($resources)
+                    ->prioritizeLoading()
+                    ->each(fn (SplFileInfo $file) => require $file->getPathname());
+            }
         }
 
         return $next($request);

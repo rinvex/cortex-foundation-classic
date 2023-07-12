@@ -15,7 +15,6 @@ use Cortex\Foundation\Http\Middleware\TrustProxies;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Routing\Middleware\ValidateSignature;
-use Cortex\Foundation\Http\Middleware\VerifyDfsToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Cortex\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -29,7 +28,6 @@ use Cortex\Foundation\Http\Middleware\NotificationMiddleware;
 use Cortex\Foundation\Http\Middleware\SetSessionConfigRuntime;
 use Cortex\Foundation\Http\Middleware\DiscoverNavigationRoutes;
 use Cortex\Foundation\Http\Middleware\SetCrawlingRobotsHeaders;
-use Cortex\Foundation\Http\Middleware\SetTurbolinksLocationHeaders;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
 use Cortex\Foundation\Http\Middleware\PreventRequestsDuringMaintenance;
 
@@ -85,11 +83,9 @@ return function () {
     Route::pushMiddlewareToGroup('web', LocalizationRedirect::class);
     Route::pushMiddlewareToGroup('web', ShareErrorsFromSession::class);
     Route::pushMiddlewareToGroup('web', VerifyCsrfToken::class);
-    ! config('cortex.foundation.dfs_enabled') || Route::pushMiddlewareToGroup('web', VerifyDfsToken::class);
     Route::pushMiddlewareToGroup('web', SubstituteBindings::class);
     Route::pushMiddlewareToGroup('web', NotificationMiddleware::class);
     Route::pushMiddlewareToGroup('web', DiscoverNavigationRoutes::class);
     Route::pushMiddlewareToGroup('web', UnbindRouteParameters::class);
-    Route::pushMiddlewareToGroup('web', SetTurbolinksLocationHeaders::class);
     $this->app->environment('production') || Route::pushMiddlewareToGroup('web', Clockwork::class);
 };

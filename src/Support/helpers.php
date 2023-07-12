@@ -4,33 +4,6 @@ declare(strict_types=1);
 
 use Illuminate\Support\Str;
 use Illuminate\Support\HtmlString;
-use Cortex\Foundation\Support\DfsToken;
-
-if (! function_exists('dfs_field')) {
-    /**
-     * Generate a DFS token form field.
-     *
-     * @return \Illuminate\Support\HtmlString
-     */
-    function dfs_field()
-    {
-        return new HtmlString('<input type="hidden" name="_dfs_token" value="'.dfs_token().'">');
-    }
-}
-
-if (! function_exists('dfs_token')) {
-    /**
-     * Get the DFS token value.
-     *
-     * @throws \RuntimeException
-     *
-     * @return string
-     */
-    function dfs_token()
-    {
-        return app(DfsToken::class)->token();
-    }
-}
 
 if (! function_exists('extract_title')) {
     /**
