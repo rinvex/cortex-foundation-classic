@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Str;
-use Illuminate\Support\HtmlString;
 
 if (! function_exists('extract_title')) {
     /**
