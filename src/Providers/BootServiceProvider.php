@@ -38,11 +38,11 @@ class BootServiceProvider extends ServiceProvider
 
         // Register modules list
         $this->app->singleton('cortex.foundation.modules', fn () => collect(is_file(config('rinvex.composer.cortex-module.manifest')) ? $this->app['files']->getRequire(config('rinvex.composer.cortex-module.manifest')) : []));
-        $this->app->singleton('cortex.foundation.modules.enabled', fn () => $this->app['cortex.foundation.modules']->filter(fn ($moduleAttributes) => $moduleAttributes['active'] && $moduleAttributes['autoload']));
+        $this->app->singleton('cortex.foundation.modules.enabled', fn () => $this->app['cortex.foundation.modules']->filter(fn ($module) => $module['active'] && $module['autoload']));
         $this->app->singleton('cortex.foundation.modules.enabled.paths', fn () => $this->app['cortex.foundation.modules.enabled']->map(fn ($val, $key) => app()->modulePath($key))->filter(fn ($path) => file_exists($path))->toArray());
 
         $this->app->singleton('cortex.foundation.extensions', fn () => collect(is_file(config('rinvex.composer.cortex-extension.manifest')) ? $this->app['files']->getRequire(config('rinvex.composer.cortex-extension.manifest')) : []));
-        $this->app->singleton('cortex.foundation.extensions.enabled', fn () => $this->app['cortex.foundation.extensions']->filter(fn ($extension) => $this->app['cortex.foundation.modules.enabled']->has($extension['extends'] ?? null)));
+        $this->app->singleton('cortex.foundation.extensions.enabled', fn () => $this->app['cortex.foundation.extensions']->filter(fn ($extension) => $extension['active'] && $extension['autoload'] && $this->app['cortex.foundation.modules.enabled']->has($extension['extends'] ?? null)));
         $this->app->singleton('cortex.foundation.extensions.enabled.paths', fn () => $this->app['cortex.foundation.extensions.enabled']->map(fn ($val, $key) => app()->extensionPath($key))->filter(fn ($path) => file_exists($path))->toArray());
 
         $enabledModulesPaths = $this->app['cortex.foundation.modules.enabled.paths'];
