@@ -51,8 +51,8 @@ if (! function_exists('intend')) {
             $errors = collect($arguments['withErrors'] ?? []);
 
             return $errors->isNotEmpty() ?
-                response()->json([$errors->flatten()->first() ?: 'Error'], $status ?: 422) :
-                response()->json([$messages->flatten()->first() ?: 'OK'], $status ?: 200);
+                response()->json(['message' => $messages->flatten()->first(), 'errors' => $errors], $status ?: 422) :
+                response()->json(['message' => $messages->flatten()->first() ?: 'OK'], $status ?: 200);
         }
 
         $redirect = redirect(Arr::pull($arguments, 'url'), in_array($status, [201, 301, 302, 303, 307, 308]) ? $status : 302);
