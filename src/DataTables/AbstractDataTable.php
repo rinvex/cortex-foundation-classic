@@ -249,7 +249,7 @@ CDATA;
      * @param array       $data
      * @param array       $mergeData
      *
-     *@throws \Cortex\Foundation\Exceptions\GenericException
+     * @throws \Cortex\Foundation\Exceptions\GenericException
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
