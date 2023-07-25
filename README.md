@@ -17,16 +17,6 @@ This package still not yet documented, but you can use it on your own responsibi
 
 To be documented soon..!
 
-## unique_with Validator Rule
-
-This feature contains a variant of the `validateUnique` rule for Laravel, that allows for validation of multi-column
-UNIQUE
-indexes.
-
-It was forked and merged from the
-awesome [felixkiss/uniquewith-validator](https://github.com/felixkiss/uniquewith-validator) package, which at the time
-been outdated and un-maintained for a long time. Many thanks to core contributors for developing this.
-
 ### Support Helpers
 
 #### `intend()`
