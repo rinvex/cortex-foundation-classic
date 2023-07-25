@@ -91,25 +91,27 @@ class ExceptionHandler extends BaseExceptionHandler
         if ($e instanceof TokenMismatchException) {
             return intend([
                 'back' => true,
-                'withErrors' => ['error' => trans('cortex/foundation::messages.token_mismatch')],
+                'with' => ['warning' => trans('cortex/foundation::messages.token_mismatch')],
             ], 403);
         } elseif ($e instanceof WatsonValidationException) {
             return intend([
                 'intended' => $e->redirectTo ?? url()->previous(),
                 'withInput' => $request->all(),
+                'with' => ['warning' => $e->getMessage()],
                 'withErrors' => $e->errors(),
             ], $e->status); // 422
         } elseif ($e instanceof ValidationException) {
             return intend([
                 'intended' => $e->redirectTo ?? url()->previous(),
                 'withInput' => $request->all(),
+                'with' => ['warning' => $e->getMessage()],
                 'withErrors' => $e->errors(),
             ], $e->status); // 422
         } elseif ($e instanceof GenericException) {
             return intend([
                 'url' => $e->getRedirection() ?? route("{$request->accessarea()}.home"),
                 'withInput' => $e->getInputs() ?? $request->all(),
-                'withErrors' => ['error' => $e->getMessage()],
+                'with' => ['warning' => $e->getMessage()],
             ], $e->getStatusCode()); // 401, 403, 302
         } elseif ($e instanceof AuthenticationException) {
             // Save state, and redirect, or resubmit form after authentication
@@ -117,12 +119,12 @@ class ExceptionHandler extends BaseExceptionHandler
 
             return intend([
                 'url' => route($request->accessarea().'.cortex.auth.account.login'),
-                'withErrors' => ['error' => trans('cortex/auth::messages.unauthenticated')],
+                'with' => ['warning' => trans('cortex/auth::messages.unauthenticated')],
             ], 401);
         } elseif ($e instanceof AuthorizationException) {
             return intend([
                 'url' => in_array($request->accessarea(), ['tenantarea', 'managerarea']) ? route('tenantarea.home') : route('frontarea.home'),
-                'withErrors' => ['error' => $e->getMessage()],
+                'with' => ['warning' => $e->getMessage()],
             ], 403);
         } elseif ($e instanceof NotFoundHttpException) {
             // Catch localized routes with missing {locale}
@@ -138,7 +140,7 @@ class ExceptionHandler extends BaseExceptionHandler
 
                     return intend([
                         'url' => $originalUrl !== $localizedUrl ? $localizedUrl : route("{$request->accessarea()}.home"),
-                        'withErrors' => ['error' => $e->getMessage()],
+                        'with' => ['warning' => $e->getMessage()],
                     ], $e->getStatusCode()); // 404
                 } catch (Exception $e) {
                 }
@@ -154,23 +156,23 @@ class ExceptionHandler extends BaseExceptionHandler
 
             return intend([
                 'url' => Route::has($route) ? route($route) : route("{$request->accessarea()}.home"),
-                'withErrors' => ['error' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $resource, 'identifier' => $matches[0]])],
+                'with' => ['warning' => trans('cortex/foundation::messages.resource_not_found', ['resource' => $resource, 'identifier' => $matches[0]])],
             ], 404);
         } elseif ($e instanceof UniversityLoaderException || $e instanceof CountryLoaderException || $e instanceof LanguageLoaderException) {
             return intend([
                 'url' => route("{$request->accessarea()}.home"),
-                'withErrors' => ['error' => $e->getMessage()],
+                'with' => ['warning' => $e->getMessage()],
             ], 404);
         } elseif ($e instanceof ThrottleRequestsException) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
-                'withErrors' => ['error' => $e->getMessage()],
+                'with' => ['warning' => $e->getMessage()],
             ], $e->getStatusCode()); // 429
         } elseif ($e instanceof AbstractTenantException) {
             return intend([
                 'url' => route('frontarea.home'),
-                'withErrors' => ['error' => $e->getMessage()],
+                'with' => ['warning' => $e->getMessage()],
             ], 404); // 429
         }
 

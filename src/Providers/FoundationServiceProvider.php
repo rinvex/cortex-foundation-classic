@@ -17,7 +17,6 @@ use Cortex\Foundation\Validators\Validator;
 use Illuminate\View\Compilers\BladeCompiler;
 use Cortex\Foundation\Generators\LangJsGenerator;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Cortex\Foundation\Validators\UniqueWithValidator;
 use Illuminate\Support\Facades\Session as SessionFacade;
 use Cortex\Foundation\Verifiers\EloquentPresenceVerifier;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
@@ -80,12 +79,6 @@ class FoundationServiceProvider extends ServiceProvider
         // Override validator resolver
         ValidatorFacade::resolver(function ($translator, $data, $rules, $messages) {
             return new Validator($translator, $data, $rules, $messages);
-        });
-
-        // Add support for unique_with validator
-        ValidatorFacade::extend('unique_with', UniqueWithValidator::class.'@validateUniqueWith', trans('validation.unique_with'));
-        ValidatorFacade::replacer('unique_with', function () {
-            return call_user_func_array([new UniqueWithValidator(), 'replaceUniqueWith'], func_get_args());
         });
 
         // Override validator presence verifier

@@ -17,15 +17,19 @@ This package still not yet documented, but you can use it on your own responsibi
 
 To be documented soon..!
 
-## unique_with Validator Rule
+### Support Helpers
 
-This feature contains a variant of the `validateUnique` rule for Laravel, that allows for validation of multi-column
-UNIQUE
-indexes.
+#### `intend()`
 
-It was forked and merged from the
-awesome [felixkiss/uniquewith-validator](https://github.com/felixkiss/uniquewith-validator) package, which at the time
-been outdated and un-maintained for a long time. Many thanks to core contributors for developing this.
+The `intend` method returns redirect response:
+```php
+intend([
+    'route' => 'route.name.here',
+    'withErrors' => ['error.message.id' => 'A custom error message'],
+]);
+```
+
+> **Note:** this helper accepts `redirect` methods as it's input keys, such as `withErrors`, `with`, `back`, and `route` ..etc
 
 ### unique_with Validator Rule: Usage
 
