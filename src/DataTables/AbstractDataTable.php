@@ -73,6 +73,8 @@ abstract class AbstractDataTable extends BaseDataTable
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->buttons = $this->getAuthorizedButtons();
         $this->options = array_merge(config('cortex.foundation.datatables.options'), (array) $this->options);
         $this->options['language'] = [
