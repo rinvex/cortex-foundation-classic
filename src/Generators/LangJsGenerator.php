@@ -31,7 +31,7 @@ class LangJsGenerator extends BaseLangJsGenerator
         foreach (array_merge(array_values(app('translation.loader')->namespaces()), [$this->sourcePath]) as $directory) {
             foreach ($this->file->allFiles($directory) as $file) {
                 $path = mb_substr($file->getPath(), 0, mb_strrpos($file->getPath(), DIRECTORY_SEPARATOR));
-                $namespace = collect(app('translation.loader')->namespaces())->search(fn($paths) => in_array($path, $paths));
+                $namespace = collect(app('translation.loader')->namespaces())->search(fn ($paths) => in_array($path, $paths));
 
                 $pathName = $file->getRelativePathName();
                 $extension = $file->getExtension();
