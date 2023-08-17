@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\Middleware\FrameGuard;
 use Illuminate\Http\Middleware\HandleCors;
 use Cortex\Foundation\Http\Middleware\TrimWww;
 use Illuminate\Http\Middleware\SetCacheHeaders;
@@ -80,6 +81,7 @@ return function () {
     Route::pushMiddlewareToGroup('web', EncryptCookies::class);
     Route::pushMiddlewareToGroup('web', AddQueuedCookiesToResponse::class);
     Route::pushMiddlewareToGroup('web', StartSession::class);
+    Route::pushMiddlewareToGroup('web', FrameGuard::class);
     Route::pushMiddlewareToGroup('web', LocalizationRedirect::class);
     Route::pushMiddlewareToGroup('web', ShareErrorsFromSession::class);
     Route::pushMiddlewareToGroup('web', VerifyCsrfToken::class);

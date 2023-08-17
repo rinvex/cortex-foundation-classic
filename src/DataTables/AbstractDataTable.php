@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Cortex\Foundation\Exceptions\GenericException;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Cortex\Foundation\Transformers\DataArrayTransformer;
 use Yajra\DataTables\Services\DataTable as BaseDataTable;
 
@@ -73,6 +74,8 @@ abstract class AbstractDataTable extends BaseDataTable
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->buttons = $this->getAuthorizedButtons();
         $this->options = array_merge(config('cortex.foundation.datatables.options'), (array) $this->options);
         $this->options['language'] = [
@@ -108,7 +111,29 @@ abstract class AbstractDataTable extends BaseDataTable
     public function query()
     {
         $model = app($this->model);
+        $currentUser = $this->request()->user();
+        $morphMap = array_flip(Relation::morphMap());
         $query = $model->query();
+
+        // 1. User is not a superadmin
+        if (! $currentUser->isA('superadmin')) {
+
+            // 2. User can not list entities
+            if (! $currentUser->can('list', $model)) {
+                $query->whereNull($model->getKeyName());
+            }
+
+            // 3. User can view only owned entities
+            $currentUser->getAbilities()->whereNotNull('entity_type')->where(function ($ability) use ($morphMap) {
+                return $ability->entity_type === $morphMap[$this->model] && $ability->name === 'view' && $ability->only_owned;
+            })->whenNotEmpty(fn() => $query->where('created_by_id', $currentUser->getAuthIdentifier())->where('created_by_type', $currentUser->getMorphClass()));
+
+            // 4. User can view specific entities
+            $currentUser->getAbilities()->whereNotNull('entity_type')->whereNotNull('entity_id')->where(function ($ability) use ($morphMap) {
+                return $ability->entity_type === $morphMap[$this->model] && $ability->name === 'view' && ! $ability->only_owned;
+            })->pluck('entity_id')->whenNotEmpty(fn($entities) => $query->OrWhereIn($model->getKeyName(), $entities->toArray()));
+        }
+
         $selectedIds = collect($this->request()->input('selected_ids'))->filter();
 
         if ($selectedIds->isNotEmpty()) {

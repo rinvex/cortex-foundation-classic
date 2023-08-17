@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.3.3] - 2023-08-17
+- Seed the new 'view' ability
+- Add abilities & owned_only support to datatables
+- Fix the lang:js artisan command generation to the new translation namespaces multi-dimensional structure
+- Add missing parent::__contruct call
+- enable FrameGuard middleware (#345)
+
 ## [v8.3.2] - 2023-07-25
 - Move unique_with validation rule to rinvex/laravel-support from cortex/foundation
 - Fix exception handler and errors returned json
@@ -892,6 +899,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.3.3]: https://github.com/rinvex/cortex-foundation/compare/v8.3.2...v8.3.3
 [v8.3.2]: https://github.com/rinvex/cortex-foundation/compare/v8.3.1...v8.3.2
 [v8.3.1]: https://github.com/rinvex/cortex-foundation/compare/v8.3.0...v8.3.1
 [v8.3.0]: https://github.com/rinvex/cortex-foundation/compare/v8.2.7...v8.3.0
