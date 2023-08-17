@@ -21,11 +21,13 @@ class CortexFoundationSeeder extends Seeder
 
         $abilities = [
             ['name' => 'list', 'title' => 'List media', 'entity_type' => 'media'],
+            ['name' => 'view', 'title' => 'View media', 'entity_type' => 'media'],
             ['name' => 'create', 'title' => 'Create media', 'entity_type' => 'media'],
             ['name' => 'update', 'title' => 'Update media', 'entity_type' => 'media'],
             ['name' => 'delete', 'title' => 'Delete media', 'entity_type' => 'media'],
 
             ['name' => 'list', 'title' => 'List Accessareas', 'entity_type' => 'accessarea'],
+            ['name' => 'view', 'title' => 'View Accessareas', 'entity_type' => 'accessarea'],
             ['name' => 'create', 'title' => 'Create Accessareas', 'entity_type' => 'accessarea'],
             ['name' => 'update', 'title' => 'Update Accessareas', 'entity_type' => 'accessarea'],
             ['name' => 'delete', 'title' => 'Delete Accessareas', 'entity_type' => 'accessarea'],
