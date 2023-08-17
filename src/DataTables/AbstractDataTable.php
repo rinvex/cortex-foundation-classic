@@ -39,7 +39,7 @@ abstract class AbstractDataTable extends BaseDataTable
 
     protected array $bulkActions = ['delete', 'revoke', 'activate', 'deactivate'];
 
-    protected array $authorizedActions = ['create', 'import', 'export', 'print', 'delete', 'revoke', 'activate', 'deactivate'];
+    protected array $authorizableActions = ['create', 'import', 'export', 'print', 'delete', 'revoke', 'activate', 'deactivate'];
 
     /**
      * Set default options.
@@ -49,11 +49,18 @@ abstract class AbstractDataTable extends BaseDataTable
     protected $options;
 
     /**
-     * Set action buttons.
+     * Action buttons.
      *
      * @var array
      */
     protected $buttons;
+
+    /**
+     * Authorized buttons.
+     *
+     * @var array
+     */
+    protected $authorizedButtons;
 
     /**
      * The datatable builder parameters.
@@ -76,7 +83,7 @@ abstract class AbstractDataTable extends BaseDataTable
     {
         parent::__construct();
 
-        $this->buttons = $this->getAuthorizedButtons();
+        $this->authorizedButtons = $this->getAuthorizedButtons();
         $this->options = array_merge(config('cortex.foundation.datatables.options'), (array) $this->options);
         $this->options['language'] = [
             'search' => trans('cortex/foundation::common.datatable_language.search'),
@@ -93,7 +100,7 @@ abstract class AbstractDataTable extends BaseDataTable
     public function getAuthorizedButtons(): array
     {
         $buttons = collect(config('cortex.foundation.datatables.buttons'))->merge($this->buttons)->mapWithKeys(function ($value, $key) {
-            if (in_array($key, $this->authorizedActions)) {
+            if (in_array($key, $this->authorizableActions)) {
                 return [$key => ($user = $this->request()->user()) && $user->can($key === 'print' ? 'export' : $key, $this->model ? app($this->model) : []) && $value];
             }
 
@@ -173,7 +180,7 @@ abstract class AbstractDataTable extends BaseDataTable
      */
     public function isActionEnabled($action): bool
     {
-        if (! Arr::get($this->buttons, $action)) {
+        if (! Arr::get($this->authorizedButtons, $action)) {
             throw new GenericException(trans('cortex/foundation::messages.action_disabled'), $this->request->url());
         }
 
@@ -192,7 +199,7 @@ abstract class AbstractDataTable extends BaseDataTable
      */
     public function isActionAuthorized($action, Model $item = null): bool
     {
-        if (in_array($action, $this->authorizedActions) && ! $this->request()->user()->can($action, $item ?? ($this->model ? app($this->model) : []))) {
+        if (in_array($action, $this->authorizableActions) && ! $this->request()->user()->can($action, $item ?? ($this->model ? app($this->model) : []))) {
             throw new GenericException(trans('cortex/foundation::messages.action_unauthorized'), $this->request->url());
         }
 
@@ -345,9 +352,9 @@ CDATA;
      */
     protected function getButtons(): array
     {
-        $this->buttons['bulk'] = collect($this->buttons)
+        $this->authorizedButtons['bulk'] = collect($this->authorizedButtons)
             ->filter()->keys()->intersect($this->bulkActions)->isNotEmpty();
-        $buttons = collect($this->buttons)->filter();
+        $buttons = collect($this->authorizedButtons)->filter();
         $bulkButtons = $buttons->only($this->bulkActions);
 
         return collect([
