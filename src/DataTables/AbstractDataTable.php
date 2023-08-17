@@ -117,7 +117,6 @@ abstract class AbstractDataTable extends BaseDataTable
 
         // 1. User is not a superadmin
         if (! $currentUser->isA('superadmin')) {
-
             // 2. User can not list entities
             if (! $currentUser->can('list', $model)) {
                 $query->whereNull($model->getKeyName());
@@ -126,12 +125,12 @@ abstract class AbstractDataTable extends BaseDataTable
             // 3. User can view only owned entities
             $currentUser->getAbilities()->whereNotNull('entity_type')->where(function ($ability) use ($morphMap) {
                 return $ability->entity_type === $morphMap[$this->model] && $ability->name === 'view' && $ability->only_owned;
-            })->whenNotEmpty(fn() => $query->where('created_by_id', $currentUser->getAuthIdentifier())->where('created_by_type', $currentUser->getMorphClass()));
+            })->whenNotEmpty(fn () => $query->where('created_by_id', $currentUser->getAuthIdentifier())->where('created_by_type', $currentUser->getMorphClass()));
 
             // 4. User can view specific entities
             $currentUser->getAbilities()->whereNotNull('entity_type')->whereNotNull('entity_id')->where(function ($ability) use ($morphMap) {
                 return $ability->entity_type === $morphMap[$this->model] && $ability->name === 'view' && ! $ability->only_owned;
-            })->pluck('entity_id')->whenNotEmpty(fn($entities) => $query->OrWhereIn($model->getKeyName(), $entities->toArray()));
+            })->pluck('entity_id')->whenNotEmpty(fn ($entities) => $query->OrWhereIn($model->getKeyName(), $entities->toArray()));
         }
 
         $selectedIds = collect($this->request()->input('selected_ids'))->filter();
