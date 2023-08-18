@@ -7,6 +7,7 @@ namespace Cortex\Foundation\DataTables;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Cortex\Foundation\Exceptions\GenericException;
@@ -39,7 +40,7 @@ abstract class AbstractDataTable extends BaseDataTable
 
     protected array $bulkActions = ['delete', 'revoke', 'activate', 'deactivate'];
 
-    protected array $authorizedActions = ['create', 'import', 'export', 'print', 'delete', 'revoke', 'activate', 'deactivate'];
+    protected array $authorizableActions = ['create', 'import', 'export', 'print', 'delete', 'revoke', 'activate', 'deactivate'];
 
     /**
      * Set default options.
@@ -49,11 +50,18 @@ abstract class AbstractDataTable extends BaseDataTable
     protected $options;
 
     /**
-     * Set action buttons.
+     * Action buttons.
      *
      * @var array
      */
     protected $buttons;
+
+    /**
+     * Buttons that are both authorized and enabled.
+     *
+     * @var array
+     */
+    protected $authorizedButtons;
 
     /**
      * The datatable builder parameters.
@@ -76,7 +84,7 @@ abstract class AbstractDataTable extends BaseDataTable
     {
         parent::__construct();
 
-        $this->buttons = $this->getAuthorizedButtons();
+        $this->authorizedButtons = $this->getAuthorizedButtons();
         $this->options = array_merge(config('cortex.foundation.datatables.options'), (array) $this->options);
         $this->options['language'] = [
             'search' => trans('cortex/foundation::common.datatable_language.search'),
@@ -86,21 +94,21 @@ abstract class AbstractDataTable extends BaseDataTable
     }
 
     /**
-     * Get authorized buttons.
+     * Get only buttons that are both authorized and enabled.
      *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
-    public function getAuthorizedButtons(): array
+    public function getAuthorizedButtons(): Collection
     {
         $buttons = collect(config('cortex.foundation.datatables.buttons'))->merge($this->buttons)->mapWithKeys(function ($value, $key) {
-            if (in_array($key, $this->authorizedActions)) {
-                return [$key => ($user = $this->request()->user()) && $user->can($key === 'print' ? 'export' : $key, $this->model ? app($this->model) : []) && $value];
+            if (in_array($key, $this->authorizableActions)) {
+                return [$key => $this->request()?->user()?->can($key === 'print' ? 'export' : $key, $this->model ? app($this->model) : [])];
             }
 
             return [$key => $value];
         });
 
-        return $buttons->toArray();
+        return $buttons->filter();
     }
 
     /**
@@ -117,7 +125,6 @@ abstract class AbstractDataTable extends BaseDataTable
 
         // 1. User is not a superadmin
         if (! $currentUser->isA('superadmin')) {
-
             // 2. User can not list entities
             if (! $currentUser->can('list', $model)) {
                 $query->whereNull($model->getKeyName());
@@ -126,12 +133,12 @@ abstract class AbstractDataTable extends BaseDataTable
             // 3. User can view only owned entities
             $currentUser->getAbilities()->whereNotNull('entity_type')->where(function ($ability) use ($morphMap) {
                 return $ability->entity_type === $morphMap[$this->model] && $ability->name === 'view' && $ability->only_owned;
-            })->whenNotEmpty(fn() => $query->where('created_by_id', $currentUser->getAuthIdentifier())->where('created_by_type', $currentUser->getMorphClass()));
+            })->whenNotEmpty(fn () => $query->where('created_by_id', $currentUser->getAuthIdentifier())->where('created_by_type', $currentUser->getMorphClass()));
 
             // 4. User can view specific entities
             $currentUser->getAbilities()->whereNotNull('entity_type')->whereNotNull('entity_id')->where(function ($ability) use ($morphMap) {
                 return $ability->entity_type === $morphMap[$this->model] && $ability->name === 'view' && ! $ability->only_owned;
-            })->pluck('entity_id')->whenNotEmpty(fn($entities) => $query->OrWhereIn($model->getKeyName(), $entities->toArray()));
+            })->pluck('entity_id')->whenNotEmpty(fn ($entities) => $query->OrWhereIn($model->getKeyName(), $entities->toArray()));
         }
 
         $selectedIds = collect($this->request()->input('selected_ids'))->filter();
@@ -164,24 +171,6 @@ abstract class AbstractDataTable extends BaseDataTable
     }
 
     /**
-     * Check if the given action is enabled.
-     *
-     * @param $action
-     *
-     * @throws \Cortex\Foundation\Exceptions\GenericException
-     *
-     * @return bool
-     */
-    public function isActionEnabled($action): bool
-    {
-        if (! Arr::get($this->buttons, $action)) {
-            throw new GenericException(trans('cortex/foundation::messages.action_disabled'), $this->request->url());
-        }
-
-        return true;
-    }
-
-    /**
      * Check if the given action is authorized.
      *
      * @param                                          $action
@@ -193,7 +182,7 @@ abstract class AbstractDataTable extends BaseDataTable
      */
     public function isActionAuthorized($action, Model $item = null): bool
     {
-        if (in_array($action, $this->authorizedActions) && ! $this->request()->user()->can($action, $item ?? ($this->model ? app($this->model) : []))) {
+        if (! $this->authorizedButtons->has($action) || ! $this->request()->user()->can($action, $item ?? ($this->model ? app($this->model) : []))) {
             throw new GenericException(trans('cortex/foundation::messages.action_unauthorized'), $this->request->url());
         }
 
@@ -283,18 +272,12 @@ CDATA;
         $action = $this->request()->get('action');
 
         // Export actions
-        if (in_array($action, $this->actions) && method_exists($this, $action)) {
-            $this->isActionEnabled('export');
-            $this->isActionAuthorized('export');
-
+        if (in_array($action, $this->actions) && method_exists($this, $action) && $this->isActionAuthorized('export')) {
             return app()->call([$this, $action === 'print' ? 'printPreview' : $action]);
         }
 
         // Bulk actions
-        if (in_array($action, $this->bulkActions)) {
-            $this->isActionEnabled($action);
-            $this->isActionAuthorized($action);
-
+        if (in_array($action, $this->bulkActions) && $this->isActionAuthorized($action)) {
             return app()->call([$this, 'bulkAction'], ['action' => $action]);
         }
 
@@ -346,10 +329,8 @@ CDATA;
      */
     protected function getButtons(): array
     {
-        $this->buttons['bulk'] = collect($this->buttons)
-            ->filter()->keys()->intersect($this->bulkActions)->isNotEmpty();
-        $buttons = collect($this->buttons)->filter();
-        $bulkButtons = $buttons->only($this->bulkActions);
+        $bulkButtons = $this->authorizedButtons->only($this->bulkActions);
+        $this->authorizedButtons['bulk'] = $bulkButtons->isNotEmpty();
 
         return collect([
             'create' => ['extend' => 'create', 'text' => '<i class="fa fa-plus"></i> '.trans('cortex/foundation::common.create')],
@@ -366,7 +347,7 @@ CDATA;
             'bulk' => ['extend' => 'bulk', 'text' => '<i class="fa fa-list"></i> '.trans('cortex/foundation::common.bulk').'&nbsp;<span class="caret"/>', 'buttons' => $bulkButtons->keys(), 'autoClose' => true, 'fade' => 0],
             'colvis' => ['extend' => 'colvis', 'text' => '<i class="fa fa-columns"></i> '.trans('cortex/foundation::common.colvis').'&nbsp;<span class="caret"/>', 'fade' => 0],
             'pageLength' => ['extend' => 'pageLength', 'text' => '<i class="fa fa-list-ol"></i> '.trans('cortex/foundation::common.pageLength').'&nbsp;<span class="caret"/>', 'fade' => 0],
-        ])->only($buttons->keys())->values()->toArray();
+        ])->only($this->authorizedButtons->keys())->values()->toArray();
     }
 
     /**
