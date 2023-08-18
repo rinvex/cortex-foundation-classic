@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.3.4] - 2023-08-18
+- Simplify datatable authorized buttons logic
+- Utilize nullsafe operator to simplify code
+- Fix datatable buttons array naming conventions
+
 ## [v8.3.3] - 2023-08-17
 - Seed the new 'view' ability
 - Add abilities & owned_only support to datatables
@@ -899,6 +904,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.3.4]: https://github.com/rinvex/cortex-foundation/compare/v8.3.3...v8.3.4
 [v8.3.3]: https://github.com/rinvex/cortex-foundation/compare/v8.3.2...v8.3.3
 [v8.3.2]: https://github.com/rinvex/cortex-foundation/compare/v8.3.1...v8.3.2
 [v8.3.1]: https://github.com/rinvex/cortex-foundation/compare/v8.3.0...v8.3.1
