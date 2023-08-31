@@ -120,7 +120,6 @@ abstract class AbstractDataTable extends BaseDataTable
     {
         $model = app($this->model);
         $currentUser = $this->request()->user();
-        $morphMap = array_flip(Relation::morphMap());
         $query = $model->query();
 
         // 1. User is not a superadmin
@@ -131,13 +130,13 @@ abstract class AbstractDataTable extends BaseDataTable
             }
 
             // 3. User can view only owned entities
-            $currentUser->getAbilities()->whereNotNull('entity_type')->where(function ($ability) use ($morphMap) {
-                return $ability->entity_type === $morphMap[$this->model] && $ability->name === 'view' && $ability->only_owned;
+            $currentUser->getAbilities()->whereNotNull('entity_type')->where(function ($ability) use ($model) {
+                return $ability->entity_type === $model->getMorphClass() && $ability->name === 'view' && $ability->only_owned;
             })->whenNotEmpty(fn () => $query->where('created_by_id', $currentUser->getAuthIdentifier())->where('created_by_type', $currentUser->getMorphClass()));
 
             // 4. User can view specific entities
-            $currentUser->getAbilities()->whereNotNull('entity_type')->whereNotNull('entity_id')->where(function ($ability) use ($morphMap) {
-                return $ability->entity_type === $morphMap[$this->model] && $ability->name === 'view' && ! $ability->only_owned;
+            $currentUser->getAbilities()->whereNotNull('entity_type')->whereNotNull('entity_id')->where(function ($ability) use ($model) {
+                return $ability->entity_type === $model->getMorphClass() && $ability->name === 'view' && ! $ability->only_owned;
             })->pluck('entity_id')->whenNotEmpty(fn ($entities) => $query->OrWhereIn($model->getKeyName(), $entities->toArray()));
         }
 
