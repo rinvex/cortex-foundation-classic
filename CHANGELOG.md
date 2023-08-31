@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v8.3.5] - 2023-08-30
+- Fix model morph class when dealing with overridden classes and checking permissions
+
 ## [v8.3.4] - 2023-08-18
 - Simplify datatable authorized buttons logic
 - Utilize nullsafe operator to simplify code
@@ -904,6 +907,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.3.5]: https://github.com/rinvex/cortex-foundation/compare/v8.3.4...v8.3.5
 [v8.3.4]: https://github.com/rinvex/cortex-foundation/compare/v8.3.3...v8.3.4
 [v8.3.3]: https://github.com/rinvex/cortex-foundation/compare/v8.3.2...v8.3.3
 [v8.3.2]: https://github.com/rinvex/cortex-foundation/compare/v8.3.1...v8.3.2
