@@ -7,7 +7,6 @@ namespace Cortex\Foundation\Traits;
 use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests as BaseAuthorizesRequests;
 
 trait AuthorizesRequests
