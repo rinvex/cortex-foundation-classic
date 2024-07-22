@@ -212,9 +212,10 @@ class ExceptionHandler extends BaseExceptionHandler
                 $view = "cortex/tenants::{$accessarea}.errors.{$e->getStatusCode()}";
                 break;
             default:
-                $view ="cortex/foundation::{$accessarea}.errors.{$e->getStatusCode()}";
+                $view = "cortex/foundation::{$accessarea}.errors.{$e->getStatusCode()}";
                 break;
         }
+
         return $view;
     }
 }

@@ -11,7 +11,6 @@ use Illuminate\Support\Collection;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Cortex\Foundation\Exceptions\GenericException;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Cortex\Foundation\Transformers\DataArrayTransformer;
 use Yajra\DataTables\Services\DataTable as BaseDataTable;
 

@@ -7,7 +7,6 @@ namespace Cortex\Foundation\Traits;
 use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Cortex\Foundation\Http\Controllers\AbstractController;
 use Cortex\Foundation\Http\Controllers\AuthorizedController;
 use Cortex\Foundation\Http\Controllers\AuthenticatedController;
@@ -113,14 +112,16 @@ trait AuthorizesRequests
      */
     protected function getControllersNames(ReflectionClass $controller): array
     {
-        if(!$controller->getParentClass() || $controller->getName() == AbstractController::class || $controller->getName() == AuthorizedController::class || $controller->getName() == AuthenticatedController::class){
+        if (! $controller->getParentClass() || $controller->getName() === AbstractController::class || $controller->getName() === AuthorizedController::class || $controller->getName() === AuthenticatedController::class) {
             return [];
         }
-        if(! $controller->getParentClass()){
+        if (! $controller->getParentClass()) {
             return [$controller->getName()];
         }
+
         return array_merge([$controller->getName()], $this->getControllersNames($controller->getParentClass()));
     }
+
     /**
      * {@inheritdoc}
      */
