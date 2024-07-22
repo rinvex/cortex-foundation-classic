@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
-## [v8.3.5] - 2023-08-30
+## [v8.3.6] - 2024-07-22
+- fix methods from parent controllers (#369)
+- remove double caret, it is already added from datatable pacakge (#372)
+- check if the button is enabled (#371)
+- fix route with ModelNotFoundException (#365)
+- use morph instead of class basename (#364)
+- add blades for 405 error (#368)
+- fix managerarea and tenantarea errors blades (#367)
+
+## [v8.3.5] - 2023-08-31
 - Fix model morph class when dealing with overridden classes and checking permissions
 
 ## [v8.3.4] - 2023-08-18
@@ -907,6 +916,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-03-14
 - Tag first release
 
+[v8.3.6]: https://github.com/rinvex/cortex-foundation/compare/v8.3.5...v8.3.6
 [v8.3.5]: https://github.com/rinvex/cortex-foundation/compare/v8.3.4...v8.3.5
 [v8.3.4]: https://github.com/rinvex/cortex-foundation/compare/v8.3.3...v8.3.4
 [v8.3.3]: https://github.com/rinvex/cortex-foundation/compare/v8.3.2...v8.3.3
